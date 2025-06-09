@@ -24,6 +24,8 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
+    "types": ["node", "vite-plugin-svgr/client"],
+
     "paths": {
       "@assets/*": ["src/assets/*"],
       "@atoms/*": ["src/atoms/*"],
