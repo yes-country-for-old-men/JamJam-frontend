@@ -2667,6 +2667,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framer-motion@npm:^12.17.0":
+  version: 12.17.0
+  resolution: "framer-motion@npm:12.17.0"
+  dependencies:
+    motion-dom: ^12.17.0
+    motion-utils: ^12.12.1
+    tslib: ^2.4.0
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 78944efc27532c168257878d1551230a4f5f2203eed259de0f5f92625e303ddcdeaa21cad7cd0f600537c807e5522dc39b64e8743c762f4ab64df28e552e1c38
+  languageName: node
+  linkType: hard
+
 "fs-minipass@npm:^3.0.0":
   version: 3.0.3
   resolution: "fs-minipass@npm:3.0.3"
@@ -3372,6 +3394,7 @@ __metadata:
     eslint-plugin-react: ^7.28.0
     eslint-plugin-react-hooks: ^4.3.0
     eslint-plugin-react-refresh: ^0.4.19
+    framer-motion: ^12.17.0
     globals: ^16.0.0
     prettier: ^3.5.3
     react: ^19.1.0
@@ -3721,6 +3744,22 @@ __metadata:
   bin:
     mkdirp: dist/cjs/src/bin.js
   checksum: 972deb188e8fb55547f1e58d66bd6b4a3623bf0c7137802582602d73e6480c1c2268dcbafbfb1be466e00cc7e56ac514d7fd9334b7cf33e3e2ab547c16f83a8d
+  languageName: node
+  linkType: hard
+
+"motion-dom@npm:^12.17.0":
+  version: 12.17.0
+  resolution: "motion-dom@npm:12.17.0"
+  dependencies:
+    motion-utils: ^12.12.1
+  checksum: f4e18ae61a67155e2bfcea47bd3ac5e08b58b1179e637771db1f211e44c65d66f297416fda53a07afb940c48822861638541d1fbfc676d9133f50dcccd08768f
+  languageName: node
+  linkType: hard
+
+"motion-utils@npm:^12.12.1":
+  version: 12.12.1
+  resolution: "motion-utils@npm:12.12.1"
+  checksum: 73f745b2f619a6f971966cbde27b8d7a87523cdf38aa361519ffa7bd7582b8b7d05f95869181bc1e0c2a6c2c9a48dd45fd33f744383ff82d0a8e9b3b3cfb9702
   languageName: node
   linkType: hard
 
@@ -4838,7 +4877,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.3":
+"tslib@npm:^2.0.3, tslib@npm:^2.4.0":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: e4aba30e632b8c8902b47587fd13345e2827fa639e7c3121074d5ee0880723282411a8838f830b55100cbe4517672f84a2472667d355b81e8af165a55dc6203a
