@@ -1,5 +1,12 @@
+import { ThemeProvider } from '@emotion/react';
+import theme from '@styles/theme';
+
 const App = () => {
-  return <div>JamJam</div>;
+  return (
+    <ThemeProvider theme={theme}>
+      <div />
+    </ThemeProvider>
+  );
 };
 
 export default App;

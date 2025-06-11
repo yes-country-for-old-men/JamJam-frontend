@@ -54,5 +54,5 @@
     "react-hooks/exhaustive-deps": "off",
     "react/require-default-props": "off"
   },
-  "ignorePatterns": ["build", "dist", "public"]
+  "ignorePatterns": ["build", "dist", "public", "**/*.d.ts"]
 }
