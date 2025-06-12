@@ -11,6 +11,7 @@ const theme = {
     },
     LABEL_PRIMARY: '#111111',
     LABEL_SECONDARY: '#767676',
+    LABEL_TERTIARY: '#C4C4C6',
     BACKGROUND: '#F7F7FB',
   },
 } as const;
