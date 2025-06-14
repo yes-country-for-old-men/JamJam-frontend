@@ -46,7 +46,7 @@ const CAROUSEL_CONFIG = {
 } as const;
 
 const ANIMATION_CONFIG = {
-  type: 'spring',
+  type: 'spring' as const,
   stiffness: 200,
   damping: 25,
 };
