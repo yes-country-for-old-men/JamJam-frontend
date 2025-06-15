@@ -3403,6 +3403,7 @@ __metadata:
     eslint-plugin-react-refresh: ^0.4.19
     framer-motion: ^12.17.0
     globals: ^16.0.0
+    jotai: ^2.12.5
     prettier: ^3.5.3
     react: ^19.1.0
     react-dom: ^19.1.0
@@ -3413,6 +3414,21 @@ __metadata:
     vite-plugin-svgr: ^4.3.0
   languageName: unknown
   linkType: soft
+
+"jotai@npm:^2.12.5":
+  version: 2.12.5
+  resolution: "jotai@npm:2.12.5"
+  peerDependencies:
+    "@types/react": ">=17.0.0"
+    react: ">=17.0.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+  checksum: 04193808dd716a09d5231782983f124e83832b3942329d94f934fce371c3c4cc3e2037cfc4c1afbd68e9930dd6e02a0c6c3e5c73f69fd4369a98334fdc536ea9
+  languageName: node
+  linkType: hard
 
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
