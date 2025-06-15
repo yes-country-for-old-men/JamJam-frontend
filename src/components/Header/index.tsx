@@ -11,12 +11,13 @@ const ANIMATION_VARIANTS = {
 } as const;
 
 const Container = styled.header`
-  position: sticky;
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: space-between;
   top: 0;
-  width: 100vw;
+  left: 0;
+  width: 100%;
   height: 80px;
   background-color: ${(props) => props.theme.COLORS.BACKGROUND};
   padding: 0 24px;
