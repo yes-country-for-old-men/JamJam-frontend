@@ -32,7 +32,7 @@ const Container = styled(motion.div)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 4/3;
+  aspect-ratio: 1;
   background: white;
   border: 1px solid ${(props) => props.theme.COLORS.GRAY[5]};
   border-radius: 10px;
