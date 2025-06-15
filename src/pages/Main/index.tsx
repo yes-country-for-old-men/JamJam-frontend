@@ -56,22 +56,30 @@ const ANIMATION_VARIANTS = {
 
 const Container = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  flex: 1;
+  min-width: max-content;
   overflow-x: auto;
-  overflow-y: auto;
-  padding: 0 48px;
-  gap: 80px;
+  padding: 0;
+`;
+
+const ScrollableContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 84px;
+  padding: 48px;
 `;
 
 const TopSection = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 1200px;
+  width: 100%;
+  gap: 72px;
 `;
 
 const LeftSection = styled(motion.div)`
@@ -83,17 +91,18 @@ const LeftSection = styled(motion.div)`
 `;
 
 const Title = styled(motion.div)`
-  min-width: max-content;
   font-size: 42px;
   font-weight: 700;
   text-align: start;
   line-height: 1.4;
   white-space: pre-line;
   margin-bottom: 36px;
+  word-break: keep-all;
 `;
 
 const SearchBarWrapper = styled(motion.div)`
   width: 100%;
+  min-width: 300px;
 `;
 
 const CarouselWrapper = styled(motion.div)`
@@ -101,15 +110,15 @@ const CarouselWrapper = styled(motion.div)`
 `;
 
 const CategorySection = styled(motion.div)`
-  width: 1200px;
+  width: 100%;
 `;
 
 const CategoryGrid = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(2, 1fr);
+  width: 100%;
   gap: 24px;
-  width: 1200px;
 `;
 
 const Main: React.FC = () => {
@@ -121,52 +130,54 @@ const Main: React.FC = () => {
 
   return (
     <Container>
-      <TopSection
-        variants={ANIMATION_VARIANTS.container}
-        initial="hidden"
-        animate="visible"
-      >
-        <LeftSection variants={ANIMATION_VARIANTS.item}>
-          <Title variants={ANIMATION_VARIANTS.item}>
-            경험이 필요할 땐,{'\n'}경험이 있는 사람이 답입니다.
-          </Title>
-          <SearchBarWrapper variants={ANIMATION_VARIANTS.item}>
-            <SearchBar
-              value={searchValue}
-              onChange={handleSearchChange}
-              placeholder="필요한 손길을 찾아보세요"
-            />
-          </SearchBarWrapper>
-        </LeftSection>
-        <CarouselWrapper variants={ANIMATION_VARIANTS.item}>
-          <Carousel slides={MOCK_SLIDES} />
-        </CarouselWrapper>
-      </TopSection>
-
-      <CategorySection
-        variants={ANIMATION_VARIANTS.item}
-        initial="hidden"
-        animate="visible"
-      >
-        <CategoryGrid
-          variants={ANIMATION_VARIANTS.gridContainer}
+      <ScrollableContent>
+        <TopSection
+          variants={ANIMATION_VARIANTS.container}
           initial="hidden"
           animate="visible"
         >
-          {CATEGORIES.map((category) => (
-            <motion.div
-              key={category.id}
-              variants={ANIMATION_VARIANTS.gridItem}
-            >
-              <CategoryCard
-                id={category.id}
-                name={category.name}
-                icon={category.icon}
+          <LeftSection variants={ANIMATION_VARIANTS.item}>
+            <Title variants={ANIMATION_VARIANTS.item}>
+              경험이 필요할 땐,{'\n'}경험이 있는 사람이 답입니다.
+            </Title>
+            <SearchBarWrapper variants={ANIMATION_VARIANTS.item}>
+              <SearchBar
+                value={searchValue}
+                onChange={handleSearchChange}
+                placeholder="필요한 손길을 찾아보세요"
               />
-            </motion.div>
-          ))}
-        </CategoryGrid>
-      </CategorySection>
+            </SearchBarWrapper>
+          </LeftSection>
+          <CarouselWrapper variants={ANIMATION_VARIANTS.item}>
+            <Carousel slides={MOCK_SLIDES} />
+          </CarouselWrapper>
+        </TopSection>
+
+        <CategorySection
+          variants={ANIMATION_VARIANTS.item}
+          initial="hidden"
+          animate="visible"
+        >
+          <CategoryGrid
+            variants={ANIMATION_VARIANTS.gridContainer}
+            initial="hidden"
+            animate="visible"
+          >
+            {CATEGORIES.map((category) => (
+              <motion.div
+                key={category.id}
+                variants={ANIMATION_VARIANTS.gridItem}
+              >
+                <CategoryCard
+                  id={category.id}
+                  name={category.name}
+                  icon={category.icon}
+                />
+              </motion.div>
+            ))}
+          </CategoryGrid>
+        </CategorySection>
+      </ScrollableContent>
     </Container>
   );
 };
