@@ -13,8 +13,8 @@ const Backdrop = styled(motion.div)`
   justify-content: center;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(8px);
   z-index: 1111;
@@ -22,7 +22,7 @@ const Backdrop = styled(motion.div)`
 
 const ModalContainer = styled(motion.div)`
   position: relative;
-  width: 80vw;
+  width: 80dvw;
   max-width: 360px;
   background-color: white;
   border-radius: 16px;
