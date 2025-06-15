@@ -138,7 +138,7 @@ const Main: React.FC = () => {
         >
           <LeftSection variants={ANIMATION_VARIANTS.item}>
             <Title variants={ANIMATION_VARIANTS.item}>
-              경험이 필요할 땐,{'\n'}경험이 있는 사람이 답입니다.
+              당신이 쌓아온 삶의 경험이,{'\n'}필요한 일과 다시 이어지도록.
             </Title>
             <SearchBarWrapper variants={ANIMATION_VARIANTS.item}>
               <SearchBar
