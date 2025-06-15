@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import useModal from '@hooks/useModal';
+import LoginModal from '@components/Modal/LoginModal';
 import LogoSVG from '@assets/logo.svg?react';
 
 const ANIMATION_VARIANTS = {
@@ -59,9 +61,21 @@ const SignUpButton = styled(motion.button)`
 
 const Header = () => {
   const navigate = useNavigate();
+  const { openModal } = useModal();
 
   const handleLogoClick = () => {
     navigate('/');
+  };
+
+  const handleLoginClick = () => {
+    openModal({
+      id: 'login-modal',
+      content: <LoginModal />,
+    });
+  };
+
+  const handleSignupClick = () => {
+    navigate('/signup');
   };
 
   return (
@@ -77,6 +91,7 @@ const Header = () => {
           initial="rest"
           whileHover="hover"
           transition={{ type: 'tween', duration: 0.2 }}
+          onClick={handleLoginClick}
         >
           로그인
         </SignInButton>
@@ -85,6 +100,7 @@ const Header = () => {
           initial="rest"
           whileHover="hover"
           transition={{ type: 'tween', duration: 0.2 }}
+          onClick={handleSignupClick}
         >
           회원가입
         </SignUpButton>
