@@ -115,7 +115,7 @@ const CategorySection = styled(motion.div)`
 
 const CategoryGrid = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(2, 1fr);
   width: 100%;
   gap: 24px;
