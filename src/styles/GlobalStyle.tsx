@@ -175,6 +175,7 @@ const globalStyles = css`
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: ${theme.COLORS.BACKGROUND};
     font-size: 16px;
     color: ${theme.COLORS.LABEL_PRIMARY};
     letter-spacing: -0.025em;
@@ -184,7 +185,6 @@ const globalStyles = css`
   #root {
     width: 100%;
     min-height: 100vh;
-    background-color: ${theme.COLORS.BACKGROUND};
   }
 `;
 
