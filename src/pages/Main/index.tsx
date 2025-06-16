@@ -51,6 +51,14 @@ const ANIMATION_VARIANTS = {
         damping: 24,
       },
     },
+    hover: {
+      y: -8,
+      transition: {
+        type: 'spring',
+        stiffness: 400,
+        damping: 20,
+      },
+    },
   },
 } as const;
 
@@ -70,8 +78,8 @@ const ScrollableContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 84px;
-  padding: 48px;
+  gap: 72px;
+  padding: 72px 36px;
 `;
 
 const TopSection = styled(motion.div)`
@@ -138,7 +146,7 @@ const Main: React.FC = () => {
         >
           <LeftSection variants={ANIMATION_VARIANTS.item}>
             <Title variants={ANIMATION_VARIANTS.item}>
-              당신이 쌓아온 삶의 경험이,{'\n'}필요한 일과 다시 이어지도록.
+              당신이 쌓아온 삶의 경험이{'\n'}필요한 일과 이어질 수 있도록.
             </Title>
             <SearchBarWrapper variants={ANIMATION_VARIANTS.item}>
               <SearchBar
@@ -167,6 +175,7 @@ const Main: React.FC = () => {
               <motion.div
                 key={category.id}
                 variants={ANIMATION_VARIANTS.gridItem}
+                whileHover="hover"
               >
                 <CategoryCard
                   id={category.id}
