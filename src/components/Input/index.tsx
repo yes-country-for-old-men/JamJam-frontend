@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import RequiredIcon from '@assets/icons/required.svg?react';
+import VisibleIcon from '@assets/icons/visible.svg?react';
+import InvisibleIcon from '@assets/icons/invisible.svg?react';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   required?: boolean;
+  showPasswordToggle?: boolean;
 }
 
 const InputGroup = styled.div`
@@ -22,17 +25,24 @@ const Label = styled.label`
   gap: 4px;
 `;
 
-const StyledInput = styled.input`
-  padding: 12px 16px;
-  border: 1px solid ${(props) => props.theme.COLORS.GRAY[5]};
+const InputContainer = styled.div`
+  position: relative;
+`;
+
+const StyledInput = styled.input<{ hasToggle?: boolean }>`
+  padding: ${(props) => (props.hasToggle ? '16px 40px 16px 16px' : '16px')};
+  border: none;
   border-radius: 8px;
   font-size: 14px;
+  box-shadow: inset 0 0 0 1px ${(props) => props.theme.COLORS.GRAY[5]};
   transition: all 0.2s ease;
+  width: 100%;
 
   &:focus {
     outline: none;
-    border-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    box-shadow:
+      inset 0 0 0 1px ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]},
+      0 0 0 3px rgba(59, 130, 246, 0.1);
   }
 
   &:disabled {
@@ -46,13 +56,43 @@ const StyledInput = styled.input`
   }
 `;
 
+const PasswordToggleIcon = styled.button`
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  width: 24px;
+  height: 24px;
+`;
+
 const Input: React.FC<InputProps> = ({
   id,
   label,
   required = false,
   className,
+  showPasswordToggle = false,
+  type,
   ...rest
 }) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const getInputType = () => {
+    if (showPasswordToggle && type === 'password') {
+      return showPassword ? 'text' : 'password';
+    }
+    return type;
+  };
+
+  const shouldShowToggle = showPasswordToggle && type === 'password';
+
   return (
     <InputGroup className={className}>
       {label && (
@@ -61,7 +101,27 @@ const Input: React.FC<InputProps> = ({
           {required && <RequiredIcon />}
         </Label>
       )}
-      <StyledInput id={id} required={required} {...rest} />
+      <InputContainer>
+        <StyledInput
+          id={id}
+          required={required}
+          type={getInputType()}
+          hasToggle={shouldShowToggle}
+          {...rest}
+        />
+        {shouldShowToggle && (
+          <PasswordToggleIcon
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <InvisibleIcon width={16} height={16} />
+            ) : (
+              <VisibleIcon width={16} height={16} />
+            )}
+          </PasswordToggleIcon>
+        )}
+      </InputContainer>
     </InputGroup>
   );
 };
