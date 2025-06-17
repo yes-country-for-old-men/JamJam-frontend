@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'outline';
   size?: 'small' | 'medium' | 'large';
   fullWidth?: boolean;
 }
@@ -15,11 +15,11 @@ const StyledButton = styled.button<{
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border: none;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: none;
 
   ${(props) => props.fullWidth && 'width: 100%;'}
 
@@ -28,17 +28,17 @@ const StyledButton = styled.button<{
       case 'small':
         return `
           font-size: 12px;
-          padding: 8px 16px;
+          padding: 12px 16px;
         `;
       case 'large':
         return `
           font-size: 16px;
-          padding: 16px 32px;
+          padding: 18px 32px;
         `;
       default:
         return `
           font-size: 14px;
-          padding: 12px 20px;
+          padding: 16px 20px;
         `;
     }
   }}
@@ -54,6 +54,17 @@ const StyledButton = styled.button<{
             background-color: ${props.theme.COLORS.GRAY[6]};
           }
         `;
+      case 'outline':
+        return `
+        background-color: white;
+        box-shadow: inset 0 0 0 1px ${props.theme.COLORS.GRAY[4]};
+        color: ${props.theme.COLORS.LABEL_SECONDARY};
+        
+        &:hover:not(:disabled) {
+          background-color: ${props.theme.COLORS.GRAY[6]};
+          box-shadow: inset 0 0 0 1px ${props.theme.COLORS.GRAY[5]};
+        }
+      `;
       default:
         return `
           background-color: ${props.theme.COLORS.JAMJAM_PRIMARY[1]};
@@ -71,7 +82,7 @@ const StyledButton = styled.button<{
   }}
 
     &:disabled {
-    opacity: 0.5;
+    opacity: 0.2;
     cursor: not-allowed;
   }
 `;
