@@ -1,5 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import ProviderActiveIcon from '@assets/icons/provider-active.svg?react';
+import ProviderInactiveIcon from '@assets/icons/provider-inactive.svg?react';
+import ClientActiveIcon from '@assets/icons/client-active.svg?react';
+import ClientInactiveIcon from '@assets/icons/client-inactive.svg?react';
 
 const RoleSelectionContainer = styled.div`
   display: grid;
@@ -31,11 +35,10 @@ const RoleCard = styled.div<{ selected: boolean }>`
 `;
 
 const RoleIcon = styled.div`
-  width: 60px;
-  height: 60px;
-  background-color: ${(props) => props.theme.COLORS.GRAY[2]};
-  border-radius: 8px;
-  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
 `;
 
 const RoleTitle = styled.div`
@@ -45,6 +48,7 @@ const RoleTitle = styled.div`
 `;
 
 const RoleDescription = styled.div`
+  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
   font-size: 14px;
   line-height: 1.4;
 `;
@@ -63,7 +67,13 @@ const RoleSelection: React.FC<RoleSelectionProps> = ({
       selected={selectedRole === 'provider'}
       onClick={() => onRoleSelect('provider')}
     >
-      <RoleIcon />
+      <RoleIcon>
+        {selectedRole === 'provider' ? (
+          <ProviderActiveIcon />
+        ) : (
+          <ProviderInactiveIcon />
+        )}
+      </RoleIcon>
       <RoleTitle>경험을 나누고 싶은 분</RoleTitle>
       <RoleDescription>
         내가 할 수 있는 일을
@@ -76,7 +86,13 @@ const RoleSelection: React.FC<RoleSelectionProps> = ({
       selected={selectedRole === 'client'}
       onClick={() => onRoleSelect('client')}
     >
-      <RoleIcon />
+      <RoleIcon>
+        {selectedRole === 'client' ? (
+          <ClientActiveIcon />
+        ) : (
+          <ClientInactiveIcon />
+        )}
+      </RoleIcon>
       <RoleTitle>도움을 받고 싶은 분</RoleTitle>
       <RoleDescription>
         지금 필요한 일에
