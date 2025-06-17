@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { isValidDate, isEligibleAge } from '@utils/validation';
+import { isValidDate, isEligibleAgeForRole } from '@utils/validation';
 
 export const step1Schema = z.object({
   role: z.enum(['provider', 'client'], {
@@ -41,49 +41,62 @@ export const step2Schema = z
     path: ['confirmPassword'],
   });
 
-export const step3Schema = z
-  .object({
-    name: z
-      .string()
-      .min(1, '이름을 입력해 주세요.')
-      .regex(/^[가-힣\s]+$/, '이름은 한글만 입력 가능합니다.'),
-    birthYear: z
-      .string()
-      .min(1, '올바른 날짜로 입력해 주세요.')
-      .regex(/^\d{4}$/, '올바른 날짜로 입력해 주세요.'),
-    birthMonth: z
-      .string()
-      .min(1, '올바른 날짜로 입력해 주세요.')
-      .regex(/^(1[0-2]|[1-9])$/, '올바른 날짜로 입력해 주세요.'),
-    birthDay: z
-      .string()
-      .min(1, '올바른 날짜로 입력해 주세요.')
-      .regex(/^(3[01]|[12][0-9]|[1-9])$/, '올바른 날짜로 입력해 주세요.'),
-    gender: z.string().min(1, '성별을 선택해주세요.'),
-    phone: z
-      .string()
-      .min(1, '휴대폰 번호를 입력해 주세요.')
-      .regex(
-        /^01[0-9]-?[0-9]{3,4}-?[0-9]{4}$/,
-        '올바른 휴대폰 번호 형식이 아닙니다.',
-      ),
-    verificationCode: z.string().optional(),
-  })
-  .refine(
-    (data) => isValidDate(data.birthYear, data.birthMonth, data.birthDay),
-    {
-      message: '올바른 날짜로 입력해 주세요.',
-      path: ['birthDay'],
-    },
-  )
-  .refine(
-    (data) => isEligibleAge(data.birthYear, data.birthMonth, data.birthDay),
-    {
-      message: '만 14세 이상만 가입할 수 있습니다.',
-      path: ['birthDay'],
-    },
-  );
+export const createStep3Schema = (role?: 'provider' | 'client') => {
+  return z
+    .object({
+      name: z
+        .string()
+        .min(1, '이름을 입력해 주세요.')
+        .regex(/^[가-힣\s]+$/, '이름은 한글만 입력 가능합니다.'),
+      birthYear: z
+        .string()
+        .min(1, '올바른 날짜로 입력해 주세요.')
+        .regex(/^\d{4}$/, '올바른 날짜로 입력해 주세요.'),
+      birthMonth: z
+        .string()
+        .min(1, '올바른 날짜로 입력해 주세요.')
+        .regex(/^(1[0-2]|[1-9])$/, '올바른 날짜로 입력해 주세요.'),
+      birthDay: z
+        .string()
+        .min(1, '올바른 날짜로 입력해 주세요.')
+        .regex(/^(3[01]|[12][0-9]|[1-9])$/, '올바른 날짜로 입력해 주세요.'),
+      gender: z.string().min(1, '성별을 선택해주세요.'),
+      phone: z
+        .string()
+        .min(1, '휴대폰 번호를 입력해 주세요.')
+        .regex(
+          /^01[0-9]-?[0-9]{3,4}-?[0-9]{4}$/,
+          '올바른 휴대폰 번호 형식이 아닙니다.',
+        ),
+      verificationCode: z.string().optional(),
+    })
+    .refine(
+      (data) => isValidDate(data.birthYear, data.birthMonth, data.birthDay),
+      {
+        message: '올바른 날짜로 입력해 주세요.',
+        path: ['birthDay'],
+      },
+    )
+    .refine(
+      (data) => {
+        const minAge = role === 'provider' ? 60 : 14;
+        return isEligibleAgeForRole(
+          data.birthYear,
+          data.birthMonth,
+          data.birthDay,
+          minAge,
+        );
+      },
+      {
+        message:
+          role === 'provider'
+            ? '서비스 제공자는 만 60세 이상만 가입할 수 있습니다.'
+            : '만 14세 이상만 가입할 수 있습니다.',
+        path: ['birthDay'],
+      },
+    );
+};
 
 export type Step1Data = z.infer<typeof step1Schema>;
 export type Step2Data = z.infer<typeof step2Schema>;
-export type Step3Data = z.infer<typeof step3Schema>;
+export type Step3Data = z.infer<ReturnType<typeof createStep3Schema>>;

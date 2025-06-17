@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -14,7 +14,7 @@ import { removePaddingZero, formatPhoneNumber } from '@utils/format';
 import {
   step1Schema,
   step2Schema,
-  step3Schema,
+  createStep3Schema,
   type Step1Data,
   type Step2Data,
   type Step3Data,
@@ -198,8 +198,11 @@ const SignUp: React.FC = () => {
     },
   });
 
+  const selectedRole = step1Form.watch('role');
+  const currentStep3Schema = createStep3Schema(selectedRole);
+
   const step3Form = useForm<Step3Data>({
-    resolver: zodResolver(step3Schema),
+    resolver: zodResolver(currentStep3Schema),
     defaultValues: {
       name: '',
       birthYear: '',
@@ -210,6 +213,12 @@ const SignUp: React.FC = () => {
       verificationCode: '',
     },
   });
+
+  useEffect(() => {
+    if (selectedRole) {
+      step3Form.trigger();
+    }
+  }, [selectedRole, step3Form]);
 
   const handleRoleSelect = (role: 'provider' | 'client') => {
     step1Form.setValue('role', role);
@@ -873,10 +882,8 @@ const SignUp: React.FC = () => {
           </StepIndicator>
           <Title>{getTitleText()}</Title>
         </Header>
-
         {renderStepContent()}
       </FormContainer>
-
       <ButtonsWrapper>{renderButtons()}</ButtonsWrapper>
     </Container>
   );
