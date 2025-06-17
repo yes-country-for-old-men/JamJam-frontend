@@ -6,6 +6,7 @@ import GlobalStyle from '@styles/GlobalStyle';
 import Layout from '@components/Layout';
 import Modal from '@components/Modal';
 import Main from '@pages/Main';
+import SignUp from '@pages/SignUp';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
             <Route path="/" element={<Layout />}>
               <Route index element={<Main />} />
             </Route>
+            <Route path="/signup" element={<SignUp />} />
           </Routes>
         </Router>
         <Modal />
