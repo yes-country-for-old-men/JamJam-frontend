@@ -8,7 +8,7 @@ const StyledButton = styled.button<{ selected: boolean }>`
   background-color: ${(props) =>
     props.selected ? `${props.theme.COLORS.JAMJAM_PRIMARY[2]}` : 'white'};
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: inset 0 0 0 1px
     ${(props) =>
       props.selected
