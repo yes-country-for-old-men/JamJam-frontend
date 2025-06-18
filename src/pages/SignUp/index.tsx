@@ -24,6 +24,7 @@ import ToggleButton from '@components/ToggleButton';
 import LogoIcon from '@assets/icons/logo-icon.svg?react';
 import MaleIcon from '@assets/icons/male.svg?react';
 import FemaleIcon from '@assets/icons/female.svg?react';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -49,6 +50,8 @@ const Header = styled.div`
   gap: 36px;
   margin-bottom: 36px;
 `;
+
+const LogoButton = styled.button``;
 
 const StepIndicator = styled.div`
   display: flex;
@@ -163,7 +166,6 @@ const GenderToggleContainer = styled.div`
 const SignUp: React.FC = () => {
   const [step, setStep] = useState(1);
   const [isVerificationSent, setIsVerificationSent] = useState(false);
-
   const [nicknameMessage, setNicknameMessage] = useState('');
   const [idMessage, setIdMessage] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
@@ -180,6 +182,8 @@ const SignUp: React.FC = () => {
   >('idle');
   const [isNicknameChecked, setIsNicknameChecked] = useState(false);
   const [isIdChecked, setIsIdChecked] = useState(false);
+
+  const navigate = useNavigate();
 
   const step1Form = useForm<Step1Data>({
     resolver: zodResolver(step1Schema),
@@ -219,6 +223,10 @@ const SignUp: React.FC = () => {
       step3Form.trigger();
     }
   }, [selectedRole, step3Form]);
+
+  const handleLogoClick = () => {
+    navigate('/');
+  };
 
   const handleRoleSelect = (role: 'provider' | 'client') => {
     step1Form.setValue('role', role);
@@ -874,7 +882,9 @@ const SignUp: React.FC = () => {
     <Container>
       <FormContainer>
         <Header>
-          <LogoIcon height={44} />
+          <LogoButton onClick={handleLogoClick}>
+            <LogoIcon height={44} />
+          </LogoButton>
           <StepIndicator>
             <StepDot active={step >= 1} />
             <StepDot active={step >= 2} />
