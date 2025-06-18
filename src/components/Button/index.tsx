@@ -16,7 +16,7 @@ const StyledButton = styled.button<{
   align-items: center;
   justify-content: center;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;

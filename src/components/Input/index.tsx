@@ -32,7 +32,7 @@ const InputContainer = styled.div`
 const StyledInput = styled.input<{ hasToggle?: boolean }>`
   padding: ${(props) => (props.hasToggle ? '16px 40px 16px 16px' : '16px')};
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 14px;
   box-shadow: inset 0 0 0 1px ${(props) => props.theme.COLORS.GRAY[5]};
   transition: all 0.2s ease;
