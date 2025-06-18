@@ -14,7 +14,7 @@ const LogoWrapper = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
-  padding: 12px 0;
+  padding: 16px 0;
 `;
 
 const FindLinksWrapper = styled.div`
@@ -78,7 +78,7 @@ const LoginModal: React.FC = () => {
   return (
     <LoginForm>
       <LogoWrapper>
-        <LogoIcon width={64} height={64} />
+        <LogoIcon height={36} />
       </LogoWrapper>
       <Input
         id="username"
