@@ -34,7 +34,7 @@ const ThumbnailWrapper = styled.div`
 `;
 
 const ThumbnailImage = styled.img`
-  width: calc((1200px - 36px * 3) / 4);
+  width: calc((1200px - 36px * 3 - 48px) / 4);
   aspect-ratio: 1;
   object-fit: cover;
   object-position: center;

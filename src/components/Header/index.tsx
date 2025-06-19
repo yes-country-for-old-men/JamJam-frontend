@@ -18,8 +18,10 @@ const Container = styled.header`
   align-items: center;
   justify-content: space-between;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
+  max-width: 1200px;
   height: 80px;
   background-color: ${(props) => props.theme.COLORS.BACKGROUND};
   padding: 0 24px;
