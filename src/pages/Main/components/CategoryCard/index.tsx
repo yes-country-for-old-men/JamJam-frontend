@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import theme from '@styles/theme';
@@ -7,7 +8,6 @@ interface CategoryCardProps {
   id: number;
   name: string;
   icon: React.ReactNode;
-  onClick?: (id: number) => void;
   className?: string;
 }
 
@@ -33,7 +33,7 @@ const Container = styled(motion.div)`
   align-items: center;
   justify-content: center;
   aspect-ratio: 1;
-  background: white;
+  background-color: white;
   border: 1px solid ${(props) => props.theme.COLORS.GRAY[5]};
   border-radius: 10px;
   cursor: pointer;
@@ -62,11 +62,12 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
   id,
   name,
   icon,
-  onClick,
   className,
 }) => {
+  const navigate = useNavigate();
+
   const handleClick = () => {
-    onClick?.(id);
+    navigate(`/category/${id}`);
   };
 
   return (
