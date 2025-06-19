@@ -19,14 +19,13 @@ const Container = styled.div`
 
 const SearchBarWrapper = styled.div`
   width: 100%;
-  max-width: 640px;
+  max-width: 560px;
   transform: scale(0.9);
   margin-bottom: 20px;
 `;
 
 const CategoryTitle = styled.div`
   width: 100%;
-  max-width: 1200px;
   font-size: 28px;
   font-weight: 700;
   text-align: start;
@@ -36,7 +35,6 @@ const CategoryTitle = styled.div`
 const ServiceGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  max-width: 1200px;
   gap: 36px;
 `;
 
@@ -71,18 +69,22 @@ const Category: React.FC = () => {
         currentCategoryId={currentCategoryId}
         onCategoryClick={handleCategoryClick}
       />
-      {currentCategory && <CategoryTitle>{currentCategory.name}</CategoryTitle>}
-      <ServiceGrid>
-        {filteredServices.map((service) => (
-          <ServiceCard
-            key={service.id}
-            name={service.name}
-            minPrice={service.minPrice}
-            thumbnailUrl={service.thumbnailUrl}
-            providerName={service.providerName}
-          />
-        ))}
-      </ServiceGrid>
+      <div style={{ maxWidth: 1200, padding: '0 24px' }}>
+        {currentCategory && (
+          <CategoryTitle>{currentCategory.name}</CategoryTitle>
+        )}
+        <ServiceGrid>
+          {filteredServices.map((service) => (
+            <ServiceCard
+              key={service.id}
+              name={service.name}
+              minPrice={service.minPrice}
+              thumbnailUrl={service.thumbnailUrl}
+              providerName={service.providerName}
+            />
+          ))}
+        </ServiceGrid>
+      </div>
     </Container>
   );
 };

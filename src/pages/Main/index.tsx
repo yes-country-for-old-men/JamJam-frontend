@@ -78,8 +78,9 @@ const ScrollableContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 1200px;
   gap: 72px;
-  padding: 72px 36px;
+  padding: 72px 24px;
 `;
 
 const TopSection = styled(motion.div)`
@@ -87,7 +88,6 @@ const TopSection = styled(motion.div)`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: 72px;
 `;
 
 const LeftSection = styled(motion.div)`
@@ -95,7 +95,6 @@ const LeftSection = styled(motion.div)`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  flex-shrink: 0;
 `;
 
 const Title = styled(motion.div)`

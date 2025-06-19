@@ -39,7 +39,7 @@ const CategoryButton = styled(motion.button)<{ isActive?: boolean }>`
   font-weight: 600;
   text-align: center;
   white-space: nowrap;
-  border-bottom: 3px solid transparent;
+  border-bottom: 2.5px solid transparent;
 
   &:hover {
     border-bottom-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
@@ -48,19 +48,19 @@ const CategoryButton = styled(motion.button)<{ isActive?: boolean }>`
 
 const CategoryExpansionButton = styled(motion.button)<{ isExpanded: boolean }>`
   position: absolute;
-  left: max(0px, calc(50vw - 600px));
+  left: max(24px, calc(50vw - (600px - 24px)));
   bottom: 0;
   display: flex;
   align-items: center;
   background: none;
-  border-bottom: 3px solid transparent;
+  border-bottom: 2.5px solid transparent;
   color: ${(props) =>
     props.isExpanded
       ? props.theme.COLORS.JAMJAM_PRIMARY[1]
       : props.theme.COLORS.LABEL_SECONDARY};
   font-size: 16px;
   font-weight: 600;
-  padding: 12px;
+  padding: 12px 0;
   gap: 8px;
 `;
 
