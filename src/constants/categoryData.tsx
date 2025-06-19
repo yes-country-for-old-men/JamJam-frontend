@@ -1,5 +1,4 @@
 import type Category from '@type/Category';
-
 import BusinessIcon from '@assets/icons/category/business.svg?react';
 import ConsultingIcon from '@assets/icons/category/consulting.svg?react';
 import MarketingIcon from '@assets/icons/category/marketing.svg?react';
