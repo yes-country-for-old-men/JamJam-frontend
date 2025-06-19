@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -24,7 +25,6 @@ import ToggleButton from '@components/ToggleButton';
 import LogoIcon from '@assets/icons/logo-icon.svg?react';
 import MaleIcon from '@assets/icons/male.svg?react';
 import FemaleIcon from '@assets/icons/female.svg?react';
-import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
