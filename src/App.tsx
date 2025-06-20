@@ -3,6 +3,7 @@ import { Provider } from 'jotai';
 import { ThemeProvider } from '@emotion/react';
 import theme from '@styles/theme';
 import GlobalStyle from '@styles/GlobalStyle';
+import ScrollInitializer from '@components/ScrollInitializer';
 import Layout from '@components/Layout';
 import Modal from '@components/Modal';
 import Main from '@pages/Main';
@@ -15,6 +16,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Router>
+          <ScrollInitializer />
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Main />} />
