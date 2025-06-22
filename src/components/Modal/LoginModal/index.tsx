@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { AxiosError } from 'axios';
+import apiClient from '@apis/apiClient';
+import useModal from '@hooks/useModal';
 import styled from '@emotion/styled';
 import Input from '@components/Input';
 import Button from '@components/Button';
@@ -60,17 +63,57 @@ const SignUpLink = styled.div`
   }
 `;
 
+const ErrorMessage = styled.div`
+  color: ${(props) => props.theme.COLORS.RED};
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 4px;
+`;
+
 const LoginModal: React.FC = () => {
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleLogin = () => {};
+  const { closeModal } = useModal();
+
+  const handleLogin = async () => {
+    if (!loginForm.username || !loginForm.password) {
+      setErrorMessage('아이디와 비밀번호를 입력해 주세요.');
+      return;
+    }
+
+    setIsLoading(true);
+    setErrorMessage('');
+
+    try {
+      const response = await apiClient.post('/api/user/login', {
+        loginId: loginForm.username,
+        password: loginForm.password,
+      });
+
+      localStorage.setItem('accessToken', response.data.accessToken);
+      closeModal();
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          setErrorMessage('아이디 또는 비밀번호가 올바르지 않습니다.');
+        } else {
+          setErrorMessage('로그인 중 오류가 발생했습니다.');
+        }
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleFindUsername = () => {};
 
   const handleFindPassword = () => {};
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !isLoading) {
       handleLogin();
     }
   };
@@ -90,6 +133,7 @@ const LoginModal: React.FC = () => {
         }
         onKeyPress={handleKeyPress}
         placeholder="아이디를 입력하세요"
+        disabled={isLoading}
       />
       <Input
         id="password"
@@ -101,10 +145,12 @@ const LoginModal: React.FC = () => {
         }
         onKeyPress={handleKeyPress}
         placeholder="비밀번호를 입력하세요"
+        disabled={isLoading}
       />
-      <Button onClick={handleLogin} fullWidth>
+      <Button onClick={handleLogin} fullWidth disabled={isLoading}>
         로그인
       </Button>
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       <FindLinksWrapper>
         <FindLink onClick={handleFindUsername}>아이디 찾기</FindLink>
         <Divider>|</Divider>
