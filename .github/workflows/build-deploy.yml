@@ -34,6 +34,7 @@ jobs:
         run: yarn build
         env:
           NODE_ENV: production
+          VITE_SERVER_URL: ${{ secrets.VITE_SERVER_URL }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
