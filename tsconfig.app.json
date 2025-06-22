@@ -28,6 +28,7 @@
     "types": ["node", "vite-plugin-svgr/client"],
 
     "paths": {
+      "@apis/*": ["src/apis/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
       "@constants/*": ["src/constants/*"],
