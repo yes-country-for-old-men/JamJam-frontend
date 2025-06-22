@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { AxiosError } from 'axios';
+import { useQueryClient } from '@tanstack/react-query';
+import styled from '@emotion/styled';
 import apiClient from '@apis/apiClient';
 import useModal from '@hooks/useModal';
-import styled from '@emotion/styled';
 import Input from '@components/Input';
 import Button from '@components/Button';
 import LogoIcon from '@assets/icons/logo-icon.svg?react';
@@ -77,6 +78,7 @@ const LoginModal: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const { closeModal } = useModal();
+  const queryClient = useQueryClient();
 
   const handleLogin = async () => {
     if (!loginForm.username || !loginForm.password) {
@@ -88,20 +90,30 @@ const LoginModal: React.FC = () => {
     setErrorMessage('');
 
     try {
-      const response = await apiClient.post('/api/user/login', {
-        loginId: loginForm.username,
-        password: loginForm.password,
-      });
+      const response = await apiClient.post(
+        '/api/user/login',
+        {
+          loginId: loginForm.username,
+          password: loginForm.password,
+        },
+        {
+          withCredentials: true,
+        },
+      );
 
       localStorage.setItem('accessToken', response.data.accessToken);
+      await queryClient.invalidateQueries({ queryKey: ['userInfo'] });
+
       closeModal();
-    } catch (error: unknown) {
+    } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
           setErrorMessage('아이디 또는 비밀번호가 올바르지 않습니다.');
         } else {
           setErrorMessage('로그인 중 오류가 발생했습니다.');
         }
+      } else {
+        setErrorMessage('로그인 중 오류가 발생했습니다.');
       }
     } finally {
       setIsLoading(false);
