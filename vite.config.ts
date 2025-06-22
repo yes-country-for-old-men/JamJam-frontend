@@ -6,12 +6,14 @@ import mkcert from 'vite-plugin-mkcert';
 import fs from 'fs';
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   server: {
-    https: {
-      key: fs.readFileSync(path.resolve(__dirname, 'localhost-key.pem')),
-      cert: fs.readFileSync(path.resolve(__dirname, 'localhost.pem')),
-    },
+    ...(command === 'serve' && {
+      https: {
+        key: fs.readFileSync(path.resolve(__dirname, 'localhost-key.pem')),
+        cert: fs.readFileSync(path.resolve(__dirname, 'localhost.pem')),
+      },
+    }),
   },
   plugins: [
     react({
@@ -43,4 +45,4 @@ export default defineConfig({
       { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },
     ],
   },
-});
+}));
