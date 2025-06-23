@@ -98,6 +98,7 @@ const UserMenuContainer = styled.div`
 const UserMenuButton = styled.button`
   display: flex;
   align-items: center;
+  color: ${(props) => props.theme.COLORS.LABEL_PRIMARY};
   cursor: pointer;
   padding: 0;
 `;
