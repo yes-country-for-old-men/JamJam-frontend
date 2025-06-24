@@ -50,30 +50,30 @@ export const createStep3Schema = (role?: 'provider' | 'client') => {
         .regex(/^[가-힣\s]+$/, '이름은 한글만 입력 가능합니다.'),
       birthYear: z
         .string()
-        .min(1, '올바른 날짜로 입력해 주세요.')
-        .regex(/^\d{4}$/, '올바른 날짜로 입력해 주세요.'),
+        .min(1, '올바른 날짜를 입력해 주세요.')
+        .regex(/^\d{4}$/, '올바른 날짜를 입력해 주세요.'),
       birthMonth: z
         .string()
-        .min(1, '올바른 날짜로 입력해 주세요.')
-        .regex(/^(1[0-2]|[1-9])$/, '올바른 날짜로 입력해 주세요.'),
+        .min(1, '올바른 날짜를 입력해 주세요.')
+        .regex(/^(1[0-2]|[1-9])$/, '올바른 날짜를 입력해 주세요.'),
       birthDay: z
         .string()
-        .min(1, '올바른 날짜로 입력해 주세요.')
-        .regex(/^(3[01]|[12][0-9]|[1-9])$/, '올바른 날짜로 입력해 주세요.'),
+        .min(1, '올바른 날짜를 입력해 주세요.')
+        .regex(/^(3[01]|[12][0-9]|[1-9])$/, '올바른 날짜를 입력해 주세요.'),
       gender: z.string().min(1, '성별을 선택해주세요.'),
       phone: z
         .string()
         .min(1, '휴대폰 번호를 입력해 주세요.')
         .regex(
-          /^01[0-9]-?[0-9]{3,4}-?[0-9]{4}$/,
-          '올바른 휴대폰 번호 형식이 아닙니다.',
+          /^010-?[0-9]{4}-?[0-9]{4}$/,
+          '올바른 휴대폰 번호를 입력해 주세요.',
         ),
       verificationCode: z.string().optional(),
     })
     .refine(
       (data) => isValidDate(data.birthYear, data.birthMonth, data.birthDay),
       {
-        message: '올바른 날짜로 입력해 주세요.',
+        message: '올바른 날짜를 입력해 주세요.',
         path: ['birthDay'],
       },
     )
