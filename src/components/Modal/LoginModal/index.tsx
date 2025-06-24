@@ -100,12 +100,8 @@ const LoginModal: React.FC = () => {
 
       closeModal();
     } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.status === 401) {
-          setErrorMessage('아이디 또는 비밀번호가 올바르지 않습니다.');
-        } else {
-          setErrorMessage('로그인 중 오류가 발생했습니다.');
-        }
+      if (error instanceof AxiosError && error.response?.status === 401) {
+        setErrorMessage('아이디 또는 비밀번호가 올바르지 않습니다.');
       } else {
         setErrorMessage('로그인 중 오류가 발생했습니다.');
       }
