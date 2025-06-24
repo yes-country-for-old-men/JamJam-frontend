@@ -11,6 +11,7 @@ const useUserInfoQuery = () => {
     queryFn: fetchUserInfo,
     enabled: hasToken,
     staleTime: 5 * 60 * 1000,
+    retry: false,
   });
 };
 
