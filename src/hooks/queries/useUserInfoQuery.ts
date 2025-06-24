@@ -1,12 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import apiClient from '@apis/apiClient';
 import type User from '@type/User';
-
-const fetchUserInfo = async (): Promise<User> => {
-  const response = await apiClient.get('/api/user');
-  return response.data.content;
-};
+import fetchUserInfo from '@apis/fetchUserInfo';
 
 const useUserInfoQuery = () => {
   const hasToken = !!localStorage.getItem('accessToken');
