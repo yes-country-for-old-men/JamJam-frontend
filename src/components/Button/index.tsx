@@ -28,17 +28,17 @@ const StyledButton = styled.button<{
       case 'small':
         return `
           font-size: 12px;
-          padding: 12px 16px;
+          padding: 12px ${props.fullWidth ? '0' : '16px'};
         `;
       case 'large':
         return `
           font-size: 16px;
-          padding: 18px 32px;
+          padding: 18px ${props.fullWidth ? '0' : '32px'};
         `;
       default:
         return `
           font-size: 14px;
-          padding: 16px 20px;
+          padding: 16px ${props.fullWidth ? '0' : '20px'};
         `;
     }
   }}
