@@ -132,7 +132,7 @@ const DropdownItem = styled.button`
 
 const Header = () => {
   const navigate = useNavigate();
-  const { openModal } = useModal();
+  const { openModal, confirm } = useModal();
   const { data: userInfo, isError, isLoading } = useUserInfoQuery();
   const { mutate: logout } = useLogoutMutation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -182,11 +182,16 @@ const Header = () => {
   };
 
   const handleLogoutClick = () => {
-    const confirmed = window.confirm('정말 로그아웃 하시겠습니까?');
-    if (!confirmed) return;
-
-    logout();
-    setIsDropdownOpen(false);
+    confirm({
+      title: '로그아웃',
+      content: '정말 로그아웃 하시겠습니까?',
+      onConfirm: () => {
+        logout();
+        setIsDropdownOpen(false);
+      },
+      confirmText: '로그아웃',
+      cancelText: '취소',
+    });
   };
 
   const renderAuthSection = () => {
