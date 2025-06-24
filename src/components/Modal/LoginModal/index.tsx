@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { AxiosError } from 'axios';
 import { useQueryClient } from '@tanstack/react-query';
 import styled from '@emotion/styled';
-import apiClient from '@apis/apiClient';
 import useModal from '@hooks/useModal';
+import userLogin from '@apis/userLogin';
 import Input from '@components/Input';
 import Button from '@components/Button';
 import LogoIcon from '@assets/icons/logo-icon.svg?react';
@@ -90,18 +90,12 @@ const LoginModal: React.FC = () => {
     setErrorMessage('');
 
     try {
-      const response = await apiClient.post(
-        '/api/user/login',
-        {
-          loginId: loginForm.username,
-          password: loginForm.password,
-        },
-        {
-          withCredentials: true,
-        },
-      );
+      const { accessToken } = await userLogin({
+        loginId: loginForm.username,
+        password: loginForm.password,
+      });
 
-      localStorage.setItem('accessToken', response.data.accessToken);
+      localStorage.setItem('accessToken', accessToken);
       await queryClient.invalidateQueries({ queryKey: ['userInfo'] });
 
       closeModal();
