@@ -4,8 +4,6 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import styled from '@emotion/styled';
-import Button from '@components/Button';
-import Input from '@components/Input';
 import {
   validateNickname,
   validateId,
@@ -20,11 +18,23 @@ import {
   type Step2Data,
   type Step3Data,
 } from '@pages/SignUp/schemas';
+import {
+  checkNickname,
+  checkLoginId,
+  sendSMS,
+  verifySMS,
+  clientSignUp,
+  providerSignUp,
+} from '@apis/signUp';
+import useModal from '@hooks/useModal';
+import Button from '@components/Button';
+import Input from '@components/Input';
 import RoleSelection from '@pages/SignUp/components/RoleSelection';
 import ToggleButton from '@components/ToggleButton';
 import LogoIcon from '@assets/icons/logo-icon.svg?react';
 import MaleIcon from '@assets/icons/male.svg?react';
 import FemaleIcon from '@assets/icons/female.svg?react';
+import CompletionIcon from '@assets/icons/completion.svg?react';
 
 const Container = styled.div`
   display: flex;
@@ -149,7 +159,11 @@ const PhoneInput = styled.div`
   flex: 1;
 `;
 
-const ButtonsWrapper = styled.div`
+const ButtonWrapper = styled.div`
+  width: 100px;
+`;
+
+const NavigationButtonsWrapper = styled.div`
   display: flex;
   width: 100%;
   max-width: 420px;
@@ -163,27 +177,76 @@ const GenderToggleContainer = styled.div`
   gap: 12px;
 `;
 
+const CountdownText = styled.span`
+  font-weight: 600;
+`;
+
+const CompletionContainer = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+
+const CompletionIconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+`;
+
+const CompletionTitle = styled.div`
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+`;
+
+const CompletionPrompt = styled.div`
+  font-size: 16px;
+  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  margin: 0;
+  line-height: 1.6;
+  white-space: pre-line;
+`;
+
+type MessageState = {
+  text: string;
+  type: 'success' | 'error' | 'info';
+} | null;
+
 const SignUp: React.FC = () => {
   const [step, setStep] = useState(1);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [completedUserNickname, setCompletedUserNickname] = useState('');
   const [isVerificationSent, setIsVerificationSent] = useState(false);
-  const [nicknameMessage, setNicknameMessage] = useState('');
-  const [idMessage, setIdMessage] = useState('');
-  const [passwordMessage, setPasswordMessage] = useState('');
-  const [confirmPasswordMessage, setConfirmPasswordMessage] = useState('');
-  const [phoneMessage, setPhoneMessage] = useState('');
-  const [phoneMessageType, setPhoneMessageType] = useState<
-    'success' | 'error' | 'info'
-  >('info');
+  const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+  const [verificationCountdown, setVerificationCountdown] = useState(0);
+  const [nicknameMessage, setNicknameMessage] = useState<MessageState>(null);
+  const [idMessage, setIdMessage] = useState<MessageState>(null);
+  const [passwordMessage, setPasswordMessage] = useState<MessageState>(null);
+  const [confirmPasswordMessage, setConfirmPasswordMessage] =
+    useState<MessageState>(null);
+  const [phoneMessage, setPhoneMessage] = useState<MessageState>(null);
+  const [verificationMessage, setVerificationMessage] =
+    useState<MessageState>(null);
   const [nicknameCheckStatus, setNicknameCheckStatus] = useState<
-    'idle' | 'checking' | 'available' | 'duplicate'
+    'idle' | 'available' | 'duplicate'
   >('idle');
   const [idCheckStatus, setIdCheckStatus] = useState<
-    'idle' | 'checking' | 'available' | 'duplicate'
+    'idle' | 'available' | 'duplicate'
   >('idle');
   const [isNicknameChecked, setIsNicknameChecked] = useState(false);
   const [isIdChecked, setIsIdChecked] = useState(false);
+  const [isCheckingNickname, setIsCheckingNickname] = useState(false);
+  const [isCheckingId, setIsCheckingId] = useState(false);
+  const [isSendingSMS, setIsSendingSMS] = useState(false);
+  const [isVerifyingSMS, setIsVerifyingSMS] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
+  const { alert } = useModal();
 
   const step1Form = useForm<Step1Data>({
     resolver: zodResolver(step1Schema),
@@ -219,12 +282,32 @@ const SignUp: React.FC = () => {
   });
 
   useEffect(() => {
-    if (selectedRole) {
-      step3Form.trigger();
+    let interval: NodeJS.Timeout | null = null;
+
+    if (verificationCountdown > 0) {
+      interval = setInterval(() => {
+        setVerificationCountdown((prev) => prev - 1);
+      }, 1000);
     }
-  }, [selectedRole, step3Form]);
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [verificationCountdown]);
+
+  const formatCountdown = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
 
   const handleLogoClick = () => {
+    navigate('/');
+  };
+
+  const handleGoHome = () => {
     navigate('/');
   };
 
@@ -237,21 +320,30 @@ const SignUp: React.FC = () => {
     step2Form.setValue('confirmPassword', value);
 
     if (value.length === 0) {
-      setConfirmPasswordMessage('');
+      setConfirmPasswordMessage(null);
       return;
     }
 
     const password = step2Form.getValues('password');
 
     if (password.length === 0) {
-      setConfirmPasswordMessage('먼저 비밀번호를 입력해 주세요.');
+      setConfirmPasswordMessage({
+        text: '먼저 비밀번호를 입력해 주세요.',
+        type: 'error',
+      });
       return;
     }
 
     if (password === value) {
-      setConfirmPasswordMessage('비밀번호가 일치합니다.');
+      setConfirmPasswordMessage({
+        text: '비밀번호가 일치합니다.',
+        type: 'success',
+      });
     } else {
-      setConfirmPasswordMessage('비밀번호가 일치하지 않습니다.');
+      setConfirmPasswordMessage({
+        text: '비밀번호가 일치하지 않습니다.',
+        type: 'error',
+      });
     }
   };
 
@@ -264,11 +356,11 @@ const SignUp: React.FC = () => {
     const validationError = validateNickname(value);
 
     if (validationError) {
-      setNicknameMessage(validationError);
+      setNicknameMessage({ text: validationError, type: 'error' });
     } else if (value.length > 0) {
-      setNicknameMessage('중복 확인이 필요합니다.');
+      setNicknameMessage({ text: '중복 확인이 필요합니다.', type: 'info' });
     } else {
-      setNicknameMessage('');
+      setNicknameMessage(null);
     }
   };
 
@@ -277,24 +369,39 @@ const SignUp: React.FC = () => {
     const validationError = validateNickname(nickname);
 
     if (validationError) {
-      setNicknameMessage(validationError);
+      setNicknameMessage({ text: validationError, type: 'error' });
       return;
     }
 
-    setNicknameCheckStatus('checking');
+    setIsCheckingNickname(true);
 
     try {
-      await new Promise((resolve) => {
-        setTimeout(resolve, 200);
-      });
+      const response = await checkNickname(nickname);
 
-      setNicknameMessage('사용 가능한 닉네임입니다.');
-      setNicknameCheckStatus('available');
-      setIsNicknameChecked(true);
-    } catch {
-      setNicknameMessage('중복 확인 중 오류가 발생했습니다.');
+      if (response.data.content.available) {
+        setNicknameMessage({
+          text: '사용 가능한 닉네임입니다.',
+          type: 'success',
+        });
+        setNicknameCheckStatus('available');
+        setIsNicknameChecked(true);
+      } else {
+        setNicknameMessage({
+          text: '이미 사용 중인 닉네임입니다.',
+          type: 'error',
+        });
+        setNicknameCheckStatus('duplicate');
+        setIsNicknameChecked(false);
+      }
+    } catch (error) {
+      const errorMessage =
+        (error as { response?: { data?: { message?: string } } }).response?.data
+          ?.message || '중복 확인 중 오류가 발생했습니다.';
+      setNicknameMessage({ text: errorMessage, type: 'error' });
       setNicknameCheckStatus('idle');
       setIsNicknameChecked(false);
+    } finally {
+      setIsCheckingNickname(false);
     }
   };
 
@@ -307,11 +414,11 @@ const SignUp: React.FC = () => {
     const validationError = validateId(value);
 
     if (validationError) {
-      setIdMessage(validationError);
+      setIdMessage({ text: validationError, type: 'error' });
     } else if (value.length > 0) {
-      setIdMessage('중복 확인이 필요합니다.');
+      setIdMessage({ text: '중복 확인이 필요합니다.', type: 'info' });
     } else {
-      setIdMessage('');
+      setIdMessage(null);
     }
   };
 
@@ -320,24 +427,33 @@ const SignUp: React.FC = () => {
     const validationError = validateId(id);
 
     if (validationError) {
-      setIdMessage(validationError);
+      setIdMessage({ text: validationError, type: 'error' });
       return;
     }
 
-    setIdCheckStatus('checking');
+    setIsCheckingId(true);
 
     try {
-      await new Promise((resolve) => {
-        setTimeout(resolve, 200);
-      });
+      const response = await checkLoginId(id);
 
-      setIdMessage('사용 가능한 아이디입니다.');
-      setIdCheckStatus('available');
-      setIsIdChecked(true);
-    } catch {
-      setIdMessage('중복 확인 중 오류가 발생했습니다.');
+      if (response.data.content.available) {
+        setIdMessage({ text: '사용 가능한 아이디입니다.', type: 'success' });
+        setIdCheckStatus('available');
+        setIsIdChecked(true);
+      } else {
+        setIdMessage({ text: '이미 사용 중인 아이디입니다.', type: 'error' });
+        setIdCheckStatus('duplicate');
+        setIsIdChecked(false);
+      }
+    } catch (error) {
+      const errorMessage =
+        (error as { response?: { data?: { message?: string } } }).response?.data
+          ?.message || '중복 확인 중 오류가 발생했습니다.';
+      setIdMessage({ text: errorMessage, type: 'error' });
       setIdCheckStatus('idle');
       setIsIdChecked(false);
+    } finally {
+      setIsCheckingId(false);
     }
   };
 
@@ -347,11 +463,14 @@ const SignUp: React.FC = () => {
     const validationError = validatePassword(value);
 
     if (validationError) {
-      setPasswordMessage(validationError);
+      setPasswordMessage({ text: validationError, type: 'error' });
     } else if (value.length > 0) {
-      setPasswordMessage('사용 가능한 비밀번호입니다.');
+      setPasswordMessage({
+        text: '사용 가능한 비밀번호입니다.',
+        type: 'success',
+      });
     } else {
-      setPasswordMessage('');
+      setPasswordMessage(null);
     }
 
     const confirmPassword = step2Form.getValues('confirmPassword');
@@ -400,14 +519,17 @@ const SignUp: React.FC = () => {
     const formatted = formatPhoneNumber(value);
     step3Form.setValue('phone', formatted);
 
-    setPhoneMessage('');
+    setPhoneMessage(null);
     setIsVerificationSent(false);
+    setIsPhoneVerified(false);
+    setVerificationMessage(null);
+    setVerificationCountdown(0);
   };
 
-  const handleSendVerification = () => {
+  const handleSendVerification = async () => {
     step3Form.clearErrors('phone');
     step3Form.clearErrors('verificationCode');
-    setPhoneMessage('');
+    setPhoneMessage(null);
 
     const phone = step3Form.getValues('phone');
     if (!phone) {
@@ -433,9 +555,90 @@ const SignUp: React.FC = () => {
       return;
     }
 
-    setPhoneMessage('인증번호가 전송되었습니다.');
-    setPhoneMessageType('success');
-    setIsVerificationSent(true);
+    setIsSendingSMS(true);
+
+    try {
+      const cleanPhone = phone.replace(/-/g, '');
+      await sendSMS({ phoneNumber: cleanPhone });
+
+      setPhoneMessage({ text: '인증번호가 전송되었습니다.', type: 'success' });
+      setIsVerificationSent(true);
+      setIsPhoneVerified(false);
+      setVerificationCountdown(300);
+      setVerificationMessage(null);
+    } catch (error) {
+      const errorMessage =
+        (error as { response?: { data?: { message?: string } } }).response?.data
+          ?.message || '인증번호 전송에 실패했습니다.';
+      setPhoneMessage({ text: errorMessage, type: 'error' });
+      setIsVerificationSent(false);
+    } finally {
+      setIsSendingSMS(false);
+    }
+  };
+
+  const handleVerifyCode = async () => {
+    const verificationCode = step3Form.getValues('verificationCode');
+    const phone = step3Form.getValues('phone');
+
+    if (!verificationCode) {
+      setVerificationMessage({
+        text: '인증번호를 입력해 주세요.',
+        type: 'error',
+      });
+      return;
+    }
+
+    if (!/^\d{6}$/.test(verificationCode)) {
+      setVerificationMessage({
+        text: '인증번호는 6자리 숫자입니다.',
+        type: 'error',
+      });
+      return;
+    }
+
+    setIsVerifyingSMS(true);
+
+    try {
+      const cleanPhone = phone.replace(/-/g, '');
+      await verifySMS({
+        phoneNumber: cleanPhone,
+        code: verificationCode,
+      });
+
+      setVerificationMessage({
+        text: '인증이 완료되었습니다.',
+        type: 'success',
+      });
+      setIsPhoneVerified(true);
+      setVerificationCountdown(0);
+    } catch (error) {
+      const response = error as {
+        response?: { status?: number; data?: { message?: string } };
+      };
+      if (response.response?.status === 400) {
+        setVerificationMessage({
+          text: '인증번호가 올바르지 않습니다.',
+          type: 'error',
+        });
+      } else if (response.response?.status === 410) {
+        setIsVerificationSent(false);
+        setVerificationCountdown(0);
+        setPhoneMessage({
+          text: '인증번호가 만료되었습니다.',
+          type: 'error',
+        });
+        setVerificationMessage(null);
+      } else {
+        setVerificationMessage({
+          text: '알 수 없는 에러가 발생했습니다.',
+          type: 'error',
+        });
+      }
+      setIsPhoneVerified(false);
+    } finally {
+      setIsVerifyingSMS(false);
+    }
   };
 
   const handleBack = () => {
@@ -453,12 +656,18 @@ const SignUp: React.FC = () => {
       step2Form.handleSubmit(
         () => {
           if (!isNicknameChecked || nicknameCheckStatus !== 'available') {
-            setNicknameMessage('닉네임 중복 확인이 필요합니다.');
+            setNicknameMessage({
+              text: '닉네임 중복 확인이 필요합니다.',
+              type: 'error',
+            });
             return;
           }
 
           if (!isIdChecked || idCheckStatus !== 'available') {
-            setIdMessage('아이디 중복 확인이 필요합니다.');
+            setIdMessage({
+              text: '아이디 중복 확인이 필요합니다.',
+              type: 'error',
+            });
             return;
           }
 
@@ -466,26 +675,41 @@ const SignUp: React.FC = () => {
         },
         (errors) => {
           if (errors.nickname) {
-            setNicknameMessage(errors.nickname.message || '');
+            setNicknameMessage({
+              text: errors.nickname.message || '',
+              type: 'error',
+            });
           } else if (
             !isNicknameChecked ||
             nicknameCheckStatus !== 'available'
           ) {
-            setNicknameMessage('닉네임 중복 확인이 필요합니다.');
+            setNicknameMessage({
+              text: '닉네임 중복 확인이 필요합니다.',
+              type: 'error',
+            });
           }
 
           if (errors.id) {
-            setIdMessage(errors.id.message || '');
+            setIdMessage({ text: errors.id.message || '', type: 'error' });
           } else if (!isIdChecked || idCheckStatus !== 'available') {
-            setIdMessage('아이디 중복 확인이 필요합니다.');
+            setIdMessage({
+              text: '아이디 중복 확인이 필요합니다.',
+              type: 'error',
+            });
           }
 
           if (errors.password) {
-            setPasswordMessage(errors.password.message || '');
+            setPasswordMessage({
+              text: errors.password.message || '',
+              type: 'error',
+            });
           }
 
           if (errors.confirmPassword) {
-            setConfirmPasswordMessage(errors.confirmPassword.message || '');
+            setConfirmPasswordMessage({
+              text: errors.confirmPassword.message || '',
+              type: 'error',
+            });
           }
         },
       )();
@@ -493,36 +717,64 @@ const SignUp: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    step3Form.handleSubmit((data) => {
+    step3Form.handleSubmit(async (data) => {
       if (!isVerificationSent) {
-        step3Form.setError('phone', {
-          message: '휴대폰 번호를 인증해 주세요.',
+        setPhoneMessage({
+          text: '휴대폰 번호를 인증해 주세요.',
+          type: 'error',
         });
         return;
       }
 
-      if (!data.verificationCode) {
-        step3Form.setError('verificationCode', {
-          message: '인증번호를 입력해 주세요.',
+      if (!isPhoneVerified) {
+        setVerificationMessage({
+          text: '휴대폰 인증을 완료해 주세요.',
+          type: 'error',
         });
         return;
       }
 
-      if (!/^\d{6}$/.test(data.verificationCode)) {
-        step3Form.setError('verificationCode', {
-          message: '인증번호는 6자리 숫자입니다.',
+      setIsSubmitting(true);
+
+      try {
+        const step1Data = step1Form.getValues();
+        const step2Data = step2Form.getValues();
+
+        const birth = `${data.birthYear}-${data.birthMonth.padStart(2, '0')}-${data.birthDay.padStart(2, '0')}`;
+        const gender: 'MALE' | 'FEMALE' =
+          data.gender === '남성' ? 'MALE' : 'FEMALE';
+        const phoneNumber = data.phone.replace(/-/g, '');
+
+        const signUpData = {
+          name: data.name,
+          nickname: step2Data.nickname,
+          loginId: step2Data.id,
+          phoneNumber,
+          password: step2Data.password,
+          birth,
+          gender,
+        };
+
+        if (step1Data.role === 'client') {
+          await clientSignUp(signUpData);
+        } else {
+          await providerSignUp(signUpData);
+        }
+
+        setCompletedUserNickname(step2Data.nickname);
+        setIsCompleted(true);
+      } catch (error) {
+        const errorMessage =
+          (error as { response?: { data?: { message?: string } } }).response
+            ?.data?.message || '회원가입에 실패했습니다.';
+
+        alert({
+          title: '회원가입 실패',
+          content: errorMessage,
         });
-        return;
+      } finally {
+        setIsSubmitting(false);
       }
-
-      const allData = {
-        selectedRole: step1Form.getValues('role'),
-        ...step2Form.getValues(),
-        ...data,
-      };
-
-      // eslint-disable-next-line
-      console.log(JSON.stringify(allData));
     })();
   };
 
@@ -539,22 +791,22 @@ const SignUp: React.FC = () => {
     }
   };
 
-  const getMessageComponent = (
-    message: string,
-    type: 'success' | 'error' | 'info',
-  ) => {
+  const renderMessage = (message: MessageState) => {
     if (!message) return null;
 
-    if (type === 'success') {
-      return <SuccessMessage>{message}</SuccessMessage>;
+    switch (message.type) {
+      case 'success':
+        return <SuccessMessage>{message.text}</SuccessMessage>;
+      case 'error':
+        return <InvalidMessage>{message.text}</InvalidMessage>;
+      case 'info':
+        return <InfoMessage>{message.text}</InfoMessage>;
+      default:
+        return null;
     }
-    if (type === 'error') {
-      return <InvalidMessage>{message}</InvalidMessage>;
-    }
-    return <InfoMessage>{message}</InfoMessage>;
   };
 
-  const renderButtons = () => {
+  const renderNavButtons = () => {
     if (step === 1) {
       return (
         <Button
@@ -569,6 +821,7 @@ const SignUp: React.FC = () => {
     }
 
     const isLastStep = step === 3;
+
     return (
       <>
         <Button variant="outline" fullWidth size="large" onClick={handleBack}>
@@ -577,6 +830,7 @@ const SignUp: React.FC = () => {
         <Button
           fullWidth
           size="large"
+          disabled={isSubmitting}
           onClick={isLastStep ? handleSubmit : handleNext}
         >
           {isLastStep ? '완료' : '다음'}
@@ -615,32 +869,22 @@ const SignUp: React.FC = () => {
                     onChange={(e) => handleNicknameChange(e.target.value)}
                   />
                 </NicknameInput>
-                <Button
-                  type="button"
-                  onClick={handleNicknameCheck}
-                  disabled={
-                    nicknameCheckStatus === 'checking' ||
-                    !step2Form.watch('nickname') ||
-                    !!validateNickname(step2Form.watch('nickname'))
-                  }
-                >
-                  중복 확인
-                </Button>
+                <ButtonWrapper>
+                  <Button
+                    type="button"
+                    fullWidth
+                    onClick={handleNicknameCheck}
+                    disabled={
+                      isCheckingNickname ||
+                      !step2Form.watch('nickname') ||
+                      !!validateNickname(step2Form.watch('nickname'))
+                    }
+                  >
+                    중복 확인
+                  </Button>
+                </ButtonWrapper>
               </NicknameInputContainer>
-              {nicknameCheckStatus === 'checking' &&
-                getMessageComponent(nicknameMessage, 'info')}
-              {nicknameCheckStatus === 'available' &&
-                getMessageComponent(nicknameMessage, 'success')}
-              {nicknameCheckStatus === 'duplicate' &&
-                getMessageComponent(nicknameMessage, 'error')}
-              {nicknameCheckStatus === 'idle' &&
-                nicknameMessage &&
-                getMessageComponent(
-                  nicknameMessage,
-                  nicknameMessage === '중복 확인이 필요합니다.'
-                    ? 'info'
-                    : 'error',
-                )}
+              {renderMessage(nicknameMessage)}
             </InputWrapper>
 
             <InputWrapper>
@@ -653,30 +897,22 @@ const SignUp: React.FC = () => {
                     onChange={(e) => handleIdChange(e.target.value)}
                   />
                 </IdInput>
-                <Button
-                  type="button"
-                  onClick={handleIdCheck}
-                  disabled={
-                    idCheckStatus === 'checking' ||
-                    !step2Form.watch('id') ||
-                    !!validateId(step2Form.watch('id'))
-                  }
-                >
-                  중복 확인
-                </Button>
+                <ButtonWrapper>
+                  <Button
+                    type="button"
+                    fullWidth
+                    onClick={handleIdCheck}
+                    disabled={
+                      isCheckingId ||
+                      !step2Form.watch('id') ||
+                      !!validateId(step2Form.watch('id'))
+                    }
+                  >
+                    중복 확인
+                  </Button>
+                </ButtonWrapper>
               </IdInputContainer>
-              {idCheckStatus === 'checking' &&
-                getMessageComponent(idMessage, 'info')}
-              {idCheckStatus === 'available' &&
-                getMessageComponent(idMessage, 'success')}
-              {idCheckStatus === 'duplicate' &&
-                getMessageComponent(idMessage, 'error')}
-              {idCheckStatus === 'idle' &&
-                idMessage &&
-                getMessageComponent(
-                  idMessage,
-                  idMessage === '중복 확인이 필요합니다.' ? 'info' : 'error',
-                )}
+              {renderMessage(idMessage)}
             </InputWrapper>
 
             <InputWrapper>
@@ -688,11 +924,7 @@ const SignUp: React.FC = () => {
                 value={step2Form.watch('password')}
                 onChange={(e) => handlePasswordChange(e.target.value)}
               />
-              {passwordMessage === '사용 가능한 비밀번호입니다.' &&
-                getMessageComponent(passwordMessage, 'success')}
-              {passwordMessage !== '사용 가능한 비밀번호입니다.' &&
-                passwordMessage &&
-                getMessageComponent(passwordMessage, 'error')}
+              {renderMessage(passwordMessage)}
             </InputWrapper>
 
             <InputWrapper>
@@ -704,11 +936,7 @@ const SignUp: React.FC = () => {
                 value={step2Form.watch('confirmPassword')}
                 onChange={(e) => handleConfirmPasswordChange(e.target.value)}
               />
-              {confirmPasswordMessage === '비밀번호가 일치합니다.' &&
-                getMessageComponent(confirmPasswordMessage, 'success')}
-              {confirmPasswordMessage !== '비밀번호가 일치합니다.' &&
-                confirmPasswordMessage &&
-                getMessageComponent(confirmPasswordMessage, 'error')}
+              {renderMessage(confirmPasswordMessage)}
             </InputWrapper>
           </FormSection>
         );
@@ -835,39 +1063,66 @@ const SignUp: React.FC = () => {
                     maxLength={13}
                   />
                 </PhoneInput>
-                <Button type="button" onClick={handleSendVerification}>
-                  {isVerificationSent ? '재전송' : '인증번호 받기'}
-                </Button>
+                <ButtonWrapper>
+                  <Button
+                    type="button"
+                    fullWidth
+                    onClick={handleSendVerification}
+                    disabled={isSendingSMS || isPhoneVerified}
+                  >
+                    {isVerificationSent ? '재전송' : '인증번호 전송'}
+                  </Button>
+                </ButtonWrapper>
               </PhoneInputContainer>
               {step3Form.formState.errors.phone && (
                 <InvalidMessage>
                   {step3Form.formState.errors.phone.message}
                 </InvalidMessage>
               )}
-              {phoneMessage &&
-                getMessageComponent(phoneMessage, phoneMessageType)}
+              {renderMessage(phoneMessage)}
             </div>
 
             {isVerificationSent && (
               <div>
-                <Controller
-                  name="verificationCode"
-                  control={step3Form.control}
-                  render={({ field }) => (
-                    <Input
-                      label="인증번호"
-                      placeholder="인증번호 6자리를 입력해 주세요"
-                      value={field.value}
-                      onChange={field.onChange}
-                      maxLength={6}
-                    />
+                <FormLabel>
+                  인증번호
+                  {verificationCountdown > 0 && (
+                    <CountdownText>
+                      {' '}
+                      ({formatCountdown(verificationCountdown)})
+                    </CountdownText>
                   )}
-                />
-                {step3Form.formState.errors.verificationCode && (
-                  <InvalidMessage>
-                    {step3Form.formState.errors.verificationCode.message}
-                  </InvalidMessage>
-                )}
+                </FormLabel>
+                <PhoneInputContainer>
+                  <PhoneInput>
+                    <Controller
+                      name="verificationCode"
+                      control={step3Form.control}
+                      render={({ field }) => (
+                        <Input
+                          placeholder="인증번호 6자리를 입력해 주세요"
+                          value={field.value}
+                          onChange={field.onChange}
+                          maxLength={6}
+                          disabled={isPhoneVerified}
+                        />
+                      )}
+                    />
+                  </PhoneInput>
+                  {!isPhoneVerified && (
+                    <ButtonWrapper>
+                      <Button
+                        type="button"
+                        fullWidth
+                        onClick={handleVerifyCode}
+                        disabled={isVerifyingSMS}
+                      >
+                        인증 확인
+                      </Button>
+                    </ButtonWrapper>
+                  )}
+                </PhoneInputContainer>
+                {renderMessage(verificationMessage)}
               </div>
             )}
           </FormSection>
@@ -877,6 +1132,37 @@ const SignUp: React.FC = () => {
         return null;
     }
   };
+
+  const renderCompletionScreen = () => {
+    return (
+      <CompletionContainer>
+        <CompletionIconWrapper>
+          <CompletionIcon />
+        </CompletionIconWrapper>
+        <div>
+          <CompletionTitle>회원가입이 완료되었어요!</CompletionTitle>
+          <CompletionPrompt>
+            {completedUserNickname} 님의 회원가입을 환영합니다.
+            {'\n'}
+            이제 잼잼의 다양한 서비스를 이용하실 수 있습니다.
+          </CompletionPrompt>
+        </div>
+      </CompletionContainer>
+    );
+  };
+
+  if (isCompleted) {
+    return (
+      <Container>
+        <FormContainer>{renderCompletionScreen()}</FormContainer>
+        <NavigationButtonsWrapper>
+          <Button fullWidth size="large" onClick={handleGoHome}>
+            홈으로 이동
+          </Button>
+        </NavigationButtonsWrapper>
+      </Container>
+    );
+  }
 
   return (
     <Container>
@@ -894,7 +1180,7 @@ const SignUp: React.FC = () => {
         </Header>
         {renderStepContent()}
       </FormContainer>
-      <ButtonsWrapper>{renderButtons()}</ButtonsWrapper>
+      <NavigationButtonsWrapper>{renderNavButtons()}</NavigationButtonsWrapper>
     </Container>
   );
 };
