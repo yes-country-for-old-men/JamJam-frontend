@@ -38,12 +38,12 @@ const ModalHeader = styled.div<{ hasTitle: boolean }>`
   align-items: center;
   justify-content: ${(props) =>
     props.hasTitle ? 'space-between' : 'flex-end'};
-  padding: 20px 16px 20px 24px;
+  padding: 20px 16px 12px 24px;
 `;
 
 const ModalTitle = styled.div`
   flex: 1;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   color: ${(props) => props.theme.COLORS.LABEL_PRIMARY};
   margin: 0;
@@ -76,6 +76,7 @@ const CloseButton = styled.button`
 const ModalContent = styled.div<{ hasHeader: boolean }>`
   color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
   padding: ${(props) => (props.hasHeader ? '0 24px 24px 24px' : '24px')};
+  white-space: pre-line;
 `;
 
 const ModalFooter = styled.div`
