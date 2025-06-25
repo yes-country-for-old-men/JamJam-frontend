@@ -54,7 +54,6 @@ const SearchInput = styled(motion.input)`
   border-radius: 12px;
   font-size: 18px;
   color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
-  letter-spacing: -0.025em;
   padding: 24px 64px 24px 20px;
 
   &::placeholder {
@@ -73,7 +72,6 @@ const SearchButton = styled(motion.button)`
   border: none;
   border-radius: 12px;
   padding: 8px;
-  cursor: pointer;
 `;
 
 const SearchBar: React.FC<SearchBarProps> = ({

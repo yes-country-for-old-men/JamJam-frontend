@@ -7,7 +7,6 @@ const StyledButton = styled.button<{ selected: boolean }>`
   justify-content: center;
   background-color: ${(props) =>
     props.selected ? `${props.theme.COLORS.JAMJAM_PRIMARY[2]}` : 'white'};
-  border: none;
   border-radius: 10px;
   box-shadow: inset 0 0 0 1px
     ${(props) =>
@@ -22,7 +21,6 @@ const StyledButton = styled.button<{ selected: boolean }>`
   font-weight: 600;
   gap: 8px;
   padding: 16px;
-  cursor: pointer;
   transition: all 0.2s ease;
 
   &:hover {
