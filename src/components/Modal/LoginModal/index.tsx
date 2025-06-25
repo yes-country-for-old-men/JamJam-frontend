@@ -110,7 +110,7 @@ const LoginModal: React.FC = () => {
 
   const handleFindPassword = () => {};
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !isLoading) {
       handleLogin();
     }
@@ -129,7 +129,7 @@ const LoginModal: React.FC = () => {
         onChange={(e) =>
           setLoginForm((prev) => ({ ...prev, username: e.target.value }))
         }
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyDown}
         placeholder="아이디를 입력하세요"
         disabled={isLoading}
       />
@@ -141,7 +141,7 @@ const LoginModal: React.FC = () => {
         onChange={(e) =>
           setLoginForm((prev) => ({ ...prev, password: e.target.value }))
         }
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyDown}
         placeholder="비밀번호를 입력하세요"
         disabled={isLoading}
       />

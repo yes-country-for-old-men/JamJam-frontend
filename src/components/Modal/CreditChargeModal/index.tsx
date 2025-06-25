@@ -111,7 +111,7 @@ const CreditChargeModal: React.FC = () => {
     }
   }, [amount, isValidAmount, isLoading]);
 
-  const handleKeyPress = useCallback(
+  const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === 'Enter' && isValidAmount) {
         handlePayment();
@@ -129,7 +129,7 @@ const CreditChargeModal: React.FC = () => {
           label="충전 금액"
           value={displayValue}
           onChange={handleAmountChange}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyDown}
           placeholder="충전할 금액을 입력하세요"
         />
         <QuickAmountButtonGrid>
