@@ -4,7 +4,7 @@ import requestPayment from '@apis/requestPayment';
 import Input from '@components/Input';
 import Button from '@components/Button';
 
-const CreditChargeForm = styled.div`
+const CreditChargeForm = styled.form`
   display: flex;
   flex-direction: column;
 `;
@@ -111,17 +111,30 @@ const CreditChargeModal: React.FC = () => {
     }
   }, [amount, isValidAmount, isLoading]);
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' && isValidAmount) {
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      if (isValidAmount && !isLoading) {
         handlePayment();
       }
     },
-    [handlePayment, isValidAmount],
+    [handlePayment, isValidAmount, isLoading],
+  );
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (isValidAmount && !isLoading) {
+          handlePayment();
+        }
+      }
+    },
+    [handlePayment, isValidAmount, isLoading],
   );
 
   return (
-    <CreditChargeForm>
+    <CreditChargeForm onSubmit={handleSubmit}>
       <AmountInputField>
         <AmountInput
           id="charge"
@@ -136,6 +149,7 @@ const CreditChargeModal: React.FC = () => {
           {QUICK_CHARGE_AMOUNTS.map(({ label, value }) => (
             <QuickAmountButton
               key={value}
+              type="button"
               onClick={() => handleQuickCharge(value)}
               disabled={amount + value > MAX_CHARGE_AMOUNT}
             >
@@ -149,6 +163,7 @@ const CreditChargeModal: React.FC = () => {
         <br />• 결제 내역은 마이페이지에서 확인하실 수 있습니다.
       </InfoNotification>
       <Button
+        type="submit"
         onClick={handlePayment}
         fullWidth
         disabled={!isValidAmount || isLoading}

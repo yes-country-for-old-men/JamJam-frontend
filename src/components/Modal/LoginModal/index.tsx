@@ -8,7 +8,7 @@ import Input from '@components/Input';
 import Button from '@components/Button';
 import LogoIcon from '@assets/icons/logo-icon.svg?react';
 
-const LoginForm = styled.div`
+const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -106,18 +106,28 @@ const LoginModal: React.FC = () => {
     }
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isLoading) {
+      handleLogin();
+    }
+  };
+
   const handleFindUsername = () => {};
 
   const handleFindPassword = () => {};
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !isLoading) {
-      handleLogin();
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (!isLoading) {
+        handleLogin();
+      }
     }
   };
 
   return (
-    <LoginForm>
+    <LoginForm onSubmit={handleSubmit}>
       <LogoWrapper>
         <LogoIcon height={36} />
       </LogoWrapper>
@@ -145,14 +155,23 @@ const LoginModal: React.FC = () => {
         placeholder="비밀번호를 입력하세요"
         disabled={isLoading}
       />
-      <Button onClick={handleLogin} fullWidth disabled={isLoading}>
+      <Button
+        type="submit"
+        onClick={handleLogin}
+        fullWidth
+        disabled={isLoading}
+      >
         로그인
       </Button>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       <FindLinksWrapper>
-        <FindLink onClick={handleFindUsername}>아이디 찾기</FindLink>
+        <FindLink type="button" onClick={handleFindUsername}>
+          아이디 찾기
+        </FindLink>
         <Divider>|</Divider>
-        <FindLink onClick={handleFindPassword}>비밀번호 찾기</FindLink>
+        <FindLink type="button" onClick={handleFindPassword}>
+          비밀번호 찾기
+        </FindLink>
       </FindLinksWrapper>
       <SignUpLink>
         잼잼이 처음이신가요?<a href="/signup">회원가입</a>
