@@ -28,8 +28,6 @@ const CategoryContainer = styled.div`
 `;
 
 const CategoryButton = styled(motion.button)<{ isActive?: boolean }>`
-  background: none;
-  border: none;
   padding: 12px;
   color: ${(props) =>
     props.isActive
@@ -52,7 +50,6 @@ const CategoryExpansionButton = styled(motion.button)<{ isExpanded: boolean }>`
   bottom: 0;
   display: flex;
   align-items: center;
-  background: none;
   border-bottom: 2.5px solid transparent;
   color: ${(props) =>
     props.isExpanded

@@ -12,9 +12,7 @@ const Container = styled.button`
   display: flex;
   flex-direction: column;
   width: 100%;
-  color: ${(props) => props.theme.COLORS.LABEL_PRIMARY};
   text-align: start;
-  letter-spacing: -0.025em;
 `;
 
 const ContentSection = styled.div`

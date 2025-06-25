@@ -43,16 +43,13 @@ const LogoButton = styled.button`
   display: flex;
   align-items: center;
   padding: 0;
-  cursor: pointer;
 `;
 
 const SignInButton = styled(motion.button)`
   display: flex;
-  color: ${(props) => props.theme.COLORS.LABEL_PRIMARY};
   font-size: 14px;
   font-weight: 600;
   padding: 8px 12px;
-  cursor: pointer;
   margin-right: 12px;
 `;
 
@@ -64,7 +61,6 @@ const SignUpButton = styled(motion.button)`
   font-weight: 700;
   border-radius: 8px;
   padding: 8px 12px;
-  cursor: pointer;
 `;
 
 const ProfileImageWrapper = styled.div`
@@ -98,8 +94,6 @@ const UserMenuContainer = styled.div`
 const UserMenuButton = styled.button`
   display: flex;
   align-items: center;
-  color: ${(props) => props.theme.COLORS.LABEL_PRIMARY};
-  cursor: pointer;
   padding: 0;
 `;
 
@@ -122,8 +116,6 @@ const DropdownItem = styled.button`
   padding: 12px 16px;
   font-size: 14px;
   font-weight: 500;
-  color: ${(props) => props.theme.COLORS.LABEL_PRIMARY};
-  cursor: pointer;
 
   &:hover {
     background-color: ${(props) => props.theme.COLORS.GRAY[5]};

@@ -28,11 +28,8 @@ const FindLinksWrapper = styled.div`
 `;
 
 const FindLink = styled.button`
-  background: none;
-  border: none;
   color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
   font-size: 12px;
-  cursor: pointer;
 
   &:hover {
     text-decoration: underline;
@@ -45,7 +42,6 @@ const Divider = styled.span`
 `;
 
 const SignUpLink = styled.div`
-  color: ${(props) => props.theme.COLORS.LABEL_PRIMARY};
   font-size: 14px;
   font-weight: 500;
   text-align: center;

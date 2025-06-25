@@ -51,7 +51,6 @@ const IconWrapper = styled.div`
 `;
 
 const CategoryTitle = styled.span`
-  color: ${(props) => props.theme.COLORS.LABEL_PRIMARY || '#1f2937'};
   text-align: center;
   font-weight: 600;
   line-height: 1.4;

@@ -45,7 +45,6 @@ const ModalTitle = styled.div`
   flex: 1;
   font-size: 18px;
   font-weight: 700;
-  color: ${(props) => props.theme.COLORS.LABEL_PRIMARY};
   margin: 0;
   padding-right: 40px;
 `;
@@ -56,12 +55,9 @@ const CloseButton = styled.button`
   justify-content: center;
   width: 32px;
   height: 32px;
-  background-color: transparent;
   color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
   text-align: center;
   border-radius: 8px;
-  border: none;
-  cursor: pointer;
 
   &:hover {
     background-color: ${(props) => props.theme.COLORS.GRAY[6]};
