@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'jotai';
 import { ThemeProvider } from '@emotion/react';
-import AuthEventHandler from '@components/AuthEventHandler';
+import EventHandler from '@components/EventHandler';
 import theme from '@styles/theme';
 import GlobalStyle from '@styles/GlobalStyle';
 import ScrollInitializer from '@components/ScrollInitializer';
@@ -26,7 +26,7 @@ const App = () => {
             <Route path="/signup" element={<SignUp />} />
           </Routes>
         </Router>
-        <AuthEventHandler />
+        <EventHandler />
         <Modal />
       </ThemeProvider>
     </Provider>
