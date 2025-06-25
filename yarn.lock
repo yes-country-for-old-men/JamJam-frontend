@@ -753,6 +753,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@portone/browser-sdk@npm:^0.0.23":
+  version: 0.0.23
+  resolution: "@portone/browser-sdk@npm:0.0.23"
+  checksum: 0549e79b19dca6d243bf6b4951fe97d0edbe7a827a763230e44d115ca6f6176e87da52058552a96f105f8bae91f1380c91cb4864dd1c5e33effde3176a887826
+  languageName: node
+  linkType: hard
+
 "@rolldown/pluginutils@npm:1.0.0-beta.11":
   version: 1.0.0-beta.11
   resolution: "@rolldown/pluginutils@npm:1.0.0-beta.11"
@@ -3500,6 +3507,7 @@ __metadata:
     "@emotion/styled": ^11.14.0
     "@eslint/js": ^9.25.0
     "@hookform/resolvers": ^5.1.1
+    "@portone/browser-sdk": ^0.0.23
     "@tanstack/react-query": ^5.81.2
     "@tanstack/react-query-devtools": ^5.81.2
     "@types/node": ^22.15.30
