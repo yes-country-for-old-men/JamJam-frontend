@@ -68,10 +68,9 @@ const SearchButton = styled(motion.button)`
   justify-content: center;
   right: 12px;
   top: 50%;
-  background: none;
-  border: none;
+  width: 40px;
+  height: 40px;
   border-radius: 12px;
-  padding: 8px;
 `;
 
 const SearchBar: React.FC<SearchBarProps> = ({
