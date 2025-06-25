@@ -21,7 +21,6 @@ const Label = styled.label`
   align-items: center;
   font-weight: 600;
   font-size: 14px;
-  color: ${(props) => props.theme.COLORS.LABEL_PRIMARY};
   gap: 4px;
 `;
 
@@ -61,9 +60,6 @@ const PasswordToggleIcon = styled.button`
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
   color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
   display: flex;
   align-items: center;
@@ -76,6 +72,7 @@ const PasswordToggleIcon = styled.button`
 const Input: React.FC<InputProps> = ({
   id,
   label,
+  style,
   required = false,
   className,
   showPasswordToggle = false,
@@ -94,7 +91,7 @@ const Input: React.FC<InputProps> = ({
   const shouldShowToggle = showPasswordToggle && type === 'password';
 
   return (
-    <InputGroup className={className}>
+    <InputGroup>
       {label && (
         <Label htmlFor={id}>
           {label}
@@ -104,9 +101,11 @@ const Input: React.FC<InputProps> = ({
       <InputContainer>
         <StyledInput
           id={id}
+          style={style}
           required={required}
           type={getInputType()}
           hasToggle={shouldShowToggle}
+          className={className}
           {...rest}
         />
         {shouldShowToggle && (
