@@ -120,6 +120,8 @@ const LoginModal: React.FC = () => {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault();
+      (e.target as HTMLElement).blur();
+
       if (!isLoading) {
         handleLogin();
       }
