@@ -18,9 +18,11 @@ export interface ServiceGenerateRequest {
 }
 
 export interface ServiceGenerateResponse {
-  serviceNames: string[];
-  categoryId: number;
-  description: string;
+  content: {
+    serviceNames: string[];
+    categoryId: number;
+    description: string;
+  };
 }
 
 export interface AiThumbnailRequest {
