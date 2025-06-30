@@ -12,20 +12,22 @@ interface CategoryTabNavigatorProps {
   onCategoryClick?: (categoryId: number) => void;
 }
 
-const Container = styled.div`
+const Container = styled.nav`
   position: relative;
   width: 100%;
-  background: ${(props) => props.theme.COLORS.BACKGROUND};
+  background-color: ${(props) => props.theme.COLORS.BACKGROUND};
   border-bottom: 1px solid ${(props) => props.theme.COLORS.GRAY[5]};
   margin-bottom: 36px;
 `;
 
-const CategoryContainer = styled.div`
+const CategoryList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px;
 `;
+
+const CategoryItem = styled.li``;
 
 const CategoryButton = styled(motion.button)<{ isActive?: boolean }>`
   padding: 12px;
@@ -44,7 +46,7 @@ const CategoryButton = styled(motion.button)<{ isActive?: boolean }>`
   }
 `;
 
-const CategoryExpansionButton = styled(motion.button)<{ isExpanded: boolean }>`
+const ExpansionButton = styled(motion.button)<{ isExpanded: boolean }>`
   position: absolute;
   left: max(24px, calc(50vw - (600px - 24px)));
   bottom: 0;
@@ -60,6 +62,12 @@ const CategoryExpansionButton = styled(motion.button)<{ isExpanded: boolean }>`
   padding: 12px 0;
   gap: 8px;
 `;
+
+const ExpandedSection = styled(motion.section)`
+  overflow: hidden;
+`;
+
+const ExpandedContent = styled.div``;
 
 const CategoryTabNavigator: React.FC<CategoryTabNavigatorProps> = ({
   categories,
@@ -86,11 +94,17 @@ const CategoryTabNavigator: React.FC<CategoryTabNavigatorProps> = ({
     onCategoryClick?.(categoryId);
   };
 
+  const handleExpansionToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
-    <Container>
-      <CategoryExpansionButton
+    <Container role="navigation" aria-label="category-navigator">
+      <ExpansionButton
         isExpanded={isExpanded}
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={handleExpansionToggle}
+        aria-expanded={isExpanded}
+        aria-controls="expanded-categories"
       >
         <CategoryIcon stroke={iconColor} />
         카테고리
@@ -100,21 +114,25 @@ const CategoryTabNavigator: React.FC<CategoryTabNavigatorProps> = ({
         >
           <ArrowDownIcon fill={iconColor} />
         </motion.div>
-      </CategoryExpansionButton>
-      <CategoryContainer>
+      </ExpansionButton>
+      <CategoryList role="tablist">
         {topCategories.map((category) => (
-          <CategoryButton
-            key={category.id}
-            isActive={currentCategoryId === category.id}
-            onClick={() => handleCategoryClick(category.id)}
-          >
-            {category.name}
-          </CategoryButton>
+          <CategoryItem key={category.id}>
+            <CategoryButton
+              isActive={currentCategoryId === category.id}
+              onClick={() => handleCategoryClick(category.id)}
+              role="tab"
+              aria-selected={currentCategoryId === category.id}
+            >
+              {category.name}
+            </CategoryButton>
+          </CategoryItem>
         ))}
-      </CategoryContainer>
+      </CategoryList>
       <AnimatePresence>
         {isExpanded && (
-          <motion.div
+          <ExpandedSection
+            id="expanded-categories"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: contentHeight, opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -122,22 +140,24 @@ const CategoryTabNavigator: React.FC<CategoryTabNavigatorProps> = ({
               height: { duration: 0.3, ease: [0.4, 0, 0.2, 1] },
               opacity: { duration: 0.2, delay: isExpanded ? 0.1 : 0 },
             }}
-            style={{ overflow: 'hidden' }}
           >
-            <div ref={contentRef}>
-              <CategoryContainer>
+            <ExpandedContent ref={contentRef}>
+              <CategoryList role="tablist">
                 {expandedCategories.map((category) => (
-                  <CategoryButton
-                    key={category.id}
-                    isActive={currentCategoryId === category.id}
-                    onClick={() => handleCategoryClick(category.id)}
-                  >
-                    {category.name}
-                  </CategoryButton>
+                  <CategoryItem key={category.id}>
+                    <CategoryButton
+                      isActive={currentCategoryId === category.id}
+                      onClick={() => handleCategoryClick(category.id)}
+                      role="tab"
+                      aria-selected={currentCategoryId === category.id}
+                    >
+                      {category.name}
+                    </CategoryButton>
+                  </CategoryItem>
                 ))}
-              </CategoryContainer>
-            </div>
-          </motion.div>
+              </CategoryList>
+            </ExpandedContent>
+          </ExpandedSection>
         )}
       </AnimatePresence>
     </Container>
