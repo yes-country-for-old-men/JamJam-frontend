@@ -22,16 +22,21 @@ const Container = styled.header`
   position: fixed;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
   width: 100%;
-  max-width: 1200px;
   height: 80px;
   background-color: ${(props) => props.theme.COLORS.BACKGROUND};
-  padding: 0 24px;
   z-index: 11;
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 24px;
 `;
 
 const HeaderContent = styled.div`
@@ -256,12 +261,14 @@ const Header = () => {
 
   return (
     <Container>
-      <HeaderContent>
-        <LogoButton onClick={handleLogoClick}>
-          <LogoSVG />
-        </LogoButton>
-      </HeaderContent>
-      {renderAuthSection()}
+      <ContentWrapper>
+        <HeaderContent>
+          <LogoButton onClick={handleLogoClick}>
+            <LogoSVG />
+          </LogoButton>
+        </HeaderContent>
+        {renderAuthSection()}
+      </ContentWrapper>
     </Container>
   );
 };
