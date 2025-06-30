@@ -6,5 +6,5 @@ export default interface User {
   birth: string;
   role: 'PROVIDER' | 'CLIENT';
   gender: 'MALE' | 'FEMALE';
-  profileUrl: string;
+  profileUrl?: string;
 }
