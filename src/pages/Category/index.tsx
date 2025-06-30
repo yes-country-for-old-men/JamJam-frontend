@@ -7,30 +7,40 @@ import ServiceCard from '@pages/Category/components/ServiceCard';
 import CATEGORIES from '@constants/categoryData';
 import { MOCK_SERVICES } from '@constants/mockData';
 
-const Container = styled.div`
+const Container = styled.main`
   display: flex;
   flex: 1;
   flex-direction: column;
   align-items: center;
   min-width: max-content;
   overflow-x: auto;
-  padding: 0;
 `;
 
-const SearchBarWrapper = styled.div`
+const SearchSection = styled.section`
   width: 100%;
   max-width: 560px;
   transform: scale(0.9);
   margin-bottom: 20px;
 `;
 
-const CategoryTitle = styled.div`
+const ContentWrapper = styled.div`
+  max-width: 1200px;
+  padding: 0 24px;
   width: 100%;
+`;
+
+const CategoryHeader = styled.header`
+  width: 100%;
+  margin-bottom: 28px;
+`;
+
+const CategoryTitle = styled.div`
   font-size: 28px;
   font-weight: 700;
   text-align: start;
-  margin-bottom: 28px;
 `;
+
+const ServicesSection = styled.section``;
 
 const ServiceGrid = styled.div`
   display: grid;
@@ -61,30 +71,34 @@ const Category: React.FC = () => {
 
   return (
     <Container>
-      <SearchBarWrapper>
+      <SearchSection>
         <SearchBar />
-      </SearchBarWrapper>
+      </SearchSection>
       <CategoryTabNavigator
         categories={CATEGORIES}
         currentCategoryId={currentCategoryId}
         onCategoryClick={handleCategoryClick}
       />
-      <div style={{ maxWidth: 1200, padding: '0 24px' }}>
+      <ContentWrapper>
         {currentCategory && (
-          <CategoryTitle>{currentCategory.name}</CategoryTitle>
+          <CategoryHeader>
+            <CategoryTitle>{currentCategory.name}</CategoryTitle>
+          </CategoryHeader>
         )}
-        <ServiceGrid>
-          {filteredServices.map((service) => (
-            <ServiceCard
-              key={service.id}
-              name={service.name}
-              minPrice={service.minPrice}
-              thumbnailUrl={service.thumbnailUrl}
-              providerName={service.providerName}
-            />
-          ))}
-        </ServiceGrid>
-      </div>
+        <ServicesSection>
+          <ServiceGrid>
+            {filteredServices.map((service) => (
+              <ServiceCard
+                key={service.id}
+                name={service.name}
+                minPrice={service.minPrice}
+                thumbnailUrl={service.thumbnailUrl}
+                providerName={service.providerName}
+              />
+            ))}
+          </ServiceGrid>
+        </ServicesSection>
+      </ContentWrapper>
     </Container>
   );
 };

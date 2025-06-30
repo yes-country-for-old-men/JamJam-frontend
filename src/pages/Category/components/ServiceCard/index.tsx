@@ -8,19 +8,16 @@ interface ServiceCardProps {
   providerName: string;
 }
 
-const Container = styled.button`
+const Container = styled.article`
   display: flex;
   flex-direction: column;
   width: 100%;
   text-align: start;
+  line-height: 1.2;
+  cursor: pointer;
 `;
 
-const ContentSection = styled.div`
-  flex: 1;
-  padding: 12px 4px;
-`;
-
-const ThumbnailWrapper = styled.div`
+const ThumbnailSection = styled.figure`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,10 +29,15 @@ const ThumbnailWrapper = styled.div`
 `;
 
 const ThumbnailImage = styled.img`
-  width: calc((1200px - 36px * 3 - 48px) / 4);
-  aspect-ratio: 1;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
+`;
+
+const ContentSection = styled.div`
+  flex: 1;
+  padding: 12px 4px;
 `;
 
 const ServiceName = styled.div`
@@ -44,13 +46,13 @@ const ServiceName = styled.div`
   margin-bottom: 4px;
 `;
 
-const MinimumPrice = styled.div`
+const PriceInfo = styled.div`
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 4px;
 `;
 
-const ProviderName = styled.span`
+const ProviderInfo = styled.span`
   font-size: 14px;
   color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
 `;
@@ -63,13 +65,13 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 }) => {
   return (
     <Container>
-      <ThumbnailWrapper>
+      <ThumbnailSection>
         <ThumbnailImage src={thumbnailUrl} alt={name} />
-      </ThumbnailWrapper>
+      </ThumbnailSection>
       <ContentSection>
         <ServiceName>{name}</ServiceName>
-        <MinimumPrice>{minPrice.toLocaleString()}원 ~</MinimumPrice>
-        <ProviderName>{providerName}</ProviderName>
+        <PriceInfo>{minPrice.toLocaleString()}원 ~</PriceInfo>
+        <ProviderInfo>{providerName}</ProviderInfo>
       </ContentSection>
     </Container>
   );
