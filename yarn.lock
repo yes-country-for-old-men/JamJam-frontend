@@ -937,6 +937,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@stomp/stompjs@npm:^7.1.1":
+  version: 7.1.1
+  resolution: "@stomp/stompjs@npm:7.1.1"
+  checksum: a1fac5e1e94370e9575885d9df14e7507c7a526dfb3bf07e9dfcad2b4500d0db4a5d92627a20364437d684adb53fac29800381392e554fa7debd362a8ed6f3fb
+  languageName: node
+  linkType: hard
+
 "@svgr/babel-plugin-add-jsx-attribute@npm:8.0.0":
   version: 8.0.0
   resolution: "@svgr/babel-plugin-add-jsx-attribute@npm:8.0.0"
@@ -3508,6 +3515,7 @@ __metadata:
     "@eslint/js": ^9.25.0
     "@hookform/resolvers": ^5.1.1
     "@portone/browser-sdk": ^0.0.23
+    "@stomp/stompjs": ^7.1.1
     "@tanstack/react-query": ^5.81.2
     "@tanstack/react-query-devtools": ^5.81.2
     "@types/node": ^22.15.30
