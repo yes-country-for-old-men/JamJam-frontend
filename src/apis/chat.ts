@@ -1,48 +1,47 @@
 import apiClient from '@apis/apiClient';
+import type APIResponse from '@type/APIResponse';
 import type { ChatRoomSummary, ChatMessage } from '@type/Chat';
 
 export interface MarkAsReadRequest {
   lastReadMessageId: number;
 }
 
-export interface ChatRoomsResponse {
-  content: {
-    rooms: ChatRoomSummary[];
-    currentPage: number;
-    totalPages: number;
+type ChatRoomsContent = {
+  rooms: ChatRoomSummary[];
+  currentPage: number;
+  totalPages: number;
+  hasNext: boolean;
+};
+
+type ChatMessagesContent = {
+  sliceInfo: {
     hasNext: boolean;
   };
-}
+  chats: ChatMessage[];
+};
 
-export interface ChatMessagesResponse {
-  content: {
-    sliceInfo: {
-      hasNext: boolean;
-    };
-    chats: ChatMessage[];
-  };
-}
-
-export interface CreateChatRoomResponse {
-  content: {
-    roomId: number;
-  };
-}
+type CreateChatRoomContent = {
+  roomId: number;
+};
 
 export const getChatRooms = (page: number = 0, size: number = 20) =>
-  apiClient.get<ChatRoomsResponse>(`/api/chat/rooms?page=${page}&size=${size}`);
+  apiClient.get<APIResponse<ChatRoomsContent>>(
+    `/api/chat/rooms?page=${page}&size=${size}`,
+  );
 
 export const getChatMessages = (
   chatRoomId: number,
   page: number = 0,
   size: number = 50,
 ) =>
-  apiClient.get<ChatMessagesResponse>(
+  apiClient.get<APIResponse<ChatMessagesContent>>(
     `/api/chat/rooms/${chatRoomId}/messages?page=${page}&size=${size}`,
   );
 
 export const createChatRoom = (otherId: number) =>
-  apiClient.post<CreateChatRoomResponse>(`/api/chat/room?otherId=${otherId}`);
+  apiClient.post<APIResponse<CreateChatRoomContent>>(
+    `/api/chat/room?otherId=${otherId}`,
+  );
 
 export const markAsRead = (chatRoomId: number, data: MarkAsReadRequest) =>
   apiClient.put(`/api/chat/rooms/${chatRoomId}/read`, data);

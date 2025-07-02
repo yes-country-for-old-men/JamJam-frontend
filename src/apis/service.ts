@@ -1,4 +1,5 @@
 import apiClient from '@apis/apiClient';
+import type APIResponse from '@type/APIResponse';
 
 export interface ServiceRegisterRequest {
   request: {
@@ -17,13 +18,11 @@ export interface ServiceGenerateRequest {
   career: string;
 }
 
-export interface ServiceGenerateResponse {
-  content: {
-    serviceNames: string[];
-    categoryId: number;
-    description: string;
-  };
-}
+type ServiceGenerateContent = {
+  serviceNames: string[];
+  categoryId: number;
+  description: string;
+};
 
 export interface AiThumbnailRequest {
   serviceName: string;
@@ -31,11 +30,9 @@ export interface AiThumbnailRequest {
   typography: boolean;
 }
 
-export interface AiThumbnailResponse {
-  content: {
-    imageBase64: string;
-  };
-}
+type AiThumbnailContent = {
+  imageBase64: string;
+};
 
 export const registerService = (data: ServiceRegisterRequest) => {
   const formData = new FormData();
@@ -55,7 +52,13 @@ export const registerService = (data: ServiceRegisterRequest) => {
 };
 
 export const generateService = (data: ServiceGenerateRequest) =>
-  apiClient.post<ServiceGenerateResponse>('/api/service/generate', data);
+  apiClient.post<APIResponse<ServiceGenerateContent>>(
+    '/api/service/generate',
+    data,
+  );
 
 export const generateAiThumbnail = (data: AiThumbnailRequest) =>
-  apiClient.post<AiThumbnailResponse>('/api/service/ai-thumbnail', data);
+  apiClient.post<APIResponse<AiThumbnailContent>>(
+    '/api/service/ai-thumbnail',
+    data,
+  );

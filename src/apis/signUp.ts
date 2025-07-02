@@ -1,10 +1,9 @@
 import apiClient from '@apis/apiClient';
+import type APIResponse from '@type/APIResponse';
 
-export interface CheckResponse {
-  content: {
-    available: boolean;
-  };
-}
+type CheckContent = {
+  available: boolean;
+};
 
 export interface SMSSendRequest {
   phoneNumber: string;
@@ -26,12 +25,12 @@ export interface SignUpRequest {
 }
 
 export const checkNickname = (nickname: string) =>
-  apiClient.get<CheckResponse>('/api/user/check/nickname', {
+  apiClient.get<APIResponse<CheckContent>>('/api/user/check/nickname', {
     params: { nickname },
   });
 
 export const checkLoginId = (loginId: string) =>
-  apiClient.get<CheckResponse>('/api/user/check/loginId', {
+  apiClient.get<APIResponse<CheckContent>>('/api/user/check/loginId', {
     params: { loginId },
   });
 
