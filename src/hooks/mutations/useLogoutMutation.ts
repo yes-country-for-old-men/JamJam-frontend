@@ -9,6 +9,7 @@ const useLogoutMutation = () => {
     onSuccess: () => {
       localStorage.removeItem('accessToken');
       queryClient.clear();
+      window.location.reload();
     },
   });
 };

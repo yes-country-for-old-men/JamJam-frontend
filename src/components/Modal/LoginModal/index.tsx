@@ -93,6 +93,7 @@ const LoginModal: React.FC = () => {
 
       localStorage.setItem('accessToken', accessToken);
       await queryClient.invalidateQueries({ queryKey: ['userInfo'] });
+      window.location.reload();
 
       closeModal();
     } catch (error) {
