@@ -50,6 +50,10 @@ export default defineConfig(({ mode, command }) => {
         },
         { find: '@hooks', replacement: path.resolve(__dirname, 'src/hooks') },
         { find: '@pages', replacement: path.resolve(__dirname, 'src/pages') },
+        {
+          find: '@services',
+          replacement: path.resolve(__dirname, 'src/services'),
+        },
         { find: '@stores', replacement: path.resolve(__dirname, 'src/stores') },
         { find: '@styles', replacement: path.resolve(__dirname, 'src/styles') },
         { find: '@type', replacement: path.resolve(__dirname, 'src/types') },
