@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import styled from '@emotion/styled';
 import useScrollSpy from '@hooks/useScrollSpy';
 import getCategoryNameById from '@utils/getCategoryNameById';
+import getSkillNameById from '@utils/getSkillNameById';
 import type { ProviderProfile } from '@type/Provider';
 import Button from '@components/Button';
 import UserProfileImageIcon from '@assets/icons/user-profile-image.svg?react';
@@ -195,6 +196,31 @@ const ExperienceItem = styled.li`
 
 const ExperienceContent = styled.span``;
 
+const formatContactHours = (contactHours: {
+  startHour: number;
+  endHour: number;
+}): string => {
+  if (contactHours.startHour === 0 && contactHours.endHour === 24) {
+    return '24시간';
+  }
+  return `${contactHours.startHour}:00 - ${contactHours.endHour}:00`;
+};
+
+const formatEducation = (education: {
+  school: string;
+  major: string;
+  degree: string;
+}): string => {
+  return `${education.school} ${education.major} ${education.degree}`;
+};
+
+const formatCareer = (career: {
+  company: string;
+  position: string;
+}): string => {
+  return `${career.company} ${career.position}`;
+};
+
 const ProfileCard: React.FC<{ data: ProviderProfile }> = ({ data }) => (
   <ProfileSection>
     <ProfileImageWrapper>
@@ -217,7 +243,7 @@ const ProfileCard: React.FC<{ data: ProviderProfile }> = ({ data }) => (
   </ProfileSection>
 );
 
-const ExpertInfoSection: React.FC<{ data: ProviderProfile }> = ({ data }) => (
+const ProviderInfoSection: React.FC<{ data: ProviderProfile }> = ({ data }) => (
   <>
     <InfoSection>
       <SectionTitle>자기 소개</SectionTitle>
@@ -227,7 +253,7 @@ const ExpertInfoSection: React.FC<{ data: ProviderProfile }> = ({ data }) => (
       <SectionTitle>보유 기술</SectionTitle>
       <SkillsContainer>
         {data.skills.map((skill) => (
-          <SkillTag key={skill}>{skill}</SkillTag>
+          <SkillTag key={skill.id}>{getSkillNameById(skill.id)}</SkillTag>
         ))}
       </SkillsContainer>
     </InfoSection>
@@ -235,9 +261,9 @@ const ExpertInfoSection: React.FC<{ data: ProviderProfile }> = ({ data }) => (
       <SectionTitle>경력 사항</SectionTitle>
       <ExperienceList>
         {data.careers.map((career) => (
-          <ExperienceItem key={career}>
+          <ExperienceItem key={career.id}>
             <CareerIcon />
-            <ExperienceContent>{career}</ExperienceContent>
+            <ExperienceContent>{formatCareer(career)}</ExperienceContent>
           </ExperienceItem>
         ))}
       </ExperienceList>
@@ -246,15 +272,15 @@ const ExpertInfoSection: React.FC<{ data: ProviderProfile }> = ({ data }) => (
       <SectionTitle>학력 및 자격증</SectionTitle>
       <ExperienceList>
         {data.educations.map((education) => (
-          <ExperienceItem key={`education-${education}`}>
+          <ExperienceItem key={education.id}>
             <EducationIcon />
-            <ExperienceContent>{education}</ExperienceContent>
+            <ExperienceContent>{formatEducation(education)}</ExperienceContent>
           </ExperienceItem>
         ))}
         {data.licenses.map((license) => (
-          <ExperienceItem key={`license-${license}`}>
+          <ExperienceItem key={license.id}>
             <LicenseIcon />
-            <ExperienceContent>{license}</ExperienceContent>
+            <ExperienceContent>{license.name}</ExperienceContent>
           </ExperienceItem>
         ))}
       </ExperienceList>
@@ -273,7 +299,7 @@ const SidePanel: React.FC<{ data: ProviderProfile }> = ({ data }) => (
     <SideCardTitle>{data.nickname}</SideCardTitle>
     <StatusInfo>
       <StatusLabel>연락 가능 시간</StatusLabel>
-      <StatusValue>{data.contactHours}</StatusValue>
+      <StatusValue>{formatContactHours(data.contactHours)}</StatusValue>
     </StatusInfo>
     <StatusInfo>
       <StatusLabel>평균 응답 시간</StatusLabel>
@@ -328,7 +354,7 @@ const Provider: React.FC<{ data: ProviderProfile }> = ({ data }) => {
         </TabContainer>
         <TabContentContainer>
           <section ref={expertInfoRef}>
-            <ExpertInfoSection data={data} />
+            <ProviderInfoSection data={data} />
           </section>
           <section ref={servicesRef}>
             <ServicesSection />
