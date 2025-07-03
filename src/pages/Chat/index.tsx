@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import useChat from '@hooks/useChat';
 import useMessageGrouping from '@hooks/useMessageGrouping';
+import useMessageScroll from '@hooks/useMessageScroll';
 import decodeToken from '@utils/decodeToken';
 import { formatTime, formatRelativeTime } from '@utils/format';
 import theme from '@styles/theme';
@@ -419,6 +420,17 @@ const Chat: React.FC = () => {
     loadMoreMessages,
   } = useChat(token, currentUserId);
 
+  const { groupedMessages, getBubblePosition, shouldShowProfile } =
+    useMessageGrouping(messages);
+
+  const {
+    messagesEndRef,
+    messagesContainerRef,
+    scrollToBottom,
+    handleScroll,
+    maintainScrollPosition,
+  } = useMessageScroll();
+
   const handleSendMessage = () => {
     if (!messageText.trim()) return;
 
@@ -430,7 +442,7 @@ const Chat: React.FC = () => {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
@@ -446,15 +458,6 @@ const Chat: React.FC = () => {
     }
   };
 
-  const {
-    messagesEndRef,
-    messagesContainerRef,
-    groupedMessages,
-    getBubblePosition,
-    shouldShowProfile,
-    handleScroll,
-  } = useMessageGrouping(messages);
-
   const selectedChat = chatRooms.find((chat) => chat.id === selectedChatId);
   const filteredChatRooms = chatRooms.filter((chat) =>
     chat.name.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -463,6 +466,18 @@ const Chat: React.FC = () => {
   const handleMessagesScroll = () => {
     handleScroll(loadMoreMessages);
   };
+
+  useEffect(() => {
+    if (selectedChatId) {
+      setTimeout(() => {
+        scrollToBottom();
+      }, 100);
+    }
+  }, [selectedChatId, scrollToBottom]);
+
+  useEffect(() => {
+    maintainScrollPosition();
+  }, [messages.length, maintainScrollPosition]);
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
@@ -652,7 +667,7 @@ const Chat: React.FC = () => {
                     placeholder="메시지를 입력하세요."
                     value={messageText}
                     onChange={handleInputChange}
-                    onKeyPress={handleKeyPress}
+                    onKeyDown={handleKeyDown}
                     rows={1}
                     disabled={!isConnected}
                   />

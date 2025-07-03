@@ -1,4 +1,3 @@
-import { useRef, useEffect, useCallback } from 'react';
 import { formatDate } from '@utils/format';
 import type { Message } from '@type/Chat';
 
@@ -46,27 +45,6 @@ const shouldShowProfile = (dayMessages: Message[], index: number): boolean => {
 };
 
 const useMessageGrouping = (messages: Message[]) => {
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const messagesContainerRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    const container = messagesContainerRef.current;
-    if (container) {
-      container.scrollTop = container.scrollHeight;
-    }
-  };
-
-  const handleScroll = useCallback((onLoadMore: () => void) => {
-    const container = messagesContainerRef.current;
-    if (container && container.scrollTop === 0) {
-      onLoadMore();
-    }
-  }, []);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
   const groupedMessages = messages.reduce(
     (acc, message) => {
       const date = formatDate(message.timestamp);
@@ -79,12 +57,9 @@ const useMessageGrouping = (messages: Message[]) => {
   );
 
   return {
-    messagesEndRef,
-    messagesContainerRef,
     groupedMessages,
     getBubblePosition,
     shouldShowProfile,
-    handleScroll,
   };
 };
 
