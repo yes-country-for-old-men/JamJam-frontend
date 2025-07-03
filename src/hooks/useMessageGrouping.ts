@@ -50,7 +50,10 @@ const useMessageGrouping = (messages: Message[]) => {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const container = messagesContainerRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
   };
 
   const handleScroll = useCallback((onLoadMore: () => void) => {
