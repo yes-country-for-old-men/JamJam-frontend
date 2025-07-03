@@ -10,6 +10,7 @@ import Modal from '@components/Modal';
 import Main from '@pages/Main';
 import SignUp from '@pages/SignUp';
 import Category from '@pages/Category';
+import Chat from '@pages/Chat';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
             <Route path="/" element={<Layout />}>
               <Route index element={<Main />} />
               <Route path="/category/:categoryId" element={<Category />} />
+              <Route path="/chat" element={<Chat />} />
             </Route>
             <Route path="/signup" element={<SignUp />} />
           </Routes>
