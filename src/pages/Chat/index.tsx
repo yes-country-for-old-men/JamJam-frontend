@@ -268,6 +268,7 @@ const SenderProfileContainer = styled.figure`
   font-size: 12px;
   align-self: flex-start;
   margin-right: 8px;
+  overflow: hidden;
 `;
 
 const SenderProfileImage = styled.img`
