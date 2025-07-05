@@ -21,6 +21,7 @@ const Sidebar = styled.aside`
   flex-direction: column;
   flex: 1;
   top: 104px;
+  height: fit-content;
 `;
 
 const UserInfoCard = styled.div`
