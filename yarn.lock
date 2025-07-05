@@ -600,6 +600,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hugerte/framework-integration-shared@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@hugerte/framework-integration-shared@npm:1.0.1"
+  peerDependencies:
+    hugerte: ^1.0.4
+  checksum: 6afac739071719f1f41fa5beab827e8bcabfac571099ddc81fdd7ad886094480052747d1a8f136cc9b65e7c1dade6761ef9fe8d1254cb39b51654fb61d9c2e11
+  languageName: node
+  linkType: hard
+
+"@hugerte/hugerte-react@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@hugerte/hugerte-react@npm:2.0.1"
+  dependencies:
+    "@hugerte/framework-integration-shared": ^1.0.1
+  peerDependencies:
+    hugerte: ^1.0.6
+    react: ^19.0.0 || ^18.0.0 || ^17.0.1 || ^16.7.0
+    react-dom: ^19.0.0 || ^18.0.0 || ^17.0.1 || ^16.7.0
+  peerDependenciesMeta:
+    hugerte:
+      optional: true
+  checksum: ab62e74d27f542291d2ff71f3a00b2b0f707d370c08dd65b512f6a77da9d4a269d701000ed33354342296048c2f266eb0153c8f2feb7e1c35db0024b99cfd1a1
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.13.0":
   version: 0.13.0
   resolution: "@humanwhocodes/config-array@npm:0.13.0"
@@ -3514,6 +3539,7 @@ __metadata:
     "@emotion/styled": ^11.14.0
     "@eslint/js": ^9.25.0
     "@hookform/resolvers": ^5.1.1
+    "@hugerte/hugerte-react": ^2.0.1
     "@portone/browser-sdk": ^0.0.23
     "@stomp/stompjs": ^7.1.1
     "@tanstack/react-query": ^5.81.2
