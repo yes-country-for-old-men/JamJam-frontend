@@ -20,7 +20,7 @@ export interface ServiceGenerateRequest {
 
 type ServiceGenerateContent = {
   serviceNames: string[];
-  categoryId: number;
+  category: number;
   description: string;
 };
 
