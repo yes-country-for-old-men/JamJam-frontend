@@ -29,6 +29,7 @@ const useModal = () => {
   }) => {
     openModal({
       id: 'confirm-modal',
+      type: 'confirm',
       title: config.title,
       content: config.content,
       onConfirm: config.onConfirm,
@@ -45,10 +46,26 @@ const useModal = () => {
   }) => {
     openModal({
       id: 'alert-modal',
+      type: 'alert',
       title: config.title,
       content: config.content,
       confirmText: config.confirmText || '확인',
       showCloseButton: false,
+    });
+  };
+
+  const loading = (
+    config: {
+      loadingText?: string;
+      disableBackdropClick?: boolean;
+    } = {},
+  ) => {
+    openModal({
+      id: 'loading-modal',
+      type: 'loading',
+      loadingText: config.loadingText,
+      showCloseButton: false,
+      disableBackdropClick: config.disableBackdropClick,
     });
   };
 
@@ -58,6 +75,7 @@ const useModal = () => {
     closeModal,
     confirm,
     alert,
+    loading,
     isOpen: modal?.isOpen ?? false,
   };
 };

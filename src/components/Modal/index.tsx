@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import useModal from '@hooks/useModal';
 import Button from '@components/Button';
+import Spinner from '@components/Spinner';
 import CloseIcon from '@assets/icons/close.svg?react';
 
 const Backdrop = styled(motion.div)`
@@ -86,6 +87,21 @@ const FooterButtonWrapper = styled.div`
   flex: 1;
 `;
 
+const LoadingContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+`;
+
+const LoadingText = styled(motion.div)`
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+`;
+
 const Modal: React.FC = () => {
   const { modal, closeModal } = useModal();
 
@@ -126,6 +142,41 @@ const Modal: React.FC = () => {
   const hasTitle = Boolean(modal?.title);
   const showCloseButton = Boolean(modal?.showCloseButton);
 
+  const renderContent = () => {
+    if (modal?.loadingText !== undefined) {
+      return (
+        <LoadingContent>
+          <Spinner />
+          {modal.loadingText && (
+            <LoadingText
+              initial={{ opacity: 0, y: 10 }}
+              animate={{
+                opacity: [0.5, 1, 0.5],
+                y: 0,
+              }}
+              transition={{
+                opacity: {
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                },
+                y: {
+                  duration: 0.3,
+                  ease: 'easeOut',
+                },
+              }}
+            >
+              {modal.loadingText}
+            </LoadingText>
+          )}
+        </LoadingContent>
+      );
+    }
+    return modal?.content;
+  };
+
+  const isLoadingModal = modal?.loadingText !== undefined;
+
   return createPortal(
     <AnimatePresence>
       {modal?.isOpen && (
@@ -136,43 +187,51 @@ const Modal: React.FC = () => {
           transition={{ duration: 0.2 }}
           onClick={handleBackdropClick}
         >
-          <ModalContainer
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.2 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {(hasTitle || showCloseButton) && (
-              <ModalHeader hasTitle={hasTitle}>
-                {hasTitle && <ModalTitle>{modal.title}</ModalTitle>}
-                {showCloseButton && (
-                  <CloseButton onClick={handleClose}>
-                    <CloseIcon />
-                  </CloseButton>
-                )}
-              </ModalHeader>
-            )}
-            <ModalContent hasHeader={hasTitle || showCloseButton}>
-              {modal.content}
-            </ModalContent>
-            {(modal.onConfirm || modal.confirmText) && (
-              <ModalFooter>
-                {modal.cancelText && (
+          {isLoadingModal ? (
+            renderContent()
+          ) : (
+            <ModalContainer
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {(hasTitle || showCloseButton) && (
+                <ModalHeader hasTitle={hasTitle}>
+                  {hasTitle && <ModalTitle>{modal.title}</ModalTitle>}
+                  {showCloseButton && (
+                    <CloseButton onClick={handleClose}>
+                      <CloseIcon />
+                    </CloseButton>
+                  )}
+                </ModalHeader>
+              )}
+              <ModalContent hasHeader={hasTitle || showCloseButton}>
+                {renderContent()}
+              </ModalContent>
+              {(modal.onConfirm || modal.confirmText) && (
+                <ModalFooter>
+                  {modal.cancelText && (
+                    <FooterButtonWrapper>
+                      <Button
+                        variant="secondary"
+                        onClick={handleClose}
+                        fullWidth
+                      >
+                        {modal.cancelText}
+                      </Button>
+                    </FooterButtonWrapper>
+                  )}
                   <FooterButtonWrapper>
-                    <Button variant="secondary" onClick={handleClose} fullWidth>
-                      {modal.cancelText}
+                    <Button variant="primary" onClick={handleConfirm} fullWidth>
+                      {modal.confirmText || '확인'}
                     </Button>
                   </FooterButtonWrapper>
-                )}
-                <FooterButtonWrapper>
-                  <Button variant="primary" onClick={handleConfirm} fullWidth>
-                    {modal.confirmText || '확인'}
-                  </Button>
-                </FooterButtonWrapper>
-              </ModalFooter>
-            )}
-          </ModalContainer>
+                </ModalFooter>
+              )}
+            </ModalContainer>
+          )}
         </Backdrop>
       )}
     </AnimatePresence>,
