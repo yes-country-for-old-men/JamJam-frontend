@@ -1,10 +1,11 @@
 import React, { useRef } from 'react';
 import styled from '@emotion/styled';
-import useScrollSpy from '@hooks/useScrollSpy';
+import { useTabScroll } from '@hooks/useTabScroll';
 import getCategoryNameById from '@utils/getCategoryNameById';
 import getSkillNameById from '@utils/getSkillNameById';
 import type { ProviderProfile } from '@type/Provider';
 import Button from '@components/Button';
+import SectionTab from '@components/SectionTab';
 import UserProfileImageIcon from '@assets/icons/user-profile-image.svg?react';
 import LocationIcon from '@assets/icons/location.svg?react';
 import CareerIcon from '@assets/icons/career.svg?react';
@@ -136,30 +137,6 @@ const SectionTitle = styled.div`
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 16px;
-`;
-
-const TabContainer = styled.nav`
-  position: sticky;
-  display: flex;
-  top: 80px;
-  background-color: ${(props) => props.theme.COLORS.BACKGROUND};
-  border-bottom: 1px solid ${(props) => props.theme.COLORS.GRAY[5]};
-  z-index: 1;
-`;
-
-const TabButton = styled.button<{ active: boolean }>`
-  background-color: transparent;
-  border-bottom: 2.5px solid
-    ${({ theme, active }) =>
-      active ? theme.COLORS.JAMJAM_PRIMARY[1] : 'transparent'};
-  color: ${({ theme, active }) =>
-    active ? theme.COLORS.LABEL_PRIMARY : theme.COLORS.LABEL_SECONDARY};
-  font-weight: ${({ active }) => (active ? '600' : '400')};
-  padding: 16px 32px;
-`;
-
-const TabContentContainer = styled.div`
-  padding: 28px 8px;
 `;
 
 const IntroductionText = styled.div`
@@ -319,50 +296,28 @@ const Provider: React.FC<{ data: ProviderProfile }> = ({ data }) => {
   const servicesRef = useRef<HTMLElement | null>(null);
   const sectionRefs = [expertInfoRef, servicesRef];
 
-  const activeSection = useScrollSpy(sectionRefs);
   const TABS = ['전문가 정보', '서비스'] as const;
-  const activeTab = TABS[activeSection];
-
-  const scrollToSection = (index: number) => {
-    const targetRef = sectionRefs[index];
-    if (targetRef.current) {
-      const yOffset = -140;
-      const y =
-        targetRef.current.getBoundingClientRect().top +
-        window.pageYOffset +
-        yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-  };
-
-  const handleTabClick = (tabName: (typeof TABS)[number]) => {
-    const index = TABS.indexOf(tabName);
-    scrollToSection(index);
-  };
+  const { activeTab, handleTabClick } = useTabScroll({
+    tabs: TABS,
+    sectionRefs,
+  });
 
   return (
     <Container>
       <MainContent>
         <ProfileCard data={data} />
-        <TabContainer>
-          {TABS.map((tab) => (
-            <TabButton
-              key={tab}
-              active={activeTab === tab}
-              onClick={() => handleTabClick(tab)}
-            >
-              {tab}
-            </TabButton>
-          ))}
-        </TabContainer>
-        <TabContentContainer>
+        <SectionTab
+          tabs={TABS}
+          activeTab={activeTab}
+          onTabClick={handleTabClick}
+        >
           <section ref={expertInfoRef}>
             <ProviderInfoSection data={data} />
           </section>
           <section ref={servicesRef}>
             <ServicesSection />
           </section>
-        </TabContentContainer>
+        </SectionTab>
       </MainContent>
       <SidePanel data={data} />
     </Container>
