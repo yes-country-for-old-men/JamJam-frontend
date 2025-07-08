@@ -21,7 +21,7 @@ const Container = styled.main`
 `;
 
 const MainContent = styled.article`
-  width: 880px;
+  width: 840px;
 `;
 
 const ProfileSection = styled.section`
@@ -74,7 +74,7 @@ const CategoryBadge = styled.span`
   border-radius: 20px;
   color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   padding: 4px 8px;
 `;
 
@@ -88,30 +88,33 @@ const LocationInfo = styled.div`
 
 const SideCard = styled.aside`
   position: sticky;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   top: 80px;
-  width: calc(1200px - 880px);
   height: fit-content;
   background-color: white;
   border-radius: 16px;
-  padding: 20px;
+  padding: 16px;
 `;
 
 const SideCardTitle = styled.div`
   font-size: 18px;
   font-weight: 600;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 `;
 
 const StatusInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 `;
 
 const StatusLabel = styled.span`
   color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
   font-size: 14px;
+  letter-spacing: -0.075em;
 `;
 
 const StatusValue = styled.span`
@@ -120,7 +123,7 @@ const StatusValue = styled.span`
 `;
 
 const InquiryButtonWrapper = styled.div`
-  margin-top: 24px;
+  margin-top: 12px;
 `;
 
 const InfoSection = styled.section`
