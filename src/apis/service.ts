@@ -37,7 +37,10 @@ type AiThumbnailContent = {
 export const registerService = (data: ServiceRegisterRequest) => {
   const formData = new FormData();
 
-  formData.append('request', JSON.stringify(data.request));
+  const jsonBlob = new Blob([JSON.stringify(data.request)], {
+    type: 'application/json',
+  });
+  formData.append('request', jsonBlob);
 
   formData.append('thumbnail', data.thumbnail);
   data.portfolioImages?.forEach((image) => {

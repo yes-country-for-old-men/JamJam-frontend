@@ -9,38 +9,33 @@ import type {
   ContactHours,
 } from '@type/Provider';
 
-export interface SkillWithDocument extends Skill {
-  document?: File;
+export interface CareerWithFile extends Career {
+  file?: File;
 }
 
-export interface CareerWithDocument extends Career {
-  document?: File;
+export interface EducationWithFile extends Education {
+  file?: File;
 }
 
-export interface EducationWithDocument extends Education {
-  document?: File;
+export interface LicenseWithFile extends License {
+  file?: File;
 }
 
-export interface LicenseWithDocument extends License {
-  document?: File;
-}
-
-export interface ProviderRequestWithDocuments {
+export interface ProviderRequestWithFiles {
   categoryId: number;
   location: string;
   introduction: string;
   contactHours: ContactHours;
-  averageResponseTime: string;
-  skills: SkillWithDocument[];
-  careers: CareerWithDocument[];
-  educations: EducationWithDocument[];
-  licenses: LicenseWithDocument[];
+  skills: Skill[];
+  careers: CareerWithFile[];
+  educations: EducationWithFile[];
+  licenses: LicenseWithFile[];
 }
 
 export const getProviderProfile = () =>
   apiClient.get<APIResponse<ProviderProfile>>('/api/providers');
 
-const createProviderFormData = (data: ProviderRequestWithDocuments) => {
+const createProviderFormData = (data: ProviderRequestWithFiles) => {
   const formData = new FormData();
 
   const requestData = {
@@ -48,43 +43,39 @@ const createProviderFormData = (data: ProviderRequestWithDocuments) => {
     location: data.location,
     introduction: data.introduction,
     contactHours: data.contactHours,
-    averageResponseTime: data.averageResponseTime,
-    skills: data.skills.map(({ document, ...skill }) => skill),
-    careers: data.careers.map(({ document, ...career }) => career),
-    educations: data.educations.map(({ document, ...education }) => education),
-    licenses: data.licenses.map(({ document, ...license }) => license),
+    skills: data.skills,
+    careers: data.careers.map(({ file, ...career }) => career),
+    educations: data.educations.map(({ file, ...education }) => education),
+    licenses: data.licenses.map(({ file, ...license }) => license),
   };
 
-  formData.append('request', JSON.stringify(requestData));
-
-  data.skills.forEach((skill) => {
-    if (skill.document) {
-      formData.append('skillDocuments', skill.document);
-    }
+  const jsonBlob = new Blob([JSON.stringify(requestData)], {
+    type: 'application/json',
   });
+  formData.append('request', jsonBlob);
 
   data.careers.forEach((career) => {
-    if (career.document) {
-      formData.append('careerDocuments', career.document);
+    if (career.file) {
+      formData.append('careerFiles', career.file);
     }
   });
 
   data.educations.forEach((education) => {
-    if (education.document) {
-      formData.append('educationDocuments', education.document);
+    if (education.file) {
+      formData.append('educationFiles', education.file);
     }
   });
 
   data.licenses.forEach((license) => {
-    if (license.document) {
-      formData.append('licenseDocuments', license.document);
+    if (license.file) {
+      formData.append('licenseFiles', license.file);
     }
   });
 
   return formData;
 };
 
-export const registerProviderProfile = (data: ProviderRequestWithDocuments) => {
+export const registerProviderProfile = (data: ProviderRequestWithFiles) => {
   const formData = createProviderFormData(data);
 
   return apiClient.post('/api/providers', formData, {
@@ -94,7 +85,7 @@ export const registerProviderProfile = (data: ProviderRequestWithDocuments) => {
   });
 };
 
-export const updateProviderProfile = (data: ProviderRequestWithDocuments) => {
+export const updateProviderProfile = (data: ProviderRequestWithFiles) => {
   const formData = createProviderFormData(data);
 
   return apiClient.patch('/api/providers', formData, {
