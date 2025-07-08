@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import styled from '@emotion/styled';
-import requestPayment from '@apis/requestPayment';
+import requestPayment from '@apis/request';
 import Input from '@components/Input';
 import Button from '@components/Button';
 
