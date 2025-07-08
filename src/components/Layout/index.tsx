@@ -9,7 +9,7 @@ const LayoutContainer = styled.div`
   min-height: 100dvh;
 `;
 
-const MainContent = styled.main`
+const Content = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -20,9 +20,9 @@ const Layout: React.FC = () => {
   return (
     <LayoutContainer>
       <Header />
-      <MainContent>
+      <Content>
         <Outlet />
-      </MainContent>
+      </Content>
     </LayoutContainer>
   );
 };
