@@ -4,8 +4,10 @@ import { atom } from 'jotai';
 export interface ModalState {
   id: string;
   isOpen: boolean;
+  type?: 'default' | 'loading' | 'confirm' | 'alert';
   title?: string;
   content?: React.ReactNode;
+  loadingText?: string;
   onClose?: () => void;
   onConfirm?: () => void;
   confirmText?: string;
