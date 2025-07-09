@@ -14,8 +14,6 @@ export interface ServiceRegisterRequest {
 
 export interface ServiceGenerateRequest {
   description: string;
-  skills: string;
-  career: string;
 }
 
 type ServiceGenerateContent = {
