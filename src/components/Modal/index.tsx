@@ -151,7 +151,7 @@ const Modal: React.FC = () => {
             <LoadingText
               initial={{ opacity: 0, y: 10 }}
               animate={{
-                opacity: [0.5, 1, 0.5],
+                opacity: [1, 0.5, 1],
                 y: 0,
               }}
               transition={{
