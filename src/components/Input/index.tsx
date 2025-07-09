@@ -39,8 +39,9 @@ const StyledInput = styled.input<{ hasToggle?: boolean }>`
 
   &:focus {
     outline: none;
-    box-shadow:
-      inset 0 0 0 1px ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    box-shadow: inset 0 0 0 1px
+      ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+  }
 
   &:disabled {
     background-color: ${(props) => props.theme.COLORS.GRAY[5]};
