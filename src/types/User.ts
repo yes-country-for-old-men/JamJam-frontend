@@ -1,3 +1,9 @@
+export interface BankAccount {
+  accountNumber: string;
+  depositor: string;
+  bankCode: string;
+}
+
 export default interface User {
   name: string;
   nickname: string;
@@ -7,4 +13,6 @@ export default interface User {
   role: 'PROVIDER' | 'CLIENT';
   gender: 'MALE' | 'FEMALE';
   profileUrl?: string;
+  credit: number;
+  bankAccount?: BankAccount;
 }
