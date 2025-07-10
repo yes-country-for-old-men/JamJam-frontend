@@ -16,10 +16,29 @@ export interface ServiceGenerateRequest {
   description: string;
 }
 
+export interface ServiceDetailRequest {
+  serviceId: number;
+}
+
+export interface ServiceDeleteRequest {
+  serviceId: number;
+}
+
 type ServiceGenerateContent = {
   serviceNames: string[];
   category: number;
   description: string;
+};
+
+type ServiceDetailContent = {
+  userId: number;
+  serviceId: number;
+  thumbnail: string;
+  portfolioImages: { id: number; url: string }[];
+  serviceName: string;
+  description: string;
+  salary: number;
+  category: number;
 };
 
 export interface AiThumbnailRequest {
@@ -41,6 +60,7 @@ export const registerService = (data: ServiceRegisterRequest) => {
   formData.append('request', jsonBlob);
 
   formData.append('thumbnail', data.thumbnail);
+
   data.portfolioImages?.forEach((image) => {
     formData.append('portfolioImages', image);
   });
@@ -63,3 +83,13 @@ export const generateAiThumbnail = (data: AiThumbnailRequest) =>
     '/api/service/ai-thumbnail',
     data,
   );
+
+export const getServiceDetail = (params: ServiceDetailRequest) =>
+  apiClient.get<APIResponse<ServiceDetailContent>>('/api/service/detail', {
+    params,
+  });
+
+export const deleteService = (params: ServiceDeleteRequest) =>
+  apiClient.delete('/api/service/delete', {
+    params,
+  });
