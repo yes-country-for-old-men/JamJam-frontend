@@ -42,6 +42,7 @@ const useModal = () => {
   const alert = (config: {
     title: string;
     content: React.ReactNode;
+    onConfirm?: () => void;
     confirmText?: string;
   }) => {
     openModal({
@@ -49,6 +50,7 @@ const useModal = () => {
       type: 'alert',
       title: config.title,
       content: config.content,
+      onConfirm: config.onConfirm,
       confirmText: config.confirmText || '확인',
       showCloseButton: false,
     });
