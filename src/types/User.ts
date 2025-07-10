@@ -1,7 +1,8 @@
-export interface BankAccount {
+export interface Account {
   accountNumber: string;
   depositor: string;
   bankCode: string;
+  bankName: string;
 }
 
 export default interface User {
@@ -14,5 +15,5 @@ export default interface User {
   gender: 'MALE' | 'FEMALE';
   profileUrl?: string;
   credit: number;
-  bankAccount?: BankAccount;
+  account?: Account;
 }
