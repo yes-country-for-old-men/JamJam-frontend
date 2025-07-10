@@ -35,6 +35,18 @@ export interface ProviderRequestWithFiles {
 export const getProviderProfile = () =>
   apiClient.get<APIResponse<ProviderProfile>>('/api/providers');
 
+export type ProviderDetailContent = ProviderProfile & {
+  profileUrl: string;
+  nickname: string;
+  services: Array<{
+    serviceId: number;
+    thumbnailUrl: string;
+    serviceName: string;
+    providerName: string;
+    salary: number;
+  }>;
+};
+
 const createProviderFormData = (data: ProviderRequestWithFiles) => {
   const formData = new FormData();
 
@@ -94,3 +106,8 @@ export const updateProviderProfile = (data: ProviderRequestWithFiles) => {
     },
   });
 };
+
+export const getProviderPage = (userId: number) =>
+  apiClient.get<APIResponse<ProviderDetailContent>>(
+    `/api/providers/page/${userId}`,
+  );
