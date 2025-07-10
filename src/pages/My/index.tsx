@@ -66,6 +66,7 @@ const UserNickname = styled.div`
 
 const UserRole = styled.div`
   background-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+  width: fit-content;
   border-radius: 16px;
   color: white;
   font-size: 12px;
