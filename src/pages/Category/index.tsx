@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import SearchBar from '@components/SearchBar';
 import CategoryTabNavigator from '@pages/Category/components/CategoryTabNavigator';
-import ServiceCard from '@pages/Category/components/ServiceCard';
+import ServiceCard from '@components/ServiceCard';
 import CATEGORIES from '@constants/categoryData';
 import { MOCK_SERVICES } from '@constants/mockData';
 
@@ -90,6 +90,7 @@ const Category: React.FC = () => {
             {filteredServices.map((service) => (
               <ServiceCard
                 key={service.id}
+                id={service.id}
                 name={service.name}
                 minPrice={service.minPrice}
                 thumbnailUrl={service.thumbnailUrl}

@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 interface ServiceCardProps {
+  id: number;
   name: string;
   minPrice: number;
   thumbnailUrl?: string;
-  providerName: string;
+  providerName?: string;
 }
 
 const Container = styled.article`
@@ -58,13 +60,20 @@ const ProviderInfo = styled.span`
 `;
 
 const ServiceCard: React.FC<ServiceCardProps> = ({
+  id,
   name,
   thumbnailUrl,
   minPrice,
   providerName,
 }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/service/${id}`);
+  };
+
   return (
-    <Container>
+    <Container onClick={handleClick}>
       <ThumbnailSection>
         <ThumbnailImage src={thumbnailUrl} alt={name} />
       </ThumbnailSection>
