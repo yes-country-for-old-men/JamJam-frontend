@@ -30,7 +30,7 @@ type ServiceGenerateContent = {
   description: string;
 };
 
-type ServiceDetailContent = {
+export type ServiceDetailContent = {
   userId: number;
   serviceId: number;
   thumbnail: string;
