@@ -32,6 +32,9 @@ type ServiceGenerateContent = {
 
 export type ServiceDetailContent = {
   userId: number;
+  nickName: string;
+  profileUrl: string;
+  location: string;
   serviceId: number;
   thumbnail: string;
   portfolioImages: { id: number; url: string }[];
