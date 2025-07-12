@@ -1,15 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from '@emotion/styled';
-import type Category from '@type/Category';
-import theme from '@styles/theme';
+import theme from '@styles/theme.ts';
+import CATEGORIES from '@constants/categoryData';
 import CategoryIcon from '@assets/icons/category.svg?react';
 import ArrowDownIcon from '@assets/icons/arrow-down.svg?react';
 
 interface CategoryTabNavigatorProps {
-  categories: readonly Category[];
   currentCategoryId?: number | null;
-  onCategoryClick?: (categoryId: number) => void;
 }
 
 const Container = styled.nav`
@@ -70,16 +69,14 @@ const ExpandedSection = styled(motion.section)`
 const ExpandedContent = styled.div``;
 
 const CategoryTabNavigator: React.FC<CategoryTabNavigatorProps> = ({
-  categories,
   currentCategoryId,
-  onCategoryClick,
 }) => {
+  const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
-
-  const topCategories = categories.slice(0, 6);
-  const expandedCategories = categories.slice(6);
+  const topCategories = CATEGORIES.slice(0, 6);
+  const expandedCategories = CATEGORIES.slice(6);
   const iconColor = isExpanded
     ? theme.COLORS.JAMJAM_PRIMARY[1]
     : theme.COLORS.LABEL_SECONDARY;
@@ -90,8 +87,8 @@ const CategoryTabNavigator: React.FC<CategoryTabNavigatorProps> = ({
     }
   }, [expandedCategories]);
 
-  const handleCategoryClick = (categoryId: number) => {
-    onCategoryClick?.(categoryId);
+  const handleCategoryClick = (newCategoryId: number) => {
+    navigate(`/category/${newCategoryId}`);
   };
 
   const handleExpansionToggle = () => {
