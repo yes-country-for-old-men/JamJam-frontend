@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import SearchBar from '@components/SearchBar';
-import CategoryTabNavigator from '@pages/Category/components/CategoryTabNavigator';
+import CategoryTabNavigator from '@components/CategoryTabNavigator';
 import ServiceCard from '@components/ServiceCard';
 import CATEGORIES from '@constants/categoryData';
 import { MOCK_SERVICES } from '@constants/mockData';
@@ -50,7 +50,6 @@ const ServiceGrid = styled.div`
 
 const Category: React.FC = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
-  const navigate = useNavigate();
 
   const currentCategoryId = categoryId ? parseInt(categoryId, 10) : null;
 
@@ -65,20 +64,12 @@ const Category: React.FC = () => {
     );
   }, [currentCategoryId]);
 
-  const handleCategoryClick = (newCategoryId: number) => {
-    navigate(`/category/${newCategoryId}`);
-  };
-
   return (
     <Container>
       <SearchSection>
         <SearchBar />
       </SearchSection>
-      <CategoryTabNavigator
-        categories={CATEGORIES}
-        currentCategoryId={currentCategoryId}
-        onCategoryClick={handleCategoryClick}
-      />
+      <CategoryTabNavigator currentCategoryId={currentCategoryId} />
       <ContentWrapper>
         {currentCategory && (
           <CategoryHeader>
