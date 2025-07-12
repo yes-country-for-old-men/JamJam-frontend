@@ -96,7 +96,7 @@ const StyledHTMLContent = styled.div`
   blockquote {
     background-color: ${(props) => props.theme.COLORS.GRAY[6]};
     border-left: 3px solid ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
-    font-style: italic;
+    font-style: normal;
     margin: 16px 0;
     padding: 12px 16px;
 
@@ -156,6 +156,10 @@ const StyledHTMLContent = styled.div`
       background: none;
       padding: 0;
     }
+  }
+
+  hr {
+    border: 0.5px solid ${(props) => props.theme.COLORS.GRAY[5]};
   }
 `;
 
