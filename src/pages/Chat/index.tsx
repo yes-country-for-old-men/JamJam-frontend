@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import useChat from '@hooks/useChat';
@@ -111,6 +111,7 @@ const ChatRoomProfileImage = styled.img`
 
 const ChatRoomInfo = styled.div`
   flex: 1;
+  overflow: hidden;
 `;
 
 const ChatRoomInfoHeader = styled.header`
@@ -402,9 +403,12 @@ const ChatEmptyStateText = styled.div`
   padding: 0 12px;
 `;
 
+const SCROLL_BOTTOM_THRESHOLD = 100;
+
 const Chat: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [messageText, setMessageText] = useState('');
+  const [previousMessagesLength, setPreviousMessagesLength] = useState(0);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const token = localStorage.getItem('accessToken') || '';
@@ -414,6 +418,7 @@ const Chat: React.FC = () => {
     selectedChatId,
     chatRooms,
     messages,
+    loading,
     isConnected,
     selectChat,
     sendMessage,
@@ -432,6 +437,14 @@ const Chat: React.FC = () => {
     maintainScrollPosition,
   } = useMessageScroll();
 
+  const isScrollAtBottom = () => {
+    const container = messagesContainerRef.current;
+    if (!container) return false;
+
+    const { scrollTop, scrollHeight, clientHeight } = container;
+    return scrollTop + clientHeight >= scrollHeight - SCROLL_BOTTOM_THRESHOLD;
+  };
+
   const handleSendMessage = () => {
     if (!messageText.trim()) return;
 
@@ -441,10 +454,14 @@ const Chat: React.FC = () => {
     if (inputRef.current) {
       inputRef.current.style.height = 'auto';
     }
+
+    setTimeout(() => {
+      scrollToBottom();
+    }, 100);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
       e.preventDefault();
       handleSendMessage();
     }
@@ -469,12 +486,24 @@ const Chat: React.FC = () => {
   };
 
   useEffect(() => {
-    if (selectedChatId) {
-      setTimeout(() => {
-        scrollToBottom();
-      }, 100);
+    if (selectedChatId && !loading) {
+      scrollToBottom();
     }
-  }, [selectedChatId, scrollToBottom]);
+  }, [selectedChatId, loading]);
+
+  useLayoutEffect(() => {
+    if (messages.length > previousMessagesLength) {
+      const wasAtBottom = isScrollAtBottom();
+
+      if (wasAtBottom || messages.length === 1) {
+        setTimeout(() => {
+          scrollToBottom();
+        }, 0);
+      }
+    }
+
+    setPreviousMessagesLength(messages.length);
+  }, [messages]);
 
   useEffect(() => {
     maintainScrollPosition();
