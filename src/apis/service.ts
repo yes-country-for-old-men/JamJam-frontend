@@ -24,6 +24,13 @@ export interface ServiceDeleteRequest {
   serviceId: number;
 }
 
+export interface ServiceListRequest {
+  category?: number;
+  providerId?: number;
+  page?: number;
+  size?: number;
+}
+
 type ServiceGenerateContent = {
   serviceNames: string[];
   category: number;
@@ -42,6 +49,21 @@ export type ServiceDetailContent = {
   description: string;
   salary: number;
   category: number;
+};
+
+export type ServiceListItem = {
+  serviceId: number;
+  thumbnailUrl: string;
+  serviceName: string;
+  providerName: string;
+  salary: number;
+};
+
+export type ServiceListContent = {
+  services: ServiceListItem[];
+  currentPage: number;
+  totalPages: number;
+  hasNext: boolean;
 };
 
 export interface AiThumbnailRequest {
@@ -94,5 +116,10 @@ export const getServiceDetail = (params: ServiceDetailRequest) =>
 
 export const deleteService = (params: ServiceDeleteRequest) =>
   apiClient.delete('/api/service/delete', {
+    params,
+  });
+
+export const getServiceList = (params: ServiceListRequest) =>
+  apiClient.get<APIResponse<ServiceListContent>>('/api/service/service-list', {
     params,
   });
