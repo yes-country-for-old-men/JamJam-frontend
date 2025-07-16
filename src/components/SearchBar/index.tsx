@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import theme from '@styles/theme';
@@ -7,7 +8,6 @@ import SearchIcon from '@assets/icons/search.svg?react';
 interface SearchBarProps {
   value?: string;
   onChange?: (value: string) => void;
-  onSearch?: () => void;
   placeholder?: string;
   className?: string;
 }
@@ -53,7 +53,6 @@ const SearchInput = styled(motion.input)`
   outline: none;
   border-radius: 12px;
   font-size: 18px;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
   padding: 24px 64px 24px 20px;
 
   &::placeholder {
@@ -74,13 +73,16 @@ const SearchButton = styled(motion.button)`
 `;
 
 const SearchBar: React.FC<SearchBarProps> = ({
-  value = '',
+  value,
   onChange,
-  onSearch,
   placeholder = '필요한 손길을 찾아보세요',
   className,
 }) => {
-  const [searchValue, setSearchValue] = useState(value);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [searchValue, setSearchValue] = useState(
+    value || searchParams.get('keyword') || '',
+  );
   const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,7 +92,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   const handleSearch = () => {
-    onSearch?.();
+    if (searchValue.trim()) {
+      navigate(`/search?keyword=${encodeURIComponent(searchValue.trim())}`);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
