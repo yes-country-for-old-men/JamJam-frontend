@@ -88,11 +88,13 @@ const TopSection = styled(motion.div)`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  gap: 64px;
 `;
 
 const LeftSection = styled(motion.div)`
   display: flex;
   flex-direction: column;
+  flex: 1;
   align-items: flex-start;
   justify-content: center;
 `;
@@ -145,7 +147,7 @@ const Main: React.FC = () => {
         >
           <LeftSection variants={ANIMATION_VARIANTS.item}>
             <Title variants={ANIMATION_VARIANTS.item}>
-              당신이 쌓아온 삶의 경험이{'\n'}필요한 일과 이어질 수 있도록.
+              잊혀지는 경력이 아니라,{'\n'}이어지는 기회가 되도록
             </Title>
             <SearchBarWrapper variants={ANIMATION_VARIANTS.item}>
               <SearchBar
