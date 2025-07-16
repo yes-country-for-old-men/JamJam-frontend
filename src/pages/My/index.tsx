@@ -115,10 +115,10 @@ const My: React.FC = () => {
 
   const menuItems = [
     { key: 'info-edit', label: '기본 정보 수정' },
+    { key: 'credit', label: '잼잼 크레딧' },
     { key: 'profile-edit', label: '전문가 프로필 수정' },
-    { key: 'service-manage', label: '서비스 관리' },
     { key: 'service-register', label: '서비스 등록' },
-    { key: 'revenue-manage', label: '수익 관리' },
+    { key: 'order-manage', label: '주문 관리' },
   ];
 
   const currentPath = location.pathname.split('/').pop();
