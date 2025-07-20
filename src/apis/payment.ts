@@ -23,10 +23,15 @@ interface PaymentCompleteRequest {
   paymentUid: string;
 }
 
-const showPaymentAlert = (title: string, content: string) => {
+const showPaymentAlert = (
+  title: string,
+  content: string,
+  onConfirm?: () => void,
+) => {
   eventManager.emit('alert', {
     title,
     content: ensurePunctuation(content),
+    onConfirm,
   });
 };
 
@@ -79,6 +84,7 @@ const requestPayment = async (chargeAmount: number) => {
       showPaymentAlert(
         PAYMENT_MESSAGES.TITLES.SUCCESS,
         PAYMENT_MESSAGES.SUCCESS,
+        () => window.location.reload(),
       );
     } catch (verificationError) {
       const errorMessage: string =
