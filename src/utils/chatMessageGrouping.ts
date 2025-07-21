@@ -44,7 +44,7 @@ const shouldShowProfile = (dayMessages: Message[], index: number): boolean => {
   );
 };
 
-const useMessageGrouping = (messages: Message[]) => {
+const chatMessageGrouping = (messages: Message[]) => {
   const groupedMessages = messages.reduce(
     (acc, message) => {
       const date = formatDate(message.timestamp);
@@ -63,4 +63,4 @@ const useMessageGrouping = (messages: Message[]) => {
   };
 };
 
-export default useMessageGrouping;
+export default chatMessageGrouping;

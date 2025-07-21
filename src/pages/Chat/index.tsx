@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import useChat from '@hooks/useChat';
-import useMessageGrouping from '@hooks/useMessageGrouping';
 import useMessageScroll from '@hooks/useMessageScroll';
 import decodeToken from '@utils/decodeToken';
+import chatMessageGrouping from '@utils/chatMessageGrouping';
 import { formatTime, formatRelativeTime } from '@utils/format';
 import theme from '@styles/theme';
 import LogoIcon from '@assets/icons/gray-logo-icon.svg?react';
@@ -427,7 +427,7 @@ const Chat: React.FC = () => {
   } = useChat(token, currentUserId);
 
   const { groupedMessages, getBubblePosition, shouldShowProfile } =
-    useMessageGrouping(messages);
+    chatMessageGrouping(messages);
 
   const {
     messagesEndRef,
