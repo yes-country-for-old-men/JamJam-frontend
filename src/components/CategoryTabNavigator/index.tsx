@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from '@emotion/styled';
-import theme from '@styles/theme.ts';
+import theme from '@styles/theme';
 import CATEGORIES from '@constants/categoryData';
 import CategoryIcon from '@assets/icons/category.svg?react';
 import ArrowDownIcon from '@assets/icons/arrow-down.svg?react';
@@ -14,6 +14,7 @@ interface CategoryTabNavigatorProps {
 const Container = styled.nav`
   position: relative;
   width: 100%;
+  min-width: 1200px;
   background-color: ${(props) => props.theme.COLORS.BACKGROUND};
   border-bottom: 1px solid ${(props) => props.theme.COLORS.GRAY[5]};
   margin-bottom: 36px;
