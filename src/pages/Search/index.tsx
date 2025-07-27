@@ -109,6 +109,8 @@ const Search: React.FC = () => {
           setCurrentPage(page);
           setHasSearched(true);
         }
+      } catch {
+        setHasNext(false);
       } finally {
         setLoading(false);
       }

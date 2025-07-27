@@ -104,6 +104,8 @@ const Category: React.FC = () => {
           setHasNext(nextExists);
           setCurrentPage(page);
         }
+      } catch {
+        setHasNext(false);
       } finally {
         setLoading(false);
       }
