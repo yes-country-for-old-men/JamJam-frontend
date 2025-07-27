@@ -8,7 +8,7 @@ import {
   type Step1Data,
   type Step2Data,
   type Step3Data,
-} from '@pages/SignUp/schemas';
+} from '@pages/SignUp/schemas/signUpSchemas';
 
 const useSignUpForm = () => {
   const [step, setStep] = useState(1);
@@ -38,7 +38,7 @@ const useSignUpForm = () => {
       birthYear: '',
       birthMonth: '',
       birthDay: '',
-      gender: '',
+      gender: undefined,
       phone: '',
       verificationCode: '',
     },
