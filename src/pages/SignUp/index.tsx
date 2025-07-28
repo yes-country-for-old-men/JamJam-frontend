@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { z } from 'zod';
 import * as S from '@pages/SignUp/SignUp.styles';
 import { type MessageState } from '@type/MessageState';
 import { clientSignUp, providerSignUp } from '@apis/signUp';
@@ -10,6 +9,7 @@ import useValidation from '@hooks/useValidation';
 import usePhoneVerification from '@hooks/usePhoneVerification';
 import { removePaddingZero, formatPhoneNumber } from '@utils/format';
 import getErrorMessage from '@utils/getErrorMessage';
+import { phoneSchema } from '@schemas/userInfoSchemas';
 import Button from '@components/Button';
 import StepIndicator from '@pages/SignUp/components/StepIndicator';
 import Step1 from '@pages/SignUp/components/Step1';
@@ -147,16 +147,6 @@ const SignUp: React.FC = () => {
       step3Form.setError('phone', { message: '휴대폰 번호를 입력해 주세요.' });
       return;
     }
-
-    const phoneSchema = z.object({
-      phone: z
-        .string()
-        .min(1, '휴대폰 번호를 입력해 주세요.')
-        .regex(
-          /^010-?[0-9]{4}-?[0-9]{4}$/,
-          '올바른 휴대폰 번호 형식이 아닙니다.',
-        ),
-    });
 
     const validation = phoneSchema.safeParse({ phone });
     if (!validation.success) {
