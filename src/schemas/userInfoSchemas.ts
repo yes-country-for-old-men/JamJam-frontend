@@ -25,9 +25,28 @@ export const passwordSchema = z
   .regex(/[a-zA-Z]/, '비밀번호에는 영문이 포함되어야 합니다.')
   .regex(/[0-9]/, '비밀번호에는 숫자가 포함되어야 합니다.');
 
+export const optionalPasswordSchema = z
+  .string()
+  .optional()
+  .refine((value) => !value || value.length >= 8, {
+    message: '비밀번호는 8자 이상이어야 합니다.',
+  })
+  .refine((value) => !value || /[a-zA-Z]/.test(value), {
+    message: '비밀번호에는 영문이 포함되어야 합니다.',
+  })
+  .refine((value) => !value || /[0-9]/.test(value), {
+    message: '비밀번호에는 숫자가 포함되어야 합니다.',
+  });
+
 export const confirmPasswordSchema = z
   .string()
   .min(1, '비밀번호를 한번 더 입력해 주세요.');
+
+export const optionalConfirmPasswordSchema = z.string().optional();
+
+export const currentPasswordSchema = z
+  .string()
+  .min(1, '현재 비밀번호를 입력해 주세요.');
 
 export const nameSchema = z
   .string()
@@ -59,5 +78,15 @@ export const phoneSchema = z
 export const verificationCodeSchema = z.string().optional();
 
 export const roleSchema = z.enum(['provider', 'client'], {
-  required_error: '역할을 선택해 주세요.',
+  required_error: '역할을 선택해주세요.',
 });
+
+export const profileUrlSchema = z
+  .union([z.string(), z.instanceof(File), z.null()])
+  .optional();
+
+export const bankNameSchema = z.string().optional();
+
+export const accountNumberSchema = z.string().optional();
+
+export const accountHolderSchema = z.string().optional();
