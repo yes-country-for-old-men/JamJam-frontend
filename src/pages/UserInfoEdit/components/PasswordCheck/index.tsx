@@ -1,13 +1,13 @@
 import React from 'react';
-import { type UseFormReturn, Controller } from 'react-hook-form';
-import { type PasswordCheckData } from '@pages/UserInfoEdit/schemas/editableInfoSchemas';
+import { Controller } from 'react-hook-form';
+import { type PasswordCheckForm } from '@pages/UserInfoEdit/hooks/useInfoEditForm';
 import * as S from '@pages/UserInfoEdit/UserInfoEdit.styles';
 import Input from '@components/Input';
 import Button from '@components/Button';
 import PasswordIcon from '@assets/icons/password.svg?react';
 
 interface PasswordCheckProps {
-  form: UseFormReturn<PasswordCheckData>;
+  form: PasswordCheckForm;
   isLoading: boolean;
   onPasswordVerify: () => void;
 }

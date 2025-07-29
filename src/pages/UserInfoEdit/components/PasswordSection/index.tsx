@@ -1,11 +1,11 @@
 import React from 'react';
-import { type UseFormReturn, Controller } from 'react-hook-form';
-import { type EditInfoData } from '@pages/UserInfoEdit/schemas/editableInfoSchemas';
+import { Controller } from 'react-hook-form';
+import { type InfoEditForm } from '@pages/UserInfoEdit/hooks/useInfoEditForm';
 import * as S from '@pages/UserInfoEdit/UserInfoEdit.styles';
 import Input from '@components/Input';
 
 interface PasswordSectionProps {
-  form: UseFormReturn<EditInfoData>;
+  form: InfoEditForm;
 }
 
 const PasswordSection: React.FC<PasswordSectionProps> = ({ form }) => {

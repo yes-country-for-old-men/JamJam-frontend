@@ -1,6 +1,6 @@
 import React from 'react';
-import { type UseFormReturn, Controller } from 'react-hook-form';
-import { type EditInfoData } from '@pages/UserInfoEdit/schemas/editableInfoSchemas';
+import { Controller } from 'react-hook-form';
+import { type InfoEditForm } from '@pages/UserInfoEdit/hooks/useInfoEditForm';
 import { type MessageState } from '@type/MessageState';
 import * as S from '@pages/UserInfoEdit/UserInfoEdit.styles';
 import Input from '@components/Input';
@@ -8,10 +8,10 @@ import Button from '@components/Button';
 import ImageUpload from '@components/ImageUpload';
 
 interface BasicInfoSectionProps {
-  form: UseFormReturn<EditInfoData>;
+  form: InfoEditForm;
   nicknameMessage: MessageState;
   isCheckingNickname: boolean;
-  onNicknameChange: (value: string, setValue: any) => void;
+  onNicknameChange: (value: string, setValue: InfoEditForm['setValue']) => void;
   onNicknameCheck: (nickname: string) => void;
   renderMessage: (message: MessageState) => React.ReactNode;
 }
@@ -49,9 +49,7 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({
                   value={field.value}
                   onChange={(e) => {
                     const { value } = e.target;
-                    onNicknameChange(value, (infoField: string, val: any) =>
-                      form.setValue(infoField as keyof EditInfoData, val),
-                    );
+                    onNicknameChange(value, form.setValue);
                   }}
                 />
               )}
