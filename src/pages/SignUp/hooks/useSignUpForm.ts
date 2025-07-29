@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, type UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   step1Schema,
@@ -9,6 +9,10 @@ import {
   type Step2Data,
   type Step3Data,
 } from '@pages/SignUp/schemas/signUpSchemas';
+
+export type Step1Form = UseFormReturn<Step1Data>;
+export type Step2Form = UseFormReturn<Step2Data>;
+export type Step3Form = UseFormReturn<Step3Data>;
 
 const useSignUpForm = () => {
   const [step, setStep] = useState(1);

@@ -1,27 +1,25 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import React from 'react';
-import { type UseFormReturn } from 'react-hook-form';
+import { type Step2Form } from '@pages/SignUp/hooks/useSignUpForm';
 import { type MessageState } from '@type/MessageState';
 import * as S from '@pages/SignUp/SignUp.styles';
 import Input from '@components/Input';
 import Button from '@components/Button';
 
 interface Step2Props {
-  form: UseFormReturn<any>;
+  form: Step2Form;
   nicknameMessage: MessageState;
   idMessage: MessageState;
   passwordMessage: MessageState;
   confirmPasswordMessage: MessageState;
   isCheckingNickname: boolean;
   isCheckingId: boolean;
-  onNicknameChange: (value: string, setValue: any) => void;
-  onIdChange: (value: string, setValue: any) => void;
-  onPasswordChange: (value: string, setValue: any) => void;
+  onNicknameChange: (value: string, setValue: Step2Form['setValue']) => void;
+  onIdChange: (value: string, setValue: Step2Form['setValue']) => void;
+  onPasswordChange: (value: string, setValue: Step2Form['setValue']) => void;
   onConfirmPasswordChange: (
     value: string,
-    setValue: any,
-    getValues: any,
+    setValue: Step2Form['setValue'],
+    getValues: Step2Form['getValues'],
   ) => void;
   onNicknameCheck: (nickname: string) => void;
   onIdCheck: (id: string) => void;
