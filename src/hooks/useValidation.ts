@@ -18,10 +18,10 @@ import getErrorMessage from '@utils/getErrorMessage';
 type ValidationStatus = 'idle' | 'available' | 'duplicate';
 
 interface FormData extends FieldValues {
-  nickname: string;
-  id: string;
-  password: string;
-  confirmPassword: string;
+  nickname?: string;
+  id?: string;
+  password?: string;
+  confirmPassword?: string;
 }
 
 const useValidation = <T extends FormData = FormData>() => {
@@ -30,7 +30,6 @@ const useValidation = <T extends FormData = FormData>() => {
   const [passwordMessage, setPasswordMessage] = useState<MessageState>(null);
   const [confirmPasswordMessage, setConfirmPasswordMessage] =
     useState<MessageState>(null);
-
   const [nicknameCheckStatus, setNicknameCheckStatus] =
     useState<ValidationStatus>('idle');
   const [idCheckStatus, setIdCheckStatus] = useState<ValidationStatus>('idle');

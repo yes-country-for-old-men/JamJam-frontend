@@ -73,7 +73,7 @@ const UserInfoEdit: React.FC = () => {
     handleNicknameChange,
     handleNicknameCheck,
     setNicknameMessage,
-  } = useValidation();
+  } = useValidation<UserInfoFormData>();
 
   const {
     isVerificationSent,
