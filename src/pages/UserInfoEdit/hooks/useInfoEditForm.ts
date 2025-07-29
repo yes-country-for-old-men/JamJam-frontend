@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { useForm, type UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   passwordCheckSchema,
@@ -6,6 +6,9 @@ import {
   type PasswordCheckData,
   type EditInfoData,
 } from '@pages/UserInfoEdit/schemas/editableInfoSchemas';
+
+export type PasswordCheckForm = UseFormReturn<PasswordCheckData>;
+export type InfoEditForm = UseFormReturn<EditInfoData>;
 
 const useInfoEditForm = () => {
   const passwordForm = useForm<PasswordCheckData>({
