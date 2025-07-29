@@ -1,14 +1,10 @@
 import React from 'react';
-import { type UseFormReturn } from 'react-hook-form';
+import { type Step1Form } from '@pages/SignUp/hooks/useSignUpForm';
 import * as S from '@pages/SignUp/SignUp.styles';
 import RoleSelection from '@pages/SignUp/components/RoleSelection';
 
-interface Step1Data {
-  role: 'provider' | 'client';
-}
-
 interface Step1Props {
-  form: UseFormReturn<Step1Data>;
+  form: Step1Form;
   onRoleSelect: (role: 'provider' | 'client') => void;
 }
 

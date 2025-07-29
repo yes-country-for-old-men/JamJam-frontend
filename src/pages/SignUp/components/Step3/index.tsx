@@ -1,5 +1,6 @@
 import React from 'react';
-import { type UseFormReturn, Controller } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
+import { type Step3Form } from '@pages/SignUp/hooks/useSignUpForm';
 import { type MessageState } from '@type/MessageState';
 import * as S from '@pages/SignUp/SignUp.styles';
 import Input from '@components/Input';
@@ -8,18 +9,8 @@ import ToggleButton from '@components/ToggleButton';
 import MaleIcon from '@assets/icons/male.svg?react';
 import FemaleIcon from '@assets/icons/female.svg?react';
 
-interface Step3Data {
-  name: string;
-  birthYear: string;
-  birthMonth: string;
-  birthDay: string;
-  gender?: 'MALE' | 'FEMALE';
-  phone: string;
-  verificationCode?: string;
-}
-
 interface Step3Props {
-  form: UseFormReturn<Step3Data>;
+  form: Step3Form;
   phoneMessage: MessageState;
   verificationMessage: MessageState;
   isVerificationSent: boolean;
