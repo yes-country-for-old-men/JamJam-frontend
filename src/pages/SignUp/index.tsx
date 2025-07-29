@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from '@pages/SignUp/SignUp.styles';
+import { type Step2Data } from '@pages/SignUp/schemas/signUpSchemas';
 import { type MessageState } from '@type/MessageState';
 import { clientSignUp, providerSignUp } from '@apis/signUp';
 import useModal from '@hooks/useModal';
@@ -49,7 +50,7 @@ const SignUp: React.FC = () => {
     setIdMessage,
     setPasswordMessage,
     setConfirmPasswordMessage,
-  } = useValidation();
+  } = useValidation<Step2Data>();
 
   const {
     isVerificationSent,
