@@ -1,6 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
-import useSlider, { type SliderRange } from '@hooks/useSlider';
+import useSlider, {
+  type SliderRange,
+} from '@components/Slider/hooks/useSlider';
 
 const SliderContainer = styled.div`
   position: relative;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { type ProfileForm } from '@pages/ProfileEdit/hooks/useProfileForm';
 import { type ContactHours } from '@type/Provider';
-import { type SliderRange } from '@hooks/useSlider';
+import { type SliderRange } from '@components/Slider/hooks/useSlider';
 import * as S from '@pages/ProfileEdit/ProfileEdit.styles';
 import Slider from '@components/Slider';
 
