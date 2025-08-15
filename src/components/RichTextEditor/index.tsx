@@ -22,7 +22,6 @@ const LETTER_SPACING = '-0.025em';
 
 const EditorContainer = styled.div`
   position: relative;
-  margin-bottom: 16px;
   border-radius: 12px;
   overflow: hidden;
 
