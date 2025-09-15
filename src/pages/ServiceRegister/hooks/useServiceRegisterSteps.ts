@@ -18,7 +18,7 @@ interface UseServiceRegisterLogicProps {
 }
 
 const useServiceRegisterSteps = ({ form }: UseServiceRegisterLogicProps) => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [isGeneratingThumbnail, setIsGeneratingThumbnail] = useState(false);
   const [hasGeneratedThumbnail, setHasGeneratedThumbnail] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
