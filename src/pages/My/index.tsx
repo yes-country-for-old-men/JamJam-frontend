@@ -114,7 +114,7 @@ const My: React.FC = () => {
   const { data: userInfo, isLoading } = useUserInfoQuery();
 
   const menuItems = [
-    { key: 'info-edit', label: '기본 정보 수정' },
+    { key: 'info-edit', label: '회원 정보 수정' },
     { key: 'credit', label: '잼잼 크레딧' },
     { key: 'profile-edit', label: '전문가 프로필 수정' },
     { key: 'service-register', label: '서비스 등록' },
