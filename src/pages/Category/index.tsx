@@ -1,164 +1,62 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-  useMemo,
-} from 'react';
+import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import styled from '@emotion/styled';
-import { getServiceList, type ServiceListItem } from '@apis/service';
+import useCategory from '@pages/Category/hooks/useCategory';
+import useServiceListQuery from '@pages/Category/hooks/queries/useServiceListQuery';
+import * as S from '@pages/Category/Category.styles';
 import SearchBar from '@components/SearchBar';
 import CategoryTabNavigator from '@components/CategoryTabNavigator';
 import ServiceCard from '@components/ServiceCard';
 import Spinner from '@components/Spinner';
-import CATEGORIES from '@constants/categoryData';
-
-const Container = styled.main`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  min-width: max-content;
-  overflow-x: auto;
-`;
-
-const SearchSection = styled.section`
-  width: 100%;
-  max-width: 560px;
-  transform: scale(0.9);
-  margin-bottom: 20px;
-`;
-
-const ContentWrapper = styled.div`
-  max-width: 1200px;
-  padding: 0 24px;
-  width: 100%;
-`;
-
-const CategoryHeader = styled.header`
-  width: 100%;
-  margin-bottom: 28px;
-`;
-
-const CategoryTitle = styled.div`
-  font-size: 28px;
-  font-weight: 700;
-  text-align: start;
-`;
-
-const ServicesSection = styled.section``;
-
-const ServiceGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 36px;
-  margin-bottom: 40px;
-`;
-
-const SpinnerWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 24px;
-`;
 
 const Category: React.FC = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
-  const observerRef = useRef<HTMLDivElement>(null);
-
-  const [services, setServices] = useState<ServiceListItem[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [hasNext, setHasNext] = useState(true);
-  const [currentPage, setCurrentPage] = useState(0);
-
   const currentCategoryId = categoryId ? parseInt(categoryId, 10) : null;
 
-  const currentCategory = useMemo(() => {
-    return CATEGORIES.find((category) => category.id === currentCategoryId);
-  }, [currentCategoryId]);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useServiceListQuery({
+      category: currentCategoryId!,
+    });
 
-  const loadServices = useCallback(
-    async (page: number, isInitial = false) => {
-      if (loading || !currentCategoryId) return;
+  const { currentCategory, observerRef } = useCategory({
+    categoryId,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  });
 
-      setLoading(true);
-      try {
-        const response = await getServiceList({
-          category: currentCategoryId,
-          page,
-          size: 20,
-        });
+  const services = useMemo(() => {
+    return (
+      data?.pages.flatMap((page) => page.data?.content?.services || []) || []
+    );
+  }, [data]);
 
-        if (response.data?.content) {
-          const { services: newServices, hasNext: nextExists } =
-            response.data.content;
-
-          if (isInitial) {
-            setServices(newServices);
-          } else {
-            setServices((prev) => [...prev, ...newServices]);
-          }
-
-          setHasNext(nextExists);
-          setCurrentPage(page);
-        }
-      } catch {
-        setHasNext(false);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [loading, currentCategoryId],
-  );
-
-  const handleObserver = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
-      const target = entries[0];
-      if (target.isIntersecting && hasNext && !loading) {
-        loadServices(currentPage + 1);
-      }
-    },
-    [hasNext, loading, currentPage, loadServices],
-  );
-
-  useEffect(() => {
-    if (currentCategoryId) {
-      setServices([]);
-      setCurrentPage(0);
-      setHasNext(true);
-      loadServices(0, true);
-    }
-  }, [currentCategoryId]);
-
-  useEffect(() => {
-    const option = {
-      root: null,
-      rootMargin: '20px',
-      threshold: 0,
-    };
-
-    const observer = new IntersectionObserver(handleObserver, option);
-    if (observerRef.current) observer.observe(observerRef.current);
-
-    return () => observer.disconnect();
-  }, [handleObserver]);
+  if (isLoading) {
+    return (
+      <S.Container>
+        <S.SearchSection>
+          <SearchBar />
+        </S.SearchSection>
+        <S.SpinnerWrapper>
+          <Spinner />
+        </S.SpinnerWrapper>
+      </S.Container>
+    );
+  }
 
   return (
-    <Container>
-      <SearchSection>
+    <S.Container>
+      <S.SearchSection>
         <SearchBar />
-      </SearchSection>
+      </S.SearchSection>
       <CategoryTabNavigator currentCategoryId={currentCategoryId} />
-      <ContentWrapper>
+      <S.ContentWrapper>
         {currentCategory && (
-          <CategoryHeader>
-            <CategoryTitle>{currentCategory.name}</CategoryTitle>
-          </CategoryHeader>
+          <S.CategoryHeader>
+            <S.CategoryTitle>{currentCategory.name}</S.CategoryTitle>
+          </S.CategoryHeader>
         )}
-        <ServicesSection>
-          <ServiceGrid>
+        <S.ServicesSection>
+          <S.ServiceGrid>
             {services.map((service) => (
               <ServiceCard
                 key={service.serviceId}
@@ -169,19 +67,19 @@ const Category: React.FC = () => {
                 providerName={service.providerName}
               />
             ))}
-          </ServiceGrid>
-          {hasNext && (
+          </S.ServiceGrid>
+          {hasNextPage && (
             <div ref={observerRef}>
-              {loading && (
-                <SpinnerWrapper>
+              {isFetchingNextPage && (
+                <S.SpinnerWrapper>
                   <Spinner />
-                </SpinnerWrapper>
+                </S.SpinnerWrapper>
               )}
             </div>
           )}
-        </ServicesSection>
-      </ContentWrapper>
-    </Container>
+        </S.ServicesSection>
+      </S.ContentWrapper>
+    </S.Container>
   );
 };
 
