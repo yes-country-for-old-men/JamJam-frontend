@@ -4,7 +4,7 @@ import { getServiceList, type ServiceListRequest } from '@apis/service';
 const useServiceListQuery = (params: Omit<ServiceListRequest, 'page'>) => {
   return useInfiniteQuery({
     queryKey: ['serviceList', params],
-    queryFn: ({ pageParam = 1 }) =>
+    queryFn: ({ pageParam = 0 }) =>
       getServiceList({ ...params, page: pageParam, size: 16 }),
     getNextPageParam: (lastPage) => {
       if (lastPage.data?.content?.hasNext) {

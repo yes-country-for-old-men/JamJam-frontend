@@ -4,7 +4,7 @@ import { searchServices, type ServiceSearchRequest } from '@apis/search';
 const useSearchQuery = (params: Omit<ServiceSearchRequest, 'page'>) => {
   return useInfiniteQuery({
     queryKey: ['searchServices', params],
-    queryFn: ({ pageParam = 1 }) =>
+    queryFn: ({ pageParam = 0 }) =>
       searchServices({ ...params, page: pageParam, size: 16 }),
     getNextPageParam: (lastPage) => {
       if (lastPage.data?.content?.hasNext) {
