@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import { useTabScroll } from '@hooks/useTabScroll';
-import useProviderData from '@pages/Provider/hooks/useProviderData';
+import useProviderDetailQuery from '@pages/Provider/hooks/queries/useProviderDetailQuery';
 import * as S from '@pages/Provider/Provider.styles';
 import SectionTab from '@components/SectionTab';
 import ProfileCard from '@pages/Provider/components/ProfileCard';
@@ -11,11 +11,16 @@ import SidePanel from '@pages/Provider/components/SidePanel';
 
 const Provider: React.FC = () => {
   const { userId } = useParams<{ userId: string }>();
-  const { data, loading, shouldRedirect } = useProviderData(userId);
+
+  const parsedUserId = userId ? parseInt(userId, 10) : null;
+  const { data, isLoading, error } = useProviderDetailQuery(parsedUserId);
 
   const expertInfoRef = useRef<HTMLElement | null>(null);
   const servicesRef = useRef<HTMLElement | null>(null);
   const sectionRefs = [expertInfoRef, servicesRef];
+
+  const providerData =
+    data?.data?.code === 'SUCCESS' ? data.data.content : null;
 
   const TABS = ['전문가 정보', '서비스'] as const;
   const { activeTab, handleTabClick } = useTabScroll({
@@ -23,36 +28,40 @@ const Provider: React.FC = () => {
     sectionRefs,
   });
 
-  if (shouldRedirect) {
+  if (!userId || Number.isNaN(parsedUserId!)) {
     return <Navigate to="/not-found" replace />;
   }
 
-  if (loading) {
+  if (error || (data && data.data?.code !== 'SUCCESS')) {
+    return <Navigate to="/not-found" replace />;
+  }
+
+  if (isLoading) {
     return <S.LoadingWrapper />;
   }
 
-  if (!data) {
+  if (!providerData) {
     return <Navigate to="/not-found" replace />;
   }
 
   return (
     <S.Container>
       <S.MainContent>
-        <ProfileCard data={data} />
+        <ProfileCard data={providerData} />
         <SectionTab
           tabs={TABS}
           activeTab={activeTab}
           onTabClick={handleTabClick}
         >
           <section ref={expertInfoRef}>
-            <ProviderInfoSection data={data} />
+            <ProviderInfoSection data={providerData} />
           </section>
           <section ref={servicesRef}>
-            <ServicesSection data={data} />
+            <ServicesSection data={providerData} />
           </section>
         </SectionTab>
       </S.MainContent>
-      <SidePanel data={data} />
+      <SidePanel data={providerData} />
     </S.Container>
   );
 };
