@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import { useTabScroll } from '@hooks/useTabScroll';
-import useServiceData from '@pages/Service/hooks/useServiceData';
+import useServiceDetailQuery from '@pages/Service/hooks/queries/useServiceDetailQuery';
 import * as S from '@pages/Service/Service.styles';
 import SectionTab from '@components/SectionTab';
 import CategoryTabNavigator from '@components/CategoryTabNavigator';
@@ -13,12 +13,16 @@ import SidePanel from '@pages/Service/components/SidePanel';
 const Service: React.FC = () => {
   const { serviceId } = useParams<{ serviceId: string }>();
   const navigate = useNavigate();
-  const { data, loading, shouldRedirect } = useServiceData(serviceId);
+
+  const parsedServiceId = serviceId ? parseInt(serviceId, 10) : null;
+  const { data, isLoading, error } = useServiceDetailQuery(parsedServiceId);
 
   const serviceInfoRef = useRef<HTMLElement | null>(null);
   const portfolioRef = useRef<HTMLElement | null>(null);
 
-  const hasPortfolio = data && data.portfolioImages.length > 0;
+  const serviceData = data?.data?.code === 'SUCCESS' ? data.data.content : null;
+  const hasPortfolio = serviceData && serviceData.portfolioImages.length > 0;
+
   const sectionRefs = hasPortfolio
     ? [serviceInfoRef, portfolioRef]
     : [serviceInfoRef];
@@ -33,51 +37,58 @@ const Service: React.FC = () => {
   });
 
   const handleCategoryClick = () => {
-    if (data) {
-      navigate(`/category/${data.category}`);
+    if (serviceData) {
+      navigate(`/category/${serviceData.category}`);
     }
   };
 
   const handleOrderClick = () => {
-    if (data) {
-      navigate('/order', { state: { serviceData: data } });
+    if (serviceData) {
+      navigate('/order', { state: { serviceData } });
     }
   };
 
-  if (shouldRedirect) {
+  if (!serviceId || Number.isNaN(parsedServiceId!)) {
     return <Navigate to="/not-found" replace />;
   }
 
-  if (loading) {
+  if (error || (data && data.data?.code !== 'SUCCESS')) {
+    return <Navigate to="/not-found" replace />;
+  }
+
+  if (isLoading) {
     return <S.LoadingWrapper />;
   }
 
-  if (!data) {
+  if (!serviceData) {
     return <Navigate to="/not-found" replace />;
   }
 
   return (
     <>
-      <CategoryTabNavigator currentCategoryId={data.category} />
+      <CategoryTabNavigator currentCategoryId={serviceData.category} />
       <S.Container>
         <S.MainContent>
-          <ServiceHeader data={data} onCategoryClick={handleCategoryClick} />
+          <ServiceHeader
+            data={serviceData}
+            onCategoryClick={handleCategoryClick}
+          />
           <SectionTab
             tabs={TABS}
             activeTab={activeTab}
             onTabClick={handleTabClick}
           >
             <section ref={serviceInfoRef}>
-              <ServiceInfoSection data={data} />
+              <ServiceInfoSection data={serviceData} />
             </section>
             {hasPortfolio && (
               <section ref={portfolioRef}>
-                <PortfolioSection data={data} />
+                <PortfolioSection data={serviceData} />
               </section>
             )}
           </SectionTab>
         </S.MainContent>
-        <SidePanel data={data} onOrderClick={handleOrderClick} />
+        <SidePanel data={serviceData} onOrderClick={handleOrderClick} />
       </S.Container>
     </>
   );
