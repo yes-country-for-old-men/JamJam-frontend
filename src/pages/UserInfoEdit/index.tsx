@@ -1,17 +1,14 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { type FieldErrors } from 'react-hook-form';
-import type { MessageState } from '@type/MessageState';
-import type User from '@type/User';
 import useModal from '@hooks/useModal';
 import useValidation from '@hooks/useValidation';
 import usePhoneVerification from '@hooks/usePhoneVerification';
 import useInfoEditForm from '@pages/UserInfoEdit/hooks/useInfoEditForm';
-import {
-  fetchUserInfo,
-  updateUserInfo,
-  checkPassword,
-  type UpdateUserRequest,
-} from '@apis/user';
+import useUserInfoQuery from '@hooks/queries/useUserInfoQuery';
+import useCheckPasswordMutation from '@pages/UserInfoEdit/hooks/mutations/useCheckPasswordMutation';
+import useUpdateUserInfoMutation from '@pages/UserInfoEdit/hooks/mutations/useUpdateUserInfoMutation';
+import type { MessageState } from '@type/MessageState';
+import type { UpdateUserRequest } from '@apis/user';
 import { formatPhoneNumber } from '@utils/format';
 import getErrorMessage from '@utils/getErrorMessage';
 import { phoneSchema } from '@schemas/userInfoSchemas';
@@ -54,9 +51,6 @@ interface ChangeFlags {
 
 const UserInfoEdit: React.FC = () => {
   const [isPasswordVerified, setIsPasswordVerified] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [userInfo, setUserInfo] = useState<User | null>(null);
   const [originalPhone, setOriginalPhone] = useState('');
   const [originalProfileUrl, setOriginalProfileUrl] = useState<string | null>(
     null,
@@ -64,6 +58,10 @@ const UserInfoEdit: React.FC = () => {
 
   const { alert } = useModal();
   const { passwordForm, editForm } = useInfoEditForm();
+
+  const { data: userInfo, refetch: refetchUserInfo } = useUserInfoQuery();
+  const checkPasswordMutation = useCheckPasswordMutation();
+  const updateUserInfoMutation = useUpdateUserInfoMutation();
 
   const {
     nicknameMessage,
@@ -88,6 +86,31 @@ const UserInfoEdit: React.FC = () => {
     resetVerification,
     formatCountdown,
   } = usePhoneVerification();
+
+  useEffect(() => {
+    if (userInfo) {
+      const userProfileUrl = userInfo.profileUrl || null;
+      setOriginalProfileUrl(userProfileUrl);
+
+      const formattedPhone = userInfo.phoneNumber
+        ? formatPhoneNumber(userInfo.phoneNumber)
+        : '';
+
+      editForm.reset({
+        nickname: userInfo.nickname || '',
+        profileUrl: userProfileUrl,
+        newPassword: '',
+        confirmPassword: '',
+        phone: formattedPhone,
+        verificationCode: '',
+        bankName: userInfo.account?.bankName || '',
+        accountNumber: userInfo.account?.accountNumber || '',
+        accountHolder: userInfo.account?.depositor || '',
+      });
+
+      setOriginalPhone(userInfo.phoneNumber || '');
+    }
+  }, [userInfo, editForm]);
 
   const getChangeFlags = useCallback(
     (formData: UserInfoFormData): ChangeFlags => {
@@ -243,36 +266,13 @@ const UserInfoEdit: React.FC = () => {
     const isValid = await passwordForm.trigger();
     if (!isValid) return;
 
-    setIsLoading(true);
     try {
       const password = passwordForm.getValues('currentPassword');
-      const response = await checkPassword({ password });
+      const response = await checkPasswordMutation.mutateAsync({ password });
 
       if (response.data.content.isCorrect) {
         setIsPasswordVerified(true);
-        const userData = await fetchUserInfo();
-        setUserInfo(userData);
-
-        const userProfileUrl = userData.profileUrl || null;
-        setOriginalProfileUrl(userProfileUrl);
-
-        const formattedPhone = userData.phoneNumber
-          ? formatPhoneNumber(userData.phoneNumber)
-          : '';
-
-        editForm.reset({
-          nickname: userData.nickname || '',
-          profileUrl: userProfileUrl,
-          newPassword: '',
-          confirmPassword: '',
-          phone: formattedPhone,
-          verificationCode: '',
-          bankName: userData.account?.bankName || '',
-          accountNumber: userData.account?.accountNumber || '',
-          accountHolder: userData.account?.depositor || '',
-        });
-
-        setOriginalPhone(userData.phoneNumber || '');
+        await refetchUserInfo();
       } else {
         passwordForm.setError('currentPassword', {
           message: '비밀번호가 일치하지 않습니다.',
@@ -283,8 +283,6 @@ const UserInfoEdit: React.FC = () => {
         title: '오류',
         content: getErrorMessage(error),
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -358,10 +356,9 @@ const UserInfoEdit: React.FC = () => {
           return;
         }
 
-        setIsSubmitting(true);
         try {
           const requestData = buildRequestData(formData, changeFlags);
-          await updateUserInfo(requestData);
+          await updateUserInfoMutation.mutateAsync(requestData);
 
           alert({
             title: '정보 수정 완료',
@@ -374,8 +371,6 @@ const UserInfoEdit: React.FC = () => {
             title: '정보 수정 실패',
             content: getErrorMessage(error),
           });
-        } finally {
-          setIsSubmitting(false);
         }
       },
       (errors: FieldErrors<UserInfoFormData>) => {
@@ -393,6 +388,7 @@ const UserInfoEdit: React.FC = () => {
     validateChanges,
     buildRequestData,
     updateFormAfterSubmit,
+    updateUserInfoMutation,
     alert,
     setNicknameMessage,
   ]);
@@ -415,7 +411,7 @@ const UserInfoEdit: React.FC = () => {
     return (
       <PasswordCheck
         form={passwordForm}
-        isLoading={isLoading}
+        isLoading={checkPasswordMutation.isPending}
         onPasswordVerify={handlePasswordVerify}
       />
     );
@@ -454,7 +450,7 @@ const UserInfoEdit: React.FC = () => {
           fullWidth
           variant="primary"
           onClick={handleSubmit}
-          disabled={isSubmitting}
+          disabled={updateUserInfoMutation.isPending}
         >
           정보 수정
         </Button>
