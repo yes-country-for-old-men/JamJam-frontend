@@ -3,7 +3,15 @@ import type { Message } from '@type/Chat';
 
 type BubblePosition = 'single' | 'first' | 'middle' | 'last';
 
-const getBubblePosition = (
+export const groupChatMessages = (messages: Message[]) => {
+  return messages.reduce<Record<string, Message[]>>((acc, message) => {
+    const date = formatDate(message.timestamp);
+    acc[date] = [...(acc[date] || []), message];
+    return acc;
+  }, {});
+};
+
+export const getBubblePosition = (
   dayMessages: Message[],
   index: number,
 ): BubblePosition => {
@@ -30,7 +38,10 @@ const getBubblePosition = (
   return 'last';
 };
 
-const shouldShowProfile = (dayMessages: Message[], index: number): boolean => {
+export const shouldShowProfile = (
+  dayMessages: Message[],
+  index: number,
+): boolean => {
   const currentMessage = dayMessages[index];
   if (currentMessage.isOwn) return false;
 
@@ -43,24 +54,3 @@ const shouldShowProfile = (dayMessages: Message[], index: number): boolean => {
       60 * 1000
   );
 };
-
-const chatMessageGrouping = (messages: Message[]) => {
-  const groupedMessages = messages.reduce(
-    (acc, message) => {
-      const date = formatDate(message.timestamp);
-      return {
-        ...acc,
-        [date]: [...(acc[date] || []), message],
-      };
-    },
-    {} as Record<string, Message[]>,
-  );
-
-  return {
-    groupedMessages,
-    getBubblePosition,
-    shouldShowProfile,
-  };
-};
-
-export default chatMessageGrouping;

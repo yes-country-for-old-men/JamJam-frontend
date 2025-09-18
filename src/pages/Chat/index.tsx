@@ -1,8 +1,23 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useLayoutEffect,
+  useMemo,
+} from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import useChat from '@pages/Chat/hooks/useChat';
 import useMessageScroll from '@pages/Chat/hooks/useMessageScroll';
+import useChatRoomsQuery from '@pages/Chat/hooks/queries/useChatRoomsQuery';
+import useChatMessagesQuery from '@pages/Chat/hooks/queries/useChatMessagesQuery';
+import useMarkAsReadMutation from '@pages/Chat/hooks/mutations/useMarkAsReadMutation';
 import decodeToken from '@utils/decodeToken';
-import chatMessageGrouping from '@pages/Chat/utils/chatMessageGrouping';
+import {
+  groupChatMessages,
+  getBubblePosition,
+  shouldShowProfile,
+} from '@pages/Chat/utils/chatMessagesUtils';
+import type { ChatRoom } from '@type/Chat';
 import * as S from '@pages/Chat/Chat.styles';
 import * as MessagesS from '@pages/Chat/components/Messages/Messages.styles';
 import ChatRoomItem from '@pages/Chat/components/ChatRoomItem';
@@ -11,31 +26,119 @@ import Messages from '@pages/Chat/components/Messages';
 import ChatInput from '@pages/Chat/components/ChatInput';
 import LogoIcon from '@assets/icons/gray-logo-icon.svg?react';
 
-const SCROLL_BOTTOM_THRESHOLD = 100;
-
 const Chat: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [messageText, setMessageText] = useState('');
   const [previousMessagesLength, setPreviousMessagesLength] = useState(0);
+  const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
+  const [realtimeChatRooms, setRealtimeChatRooms] = useState<ChatRoom[]>([]);
+
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const token = localStorage.getItem('accessToken') || '';
   const currentUserId = decodeToken(token)?.userId || '';
+  const queryClient = useQueryClient();
+
+  const { data: queryChatRooms = [], isLoading: chatRoomsLoading } =
+    useChatRoomsQuery(currentUserId);
 
   const {
-    selectedChatId,
-    chatRooms,
-    messages,
-    loading,
-    isConnected,
-    selectChat,
-    sendMessage,
-    markMessageAsRead,
-    loadMoreMessages,
-  } = useChat(token, currentUserId);
+    data: messagesData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading: messagesLoading,
+  } = useChatMessagesQuery(selectedChatId);
 
-  const { groupedMessages, getBubblePosition, shouldShowProfile } =
-    chatMessageGrouping(messages);
+  const markAsReadMutation = useMarkAsReadMutation();
+
+  const {
+    tempMessages,
+    isConnected,
+    selectChat: selectChatSocket,
+    sendMessage: sendMessageSocket,
+    markMessageAsRead: markMessageAsReadSocket,
+  } = useChat({
+    token,
+    currentUserId,
+    selectedChatId,
+    onChatRoomUpdate: (data) => {
+      if (Array.isArray(data)) {
+        setRealtimeChatRooms(data);
+      } else {
+        setRealtimeChatRooms((prevRooms) => {
+          if (prevRooms.length === 0) return [data];
+
+          const existingIndex = prevRooms.findIndex(
+            (room) => room.id === data.id,
+          );
+
+          if (existingIndex >= 0) {
+            const updatedRooms = [...prevRooms];
+            updatedRooms[existingIndex] = data;
+
+            if (data.lastMessageTime) {
+              updatedRooms.sort(
+                (a, b) =>
+                  new Date(b.lastMessageTime).getTime() -
+                  new Date(a.lastMessageTime).getTime(),
+              );
+            }
+
+            return updatedRooms;
+          }
+          return [data, ...prevRooms];
+        });
+      }
+
+      queryClient.invalidateQueries({ queryKey: ['chatRooms'] });
+    },
+    onNewMessage: (message) => {
+      if (!message.isOwn) {
+        setRealtimeChatRooms((prev) => {
+          if (prev.length === 0) return prev;
+
+          const updated = prev.map((chat) => {
+            if (chat.id === selectedChatId) {
+              return {
+                ...chat,
+                lastMessage: message.text,
+                lastMessageTime: message.timestamp,
+              };
+            }
+            return chat;
+          });
+          return updated;
+        });
+      }
+    },
+  });
+
+  const chatRooms = useMemo(() => {
+    return realtimeChatRooms.length > 0 ? realtimeChatRooms : queryChatRooms;
+  }, [realtimeChatRooms, queryChatRooms]);
+
+  const messages = useMemo(() => {
+    const queryMessages =
+      messagesData?.pages
+        .flatMap((page) => page.messages)
+        .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime()) || [];
+
+    const lastQueryTime =
+      queryMessages.length > 0
+        ? queryMessages[queryMessages.length - 1].timestamp.getTime()
+        : 0;
+
+    const filteredTempMessages = tempMessages.filter(
+      (msg) => msg.timestamp.getTime() > lastQueryTime,
+    );
+
+    return [...queryMessages, ...filteredTempMessages];
+  }, [messagesData, tempMessages]);
+
+  const loading = chatRoomsLoading || messagesLoading;
+
+  const groupedMessages = groupChatMessages(messages);
 
   const {
     messagesEndRef,
@@ -46,7 +149,9 @@ const Chat: React.FC = () => {
   } = useMessageScroll();
 
   const isScrollAtBottom = () => {
+    const SCROLL_BOTTOM_THRESHOLD = 100;
     const container = messagesContainerRef.current;
+
     if (!container) return false;
 
     const { scrollTop, scrollHeight, clientHeight } = container;
@@ -56,7 +161,7 @@ const Chat: React.FC = () => {
   const handleSendMessage = () => {
     if (!messageText.trim()) return;
 
-    sendMessage(messageText.trim());
+    sendMessageSocket(messageText.trim());
     setMessageText('');
 
     if (inputRef.current) {
@@ -72,6 +177,22 @@ const Chat: React.FC = () => {
     if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
       e.preventDefault();
       handleSendMessage();
+    }
+  };
+
+  const selectChat = async (chatId: number) => {
+    setSelectedChatId(chatId);
+    await selectChatSocket(chatId);
+  };
+
+  const markMessageAsRead = async (chatRoomId: number, messageId: number) => {
+    markAsReadMutation.mutate({ chatRoomId, messageId });
+    markMessageAsReadSocket(chatRoomId, messageId);
+  };
+
+  const loadMoreMessages = async () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      await fetchNextPage();
     }
   };
 
@@ -94,7 +215,7 @@ const Chat: React.FC = () => {
     if (messages.length > previousMessagesLength) {
       const wasAtBottom = isScrollAtBottom();
 
-      if (wasAtBottom || messages.length === 1) {
+      if (wasAtBottom) {
         setTimeout(() => {
           scrollToBottom();
         }, 0);
@@ -102,7 +223,7 @@ const Chat: React.FC = () => {
     }
 
     setPreviousMessagesLength(messages.length);
-  }, [messages]);
+  }, [messages.length]);
 
   useEffect(() => {
     maintainScrollPosition();
@@ -122,7 +243,38 @@ const Chat: React.FC = () => {
     }
 
     return undefined;
-  }, [selectedChatId, messages, markMessageAsRead]);
+  }, [selectedChatId, messages]);
+
+  useEffect(() => {
+    if (queryChatRooms.length > 0 && realtimeChatRooms.length === 0) {
+      setRealtimeChatRooms(queryChatRooms);
+    }
+  }, [queryChatRooms, realtimeChatRooms.length]);
+
+  if (loading) {
+    return (
+      <S.Container>
+        <S.ChatContainer>
+          <S.Sidebar>
+            <S.SearchInputWrapper>
+              <S.SearchInput
+                placeholder="검색"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </S.SearchInputWrapper>
+            <S.ChatRoomList />
+          </S.Sidebar>
+          <S.MainArea>
+            <S.EmptyState>
+              <LogoIcon />
+              <S.EmptyStateText>채팅 목록을 불러오고 있어요.</S.EmptyStateText>
+            </S.EmptyState>
+          </S.MainArea>
+        </S.ChatContainer>
+      </S.Container>
+    );
+  }
 
   return (
     <S.Container>
