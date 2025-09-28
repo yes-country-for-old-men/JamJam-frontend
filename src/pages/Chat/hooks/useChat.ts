@@ -51,51 +51,26 @@ const useChat = ({
 
   const { socket, isConnected } = useWebSocket(token, currentUserId);
 
-  const selectChat = async (chatId: number) => {
+  const clearTempMessages = () => {
     setTempMessages([]);
-
-    if (socket && isConnected) {
-      socket.joinRoom(chatId);
-    }
   };
 
-  const sendMessage = (text: string): void => {
-    if (!selectedChatId) return;
-
-    const tempMessage: Message = {
-      id: Date.now(),
-      chatRoomId: selectedChatId,
-      text,
-      isOwn: true,
-      timestamp: new Date(),
-      status: 'sending',
-    };
-
-    setTempMessages((prev) => [...prev, tempMessage]);
-
-    if (socket && isConnected) {
-      try {
-        socket.sendMessage(selectedChatId, text);
-      } catch {
-        setTempMessages((prev) =>
-          prev.map((msg) =>
-            msg.id === tempMessage.id ? { ...msg, status: 'failed' } : msg,
-          ),
-        );
-      }
-    } else {
-      setTempMessages((prev) =>
-        prev.map((msg) =>
-          msg.id === tempMessage.id ? { ...msg, status: 'failed' } : msg,
-        ),
-      );
-    }
+  const addTempMessage = (message: Message) => {
+    setTempMessages((prev) => [...prev, message]);
   };
 
-  const markMessageAsRead = (chatRoomId: number, messageId: number) => {
-    if (socket && isConnected) {
-      socket.markMessageAsRead(chatRoomId, messageId);
-    }
+  const updateTempMessage = (messageId: number, updates: Partial<Message>) => {
+    setTempMessages((prev) =>
+      prev.map((msg) => (msg.id === messageId ? { ...msg, ...updates } : msg)),
+    );
+  };
+
+  const removeTempMessagesByText = (text: string) => {
+    setTempMessages((prev) =>
+      prev.filter(
+        (msg) => !(msg.status === 'sending' && msg.text === text && msg.isOwn),
+      ),
+    );
   };
 
   useEffect(() => {
@@ -104,17 +79,8 @@ const useChat = ({
     const handleNewMessage = (data: StompNewMessageEvent) => {
       const newMessage = convertStompMessageToLocal(data, currentUserId);
 
-      setTempMessages((prev) => {
-        const filtered = prev.filter(
-          (msg) =>
-            !(
-              msg.status === 'sending' &&
-              msg.text === newMessage.text &&
-              msg.isOwn
-            ),
-        );
-        return [...filtered, newMessage];
-      });
+      removeTempMessagesByText(newMessage.text);
+      addTempMessage(newMessage);
 
       onNewMessage?.(newMessage);
     };
@@ -146,9 +112,11 @@ const useChat = ({
   return {
     tempMessages,
     isConnected,
-    selectChat,
-    sendMessage,
-    markMessageAsRead,
+    socket,
+    clearTempMessages,
+    addTempMessage,
+    updateTempMessage,
+    removeTempMessagesByText,
   };
 };
 

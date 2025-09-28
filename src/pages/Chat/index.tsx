@@ -17,7 +17,7 @@ import {
   getBubblePosition,
   shouldShowProfile,
 } from '@pages/Chat/utils/chatMessagesUtils';
-import type { ChatRoom } from '@type/Chat';
+import type { ChatRoom, Message } from '@type/Chat';
 import * as S from '@pages/Chat/Chat.styles';
 import * as MessagesS from '@pages/Chat/components/Messages/Messages.styles';
 import ChatRoomItem from '@pages/Chat/components/ChatRoomItem';
@@ -55,9 +55,10 @@ const Chat: React.FC = () => {
   const {
     tempMessages,
     isConnected,
-    selectChat: selectChatSocket,
-    sendMessage: sendMessageSocket,
-    markMessageAsRead: markMessageAsReadSocket,
+    socket,
+    clearTempMessages,
+    addTempMessage,
+    updateTempMessage,
   } = useChat({
     token,
     currentUserId,
@@ -158,10 +159,52 @@ const Chat: React.FC = () => {
     return scrollTop + clientHeight >= scrollHeight - SCROLL_BOTTOM_THRESHOLD;
   };
 
+  const selectChat = async (chatId: number) => {
+    setSelectedChatId(chatId);
+    clearTempMessages();
+
+    if (socket && isConnected) {
+      socket.joinRoom(chatId);
+    }
+  };
+
+  const sendMessage = (text: string): void => {
+    if (!selectedChatId) return;
+
+    const tempMessage: Message = {
+      id: Date.now(),
+      chatRoomId: selectedChatId,
+      text,
+      isOwn: true,
+      timestamp: new Date(),
+      status: 'sending',
+    };
+
+    addTempMessage(tempMessage);
+
+    if (socket && isConnected) {
+      try {
+        socket.sendMessage(selectedChatId, text);
+      } catch {
+        updateTempMessage(tempMessage.id, { status: 'failed' });
+      }
+    } else {
+      updateTempMessage(tempMessage.id, { status: 'failed' });
+    }
+  };
+
+  const markMessageAsRead = async (chatRoomId: number, messageId: number) => {
+    markAsReadMutation.mutate({ chatRoomId, messageId });
+
+    if (socket && isConnected) {
+      socket.markMessageAsRead(chatRoomId, messageId);
+    }
+  };
+
   const handleSendMessage = () => {
     if (!messageText.trim()) return;
 
-    sendMessageSocket(messageText.trim());
+    sendMessage(messageText.trim());
     setMessageText('');
 
     if (inputRef.current) {
@@ -178,16 +221,6 @@ const Chat: React.FC = () => {
       e.preventDefault();
       handleSendMessage();
     }
-  };
-
-  const selectChat = async (chatId: number) => {
-    setSelectedChatId(chatId);
-    await selectChatSocket(chatId);
-  };
-
-  const markMessageAsRead = async (chatRoomId: number, messageId: number) => {
-    markAsReadMutation.mutate({ chatRoomId, messageId });
-    markMessageAsReadSocket(chatRoomId, messageId);
   };
 
   const loadMoreMessages = async () => {
