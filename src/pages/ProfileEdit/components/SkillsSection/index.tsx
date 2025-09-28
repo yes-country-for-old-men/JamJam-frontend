@@ -1,6 +1,7 @@
 import React from 'react';
 import { type ProfileForm } from '@pages/ProfileEdit/hooks/useProfileForm';
 import useSkillSelection from '@pages/ProfileEdit/hooks/useSkillSelection';
+import type { Skill } from '@type/Provider';
 import * as S from '@pages/ProfileEdit/ProfileEdit.styles';
 import CATEGORIES from '@constants/categoryData';
 import DeleteIcon from '@assets/icons/cross.svg?react';
@@ -21,17 +22,40 @@ const Tag: React.FC<{
 
 const SkillsSection: React.FC<SkillsSectionProps> = ({ form }) => {
   const skills = form.watch('skills');
+
   const {
     selectedCategory,
     setSelectedCategory,
     searchTerm,
     setSearchTerm,
     displaySkills,
-    handleSkillToggle,
-    handleRemoveSkill,
-  } = useSkillSelection(skills, (newSkills) =>
-    form.setValue('skills', newSkills),
-  );
+    clearSearch,
+  } = useSkillSelection();
+
+  const handleSkillToggle = (skill: Skill) => {
+    const isSelected = skills.some((s) => s.id === skill.id);
+
+    if (isSelected) {
+      form.setValue(
+        'skills',
+        skills.filter((s) => s.id !== skill.id),
+      );
+    } else if (skills.length < 20) {
+      form.setValue('skills', [...skills, skill]);
+    }
+  };
+
+  const handleRemoveSkill = (skillToRemove: Skill) => {
+    form.setValue(
+      'skills',
+      skills.filter((skill) => skill.id !== skillToRemove.id),
+    );
+  };
+
+  const handleCategorySelect = (categoryId: number) => {
+    setSelectedCategory(categoryId);
+    clearSearch();
+  };
 
   return (
     <S.Section>
@@ -58,10 +82,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ form }) => {
               <S.CategoryItem
                 key={category.id}
                 active={selectedCategory === category.id && !searchTerm.trim()}
-                onClick={() => {
-                  setSelectedCategory(category.id);
-                  setSearchTerm('');
-                }}
+                onClick={() => handleCategorySelect(category.id)}
               >
                 {category.name}
               </S.CategoryItem>

@@ -1,12 +1,8 @@
-import { useState, useMemo, useCallback } from 'react';
-import type { Skill } from '@type/Provider';
+import { useState, useMemo } from 'react';
 import CATEGORIES from '@constants/categoryData';
 import SKILLS_BY_CATEGORY from '@constants/skillData';
 
-const useSkillSelection = (
-  skills: Skill[],
-  setSkills: (skills: Skill[]) => void,
-) => {
+const useSkillSelection = () => {
   const [selectedCategory, setSelectedCategory] = useState(CATEGORIES[0].id);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -24,29 +20,9 @@ const useSkillSelection = (
     );
   }, [searchTerm, selectedCategory, allSkills]);
 
-  const handleSkillToggle = useCallback(
-    (skill: Skill) => {
-      const isSelected = skills.some((s) => s.id === skill.id);
-
-      if (isSelected) {
-        setSkills(skills.filter((s) => s.id !== skill.id));
-      } else if (skills.length < 20) {
-        setSkills([...skills, skill]);
-      }
-    },
-    [skills, setSkills],
-  );
-
-  const handleRemoveSkill = useCallback(
-    (skillToRemove: Skill) => {
-      setSkills(skills.filter((skill) => skill.id !== skillToRemove.id));
-    },
-    [skills, setSkills],
-  );
-
-  const clearAllSkills = useCallback(() => {
-    setSkills([]);
-  }, [setSkills]);
+  const clearSearch = () => {
+    setSearchTerm('');
+  };
 
   return {
     selectedCategory,
@@ -54,9 +30,7 @@ const useSkillSelection = (
     searchTerm,
     setSearchTerm,
     displaySkills,
-    handleSkillToggle,
-    handleRemoveSkill,
-    clearAllSkills,
+    clearSearch,
   };
 };
 
