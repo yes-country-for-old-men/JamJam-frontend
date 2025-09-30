@@ -1,4 +1,4 @@
-import SKILLS_BY_CATEGORY from '@constants/skillData';
+import SKILLS_BY_CATEGORY from '@constants/skills';
 
 const getSkillNameById = (id: number): string | undefined => {
   const allSkills = Object.values(SKILLS_BY_CATEGORY).flat();

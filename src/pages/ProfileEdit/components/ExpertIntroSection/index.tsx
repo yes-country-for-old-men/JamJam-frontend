@@ -3,8 +3,8 @@ import { Controller } from 'react-hook-form';
 import { type ProfileForm } from '@pages/ProfileEdit/hooks/useProfileForm';
 import * as S from '@pages/ProfileEdit/ProfileEdit.styles';
 import Select from '@components/Select';
-import CATEGORIES from '@constants/categoryData';
-import LOCATIONS from '@constants/locationData';
+import CATEGORIES from '@constants/serviceCategories';
+import LOCATIONS from '@constants/locations';
 
 interface ExpertIntroSectionProps {
   form: ProfileForm;

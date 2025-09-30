@@ -4,7 +4,7 @@ import { type InfoEditForm } from '@pages/UserInfoEdit/hooks/useInfoEditForm';
 import * as S from '@pages/UserInfoEdit/UserInfoEdit.styles';
 import Input from '@components/Input';
 import Select from '@components/Select';
-import BANK_CODE_MAP from '@constants/bankData';
+import BANK_CODE_MAP from '@constants/bankCodes';
 
 const BANKS = Object.entries(BANK_CODE_MAP).map(([code, name]) => ({
   code,

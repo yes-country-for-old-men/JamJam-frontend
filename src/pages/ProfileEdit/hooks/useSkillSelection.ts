@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import CATEGORIES from '@constants/categoryData';
-import SKILLS_BY_CATEGORY from '@constants/skillData';
+import CATEGORIES from '@constants/serviceCategories';
+import SKILLS_BY_CATEGORY from '@constants/skills';
 
 const useSkillSelection = () => {
   const [selectedCategory, setSelectedCategory] = useState(CATEGORIES[0].id);

@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 import Carousel from '@pages/Main/components/Carousel';
 import SearchBar from '@components/SearchBar';
 import CategoryCard from '@pages/Main/components/CategoryCard';
-import CATEGORIES from '@constants/categoryData';
-import { MOCK_SLIDES } from '@constants/mockData';
+import CATEGORIES from '@constants/serviceCategories';
+import SLIDE_IMAGES from '@constants/slideImages';
 
 const ANIMATION_VARIANTS = {
   container: {
@@ -158,7 +158,7 @@ const Main: React.FC = () => {
             </SearchBarWrapper>
           </LeftSection>
           <CarouselWrapper variants={ANIMATION_VARIANTS.item}>
-            <Carousel slides={MOCK_SLIDES} />
+            <Carousel slides={SLIDE_IMAGES} />
           </CarouselWrapper>
         </TopSection>
 

@@ -19,7 +19,7 @@ import BasicInfoSection from '@pages/UserInfoEdit/components/BasicInfoSection';
 import PasswordSection from '@pages/UserInfoEdit/components/PasswordSection';
 import PhoneSection from '@pages/UserInfoEdit/components/PhoneSection';
 import AccountSection from '@pages/UserInfoEdit/components/AccountSection';
-import BANK_CODE_MAP from '@constants/bankData';
+import BANK_CODE_MAP from '@constants/bankCodes';
 
 const BANKS = Object.entries(BANK_CODE_MAP).map(([code, name]) => ({
   code,

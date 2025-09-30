@@ -15,7 +15,7 @@ import CareerSection from '@pages/ProfileEdit/components/CareerSection';
 import EducationSection from '@pages/ProfileEdit/components/EducationSection';
 import ContactTimeSection from '@pages/ProfileEdit/components/ContactTimeSection';
 import Button from '@components/Button';
-import LOCATIONS from '@constants/locationData';
+import LOCATIONS from '@constants/locations';
 
 const ProfileEdit: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);

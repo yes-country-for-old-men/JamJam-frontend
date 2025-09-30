@@ -6,7 +6,7 @@ import Input from '@components/Input';
 import Select from '@components/Select';
 import Button from '@components/Button';
 import RichTextEditor from '@components/RichTextEditor';
-import CATEGORIES from '@constants/categoryData';
+import CATEGORIES from '@constants/serviceCategories';
 
 interface ServiceDetailsStepProps {
   form: UseFormReturn<ServiceRegisterData>;

@@ -1,4 +1,4 @@
-import CATEGORIES from '@constants/categoryData';
+import CATEGORIES from '@constants/serviceCategories';
 
 const getCategoryNameById = (id: number): string | undefined => {
   return CATEGORIES.find((category) => category.id === id)?.name;

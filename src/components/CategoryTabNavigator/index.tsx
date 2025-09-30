@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from '@emotion/styled';
 import theme from '@styles/theme';
-import CATEGORIES from '@constants/categoryData';
+import CATEGORIES from '@constants/serviceCategories';
 import CategoryIcon from '@assets/icons/category.svg?react';
 import ArrowDownIcon from '@assets/icons/arrow-down.svg?react';
 
