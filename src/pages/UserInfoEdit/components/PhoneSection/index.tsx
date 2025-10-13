@@ -1,13 +1,12 @@
 import React from 'react';
-import { type UseFormReturn, Controller } from 'react-hook-form';
-import { type EditInfoData } from '@pages/UserInfoEdit/schemas/editableInfoSchemas';
+import { type InfoEditForm } from '@pages/UserInfoEdit/hooks/useInfoEditForm';
 import { type MessageState } from '@type/MessageState';
 import * as S from '@pages/UserInfoEdit/UserInfoEdit.styles';
 import Input from '@components/Input';
 import Button from '@components/Button';
 
 interface PhoneSectionProps {
-  form: UseFormReturn<EditInfoData>;
+  form: InfoEditForm;
   phoneMessage: MessageState;
   verificationMessage: MessageState;
   isVerificationSent: boolean;
@@ -19,7 +18,6 @@ interface PhoneSectionProps {
   onSendVerification: () => Promise<void>;
   onVerifyCode: () => Promise<void>;
   formatCountdown: (seconds: number) => string;
-  renderMessage: (message: MessageState) => React.ReactNode;
 }
 
 const PhoneSection: React.FC<PhoneSectionProps> = ({
@@ -35,8 +33,25 @@ const PhoneSection: React.FC<PhoneSectionProps> = ({
   onSendVerification,
   onVerifyCode,
   formatCountdown,
-  renderMessage,
 }) => {
+  const phoneError = form.formState.errors.phone;
+  const verificationCodeError = form.formState.errors.verificationCode;
+
+  const renderMessage = (message: MessageState) => {
+    if (!message) return null;
+
+    switch (message.type) {
+      case 'success':
+        return <S.SuccessMessage>{message.text}</S.SuccessMessage>;
+      case 'error':
+        return <S.InvalidMessage>{message.text}</S.InvalidMessage>;
+      case 'info':
+        return <S.InfoMessage>{message.text}</S.InfoMessage>;
+      default:
+        return null;
+    }
+  };
+
   return (
     <S.ContentSection>
       <S.SectionHeader>휴대폰 번호</S.SectionHeader>
@@ -44,17 +59,12 @@ const PhoneSection: React.FC<PhoneSectionProps> = ({
         <S.FieldLabel>휴대폰 번호</S.FieldLabel>
         <S.FlexInputGroup>
           <S.FlexInputWrapper>
-            <Controller
-              name="phone"
-              control={form.control}
-              render={({ field }) => (
-                <Input
-                  placeholder="하이픈(-) 제외하고 입력"
-                  value={field.value}
-                  onChange={(e) => onPhoneChange(e.target.value)}
-                  maxLength={13}
-                />
-              )}
+            <Input
+              placeholder="하이픈(-) 제외하고 입력"
+              {...form.register('phone', {
+                onChange: (e) => onPhoneChange(e.target.value),
+              })}
+              maxLength={13}
             />
           </S.FlexInputWrapper>
           <S.ActionButtonWrapper>
@@ -68,12 +78,9 @@ const PhoneSection: React.FC<PhoneSectionProps> = ({
             </Button>
           </S.ActionButtonWrapper>
         </S.FlexInputGroup>
-        {form.formState.errors.phone && (
-          <S.InvalidMessage>
-            {form.formState.errors.phone.message}
-          </S.InvalidMessage>
-        )}
-        {renderMessage(phoneMessage)}
+        {phoneError
+          ? renderMessage({ text: phoneError.message || '', type: 'error' })
+          : renderMessage(phoneMessage)}
       </S.FieldGroup>
       {isVerificationSent && (
         <S.FieldGroup>
@@ -88,18 +95,11 @@ const PhoneSection: React.FC<PhoneSectionProps> = ({
           </S.FieldLabel>
           <S.FlexInputGroup>
             <S.FlexInputWrapper>
-              <Controller
-                name="verificationCode"
-                control={form.control}
-                render={({ field }) => (
-                  <Input
-                    placeholder="인증번호 6자리를 입력해 주세요"
-                    value={field.value || ''}
-                    onChange={field.onChange}
-                    maxLength={6}
-                    disabled={isPhoneVerified}
-                  />
-                )}
+              <Input
+                placeholder="인증번호 6자리를 입력해 주세요"
+                {...form.register('verificationCode')}
+                maxLength={6}
+                disabled={isPhoneVerified}
               />
             </S.FlexInputWrapper>
             {!isPhoneVerified && (
@@ -115,7 +115,13 @@ const PhoneSection: React.FC<PhoneSectionProps> = ({
               </S.ActionButtonWrapper>
             )}
           </S.FlexInputGroup>
-          {renderMessage(verificationMessage)}
+          {verificationMessage
+            ? renderMessage(verificationMessage)
+            : verificationCodeError &&
+              renderMessage({
+                text: verificationCodeError.message || '',
+                type: 'error',
+              })}
         </S.FieldGroup>
       )}
     </S.ContentSection>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Controller } from 'react-hook-form';
 import { type PasswordCheckForm } from '@pages/UserInfoEdit/hooks/useInfoEditForm';
 import * as S from '@pages/UserInfoEdit/UserInfoEdit.styles';
 import Input from '@components/Input';
@@ -32,19 +31,12 @@ const PasswordCheck: React.FC<PasswordCheckProps> = ({
           <S.PasswordCheckPrompt>
             회원 정보를 수정하려면 비밀번호를 입력해 주세요.
           </S.PasswordCheckPrompt>
-          <Controller
-            name="currentPassword"
-            control={form.control}
-            render={({ field }) => (
-              <Input
-                type="password"
-                showPasswordToggle
-                placeholder="현재 비밀번호를 입력하세요"
-                value={field.value}
-                onChange={field.onChange}
-                onKeyDown={handleKeyDown}
-              />
-            )}
+          <Input
+            type="password"
+            showPasswordToggle
+            placeholder="현재 비밀번호를 입력하세요"
+            {...form.register('currentPassword')}
+            onKeyDown={handleKeyDown}
           />
           {form.formState.errors.currentPassword && (
             <S.InvalidMessage>

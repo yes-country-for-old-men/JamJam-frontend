@@ -1,17 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { type FieldErrors } from 'react-hook-form';
 import useModal from '@hooks/useModal';
-import useValidation from '@hooks/useValidation';
 import usePhoneVerification from '@hooks/usePhoneVerification';
 import useInfoEditForm from '@pages/UserInfoEdit/hooks/useInfoEditForm';
 import useUserInfoQuery from '@hooks/queries/useUserInfoQuery';
 import useCheckPasswordMutation from '@pages/UserInfoEdit/hooks/mutations/useCheckPasswordMutation';
 import useUpdateUserInfoMutation from '@pages/UserInfoEdit/hooks/mutations/useUpdateUserInfoMutation';
-import type { MessageState } from '@type/MessageState';
 import type { UpdateUserRequest } from '@apis/user';
+import { checkNickname } from '@apis/signUp';
 import { formatPhoneNumber } from '@utils/format';
 import getErrorMessage from '@utils/getErrorMessage';
-import { phoneSchema } from '@schemas/userInfoSchemas';
 import * as S from '@pages/UserInfoEdit/UserInfoEdit.styles';
 import Button from '@components/Button';
 import PasswordCheck from '@pages/UserInfoEdit/components/PasswordCheck';
@@ -55,6 +52,12 @@ const UserInfoEdit: React.FC = () => {
   const [originalProfileUrl, setOriginalProfileUrl] = useState<string | null>(
     null,
   );
+  const [originalNickname, setOriginalNickname] = useState('');
+
+  const [isNicknameAvailable, setIsNicknameAvailable] = useState<
+    boolean | null
+  >(null);
+  const [isCheckingNickname, setIsCheckingNickname] = useState(false);
 
   const { alert } = useModal();
   const { passwordForm, editForm } = useInfoEditForm();
@@ -62,16 +65,6 @@ const UserInfoEdit: React.FC = () => {
   const { data: userInfo, refetch: refetchUserInfo } = useUserInfoQuery();
   const checkPasswordMutation = useCheckPasswordMutation();
   const updateUserInfoMutation = useUpdateUserInfoMutation();
-
-  const {
-    nicknameMessage,
-    nicknameCheckStatus,
-    isNicknameChecked,
-    isCheckingNickname,
-    handleNicknameChange,
-    handleNicknameCheck,
-    setNicknameMessage,
-  } = useValidation<UserInfoFormData>();
 
   const {
     isVerificationSent,
@@ -91,6 +84,7 @@ const UserInfoEdit: React.FC = () => {
     if (userInfo) {
       const userProfileUrl = userInfo.profileUrl || null;
       setOriginalProfileUrl(userProfileUrl);
+      setOriginalNickname(userInfo.nickname || '');
 
       const formattedPhone = userInfo.phoneNumber
         ? formatPhoneNumber(userInfo.phoneNumber)
@@ -112,9 +106,45 @@ const UserInfoEdit: React.FC = () => {
     }
   }, [userInfo, editForm]);
 
+  const handleNicknameChange = useCallback(() => {
+    setIsNicknameAvailable(null);
+    editForm.clearErrors('nickname');
+  }, [editForm]);
+
+  const handleNicknameCheck = useCallback(async () => {
+    const nickname = editForm.getValues('nickname');
+    const validation = await editForm.trigger('nickname');
+
+    if (!validation) {
+      return;
+    }
+
+    setIsCheckingNickname(true);
+    try {
+      const response = await checkNickname(nickname);
+      const isAvailable = response.data.content.available;
+      setIsNicknameAvailable(isAvailable);
+
+      if (!isAvailable) {
+        editForm.setError('nickname', {
+          message: '이미 사용 중인 닉네임입니다.',
+        });
+      } else {
+        editForm.clearErrors('nickname');
+      }
+    } catch (error) {
+      alert({
+        title: '중복 확인 실패',
+        content: getErrorMessage(error),
+      });
+    } finally {
+      setIsCheckingNickname(false);
+    }
+  }, [editForm, alert]);
+
   const getChangeFlags = useCallback(
     (formData: UserInfoFormData): ChangeFlags => {
-      const isNicknameChanged = userInfo?.nickname !== formData.nickname;
+      const isNicknameChanged = originalNickname !== formData.nickname;
       const isPhoneChanged =
         userInfo?.phoneNumber !== formData.phone.replace(/-/g, '');
       const isPasswordChange = Boolean(
@@ -161,7 +191,7 @@ const UserInfoEdit: React.FC = () => {
           isAccountChanged,
       };
     },
-    [userInfo, originalProfileUrl],
+    [userInfo, originalProfileUrl, originalNickname],
   );
 
   const validateChanges = useCallback(
@@ -169,19 +199,27 @@ const UserInfoEdit: React.FC = () => {
       const { isNicknameChanged, isPhoneChanged } = changeFlags;
       const validationErrors: string[] = [];
 
-      if (
-        isNicknameChanged &&
-        (!isNicknameChecked || nicknameCheckStatus !== 'available')
-      ) {
-        setNicknameMessage({
-          text: '닉네임 중복 확인이 필요합니다.',
-          type: 'error',
+      if (isNicknameChanged && isNicknameAvailable !== true) {
+        editForm.setError('nickname', {
+          message: '닉네임 중복 확인이 필요합니다.',
         });
         return { isValid: false, errors: validationErrors };
       }
 
-      if (isPhoneChanged && !isPhoneVerified) {
-        validationErrors.push('휴대폰 번호 인증이 필요합니다.');
+      if (isPhoneChanged) {
+        if (!isVerificationSent) {
+          editForm.setError('phone', {
+            message: '휴대폰 인증번호를 전송해 주세요.',
+          });
+          return { isValid: false, errors: validationErrors };
+        }
+
+        if (!isPhoneVerified) {
+          editForm.setError('verificationCode', {
+            message: '인증번호를 입력하고 인증 확인을 완료해 주세요.',
+          });
+          return { isValid: false, errors: validationErrors };
+        }
       }
 
       return {
@@ -189,12 +227,7 @@ const UserInfoEdit: React.FC = () => {
         errors: validationErrors,
       };
     },
-    [
-      isNicknameChecked,
-      nicknameCheckStatus,
-      isPhoneVerified,
-      setNicknameMessage,
-    ],
+    [isNicknameAvailable, isVerificationSent, isPhoneVerified, editForm],
   );
 
   const buildRequestData = useCallback(
@@ -242,11 +275,20 @@ const UserInfoEdit: React.FC = () => {
 
   const updateFormAfterSubmit = useCallback(
     (formData: UserInfoFormData, changeFlags: ChangeFlags): void => {
-      const { isPhoneChanged, isProfileImageChanged, isProfileImageDeleted } =
-        changeFlags;
+      const {
+        isNicknameChanged,
+        isPhoneChanged,
+        isProfileImageChanged,
+        isProfileImageDeleted,
+      } = changeFlags;
 
       editForm.setValue('newPassword', '');
       editForm.setValue('confirmPassword', '');
+
+      if (isNicknameChanged) {
+        setOriginalNickname(formData.nickname);
+        setIsNicknameAvailable(null);
+      }
 
       if (isPhoneChanged) {
         setOriginalPhone(formData.phone.replace(/-/g, ''));
@@ -310,13 +352,8 @@ const UserInfoEdit: React.FC = () => {
       return;
     }
 
-    const phoneValidation = phoneSchema.safeParse(phone);
-    if (!phoneValidation.success) {
-      editForm.setError('phone', {
-        message:
-          phoneValidation.error.errors[0]?.message ||
-          '올바른 휴대폰 번호를 입력해 주세요.',
-      });
+    const isValid = await editForm.trigger('phone');
+    if (!isValid) {
       return;
     }
 
@@ -333,55 +370,45 @@ const UserInfoEdit: React.FC = () => {
   }, [editForm, verifyCode]);
 
   const handleSubmit = useCallback((): void => {
-    editForm.handleSubmit(
-      async (formData: UserInfoFormData) => {
-        const changeFlags = getChangeFlags(formData);
+    editForm.handleSubmit(async (formData: UserInfoFormData) => {
+      const changeFlags = getChangeFlags(formData);
 
-        const validation = validateChanges(changeFlags);
-        if (!validation.isValid) {
-          if (validation.errors.length > 0) {
-            alert({
-              title: '확인 필요',
-              content: validation.errors.join('\n'),
-            });
-          }
-          return;
-        }
-
-        if (!changeFlags.hasChanges) {
+      const validation = validateChanges(changeFlags);
+      if (!validation.isValid) {
+        if (validation.errors.length > 0) {
           alert({
-            title: '변경 사항 없음',
-            content: '수정할 정보가 없습니다.',
-          });
-          return;
-        }
-
-        try {
-          const requestData = buildRequestData(formData, changeFlags);
-          await updateUserInfoMutation.mutateAsync(requestData);
-
-          alert({
-            title: '정보 수정 완료',
-            content: '기본 정보가 성공적으로 수정되었습니다.',
-          });
-
-          updateFormAfterSubmit(formData, changeFlags);
-        } catch (error) {
-          alert({
-            title: '정보 수정 실패',
-            content: getErrorMessage(error),
+            title: '확인 필요',
+            content: validation.errors.join('\n'),
           });
         }
-      },
-      (errors: FieldErrors<UserInfoFormData>) => {
-        if (errors.nickname) {
-          setNicknameMessage({
-            text: errors.nickname.message || '',
-            type: 'error',
-          });
-        }
-      },
-    )();
+        return;
+      }
+
+      if (!changeFlags.hasChanges) {
+        alert({
+          title: '변경 사항 없음',
+          content: '수정할 정보가 없습니다.',
+        });
+        return;
+      }
+
+      try {
+        const requestData = buildRequestData(formData, changeFlags);
+        await updateUserInfoMutation.mutateAsync(requestData);
+
+        alert({
+          title: '정보 수정 완료',
+          content: '기본 정보가 성공적으로 수정되었습니다.',
+        });
+
+        updateFormAfterSubmit(formData, changeFlags);
+      } catch (error) {
+        alert({
+          title: '정보 수정 실패',
+          content: getErrorMessage(error),
+        });
+      }
+    })();
   }, [
     editForm,
     getChangeFlags,
@@ -390,22 +417,7 @@ const UserInfoEdit: React.FC = () => {
     updateFormAfterSubmit,
     updateUserInfoMutation,
     alert,
-    setNicknameMessage,
   ]);
-
-  const renderMessage = (message: MessageState): React.ReactElement | null => {
-    if (!message) return null;
-    switch (message.type) {
-      case 'success':
-        return <S.SuccessMessage>{message.text}</S.SuccessMessage>;
-      case 'error':
-        return <S.InvalidMessage>{message.text}</S.InvalidMessage>;
-      case 'info':
-        return <S.InfoMessage>{message.text}</S.InfoMessage>;
-      default:
-        return null;
-    }
-  };
 
   if (!isPasswordVerified) {
     return (
@@ -421,11 +433,10 @@ const UserInfoEdit: React.FC = () => {
     <S.Container>
       <BasicInfoSection
         form={editForm}
-        nicknameMessage={nicknameMessage}
+        isNicknameAvailable={isNicknameAvailable}
         isCheckingNickname={isCheckingNickname}
         onNicknameChange={handleNicknameChange}
         onNicknameCheck={handleNicknameCheck}
-        renderMessage={renderMessage}
       />
       <PasswordSection form={editForm} />
       <PhoneSection
@@ -441,7 +452,6 @@ const UserInfoEdit: React.FC = () => {
         onSendVerification={handleSendVerification}
         onVerifyCode={handleVerifyCode}
         formatCountdown={formatCountdown}
-        renderMessage={renderMessage}
       />
       <AccountSection form={editForm} />
       <S.SubmitButtonArea>

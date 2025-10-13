@@ -18,6 +18,7 @@ const useInfoEditForm = () => {
 
   const editForm = useForm<EditInfoData>({
     resolver: zodResolver(editInfoSchema),
+    mode: 'onChange',
     defaultValues: {
       nickname: '',
       profileUrl: null,

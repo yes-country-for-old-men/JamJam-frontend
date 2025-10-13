@@ -1,7 +1,5 @@
 import React from 'react';
-import { Controller } from 'react-hook-form';
 import { type InfoEditForm } from '@pages/UserInfoEdit/hooks/useInfoEditForm';
-import { type MessageState } from '@type/MessageState';
 import * as S from '@pages/UserInfoEdit/UserInfoEdit.styles';
 import Input from '@components/Input';
 import Button from '@components/Button';
@@ -9,21 +7,34 @@ import ImageUpload from '@components/ImageUpload';
 
 interface BasicInfoSectionProps {
   form: InfoEditForm;
-  nicknameMessage: MessageState;
+  isNicknameAvailable: boolean | null;
   isCheckingNickname: boolean;
-  onNicknameChange: (value: string, setValue: InfoEditForm['setValue']) => void;
-  onNicknameCheck: (nickname: string) => void;
-  renderMessage: (message: MessageState) => React.ReactNode;
+  onNicknameChange: () => void;
+  onNicknameCheck: () => void;
 }
 
 const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({
   form,
-  nicknameMessage,
+  isNicknameAvailable,
   isCheckingNickname,
   onNicknameChange,
   onNicknameCheck,
-  renderMessage,
 }) => {
+  const nicknameError = form.formState.errors.nickname;
+
+  const getNicknameMessage = () => {
+    if (nicknameError) {
+      return <S.InvalidMessage>{nicknameError.message}</S.InvalidMessage>;
+    }
+    if (isNicknameAvailable === true) {
+      return <S.SuccessMessage>사용 가능한 닉네임입니다.</S.SuccessMessage>;
+    }
+    if (isNicknameAvailable === false) {
+      return <S.InvalidMessage>이미 사용 중인 닉네임입니다.</S.InvalidMessage>;
+    }
+    return null;
+  };
+
   return (
     <S.ContentSection>
       <S.SectionHeader>기본 정보</S.SectionHeader>
@@ -40,38 +51,25 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({
         <S.FieldLabel>닉네임</S.FieldLabel>
         <S.FlexInputGroup>
           <S.FlexInputWrapper>
-            <Controller
-              name="nickname"
-              control={form.control}
-              render={({ field }) => (
-                <Input
-                  placeholder="10자 이내의 한글, 영문, 숫자 조합"
-                  value={field.value}
-                  onChange={(e) => {
-                    const { value } = e.target;
-                    onNicknameChange(value, form.setValue);
-                  }}
-                />
-              )}
+            <Input
+              placeholder="10자 이내의 한글, 영문, 숫자 조합"
+              {...form.register('nickname', {
+                onChange: onNicknameChange,
+              })}
             />
           </S.FlexInputWrapper>
           <S.ActionButtonWrapper>
             <Button
               type="button"
               fullWidth
-              onClick={() => onNicknameCheck(form.getValues('nickname'))}
+              onClick={onNicknameCheck}
               disabled={isCheckingNickname || !form.watch('nickname')}
             >
               중복 확인
             </Button>
           </S.ActionButtonWrapper>
         </S.FlexInputGroup>
-        {form.formState.errors.nickname && (
-          <S.InvalidMessage>
-            {form.formState.errors.nickname.message}
-          </S.InvalidMessage>
-        )}
-        {renderMessage(nicknameMessage)}
+        {getNicknameMessage()}
       </S.FieldGroup>
     </S.ContentSection>
   );
