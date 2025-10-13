@@ -1,5 +1,4 @@
 import React from 'react';
-import { Controller } from 'react-hook-form';
 import { type Step3Form } from '@pages/SignUp/hooks/useSignUpForm';
 import { type MessageState } from '@type/MessageState';
 import * as S from '@pages/SignUp/SignUp.styles';
@@ -8,6 +7,7 @@ import Button from '@components/Button';
 import ToggleButton from '@components/ToggleButton';
 import MaleIcon from '@assets/icons/male.svg?react';
 import FemaleIcon from '@assets/icons/female.svg?react';
+import { removePaddingZero, formatPhoneNumber } from '@utils/format';
 
 interface Step3Props {
   form: Step3Form;
@@ -18,17 +18,9 @@ interface Step3Props {
   verificationCountdown: number;
   isSendingSMS: boolean;
   isVerifyingSMS: boolean;
-  onNameChange: (value: string) => void;
-  onBirthYearChange: (value: string) => void;
-  onBirthMonthChange: (value: string) => void;
-  onBirthDayChange: (value: string) => void;
-  onBirthMonthBlur: () => void;
-  onBirthDayBlur: () => void;
-  onPhoneChange: (value: string) => void;
   onSendVerification: () => Promise<void>;
   onVerifyCode: () => Promise<void>;
   formatCountdown: (seconds: number) => string;
-  renderMessage: (message: MessageState) => React.ReactNode;
 }
 
 const Step3: React.FC<Step3Props> = ({
@@ -40,133 +32,138 @@ const Step3: React.FC<Step3Props> = ({
   verificationCountdown,
   isSendingSMS,
   isVerifyingSMS,
-  onNameChange,
-  onBirthYearChange,
-  onBirthMonthChange,
-  onBirthDayChange,
-  onBirthMonthBlur,
-  onBirthDayBlur,
-  onPhoneChange,
   onSendVerification,
   onVerifyCode,
   formatCountdown,
-  renderMessage,
 }) => {
+  const { errors } = form.formState;
+
+  const renderMessage = (message: MessageState) => {
+    if (!message) return null;
+
+    switch (message.type) {
+      case 'success':
+        return <S.SuccessMessage>{message.text}</S.SuccessMessage>;
+      case 'error':
+        return <S.InvalidMessage>{message.text}</S.InvalidMessage>;
+      case 'info':
+        return <S.InfoMessage>{message.text}</S.InfoMessage>;
+      default:
+        return null;
+    }
+  };
+
   return (
     <S.FormSection>
       <div>
-        <Controller
-          name="name"
-          control={form.control}
-          render={({ field }) => (
-            <Input
-              label="이름"
-              placeholder="홍길동"
-              value={field.value}
-              onChange={(e) => onNameChange(e.target.value)}
-            />
-          )}
+        <Input
+          label="이름"
+          placeholder="홍길동"
+          {...form.register('name', {
+            onChange: (e) => {
+              const koreanAndEnglish = e.target.value.replace(
+                /[^ㄱ-힣a-zA-Z\s]/g,
+                '',
+              );
+              form.setValue('name', koreanAndEnglish);
+            },
+          })}
         />
-        {form.formState.errors.name && (
-          <S.InvalidMessage>
-            {form.formState.errors.name.message}
-          </S.InvalidMessage>
+        {errors.name && (
+          <S.InvalidMessage>{errors.name.message}</S.InvalidMessage>
         )}
       </div>
+
       <div>
         <S.FormLabel>생년월일</S.FormLabel>
         <S.DateInputContainer>
-          <Controller
-            name="birthYear"
-            control={form.control}
-            render={({ field }) => (
-              <Input
-                placeholder="년도"
-                value={field.value}
-                onChange={(e) => onBirthYearChange(e.target.value)}
-                maxLength={4}
-              />
-            )}
+          <Input
+            placeholder="년도"
+            {...form.register('birthYear', {
+              onChange: (e) => {
+                const numbersOnly = e.target.value
+                  .replace(/[^0-9]/g, '')
+                  .slice(0, 4);
+                form.setValue('birthYear', numbersOnly);
+              },
+            })}
+            maxLength={4}
           />
-          <Controller
-            name="birthMonth"
-            control={form.control}
-            render={({ field }) => (
-              <Input
-                placeholder="월"
-                value={field.value}
-                onChange={(e) => onBirthMonthChange(e.target.value)}
-                onBlur={onBirthMonthBlur}
-                maxLength={2}
-              />
-            )}
+          <Input
+            placeholder="월"
+            {...form.register('birthMonth', {
+              onChange: (e) => {
+                const numbersOnly = e.target.value
+                  .replace(/[^0-9]/g, '')
+                  .slice(0, 2);
+                form.setValue('birthMonth', numbersOnly);
+              },
+              onBlur: (e) => {
+                const cleaned = removePaddingZero(e.target.value);
+                form.setValue('birthMonth', cleaned);
+              },
+            })}
+            maxLength={2}
           />
-          <Controller
-            name="birthDay"
-            control={form.control}
-            render={({ field }) => (
-              <Input
-                placeholder="일"
-                value={field.value}
-                onChange={(e) => onBirthDayChange(e.target.value)}
-                onBlur={onBirthDayBlur}
-                maxLength={2}
-              />
-            )}
+          <Input
+            placeholder="일"
+            {...form.register('birthDay', {
+              onChange: (e) => {
+                const numbersOnly = e.target.value
+                  .replace(/[^0-9]/g, '')
+                  .slice(0, 2);
+                form.setValue('birthDay', numbersOnly);
+              },
+              onBlur: (e) => {
+                const cleaned = removePaddingZero(e.target.value);
+                form.setValue('birthDay', cleaned);
+              },
+            })}
+            maxLength={2}
           />
         </S.DateInputContainer>
-        {(form.formState.errors.birthYear ||
-          form.formState.errors.birthMonth ||
-          form.formState.errors.birthDay) && (
+        {(errors.birthYear || errors.birthMonth || errors.birthDay) && (
           <S.InvalidMessage>
-            {form.formState.errors.birthYear?.message ||
-              form.formState.errors.birthMonth?.message ||
-              form.formState.errors.birthDay?.message}
+            {errors.birthYear?.message ||
+              errors.birthMonth?.message ||
+              errors.birthDay?.message}
           </S.InvalidMessage>
         )}
       </div>
+
       <div>
         <S.FormLabel>성별</S.FormLabel>
         <S.GenderToggleContainer>
-          <Controller
-            name="gender"
-            control={form.control}
-            render={({ field }) => (
-              <ToggleButton
-                label="남성"
-                icon={<MaleIcon width={14} height={14} />}
-                selected={field.value === 'MALE'}
-                onClick={() => field.onChange('MALE')}
-              />
-            )}
+          <ToggleButton
+            label="남성"
+            icon={<MaleIcon width={14} height={14} />}
+            selected={form.watch('gender') === 'MALE'}
+            onClick={() => form.setValue('gender', 'MALE')}
           />
-          <Controller
-            name="gender"
-            control={form.control}
-            render={({ field }) => (
-              <ToggleButton
-                label="여성"
-                icon={<FemaleIcon width={14} height={14} />}
-                selected={field.value === 'FEMALE'}
-                onClick={() => field.onChange('FEMALE')}
-              />
-            )}
+          <ToggleButton
+            label="여성"
+            icon={<FemaleIcon width={14} height={14} />}
+            selected={form.watch('gender') === 'FEMALE'}
+            onClick={() => form.setValue('gender', 'FEMALE')}
           />
         </S.GenderToggleContainer>
-        {form.formState.errors.gender && (
-          <S.InvalidMessage>
-            {form.formState.errors.gender.message}
-          </S.InvalidMessage>
+        {errors.gender && (
+          <S.InvalidMessage>{errors.gender.message}</S.InvalidMessage>
         )}
       </div>
+
       <div>
         <S.FormLabel>휴대폰 번호</S.FormLabel>
         <S.PhoneInputContainer>
           <S.PhoneInput>
             <Input
               placeholder="하이픈(-) 제외하고 입력"
-              value={form.watch('phone')}
-              onChange={(e) => onPhoneChange(e.target.value)}
+              {...form.register('phone', {
+                onChange: (e) => {
+                  const formatted = formatPhoneNumber(e.target.value);
+                  form.setValue('phone', formatted);
+                },
+              })}
               maxLength={13}
             />
           </S.PhoneInput>
@@ -181,13 +178,11 @@ const Step3: React.FC<Step3Props> = ({
             </Button>
           </S.ButtonWrapper>
         </S.PhoneInputContainer>
-        {form.formState.errors.phone && (
-          <S.InvalidMessage>
-            {form.formState.errors.phone.message}
-          </S.InvalidMessage>
-        )}
-        {renderMessage(phoneMessage)}
+        {errors.phone
+          ? renderMessage({ text: errors.phone.message || '', type: 'error' })
+          : renderMessage(phoneMessage)}
       </div>
+
       {isVerificationSent && (
         <div>
           <S.FormLabel>
@@ -201,18 +196,11 @@ const Step3: React.FC<Step3Props> = ({
           </S.FormLabel>
           <S.PhoneInputContainer>
             <S.PhoneInput>
-              <Controller
-                name="verificationCode"
-                control={form.control}
-                render={({ field }) => (
-                  <Input
-                    placeholder="인증번호 6자리를 입력해 주세요"
-                    value={field.value}
-                    onChange={field.onChange}
-                    maxLength={6}
-                    disabled={isPhoneVerified}
-                  />
-                )}
+              <Input
+                placeholder="인증번호 6자리를 입력해 주세요"
+                {...form.register('verificationCode')}
+                maxLength={6}
+                disabled={isPhoneVerified}
               />
             </S.PhoneInput>
             {!isPhoneVerified && (
@@ -228,7 +216,13 @@ const Step3: React.FC<Step3Props> = ({
               </S.ButtonWrapper>
             )}
           </S.PhoneInputContainer>
-          {renderMessage(verificationMessage)}
+          {verificationMessage
+            ? renderMessage(verificationMessage)
+            : errors.verificationCode &&
+              renderMessage({
+                text: errors.verificationCode.message || '',
+                type: 'error',
+              })}
         </div>
       )}
     </S.FormSection>

@@ -5,15 +5,19 @@ import RoleSelection from '@pages/SignUp/components/RoleSelection';
 
 interface Step1Props {
   form: Step1Form;
-  onRoleSelect: (role: 'provider' | 'client') => void;
 }
 
-const Step1: React.FC<Step1Props> = ({ form, onRoleSelect }) => {
+const Step1: React.FC<Step1Props> = ({ form }) => {
+  const handleRoleSelect = (role: 'provider' | 'client') => {
+    form.setValue('role', role);
+    form.clearErrors('role');
+  };
+
   return (
     <div>
       <RoleSelection
         selectedRole={form.watch('role') || null}
-        onRoleSelect={onRoleSelect}
+        onRoleSelect={handleRoleSelect}
       />
       {form.formState.errors.role && (
         <S.InvalidMessage>

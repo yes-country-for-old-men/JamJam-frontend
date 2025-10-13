@@ -24,6 +24,7 @@ const useSignUpForm = () => {
 
   const step2Form = useForm<Step2Data>({
     resolver: zodResolver(step2Schema),
+    mode: 'onChange',
     defaultValues: {
       nickname: '',
       id: '',
@@ -37,6 +38,7 @@ const useSignUpForm = () => {
 
   const step3Form = useForm<Step3Data>({
     resolver: zodResolver(currentStep3Schema),
+    mode: 'onChange',
     defaultValues: {
       name: '',
       birthYear: '',

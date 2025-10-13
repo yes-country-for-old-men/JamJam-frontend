@@ -1,47 +1,63 @@
 import React from 'react';
 import { type Step2Form } from '@pages/SignUp/hooks/useSignUpForm';
-import { type MessageState } from '@type/MessageState';
 import * as S from '@pages/SignUp/SignUp.styles';
 import Input from '@components/Input';
 import Button from '@components/Button';
 
 interface Step2Props {
   form: Step2Form;
-  nicknameMessage: MessageState;
-  idMessage: MessageState;
-  passwordMessage: MessageState;
-  confirmPasswordMessage: MessageState;
+  isNicknameAvailable: boolean | null;
+  isIdAvailable: boolean | null;
   isCheckingNickname: boolean;
   isCheckingId: boolean;
-  onNicknameChange: (value: string, setValue: Step2Form['setValue']) => void;
-  onIdChange: (value: string, setValue: Step2Form['setValue']) => void;
-  onPasswordChange: (value: string, setValue: Step2Form['setValue']) => void;
-  onConfirmPasswordChange: (
-    value: string,
-    setValue: Step2Form['setValue'],
-    getValues: Step2Form['getValues'],
-  ) => void;
-  onNicknameCheck: (nickname: string) => void;
-  onIdCheck: (id: string) => void;
-  renderMessage: (message: MessageState) => React.ReactNode;
+  onNicknameCheck: () => void;
+  onIdCheck: () => void;
+  onNicknameChange: () => void;
+  onIdChange: () => void;
 }
 
 const Step2: React.FC<Step2Props> = ({
   form,
-  nicknameMessage,
-  idMessage,
-  passwordMessage,
-  confirmPasswordMessage,
+  isNicknameAvailable,
+  isIdAvailable,
   isCheckingNickname,
   isCheckingId,
-  onNicknameChange,
-  onIdChange,
-  onPasswordChange,
-  onConfirmPasswordChange,
   onNicknameCheck,
   onIdCheck,
-  renderMessage,
+  onNicknameChange,
+  onIdChange,
 }) => {
+  const nicknameError = form.formState.errors.nickname;
+  const idError = form.formState.errors.id;
+  const passwordError = form.formState.errors.password;
+  const confirmPasswordError = form.formState.errors.confirmPassword;
+
+  const getNicknameMessage = () => {
+    if (nicknameError) {
+      return <S.InvalidMessage>{nicknameError.message}</S.InvalidMessage>;
+    }
+    if (isNicknameAvailable === true) {
+      return <S.SuccessMessage>사용 가능한 닉네임입니다.</S.SuccessMessage>;
+    }
+    if (isNicknameAvailable === false) {
+      return <S.InvalidMessage>이미 사용 중인 닉네임입니다.</S.InvalidMessage>;
+    }
+    return null;
+  };
+
+  const getIdMessage = () => {
+    if (idError) {
+      return <S.InvalidMessage>{idError.message}</S.InvalidMessage>;
+    }
+    if (isIdAvailable === true) {
+      return <S.SuccessMessage>사용 가능한 아이디입니다.</S.SuccessMessage>;
+    }
+    if (isIdAvailable === false) {
+      return <S.InvalidMessage>이미 사용 중인 아이디입니다.</S.InvalidMessage>;
+    }
+    return null;
+  };
+
   return (
     <S.FormSection>
       <S.InputWrapper>
@@ -50,73 +66,74 @@ const Step2: React.FC<Step2Props> = ({
           <S.NicknameInput>
             <Input
               placeholder="10자 이내의 한글, 영문, 숫자 조합"
-              value={form.watch('nickname')}
-              onChange={(e) => onNicknameChange(e.target.value, form.setValue)}
+              {...form.register('nickname', {
+                onChange: onNicknameChange,
+              })}
             />
           </S.NicknameInput>
           <S.ButtonWrapper>
             <Button
               type="button"
               fullWidth
-              onClick={() => onNicknameCheck(form.getValues('nickname'))}
+              onClick={onNicknameCheck}
               disabled={isCheckingNickname || !form.watch('nickname')}
             >
               중복 확인
             </Button>
           </S.ButtonWrapper>
         </S.NicknameInputContainer>
-        {renderMessage(nicknameMessage)}
+        {getNicknameMessage()}
       </S.InputWrapper>
+
       <S.InputWrapper>
         <S.FormLabel>아이디</S.FormLabel>
         <S.IdInputContainer>
           <S.IdInput>
             <Input
               placeholder="소문자로 시작, 소문자와 숫자만 허용"
-              value={form.watch('id')}
-              onChange={(e) => onIdChange(e.target.value, form.setValue)}
+              {...form.register('id', {
+                onChange: onIdChange,
+              })}
             />
           </S.IdInput>
           <S.ButtonWrapper>
             <Button
               type="button"
               fullWidth
-              onClick={() => onIdCheck(form.getValues('id'))}
+              onClick={onIdCheck}
               disabled={isCheckingId || !form.watch('id')}
             >
               중복 확인
             </Button>
           </S.ButtonWrapper>
         </S.IdInputContainer>
-        {renderMessage(idMessage)}
+        {getIdMessage()}
       </S.InputWrapper>
+
       <S.InputWrapper>
         <Input
           label="비밀번호"
           type="password"
           showPasswordToggle
           placeholder="영문과 숫자를 포함한 최소 8자"
-          value={form.watch('password')}
-          onChange={(e) => onPasswordChange(e.target.value, form.setValue)}
+          {...form.register('password')}
         />
-        {renderMessage(passwordMessage)}
+        {passwordError && (
+          <S.InvalidMessage>{passwordError.message}</S.InvalidMessage>
+        )}
       </S.InputWrapper>
+
       <S.InputWrapper>
         <Input
           label="비밀번호 확인"
           type="password"
           showPasswordToggle
           placeholder="비밀번호를 한번 더 입력해 주세요"
-          value={form.watch('confirmPassword')}
-          onChange={(e) =>
-            onConfirmPasswordChange(
-              e.target.value,
-              form.setValue,
-              form.getValues,
-            )
-          }
+          {...form.register('confirmPassword')}
         />
-        {renderMessage(confirmPasswordMessage)}
+        {confirmPasswordError && (
+          <S.InvalidMessage>{confirmPasswordError.message}</S.InvalidMessage>
+        )}
       </S.InputWrapper>
     </S.FormSection>
   );

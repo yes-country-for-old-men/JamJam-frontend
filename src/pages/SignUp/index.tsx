@@ -1,16 +1,16 @@
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from '@pages/SignUp/SignUp.styles';
-import { type Step2Data } from '@pages/SignUp/schemas/signUpSchemas';
-import { type MessageState } from '@type/MessageState';
-import { clientSignUp, providerSignUp } from '@apis/signUp';
+import {
+  clientSignUp,
+  providerSignUp,
+  checkNickname,
+  checkLoginId,
+} from '@apis/signUp';
 import useModal from '@hooks/useModal';
 import useSignUpForm from '@pages/SignUp/hooks/useSignUpForm';
-import useValidation from '@hooks/useValidation';
 import usePhoneVerification from '@hooks/usePhoneVerification';
-import { removePaddingZero, formatPhoneNumber } from '@utils/format';
 import getErrorMessage from '@utils/getErrorMessage';
-import { phoneSchema } from '@schemas/userInfoSchemas';
 import Button from '@components/Button';
 import StepIndicator from '@pages/SignUp/components/StepIndicator';
 import Step1 from '@pages/SignUp/components/Step1';
@@ -24,33 +24,17 @@ const SignUp: React.FC = () => {
   const [completedUserNickname, setCompletedUserNickname] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [isNicknameAvailable, setIsNicknameAvailable] = useState<
+    boolean | null
+  >(null);
+  const [isIdAvailable, setIsIdAvailable] = useState<boolean | null>(null);
+  const [isCheckingNickname, setIsCheckingNickname] = useState(false);
+  const [isCheckingId, setIsCheckingId] = useState(false);
+
   const navigate = useNavigate();
   const { alert } = useModal();
 
   const { step, setStep, step1Form, step2Form, step3Form } = useSignUpForm();
-
-  const {
-    nicknameMessage,
-    idMessage,
-    passwordMessage,
-    confirmPasswordMessage,
-    nicknameCheckStatus,
-    idCheckStatus,
-    isNicknameChecked,
-    isIdChecked,
-    isCheckingNickname,
-    isCheckingId,
-    handleNicknameChange,
-    handleNicknameCheck,
-    handleIdChange,
-    handleIdCheck,
-    handlePasswordChange,
-    handleConfirmPasswordChange,
-    setNicknameMessage,
-    setIdMessage,
-    setPasswordMessage,
-    setConfirmPasswordMessage,
-  } = useValidation<Step2Data>();
 
   const {
     isVerificationSent,
@@ -62,7 +46,6 @@ const SignUp: React.FC = () => {
     isVerifyingSMS,
     sendVerification,
     verifyCode,
-    resetVerification,
     formatCountdown,
   } = usePhoneVerification();
 
@@ -74,70 +57,77 @@ const SignUp: React.FC = () => {
     navigate('/');
   }, [navigate]);
 
-  const handleRoleSelect = useCallback(
-    (role: 'provider' | 'client') => {
-      step1Form.setValue('role', role);
-      step1Form.clearErrors('role');
-    },
-    [step1Form],
-  );
+  const handleNicknameChange = useCallback(() => {
+    setIsNicknameAvailable(null);
+    step2Form.clearErrors('nickname');
+  }, [step2Form]);
 
-  const handleNameChange = useCallback(
-    (value: string) => {
-      const koreanAndEnglish = value.replace(/[^ㄱ-힣a-zA-Z\s]/g, '');
-      step3Form.setValue('name', koreanAndEnglish);
-    },
-    [step3Form],
-  );
+  const handleIdChange = useCallback(() => {
+    setIsIdAvailable(null);
+    step2Form.clearErrors('id');
+  }, [step2Form]);
 
-  const handleBirthYearChange = useCallback(
-    (value: string) => {
-      const numbersOnly = value.replace(/[^0-9]/g, '').slice(0, 4);
-      step3Form.setValue('birthYear', numbersOnly);
-    },
-    [step3Form],
-  );
+  const handleNicknameCheck = useCallback(async () => {
+    const nickname = step2Form.getValues('nickname');
+    const validation = await step2Form.trigger('nickname');
 
-  const handleBirthMonthChange = useCallback(
-    (value: string) => {
-      const numbersOnly = value.replace(/[^0-9]/g, '').slice(0, 2);
-      step3Form.setValue('birthMonth', numbersOnly);
-    },
-    [step3Form],
-  );
-
-  const handleBirthDayChange = useCallback(
-    (value: string) => {
-      const numbersOnly = value.replace(/[^0-9]/g, '').slice(0, 2);
-      step3Form.setValue('birthDay', numbersOnly);
-    },
-    [step3Form],
-  );
-
-  const handleBirthMonthBlur = useCallback(() => {
-    const value = step3Form.getValues('birthMonth');
-    if (value) {
-      const cleaned = removePaddingZero(value);
-      step3Form.setValue('birthMonth', cleaned);
+    if (!validation) {
+      return;
     }
-  }, [step3Form]);
 
-  const handleBirthDayBlur = useCallback(() => {
-    const value = step3Form.getValues('birthDay');
-    if (value) {
-      const cleaned = removePaddingZero(value);
-      step3Form.setValue('birthDay', cleaned);
+    setIsCheckingNickname(true);
+    try {
+      const response = await checkNickname(nickname);
+      const isAvailable = response.data.content.available;
+      setIsNicknameAvailable(isAvailable);
+
+      if (!isAvailable) {
+        step2Form.setError('nickname', {
+          message: '이미 사용 중인 닉네임입니다.',
+        });
+      } else {
+        step2Form.clearErrors('nickname');
+      }
+    } catch (error) {
+      alert({
+        title: '중복 확인 실패',
+        content: getErrorMessage(error),
+      });
+    } finally {
+      setIsCheckingNickname(false);
     }
-  }, [step3Form]);
+  }, [step2Form, alert]);
 
-  const handlePhoneChange = useCallback(
-    (value: string) => {
-      const formatted = formatPhoneNumber(value);
-      step3Form.setValue('phone', formatted);
-      resetVerification();
-    },
-    [step3Form, resetVerification],
-  );
+  const handleIdCheck = useCallback(async () => {
+    const id = step2Form.getValues('id');
+    const validation = await step2Form.trigger('id');
+
+    if (!validation) {
+      return;
+    }
+
+    setIsCheckingId(true);
+    try {
+      const response = await checkLoginId(id);
+      const isAvailable = response.data.content.available;
+      setIsIdAvailable(isAvailable);
+
+      if (!isAvailable) {
+        step2Form.setError('id', {
+          message: '이미 사용 중인 아이디입니다.',
+        });
+      } else {
+        step2Form.clearErrors('id');
+      }
+    } catch (error) {
+      alert({
+        title: '중복 확인 실패',
+        content: getErrorMessage(error),
+      });
+    } finally {
+      setIsCheckingId(false);
+    }
+  }, [step2Form, alert]);
 
   const handleSendVerification = useCallback(async () => {
     step3Form.clearErrors('phone');
@@ -149,11 +139,8 @@ const SignUp: React.FC = () => {
       return;
     }
 
-    const validation = phoneSchema.safeParse({ phone });
-    if (!validation.success) {
-      step3Form.setError('phone', {
-        message: '올바른 휴대폰 번호를 입력해 주세요.',
-      });
+    const isValid = await step3Form.trigger('phone');
+    if (!isValid) {
       return;
     }
 
@@ -183,85 +170,39 @@ const SignUp: React.FC = () => {
         setStep(2);
       })();
     } else if (step === 2) {
-      step2Form.handleSubmit(
-        () => {
-          if (!isNicknameChecked || nicknameCheckStatus !== 'available') {
-            setNicknameMessage({
-              text: '닉네임 중복 확인이 필요합니다.',
-              type: 'error',
-            });
-            return;
-          }
+      step2Form.handleSubmit(() => {
+        if (isNicknameAvailable !== true) {
+          step2Form.setError('nickname', {
+            message: '닉네임 중복 확인이 필요합니다.',
+          });
+          return;
+        }
 
-          if (!isIdChecked || idCheckStatus !== 'available') {
-            setIdMessage({
-              text: '아이디 중복 확인이 필요합니다.',
-              type: 'error',
-            });
-            return;
-          }
+        if (isIdAvailable !== true) {
+          step2Form.setError('id', {
+            message: '아이디 중복 확인이 필요합니다.',
+          });
+          return;
+        }
 
-          setStep(3);
-        },
-        (errors) => {
-          if (errors.nickname) {
-            setNicknameMessage({
-              text: errors.nickname.message || '',
-              type: 'error',
-            });
-          } else if (
-            !isNicknameChecked ||
-            nicknameCheckStatus !== 'available'
-          ) {
-            setNicknameMessage({
-              text: '닉네임 중복 확인이 필요합니다.',
-              type: 'error',
-            });
-          }
-
-          if (errors.id) {
-            setIdMessage({ text: errors.id.message || '', type: 'error' });
-          } else if (!isIdChecked || idCheckStatus !== 'available') {
-            setIdMessage({
-              text: '아이디 중복 확인이 필요합니다.',
-              type: 'error',
-            });
-          }
-
-          if (errors.password) {
-            setPasswordMessage({
-              text: errors.password.message || '',
-              type: 'error',
-            });
-          }
-
-          if (errors.confirmPassword) {
-            setConfirmPasswordMessage({
-              text: errors.confirmPassword.message || '',
-              type: 'error',
-            });
-          }
-        },
-      )();
+        setStep(3);
+      })();
     }
-  }, [
-    step,
-    step1Form,
-    step2Form,
-    setStep,
-    isNicknameChecked,
-    nicknameCheckStatus,
-    isIdChecked,
-    idCheckStatus,
-    setNicknameMessage,
-    setIdMessage,
-    setPasswordMessage,
-    setConfirmPasswordMessage,
-  ]);
+  }, [step, step1Form, step2Form, setStep, isNicknameAvailable, isIdAvailable]);
 
   const handleSubmit = useCallback(() => {
     step3Form.handleSubmit(async (data) => {
-      if (!isVerificationSent || !isPhoneVerified) {
+      if (!isVerificationSent) {
+        step3Form.setError('phone', {
+          message: '휴대폰 인증번호를 전송해 주세요.',
+        });
+        return;
+      }
+
+      if (!isPhoneVerified) {
+        step3Form.setError('verificationCode', {
+          message: '인증번호를 입력하고 인증 확인을 완료해 주세요.',
+        });
         return;
       }
 
@@ -324,21 +265,6 @@ const SignUp: React.FC = () => {
     }
   };
 
-  const renderMessage = (message: MessageState) => {
-    if (!message) return null;
-
-    switch (message.type) {
-      case 'success':
-        return <S.SuccessMessage>{message.text}</S.SuccessMessage>;
-      case 'error':
-        return <S.InvalidMessage>{message.text}</S.InvalidMessage>;
-      case 'info':
-        return <S.InfoMessage>{message.text}</S.InfoMessage>;
-      default:
-        return null;
-    }
-  };
-
   const renderNavButtons = () => {
     if (step === 1) {
       return (
@@ -375,25 +301,20 @@ const SignUp: React.FC = () => {
   const renderStepContent = () => {
     switch (step) {
       case 1:
-        return <Step1 form={step1Form} onRoleSelect={handleRoleSelect} />;
+        return <Step1 form={step1Form} />;
 
       case 2:
         return (
           <Step2
             form={step2Form}
-            nicknameMessage={nicknameMessage}
-            idMessage={idMessage}
-            passwordMessage={passwordMessage}
-            confirmPasswordMessage={confirmPasswordMessage}
+            isNicknameAvailable={isNicknameAvailable}
+            isIdAvailable={isIdAvailable}
             isCheckingNickname={isCheckingNickname}
             isCheckingId={isCheckingId}
-            onNicknameChange={handleNicknameChange}
-            onIdChange={handleIdChange}
-            onPasswordChange={handlePasswordChange}
-            onConfirmPasswordChange={handleConfirmPasswordChange}
             onNicknameCheck={handleNicknameCheck}
             onIdCheck={handleIdCheck}
-            renderMessage={renderMessage}
+            onNicknameChange={handleNicknameChange}
+            onIdChange={handleIdChange}
           />
         );
 
@@ -408,17 +329,9 @@ const SignUp: React.FC = () => {
             verificationCountdown={verificationCountdown}
             isSendingSMS={isSendingSMS}
             isVerifyingSMS={isVerifyingSMS}
-            onNameChange={handleNameChange}
-            onBirthYearChange={handleBirthYearChange}
-            onBirthMonthChange={handleBirthMonthChange}
-            onBirthDayChange={handleBirthDayChange}
-            onBirthMonthBlur={handleBirthMonthBlur}
-            onBirthDayBlur={handleBirthDayBlur}
-            onPhoneChange={handlePhoneChange}
             onSendVerification={handleSendVerification}
             onVerifyCode={handleVerifyCode}
             formatCountdown={formatCountdown}
-            renderMessage={renderMessage}
           />
         );
 
