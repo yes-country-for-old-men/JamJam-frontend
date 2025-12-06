@@ -49,3 +49,14 @@ export const formatRelativeTime = (timestamp: Date) => {
 
   return `${year}. ${month}. ${day}.`;
 };
+
+export const formatDeadlineISO = (deadline: {
+  year: string;
+  month: string;
+  day: string;
+}): string => {
+  const { year, month, day } = deadline;
+  const formattedMonth = month.padStart(2, '0');
+  const formattedDay = day.padStart(2, '0');
+  return `${year}-${formattedMonth}-${formattedDay}T23:59:59`;
+};
