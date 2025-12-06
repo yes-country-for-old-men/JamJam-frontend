@@ -8,7 +8,7 @@ import {
   type Step1Data,
   type Step2Data,
   type Step3Data,
-} from '@pages/SignUp/schemas/signUpSchemas';
+} from '@pages/SignUp/schemas/signUpSchema';
 
 export type Step1Form = UseFormReturn<Step1Data>;
 export type Step2Form = UseFormReturn<Step2Data>;

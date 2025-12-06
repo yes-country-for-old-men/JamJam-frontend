@@ -5,7 +5,7 @@ import {
   editInfoSchema,
   type PasswordCheckData,
   type EditInfoData,
-} from '@pages/UserInfoEdit/schemas/editableInfoSchemas';
+} from '@pages/UserInfoEdit/schemas/editableInfoSchema';
 
 export type PasswordCheckForm = UseFormReturn<PasswordCheckData>;
 export type InfoEditForm = UseFormReturn<EditInfoData>;

@@ -10,7 +10,7 @@ import {
   bankNameSchema,
   accountNumberSchema,
   accountHolderSchema,
-} from '@schemas/userInfoSchemas';
+} from '@schemas/userInfoSchema';
 
 export const passwordCheckSchema = z.object({
   currentPassword: currentPasswordSchema,

@@ -8,7 +8,7 @@ import {
   thumbnailImageSchema,
   portfolioImagesSchema,
   includeTitleInThumbnailSchema,
-} from '@schemas/serviceSchemas';
+} from '@schemas/serviceSchema';
 
 export const serviceRegisterSchema = z.object({
   description: descriptionSchema,

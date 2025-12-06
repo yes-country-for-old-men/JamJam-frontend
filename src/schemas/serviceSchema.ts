@@ -27,23 +27,26 @@ export const priceSchema = z
   .refine((price) => price > 0, '가격을 입력해 주세요.')
   .refine((price) => price >= 100, '최소 100원 이상 입력해 주세요.');
 
+const fileWithIdSchema = z.object({
+  id: z.union([z.string(), z.number()]),
+  file: z.instanceof(File),
+});
+
 export const thumbnailImageSchema = z
-  .any()
+  .instanceof(File)
   .refine((file) => file !== null, '썸네일 이미지를 업로드해 주세요.')
-  .refine((file) => file instanceof File && file.size <= 10 * 1024 * 1024, {
+  .refine((file) => file.size <= 10 * 1024 * 1024, {
     message: '10MB 보다 큰 이미지는 업로드할 수 없습니다.',
   });
 
 export const portfolioImagesSchema = z
-  .array(z.any())
+  .array(fileWithIdSchema)
   .optional()
   .refine(
     (files) => {
       if (!files || files.length === 0) return true;
       return files.every(
-        (fileWithId) =>
-          fileWithId?.file instanceof File &&
-          fileWithId.file.size <= 5 * 1024 * 1024,
+        (fileWithId) => fileWithId.file.size <= 5 * 1024 * 1024,
       );
     },
     {
@@ -52,16 +55,3 @@ export const portfolioImagesSchema = z
   );
 
 export const includeTitleInThumbnailSchema = z.boolean();
-
-export const serviceRegisterSchema = z.object({
-  description: descriptionSchema,
-  serviceName: serviceNameSchema,
-  serviceDetail: serviceDetailSchema,
-  category: categorySchema,
-  price: priceSchema,
-  thumbnailImage: thumbnailImageSchema,
-  portfolioImages: portfolioImagesSchema,
-  includeTitleInThumbnail: includeTitleInThumbnailSchema,
-});
-
-export type ServiceRegisterData = z.infer<typeof serviceRegisterSchema>;

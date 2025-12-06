@@ -13,7 +13,7 @@ import {
   genderSchema,
   phoneSchema,
   verificationCodeSchema,
-} from '@schemas/userInfoSchemas';
+} from '@schemas/userInfoSchema';
 
 export const step1Schema = z.object({
   role: roleSchema,
