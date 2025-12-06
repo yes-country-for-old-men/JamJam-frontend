@@ -1,25 +1,63 @@
-type EventCallback = (...args: unknown[]) => void;
+import React from 'react';
+
+interface ConfirmEventPayload {
+  title: string;
+  content: React.ReactNode;
+  onConfirm: () => void;
+  confirmText?: string;
+  cancelText?: string;
+}
+
+interface AlertEventPayload {
+  title: string;
+  content: React.ReactNode;
+  onConfirm?: () => void;
+  confirmText?: string;
+}
+
+interface EventMap {
+  openLoginModal: never;
+  confirm: ConfirmEventPayload;
+  alert: AlertEventPayload;
+}
+
+type EventName = keyof EventMap;
+type EventCallback<T extends EventName> = EventMap[T] extends never
+  ? () => void
+  : (payload: EventMap[T]) => void;
 
 class EventManager {
-  private listeners: { [key: string]: EventCallback[] } = {};
+  private listeners: Map<EventName, Array<EventCallback<EventName>>> =
+    new Map();
 
-  on(event: string, callback: EventCallback) {
-    if (!this.listeners[event]) {
-      this.listeners[event] = [];
+  on<T extends EventName>(event: T, callback: EventCallback<T>): void {
+    if (!this.listeners.has(event)) {
+      this.listeners.set(event, []);
     }
-    this.listeners[event].push(callback);
+    this.listeners.get(event)!.push(callback as EventCallback<EventName>);
   }
 
-  off(event: string, callback: EventCallback) {
-    if (!this.listeners[event]) return;
-    this.listeners[event] = this.listeners[event].filter(
-      (cb) => cb !== callback,
-    );
+  off<T extends EventName>(event: T, callback: EventCallback<T>): void {
+    const eventListeners = this.listeners.get(event);
+    if (!eventListeners) return;
+
+    const filtered = eventListeners.filter((cb) => cb !== callback);
+    if (filtered.length > 0) {
+      this.listeners.set(event, filtered);
+    } else {
+      this.listeners.delete(event);
+    }
   }
 
-  emit(event: string, ...args: unknown[]) {
-    if (!this.listeners[event]) return;
-    this.listeners[event].forEach((callback) => callback(...args));
+  emit<T extends EventName>(
+    event: T,
+    ...args: EventMap[T] extends never ? [] : [EventMap[T]]
+  ): void {
+    const eventListeners = this.listeners.get(event);
+    if (!eventListeners) return;
+    eventListeners.forEach((callback) => {
+      (callback as (payload: EventMap[T]) => void)(...(args as [EventMap[T]]));
+    });
   }
 }
 
