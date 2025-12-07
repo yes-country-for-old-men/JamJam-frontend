@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import userLogout from '@apis/userLogout';
+import { logout } from '@apis/auth';
 
 const useLogoutMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: userLogout,
+    mutationFn: logout,
     onSuccess: () => {
       localStorage.removeItem('accessToken');
       queryClient.clear();
