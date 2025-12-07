@@ -8,6 +8,7 @@ import type {
   License,
   ContactHours,
 } from '@type/Provider';
+import createMultipartRequest from '@utils/multipartRequest';
 
 export interface CareerWithFile extends Career {
   file?: File;
@@ -48,8 +49,6 @@ export type ProviderDetailContent = ProviderProfile & {
 };
 
 const createProviderFormData = (data: ProviderRequestWithFiles) => {
-  const formData = new FormData();
-
   const requestData = {
     categoryId: data.categoryId,
     location: data.location,
@@ -61,50 +60,43 @@ const createProviderFormData = (data: ProviderRequestWithFiles) => {
     licenses: data.licenses.map(({ file, ...license }) => license),
   };
 
-  const jsonBlob = new Blob([JSON.stringify(requestData)], {
-    type: 'application/json',
-  });
-  formData.append('request', jsonBlob);
+  const careerFiles = data.careers
+    .map((career) => career.file)
+    .filter((file): file is File => file !== undefined);
 
-  data.careers.forEach((career) => {
-    if (career.file) {
-      formData.append('careerFiles', career.file);
-    }
-  });
+  const educationFiles = data.educations
+    .map((education) => education.file)
+    .filter((file): file is File => file !== undefined);
 
-  data.educations.forEach((education) => {
-    if (education.file) {
-      formData.append('educationFiles', education.file);
-    }
-  });
+  const licenseFiles = data.licenses
+    .map((license) => license.file)
+    .filter((file): file is File => file !== undefined);
 
-  data.licenses.forEach((license) => {
-    if (license.file) {
-      formData.append('licenseFiles', license.file);
-    }
+  return createMultipartRequest(requestData, {
+    careerFiles,
+    educationFiles,
+    licenseFiles,
   });
-
-  return formData;
 };
 
 export const registerProviderProfile = (data: ProviderRequestWithFiles) => {
-  const formData = createProviderFormData(data);
+  const { data: formData, headers } = createProviderFormData(data);
 
-  return apiClient.post('/api/providers', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  return apiClient.post<APIResponse<ProviderProfile>>(
+    '/api/providers',
+    formData,
+    { headers },
+  );
 };
 
 export const updateProviderProfile = (data: ProviderRequestWithFiles) => {
-  const formData = createProviderFormData(data);
+  const { data: formData, headers } = createProviderFormData(data);
 
-  return apiClient.patch('/api/providers', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  return apiClient.patch<APIResponse<ProviderProfile>>(
+    '/api/providers',
+    formData,
+    { headers },
+  );
 };
 
 export const getProviderPage = (userId: number) =>
