@@ -1,5 +1,6 @@
 import apiClient from '@apis/apiClient';
 import type APIResponse from '@type/APIResponse';
+import createMultipartRequest from '@utils/multipartRequest';
 
 export interface ServiceRegisterRequest {
   request: {
@@ -12,15 +13,15 @@ export interface ServiceRegisterRequest {
   portfolioImages?: File[];
 }
 
-export interface ServiceGenerateRequest {
+interface ServiceGenerateRequest {
   description: string;
 }
 
-export interface ServiceDetailRequest {
+interface ServiceDetailRequest {
   serviceId: number;
 }
 
-export interface ServiceDeleteRequest {
+interface ServiceDeleteRequest {
   serviceId: number;
 }
 
@@ -31,11 +32,11 @@ export interface ServiceListRequest {
   size?: number;
 }
 
-type ServiceGenerateContent = {
+interface ServiceGenerateContent {
   serviceNames: string[];
   category: number;
   description: string;
-};
+}
 
 export type ServiceDetailContent = {
   userId: number;
@@ -66,34 +67,24 @@ export type ServiceListContent = {
   hasNext: boolean;
 };
 
-export interface AiThumbnailRequest {
+interface AiThumbnailRequest {
   serviceName: string;
   description: string;
   typography: boolean;
 }
 
-type AiThumbnailContent = {
+interface AiThumbnailContent {
   imageBase64: string;
-};
+}
 
 export const registerService = (data: ServiceRegisterRequest) => {
-  const formData = new FormData();
-
-  const jsonBlob = new Blob([JSON.stringify(data.request)], {
-    type: 'application/json',
-  });
-  formData.append('request', jsonBlob);
-
-  formData.append('thumbnail', data.thumbnail);
-
-  data.portfolioImages?.forEach((image) => {
-    formData.append('portfolioImages', image);
+  const { data: formData, headers } = createMultipartRequest(data.request, {
+    thumbnail: data.thumbnail,
+    portfolioImages: data.portfolioImages,
   });
 
-  return apiClient.post('/api/service/register', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
+  return apiClient.post<APIResponse<void>>('/api/service/register', formData, {
+    headers,
   });
 };
 
@@ -115,7 +106,7 @@ export const getServiceDetail = (params: ServiceDetailRequest) =>
   });
 
 export const deleteService = (params: ServiceDeleteRequest) =>
-  apiClient.delete('/api/service/delete', {
+  apiClient.delete<APIResponse<void>>('/api/service/delete', {
     params,
   });
 
