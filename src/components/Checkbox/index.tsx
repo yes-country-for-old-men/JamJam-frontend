@@ -2,11 +2,11 @@ import React, { useId } from 'react';
 import styled from '@emotion/styled';
 import CheckIcon from '@assets/icons/check.svg?react';
 
-interface CheckboxProps {
+interface CheckboxProps
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
   size?: number;
   selected: boolean;
   label?: string;
-  disabled?: boolean;
   onClick: () => void;
 }
 
@@ -49,47 +49,48 @@ const Label = styled.label<{ disabled: boolean }>`
   user-select: none;
 `;
 
-const Checkbox: React.FC<CheckboxProps> = ({
-  size = 20,
-  selected,
-  label,
-  disabled = false,
-  onClick,
-}) => {
-  const id = useId();
+const Checkbox = React.memo<CheckboxProps>(
+  ({ size = 20, selected, label, disabled = false, onClick }) => {
+    const id = useId();
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !disabled) {
-      e.preventDefault();
-      onClick?.();
-    }
-  };
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' && !disabled) {
+        e.preventDefault();
+        onClick?.();
+      }
+    };
 
-  const handleClick = () => {
-    if (!disabled) {
-      onClick?.();
-    }
-  };
+    const handleClick = () => {
+      if (!disabled) {
+        onClick?.();
+      }
+    };
 
-  return (
-    <Container disabled={disabled} onClick={handleClick}>
-      <CheckButton
-        id={id}
-        role="checkbox"
-        size={size}
-        selected={selected}
-        disabled={disabled}
-        onKeyDown={handleKeyDown}
-      >
-        {selected && <CheckIcon width={size} height={size} />}
-      </CheckButton>
-      {label && (
-        <Label htmlFor={id} disabled={disabled}>
-          {label}
-        </Label>
-      )}
-    </Container>
-  );
-};
+    return (
+      <Container disabled={disabled} onClick={handleClick}>
+        <CheckButton
+          id={id}
+          role="checkbox"
+          aria-checked={selected}
+          aria-labelledby={label ? `${id}-label` : undefined}
+          aria-disabled={disabled}
+          size={size}
+          selected={selected}
+          disabled={disabled}
+          onKeyDown={handleKeyDown}
+        >
+          {selected && <CheckIcon width={size} height={size} />}
+        </CheckButton>
+        {label && (
+          <Label id={`${id}-label`} htmlFor={id} disabled={disabled}>
+            {label}
+          </Label>
+        )}
+      </Container>
+    );
+  },
+);
+
+Checkbox.displayName = 'Checkbox';
 
 export default Checkbox;
