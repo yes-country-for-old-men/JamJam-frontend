@@ -44,12 +44,11 @@ const IconWrapper = styled.div<{ selected: boolean }>`
   }
 `;
 
-interface ToggleButtonProps {
+interface ToggleButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   icon?: React.ReactNode;
   selected?: boolean;
-  onClick?: () => void;
-  disabled?: boolean;
 }
 
 const ToggleButton: React.FC<ToggleButtonProps> = ({
