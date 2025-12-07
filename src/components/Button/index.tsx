@@ -85,29 +85,33 @@ const StyledButton = styled.button<{
   }
 `;
 
-const Button: React.FC<ButtonProps> = ({
-  children,
-  variant = 'primary',
-  size = 'medium',
-  fullWidth = false,
-  type = 'button',
-  disabled = false,
-  className,
-  ...rest
-}) => {
-  return (
-    <StyledButton
-      type={type}
-      variant={variant}
-      size={size}
-      fullWidth={fullWidth}
-      disabled={disabled}
-      className={className}
-      {...rest}
-    >
-      {children}
-    </StyledButton>
-  );
-};
+const Button = React.memo<ButtonProps>(
+  ({
+    children,
+    variant = 'primary',
+    size = 'medium',
+    fullWidth = false,
+    type = 'button',
+    disabled = false,
+    className,
+    ...rest
+  }) => {
+    return (
+      <StyledButton
+        type={type}
+        variant={variant}
+        size={size}
+        fullWidth={fullWidth}
+        disabled={disabled}
+        className={className}
+        {...rest}
+      >
+        {children}
+      </StyledButton>
+    );
+  },
+);
+
+Button.displayName = 'Button';
 
 export default Button;
