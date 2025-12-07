@@ -80,47 +80,53 @@ const DropdownIcon = styled.div<{ disabled?: boolean; error?: boolean }>`
   pointer-events: none;
 `;
 
-const Select: React.FC<SelectProps> = ({
-  id,
-  label,
-  style,
-  required = false,
-  error = false,
-  disabled = false,
-  className,
-  children,
-  ...rest
-}) => {
-  return (
-    <SelectGroup>
-      {label && (
-        <Label htmlFor={id}>
-          {label}
-          {required && <RequiredIcon />}
-        </Label>
-      )}
-      <SelectContainer>
-        <StyledSelect
-          id={id}
-          style={style}
-          required={required}
-          error={error}
-          disabled={disabled}
-          className={className}
-          {...rest}
-        >
-          {children}
-        </StyledSelect>
-        <DropdownIcon disabled={disabled} error={error}>
-          <ArrowDownIcon
-            fill={theme.COLORS.LABEL_SECONDARY}
-            width={12}
-            height={12}
-          />
-        </DropdownIcon>
-      </SelectContainer>
-    </SelectGroup>
-  );
-};
+const Select = React.memo<SelectProps>(
+  ({
+    id,
+    label,
+    style,
+    required = false,
+    error = false,
+    disabled = false,
+    className,
+    children,
+    ...rest
+  }) => {
+    return (
+      <SelectGroup>
+        {label && (
+          <Label htmlFor={id}>
+            {label}
+            {required && <RequiredIcon />}
+          </Label>
+        )}
+        <SelectContainer>
+          <StyledSelect
+            id={id}
+            style={style}
+            required={required}
+            error={error}
+            disabled={disabled}
+            className={className}
+            aria-required={required}
+            aria-invalid={error}
+            {...rest}
+          >
+            {children}
+          </StyledSelect>
+          <DropdownIcon disabled={disabled} error={error}>
+            <ArrowDownIcon
+              fill={theme.COLORS.LABEL_SECONDARY}
+              width={12}
+              height={12}
+            />
+          </DropdownIcon>
+        </SelectContainer>
+      </SelectGroup>
+    );
+  },
+);
+
+Select.displayName = 'Select';
 
 export default Select;
