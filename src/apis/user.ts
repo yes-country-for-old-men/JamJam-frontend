@@ -1,6 +1,7 @@
 import apiClient from '@apis/apiClient';
 import type APIResponse from '@type/APIResponse';
 import type User from '@type/User';
+import createMultipartRequest from '@utils/multipartRequest';
 
 export interface UpdateUserRequest {
   request: {
@@ -26,28 +27,17 @@ interface CheckPasswordContent {
   isCorrect: boolean;
 }
 
-export const fetchUserInfo = async (): Promise<User> => {
+export const getUserInfo = async (): Promise<User> => {
   const response = await apiClient.get<APIResponse<User>>('/api/user');
   return response.data.content;
 };
 
 export const updateUserInfo = (data: UpdateUserRequest) => {
-  const formData = new FormData();
-
-  const jsonBlob = new Blob([JSON.stringify(data.request)], {
-    type: 'application/json',
+  const { data: formData, headers } = createMultipartRequest(data.request, {
+    profileUrl: data.profileUrl,
   });
-  formData.append('request', jsonBlob);
 
-  if (data.profileUrl) {
-    formData.append('profileUrl', data.profileUrl);
-  }
-
-  return apiClient.patch('/api/user', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  return apiClient.patch<APIResponse<User>>('/api/user', formData, { headers });
 };
 
 export const checkPassword = (data: CheckPasswordRequest) =>
