@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import useModal from '@hooks/useModal';
-import useUserInfoQuery from '@hooks/queries/useUserInfoQuery';
+import useAuthStatus from '@hooks/useAuthStatus';
 import LoginModal from '@components/Modal/LoginModal';
 
 interface ProtectedRouteProps {
@@ -9,19 +9,16 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { openModal } = useModal();
-  const { data: userInfo, isError, isLoading } = useUserInfoQuery();
-
-  const hasToken = !!localStorage.getItem('accessToken');
-  const isLoggedIn = hasToken && !!userInfo && !isError;
+  const { isLoggedIn, isLoading } = useAuthStatus();
 
   useEffect(() => {
-    if (!hasToken || (hasToken && isError)) {
+    if (!isLoggedIn && !isLoading) {
       openModal({
         id: 'login-modal',
         content: <LoginModal />,
       });
     }
-  }, [hasToken, isError, openModal]);
+  }, [isLoggedIn, isLoading, openModal]);
 
   if (isLoading || !isLoggedIn) {
     return null;
