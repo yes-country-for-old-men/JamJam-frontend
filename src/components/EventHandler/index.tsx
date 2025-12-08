@@ -14,23 +14,21 @@ const EventHandler = () => {
       });
     };
 
-    const handleConfirm = (...args: unknown[]) => {
-      const data = args[0] as {
-        title: string;
-        content: React.ReactNode;
-        onConfirm: () => void;
-        confirmText?: string;
-        cancelText?: string;
-      };
+    const handleConfirm = (data: {
+      title: string;
+      content: React.ReactNode;
+      onConfirm: () => void;
+      confirmText?: string;
+      cancelText?: string;
+    }) => {
       confirm(data);
     };
 
-    const handleAlert = (...args: unknown[]) => {
-      const data = args[0] as {
-        title: string;
-        content: React.ReactNode;
-        confirmText?: string;
-      };
+    const handleAlert = (data: {
+      title: string;
+      content: React.ReactNode;
+      confirmText?: string;
+    }) => {
       alert(data);
     };
 
