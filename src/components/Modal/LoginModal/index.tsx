@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 import { useQueryClient } from '@tanstack/react-query';
 import styled from '@emotion/styled';
 import useModal from '@hooks/useModal';
-import userLogin from '@apis/userLogin';
+import { login } from '@apis/auth';
 import Input from '@components/Input';
 import Button from '@components/Button';
 import LogoIcon from '@assets/icons/logo-icon.svg?react';
@@ -86,12 +86,12 @@ const LoginModal: React.FC = () => {
     setErrorMessage('');
 
     try {
-      const { accessToken } = await userLogin({
+      const response = await login({
         loginId: loginForm.username,
         password: loginForm.password,
       });
 
-      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('accessToken', response.content.accessToken);
       await queryClient.invalidateQueries({ queryKey: ['userInfo'] });
       window.location.reload();
 
