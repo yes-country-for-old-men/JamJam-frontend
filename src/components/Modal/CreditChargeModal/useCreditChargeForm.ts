@@ -4,11 +4,11 @@ import {
   formatDisplayValue,
   clampAmount,
   validateAmount,
-} from '@components/Modal/CreditChargeModal/utils/creditChargeUtils';
+} from '@components/Modal/CreditChargeModal/creditChargeUtils';
 import {
   MIN_CHARGE_AMOUNT,
   MAX_CHARGE_AMOUNT,
-} from '@components/Modal/CreditChargeModal/constants/creditCharge';
+} from '@components/Modal/CreditChargeModal/constants';
 
 const useCreditChargeForm = () => {
   const [amount, setAmount] = useState<number>(0);

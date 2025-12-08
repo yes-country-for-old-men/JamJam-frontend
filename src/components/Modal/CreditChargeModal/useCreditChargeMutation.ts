@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import requestPayment from '@apis/payment';
+import usePayment from '@components/Modal/CreditChargeModal/usePayment';
 
 const useCreditChargeMutation = () => {
   const queryClient = useQueryClient();
+  const { requestPayment } = usePayment();
 
   return useMutation({
     mutationFn: (amount: number) => requestPayment(amount),
