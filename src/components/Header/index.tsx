@@ -1,3 +1,4 @@
+import { Z_INDEX } from '@constants/index';
 import styled from '@emotion/styled';
 import HeaderAuth from './HeaderAuth';
 import HeaderLogo from './HeaderLogo';
@@ -11,7 +12,7 @@ const Container = styled.header`
   width: 100%;
   height: 80px;
   background-color: ${(props) => props.theme.COLORS.BACKGROUND};
-  z-index: 11;
+  z-index: ${Z_INDEX.HEADER};
 `;
 
 const ContentWrapper = styled.div`

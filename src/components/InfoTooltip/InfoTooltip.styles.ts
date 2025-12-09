@@ -1,3 +1,4 @@
+import { Z_INDEX } from '@constants/index';
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
@@ -23,7 +24,7 @@ export const InfoBubble = styled.div<{ visible: boolean }>`
   font-size: 13px;
   line-height: 1.4;
   padding: 12px;
-  z-index: 1;
+  z-index: ${Z_INDEX.BASE};
   opacity: ${(props) => (props.visible ? 1 : 0)};
   visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
   transform: ${(props) =>

@@ -7,3 +7,4 @@ export {
 export { default as SKILLS } from './skills';
 export { default as SLIDE_IMAGES } from './slideImages';
 export { STORAGE_KEYS } from './storage';
+export { Z_INDEX, getModalZIndex } from './zIndex';

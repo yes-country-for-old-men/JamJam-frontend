@@ -1,4 +1,5 @@
 import React from 'react';
+import { Z_INDEX } from '@constants/index';
 import styled from '@emotion/styled';
 
 const TabContainer = styled.nav`
@@ -7,7 +8,7 @@ const TabContainer = styled.nav`
   top: 80px;
   background-color: ${(props) => props.theme.COLORS.BACKGROUND};
   border-bottom: 1px solid ${(props) => props.theme.COLORS.GRAY[5]};
-  z-index: 1;
+  z-index: ${Z_INDEX.BASE};
 `;
 
 const TabButton = styled.button<{ active: boolean }>`

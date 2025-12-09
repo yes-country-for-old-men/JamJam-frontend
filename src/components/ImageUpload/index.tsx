@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import DeleteIcon from '@assets/icons/cross.svg?react';
 import ImageIcon from '@assets/icons/image.svg?react';
+import { Z_INDEX } from '@constants/index';
 import styled from '@emotion/styled';
 import type FileWithId from '@type/FileWithId';
 
@@ -190,7 +191,7 @@ const DeleteButton = styled.button`
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 50%;
   transition: all 0.2s ease;
-  z-index: 10;
+  z-index: ${Z_INDEX.IMAGE_OVERLAY};
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.6);

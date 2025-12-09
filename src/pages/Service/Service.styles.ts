@@ -1,3 +1,4 @@
+import { Z_INDEX } from '@constants/index';
 import styled from '@emotion/styled';
 
 export const Container = styled.main`
@@ -40,7 +41,7 @@ export const NavigationButton = styled.button`
   border: 0.5px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   transition: all 0.2s ease;
-  z-index: 1;
+  z-index: ${Z_INDEX.BASE};
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);

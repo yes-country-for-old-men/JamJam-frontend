@@ -1,3 +1,4 @@
+import { Z_INDEX } from '@constants/index';
 import styled from '@emotion/styled';
 
 export const Container = styled.article`
@@ -149,7 +150,7 @@ export const ThumbnailLoadingOverlay = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  z-index: 10;
+  z-index: ${Z_INDEX.BASE};
   gap: 12px;
 `;
 
