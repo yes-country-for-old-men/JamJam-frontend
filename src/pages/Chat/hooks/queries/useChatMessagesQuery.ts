@@ -20,7 +20,11 @@ const useChatMessagesQuery = (chatRoomId: number | null) => {
     queryFn: async ({ pageParam = 0 }) => {
       if (!chatRoomId) return { messages: [], hasNext: false };
 
-      const response = await getChatMessages(chatRoomId, pageParam, 50);
+      const response = await getChatMessages({
+        chatRoomId,
+        page: pageParam,
+        size: 50,
+      });
       const messages = response.data.content.chats.map((msg) =>
         convertApiMessageToLocal(msg, chatRoomId),
       );
