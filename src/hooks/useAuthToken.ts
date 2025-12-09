@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { storageService } from '@services/storage';
 
 interface UseAuthTokenReturn {
   exists: boolean;
@@ -9,16 +10,16 @@ interface UseAuthTokenReturn {
 
 export const useAuthToken = (): UseAuthTokenReturn => {
   const [token, setTokenState] = useState<string | null>(
-    localStorage.getItem('accessToken'),
+    storageService.getAccessToken(),
   );
 
   const set = useCallback((newToken: string) => {
-    localStorage.setItem('accessToken', newToken);
+    storageService.setAccessToken(newToken);
     setTokenState(newToken);
   }, []);
 
   const remove = useCallback(() => {
-    localStorage.removeItem('accessToken');
+    storageService.removeAccessToken();
     setTokenState(null);
   }, []);
 
