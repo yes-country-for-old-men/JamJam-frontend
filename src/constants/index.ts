@@ -6,3 +6,4 @@ export {
 } from './serviceCategories';
 export { default as SKILLS } from './skills';
 export { default as SLIDE_IMAGES } from './slideImages';
+export { STORAGE_KEYS } from './storage';
