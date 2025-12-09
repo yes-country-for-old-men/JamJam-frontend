@@ -1,6 +1,6 @@
 import React from 'react';
 import { type ProviderDetailContent } from '@apis/provider';
-import getSkillNameById from '@utils/getSkillNameById';
+import { getSkillNameById } from '@utils/dataMappers';
 import * as S from '@pages/Provider/Provider.styles';
 import CareerIcon from '@assets/icons/career.svg?react';
 import LicenseIcon from '@assets/icons/license.svg?react';

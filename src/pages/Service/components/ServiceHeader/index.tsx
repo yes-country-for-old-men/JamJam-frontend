@@ -1,6 +1,6 @@
 import React from 'react';
 import { type ServiceDetailContent } from '@apis/service';
-import getCategoryNameById from '@utils/getCategoryNameById';
+import { getCategoryNameById } from '@utils/dataMappers';
 import * as S from '@pages/Service/components/ServiceHeader/ServiceHeader.styles';
 import Button from '@components/Button';
 import UserProfileImageIcon from '@assets/icons/user-profile-image.svg?react';
