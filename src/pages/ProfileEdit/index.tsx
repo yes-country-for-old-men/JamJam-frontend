@@ -114,20 +114,20 @@ const ProfileEdit: React.FC = () => {
 
       if (hasExistingProfile) {
         await updateProviderProfile(requestData);
-        alert({
+        await alert({
           title: '프로필 수정 완료',
           content: '프로필이 성공적으로 수정되었습니다.',
         });
       } else {
         await registerProviderProfile(requestData);
-        alert({
+        await alert({
           title: '프로필 등록 완료',
           content: '프로필이 성공적으로 등록되었습니다.',
         });
         setHasExistingProfile(true);
       }
     } catch {
-      alert({
+      await alert({
         title: `프로필 ${hasExistingProfile ? '수정' : '등록'} 실패`,
         content: `프로필 ${hasExistingProfile ? '수정' : '등록'} 중 오류가 발생했습니다.`,
       });

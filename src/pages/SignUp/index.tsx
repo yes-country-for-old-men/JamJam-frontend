@@ -89,7 +89,7 @@ const SignUp: React.FC = () => {
         step2Form.clearErrors('nickname');
       }
     } catch (error) {
-      alert({
+      await alert({
         title: '중복 확인 실패',
         content: getErrorMessage(error),
       });
@@ -120,7 +120,7 @@ const SignUp: React.FC = () => {
         step2Form.clearErrors('id');
       }
     } catch (error) {
-      alert({
+      await alert({
         title: '중복 확인 실패',
         content: getErrorMessage(error),
       });
@@ -235,7 +235,7 @@ const SignUp: React.FC = () => {
         setCompletedUserNickname(step2Data.nickname);
         setIsCompleted(true);
       } catch (error) {
-        alert({
+        await alert({
           title: '회원가입 실패',
           content: getErrorMessage(error),
         });

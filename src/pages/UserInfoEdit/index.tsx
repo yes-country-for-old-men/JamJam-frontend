@@ -133,7 +133,7 @@ const UserInfoEdit: React.FC = () => {
         editForm.clearErrors('nickname');
       }
     } catch (error) {
-      alert({
+      await alert({
         title: '중복 확인 실패',
         content: getErrorMessage(error),
       });
@@ -321,7 +321,7 @@ const UserInfoEdit: React.FC = () => {
         });
       }
     } catch (error) {
-      alert({
+      await alert({
         title: '오류',
         content: getErrorMessage(error),
       });
@@ -376,7 +376,7 @@ const UserInfoEdit: React.FC = () => {
       const validation = validateChanges(changeFlags);
       if (!validation.isValid) {
         if (validation.errors.length > 0) {
-          alert({
+          await alert({
             title: '확인 필요',
             content: validation.errors.join('\n'),
           });
@@ -385,7 +385,7 @@ const UserInfoEdit: React.FC = () => {
       }
 
       if (!changeFlags.hasChanges) {
-        alert({
+        await alert({
           title: '변경 사항 없음',
           content: '수정할 정보가 없습니다.',
         });
@@ -396,14 +396,14 @@ const UserInfoEdit: React.FC = () => {
         const requestData = buildRequestData(formData, changeFlags);
         await updateUserInfoMutation.mutateAsync(requestData);
 
-        alert({
+        await alert({
           title: '정보 수정 완료',
           content: '기본 정보가 성공적으로 수정되었습니다.',
         });
 
         updateFormAfterSubmit(formData, changeFlags);
       } catch (error) {
-        alert({
+        await alert({
           title: '정보 수정 실패',
           content: getErrorMessage(error),
         });

@@ -113,17 +113,18 @@ const UserMenu = ({ userInfo }: UserMenuProps) => {
     setIsDropdownOpen(false);
   };
 
-  const handleLogoutClick = () => {
-    confirm({
+  const handleLogoutClick = async () => {
+    const result = await confirm({
       title: '로그아웃',
       content: '정말 로그아웃 하시겠습니까?',
-      onConfirm: () => {
-        logout();
-        setIsDropdownOpen(false);
-      },
       confirmText: '로그아웃',
       cancelText: '취소',
     });
+
+    if (result) {
+      logout();
+      setIsDropdownOpen(false);
+    }
   };
 
   return (

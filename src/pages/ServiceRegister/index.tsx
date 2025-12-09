@@ -70,7 +70,7 @@ const ServiceRegister: React.FC = () => {
       form.setValue('category', category);
       goToNextStep();
     } catch {
-      alert({
+      await alert({
         title: '콘텐츠 생성 실패',
         content: 'AI 콘텐츠 생성 중 오류가 발생했습니다.',
       });
@@ -103,7 +103,7 @@ const ServiceRegister: React.FC = () => {
       form.setValue('thumbnailImage', thumbnailFile);
       setHasGeneratedThumbnail(true);
     } catch {
-      alert({
+      await alert({
         title: '썸네일 생성 실패',
         content: 'AI 썸네일 생성 중 오류가 발생했습니다.',
       });
@@ -138,13 +138,13 @@ const ServiceRegister: React.FC = () => {
 
       await registerService(requestData);
 
-      alert({
+      await alert({
         title: '등록 완료',
         content: '서비스가 성공적으로 등록되었습니다.',
-        onConfirm: () => window.location.reload(),
       });
+      window.location.reload();
     } catch {
-      alert({
+      await alert({
         title: '서비스 등록 실패',
         content: '서비스 등록 중 오류가 발생했습니다.',
       });

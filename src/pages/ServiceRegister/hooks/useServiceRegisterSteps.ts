@@ -31,25 +31,28 @@ const useServiceRegisterSteps = () => {
 
   useEffect(() => {
     const checkProviderProfile = async () => {
-      const showProfileRequiredModal = () => {
-        confirm({
+      const showProfileRequiredModal = async () => {
+        const result = await confirm({
           title: '프로필 등록 필요',
           content:
             '서비스를 등록하기 전에 전문가 프로필 정보를 먼저 등록해 주세요.',
-          onConfirm: () => navigate('/my/profile-edit'),
         });
+
+        if (result) {
+          navigate('/my/profile-edit');
+        }
       };
 
       try {
         const response = await getProviderProfile();
         if (!response.data.content) {
-          showProfileRequiredModal();
+          await showProfileRequiredModal();
           return;
         }
         setIsLoading(false);
       } catch (error) {
         if (isAxiosError(error) && error.response?.status === 404) {
-          showProfileRequiredModal();
+          await showProfileRequiredModal();
         }
       }
     };
