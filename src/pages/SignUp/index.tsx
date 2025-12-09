@@ -1,23 +1,23 @@
 import React, { useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import * as S from '@pages/SignUp/SignUp.styles';
 import {
   clientSignUp,
   providerSignUp,
   checkNickname,
   checkLoginId,
 } from '@apis/signUp';
-import useModal from '@hooks/useModal';
-import useSignUpForm from '@pages/SignUp/hooks/useSignUpForm';
-import usePhoneVerification from '@hooks/usePhoneVerification';
-import getErrorMessage from '@utils/getErrorMessage';
+import LogoIcon from '@assets/icons/logo-icon.svg?react';
 import Button from '@components/Button';
-import StepIndicator from '@pages/SignUp/components/StepIndicator';
+import useModal from '@hooks/useModal';
+import usePhoneVerification from '@hooks/usePhoneVerification';
+import CompletionScreen from '@pages/SignUp/components/CompletionScreen';
 import Step1 from '@pages/SignUp/components/Step1';
 import Step2 from '@pages/SignUp/components/Step2';
 import Step3 from '@pages/SignUp/components/Step3';
-import CompletionScreen from '@pages/SignUp/components/CompletionScreen';
-import LogoIcon from '@assets/icons/logo-icon.svg?react';
+import StepIndicator from '@pages/SignUp/components/StepIndicator';
+import useSignUpForm from '@pages/SignUp/hooks/useSignUpForm';
+import * as S from '@pages/SignUp/SignUp.styles';
+import getErrorMessage from '@utils/getErrorMessage';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp: React.FC = () => {
   const [isCompleted, setIsCompleted] = useState(false);

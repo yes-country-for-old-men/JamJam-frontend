@@ -1,16 +1,16 @@
-import type Category from '@type/Category';
 import BusinessIcon from '@assets/icons/category/business.svg?react';
 import ConsultingIcon from '@assets/icons/category/consulting.svg?react';
-import MarketingIcon from '@assets/icons/category/marketing.svg?react';
-import DevelopmentIcon from '@assets/icons/category/development.svg?react';
-import DesignIcon from '@assets/icons/category/design.svg?react';
-import WriteIcon from '@assets/icons/category/write.svg?react';
-import TranslationIcon from '@assets/icons/category/translation.svg?react';
-import PhotographIcon from '@assets/icons/category/photograph.svg?react';
-import EducationIcon from '@assets/icons/category/education.svg?react';
 import CraftIcon from '@assets/icons/category/craft.svg?react';
+import DesignIcon from '@assets/icons/category/design.svg?react';
+import DevelopmentIcon from '@assets/icons/category/development.svg?react';
+import EducationIcon from '@assets/icons/category/education.svg?react';
 import HobbyIcon from '@assets/icons/category/hobby.svg?react';
 import LivingIcon from '@assets/icons/category/living.svg?react';
+import MarketingIcon from '@assets/icons/category/marketing.svg?react';
+import PhotographIcon from '@assets/icons/category/photograph.svg?react';
+import TranslationIcon from '@assets/icons/category/translation.svg?react';
+import WriteIcon from '@assets/icons/category/write.svg?react';
+import type Category from '@type/Category';
 
 const ICON_SIZE = 72;
 

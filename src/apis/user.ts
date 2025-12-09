@@ -1,7 +1,7 @@
 import apiClient from '@apis/apiClient';
+import createMultipartRequest from '@utils/multipartRequest';
 import type APIResponse from '@type/APIResponse';
 import type User from '@type/User';
-import createMultipartRequest from '@utils/multipartRequest';
 
 export interface UpdateUserRequest {
   request: {

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import styled from '@emotion/styled';
-import { motion, AnimatePresence } from 'framer-motion';
-import useModal from '@hooks/useModal';
+import CloseIcon from '@assets/icons/close.svg?react';
 import Button from '@components/Button';
 import Spinner from '@components/Spinner';
-import CloseIcon from '@assets/icons/close.svg?react';
+import styled from '@emotion/styled';
+import useModal from '@hooks/useModal';
+import { motion, AnimatePresence } from 'framer-motion';
+import { createPortal } from 'react-dom';
 
 const Backdrop = styled(motion.div)`
   position: fixed;

@@ -1,4 +1,5 @@
 import apiClient from '@apis/apiClient';
+import createMultipartRequest from '@utils/multipartRequest';
 import type APIResponse from '@type/APIResponse';
 import type {
   ProviderProfile,
@@ -8,7 +9,6 @@ import type {
   License,
   ContactHours,
 } from '@type/Provider';
-import createMultipartRequest from '@utils/multipartRequest';
 
 export interface CareerWithFile extends Career {
   file?: File;

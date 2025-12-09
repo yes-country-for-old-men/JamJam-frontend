@@ -1,22 +1,22 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { checkNickname } from '@apis/signUp';
+import Button from '@components/Button';
+import BANK_CODE_MAP from '@constants/bankCodes';
+import useUserInfoQuery from '@hooks/queries/useUserInfoQuery';
 import useModal from '@hooks/useModal';
 import usePhoneVerification from '@hooks/usePhoneVerification';
-import useInfoEditForm from '@pages/UserInfoEdit/hooks/useInfoEditForm';
-import useUserInfoQuery from '@hooks/queries/useUserInfoQuery';
-import useCheckPasswordMutation from '@pages/UserInfoEdit/hooks/mutations/useCheckPasswordMutation';
-import useUpdateUserInfoMutation from '@pages/UserInfoEdit/hooks/mutations/useUpdateUserInfoMutation';
-import type { UpdateUserRequest } from '@apis/user';
-import { checkNickname } from '@apis/signUp';
-import { formatPhoneNumber } from '@utils/format';
-import getErrorMessage from '@utils/getErrorMessage';
-import * as S from '@pages/UserInfoEdit/UserInfoEdit.styles';
-import Button from '@components/Button';
-import PasswordCheck from '@pages/UserInfoEdit/components/PasswordCheck';
+import AccountSection from '@pages/UserInfoEdit/components/AccountSection';
 import BasicInfoSection from '@pages/UserInfoEdit/components/BasicInfoSection';
+import PasswordCheck from '@pages/UserInfoEdit/components/PasswordCheck';
 import PasswordSection from '@pages/UserInfoEdit/components/PasswordSection';
 import PhoneSection from '@pages/UserInfoEdit/components/PhoneSection';
-import AccountSection from '@pages/UserInfoEdit/components/AccountSection';
-import BANK_CODE_MAP from '@constants/bankCodes';
+import useCheckPasswordMutation from '@pages/UserInfoEdit/hooks/mutations/useCheckPasswordMutation';
+import useUpdateUserInfoMutation from '@pages/UserInfoEdit/hooks/mutations/useUpdateUserInfoMutation';
+import useInfoEditForm from '@pages/UserInfoEdit/hooks/useInfoEditForm';
+import * as S from '@pages/UserInfoEdit/UserInfoEdit.styles';
+import { formatPhoneNumber } from '@utils/format';
+import getErrorMessage from '@utils/getErrorMessage';
+import type { UpdateUserRequest } from '@apis/user';
 
 const BANKS = Object.entries(BANK_CODE_MAP).map(([code, name]) => ({
   code,

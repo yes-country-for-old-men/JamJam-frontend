@@ -1,7 +1,7 @@
+import { getUserInfo } from '@apis/user';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import type User from '@type/User';
-import { getUserInfo } from '@apis/user';
 
 const useUserInfoQuery = () => {
   const hasToken = !!localStorage.getItem('accessToken');

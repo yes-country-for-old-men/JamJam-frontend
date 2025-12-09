@@ -1,9 +1,9 @@
 import React from 'react';
-import { type ProfileForm } from '@pages/ProfileEdit/hooks/useProfileForm';
-import { type ContactHours } from '@type/Provider';
-import { type SliderRange } from '@components/Slider/hooks/useSlider';
-import * as S from '@pages/ProfileEdit/ProfileEdit.styles';
 import Slider from '@components/Slider';
+import { type SliderRange } from '@components/Slider/hooks/useSlider';
+import { type ProfileForm } from '@pages/ProfileEdit/hooks/useProfileForm';
+import * as S from '@pages/ProfileEdit/ProfileEdit.styles';
+import { type ContactHours } from '@type/Provider';
 
 interface ContactTimeSectionProps {
   form: ProfileForm;

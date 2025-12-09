@@ -5,26 +5,26 @@ import React, {
   useLayoutEffect,
   useMemo,
 } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import LogoIcon from '@assets/icons/gray-logo-icon.svg?react';
+import * as S from '@pages/Chat/Chat.styles';
+import ChatHeader from '@pages/Chat/components/ChatHeader';
+import ChatInput from '@pages/Chat/components/ChatInput';
+import ChatRoomItem from '@pages/Chat/components/ChatRoomItem';
+import Messages from '@pages/Chat/components/Messages';
+import * as MessagesS from '@pages/Chat/components/Messages/Messages.styles';
+import useMarkAsReadMutation from '@pages/Chat/hooks/mutations/useMarkAsReadMutation';
+import useChatMessagesQuery from '@pages/Chat/hooks/queries/useChatMessagesQuery';
+import useChatRoomsQuery from '@pages/Chat/hooks/queries/useChatRoomsQuery';
 import useChat from '@pages/Chat/hooks/useChat';
 import useMessageScroll from '@pages/Chat/hooks/useMessageScroll';
-import useChatRoomsQuery from '@pages/Chat/hooks/queries/useChatRoomsQuery';
-import useChatMessagesQuery from '@pages/Chat/hooks/queries/useChatMessagesQuery';
-import useMarkAsReadMutation from '@pages/Chat/hooks/mutations/useMarkAsReadMutation';
-import decodeToken from '@utils/decodeToken';
 import {
   groupChatMessages,
   getBubblePosition,
   shouldShowProfile,
 } from '@pages/Chat/utils/chatMessagesUtils';
+import { useQueryClient } from '@tanstack/react-query';
+import decodeToken from '@utils/decodeToken';
 import type { ChatRoom, Message } from '@type/Chat';
-import * as S from '@pages/Chat/Chat.styles';
-import * as MessagesS from '@pages/Chat/components/Messages/Messages.styles';
-import ChatRoomItem from '@pages/Chat/components/ChatRoomItem';
-import ChatHeader from '@pages/Chat/components/ChatHeader';
-import Messages from '@pages/Chat/components/Messages';
-import ChatInput from '@pages/Chat/components/ChatInput';
-import LogoIcon from '@assets/icons/gray-logo-icon.svg?react';
 
 const Chat: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');

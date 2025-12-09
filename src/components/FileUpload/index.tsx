@@ -1,8 +1,8 @@
 import React, { useState, useRef, useCallback } from 'react';
+import DeleteIcon from '@assets/icons/cross.svg?react';
+import UploadIcon from '@assets/icons/upload.svg?react';
 import styled from '@emotion/styled';
 import type FileWithId from '@type/FileWithId';
-import UploadIcon from '@assets/icons/upload.svg?react';
-import DeleteIcon from '@assets/icons/cross.svg?react';
 
 const Container = styled.div`
   margin-top: 12px;

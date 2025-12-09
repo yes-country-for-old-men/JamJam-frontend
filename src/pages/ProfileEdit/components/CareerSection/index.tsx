@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
+import AddIcon from '@assets/icons/add.svg?react';
+import DeleteIcon from '@assets/icons/cross.svg?react';
+import FileUpload from '@components/FileUpload';
+import Input from '@components/Input';
+import DocumentsTooltip from '@pages/ProfileEdit/components/DocumentsTooltip';
 import { type ProfileForm } from '@pages/ProfileEdit/hooks/useProfileForm';
+import * as S from '@pages/ProfileEdit/ProfileEdit.styles';
 import { type Career } from '@type/Provider';
 import type FileWithId from '@type/FileWithId';
-import * as S from '@pages/ProfileEdit/ProfileEdit.styles';
-import Input from '@components/Input';
-import FileUpload from '@components/FileUpload';
-import DocumentsTooltip from '@pages/ProfileEdit/components/DocumentsTooltip';
-import DeleteIcon from '@assets/icons/cross.svg?react';
-import AddIcon from '@assets/icons/add.svg?react';
 
 interface CareerSectionProps {
   form: ProfileForm;

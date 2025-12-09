@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import useModal from '@hooks/useModal';
-import useAuthStatus from '@hooks/useAuthStatus';
 import LoginModal from '@components/Modal/LoginModal';
+import useAuthStatus from '@hooks/useAuthStatus';
+import useModal from '@hooks/useModal';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;

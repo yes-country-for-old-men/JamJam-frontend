@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import theme from '@styles/theme';
 import SearchIcon from '@assets/icons/search.svg?react';
+import styled from '@emotion/styled';
+import theme from '@styles/theme';
+import { motion } from 'framer-motion';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface SearchBarProps {
   value?: string;

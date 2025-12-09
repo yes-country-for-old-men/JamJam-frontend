@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import useSearch from '@pages/Search/hooks/useSearch';
-import useSearchQuery from '@pages/Search/hooks/queries/useSearchQuery';
-import * as S from '@pages/Search/Search.styles';
-import SearchBar from '@components/SearchBar';
 import CategoryTabNavigator from '@components/CategoryTabNavigator';
+import SearchBar from '@components/SearchBar';
 import ServiceCard from '@components/ServiceCard';
 import Spinner from '@components/Spinner';
+import useSearchQuery from '@pages/Search/hooks/queries/useSearchQuery';
+import useSearch from '@pages/Search/hooks/useSearch';
+import * as S from '@pages/Search/Search.styles';
+import { useSearchParams } from 'react-router-dom';
 
 const Search: React.FC = () => {
   const [searchParams] = useSearchParams();

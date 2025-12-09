@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import {
   descriptionSchema,
   serviceNameSchema,
@@ -9,6 +8,7 @@ import {
   portfolioImagesSchema,
   includeTitleInThumbnailSchema,
 } from '@schemas/serviceSchema';
+import { z } from 'zod';
 
 export const serviceRegisterSchema = z.object({
   description: descriptionSchema,

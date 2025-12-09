@@ -1,18 +1,18 @@
 import React from 'react';
-import useServiceRegisterForm from '@pages/ServiceRegister/hooks/useServiceRegisterForm';
-import useServiceRegisterSteps from '@pages/ServiceRegister/hooks/useServiceRegisterSteps';
-import useModal from '@hooks/useModal';
 import {
   generateService,
   generateAiThumbnail,
   registerService,
   type ServiceRegisterRequest,
 } from '@apis/service';
-import base64ToFile from '@utils/base64ToFile';
-import * as S from '@pages/ServiceRegister/ServiceRegister.styles';
+import useModal from '@hooks/useModal';
 import IntroductionStep from '@pages/ServiceRegister/components/IntroductionStep';
-import ServiceDetailsStep from '@pages/ServiceRegister/components/ServiceDetailsStep';
 import MediaUploadStep from '@pages/ServiceRegister/components/MediaUploadStep';
+import ServiceDetailsStep from '@pages/ServiceRegister/components/ServiceDetailsStep';
+import useServiceRegisterForm from '@pages/ServiceRegister/hooks/useServiceRegisterForm';
+import useServiceRegisterSteps from '@pages/ServiceRegister/hooks/useServiceRegisterSteps';
+import * as S from '@pages/ServiceRegister/ServiceRegister.styles';
+import base64ToFile from '@utils/base64ToFile';
 
 const ServiceRegister: React.FC = () => {
   const { form, formData, updatePrice, updatePortfolioImages } =

@@ -1,13 +1,13 @@
 import React, { useRef } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
-import { useTabScroll } from '@hooks/useTabScroll';
-import useProviderDetailQuery from '@pages/Provider/hooks/queries/useProviderDetailQuery';
-import * as S from '@pages/Provider/Provider.styles';
 import SectionTab from '@components/SectionTab';
+import { useTabScroll } from '@hooks/useTabScroll';
 import ProfileCard from '@pages/Provider/components/ProfileCard';
 import ProviderInfoSection from '@pages/Provider/components/ProviderInfoSection';
 import ServicesSection from '@pages/Provider/components/ServicesSection';
 import SidePanel from '@pages/Provider/components/SidePanel';
+import useProviderDetailQuery from '@pages/Provider/hooks/queries/useProviderDetailQuery';
+import * as S from '@pages/Provider/Provider.styles';
+import { useParams, Navigate } from 'react-router-dom';
 
 const Provider: React.FC = () => {
   const { userId } = useParams<{ userId: string }>();

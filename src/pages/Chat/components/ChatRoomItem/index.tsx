@@ -1,8 +1,8 @@
 import React from 'react';
-import type { ChatRoom } from '@type/Chat';
-import { formatRelativeTime } from '@utils/format';
-import * as S from '@pages/Chat/components/ChatRoomItem/ChatRoomItem.styles';
 import UserProfileImageIcon from '@assets/icons/user-profile-image.svg?react';
+import * as S from '@pages/Chat/components/ChatRoomItem/ChatRoomItem.styles';
+import { formatRelativeTime } from '@utils/format';
+import type { ChatRoom } from '@type/Chat';
 
 interface ChatRoomItemProps {
   chatRoom: ChatRoom;

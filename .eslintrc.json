@@ -47,12 +47,47 @@
       }
     ],
     "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
     "no-console": "error",
+    "no-continue": "off",
     "@typescript-eslint/lines-between-class-members": "off",
     "@typescript-eslint/no-throw-literal": "off",
     "react/prop-types": "off",
     "react-hooks/exhaustive-deps": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@/**",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "never",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
   },
   "ignorePatterns": ["build", "dist", "public", "**/*.d.ts"]
 }

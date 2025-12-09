@@ -1,7 +1,7 @@
 import React from 'react';
+import RoleSelection from '@pages/SignUp/components/RoleSelection';
 import { type Step1Form } from '@pages/SignUp/hooks/useSignUpForm';
 import * as S from '@pages/SignUp/SignUp.styles';
-import RoleSelection from '@pages/SignUp/components/RoleSelection';
 
 interface Step1Props {
   form: Step1Form;

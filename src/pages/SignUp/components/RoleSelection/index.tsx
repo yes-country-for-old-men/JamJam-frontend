@@ -1,9 +1,9 @@
 import React from 'react';
-import * as S from '@pages/SignUp/components/RoleSelection/RoleSelection.styles';
-import ProviderActiveIcon from '@assets/icons/provider-active.svg?react';
-import ProviderInactiveIcon from '@assets/icons/provider-inactive.svg?react';
 import ClientActiveIcon from '@assets/icons/client-active.svg?react';
 import ClientInactiveIcon from '@assets/icons/client-inactive.svg?react';
+import ProviderActiveIcon from '@assets/icons/provider-active.svg?react';
+import ProviderInactiveIcon from '@assets/icons/provider-inactive.svg?react';
+import * as S from '@pages/SignUp/components/RoleSelection/RoleSelection.styles';
 
 interface RoleSelectionProps {
   selectedRole: 'provider' | 'client' | null;

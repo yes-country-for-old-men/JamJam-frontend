@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import useModal from '@hooks/useModal';
-import useLogoutMutation from '@hooks/mutations/useLogoutMutation';
-import theme from '@styles/theme';
-import UserProfileImageIcon from '@assets/icons/user-profile-image.svg?react';
 import ArrowDownIcon from '@assets/icons/arrow-down.svg?react';
+import UserProfileImageIcon from '@assets/icons/user-profile-image.svg?react';
+import styled from '@emotion/styled';
+import useLogoutMutation from '@hooks/mutations/useLogoutMutation';
+import useModal from '@hooks/useModal';
+import theme from '@styles/theme';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 interface UserMenuProps {
   userInfo: {

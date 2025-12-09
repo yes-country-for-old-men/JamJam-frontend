@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import ArrowDownIcon from '@assets/icons/arrow-down.svg?react';
+import CategoryIcon from '@assets/icons/category.svg?react';
+import CATEGORIES from '@constants/serviceCategories';
 import styled from '@emotion/styled';
 import theme from '@styles/theme';
-import CATEGORIES from '@constants/serviceCategories';
-import CategoryIcon from '@assets/icons/category.svg?react';
-import ArrowDownIcon from '@assets/icons/arrow-down.svg?react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 interface CategoryTabNavigatorProps {
   currentCategoryId?: number | null;

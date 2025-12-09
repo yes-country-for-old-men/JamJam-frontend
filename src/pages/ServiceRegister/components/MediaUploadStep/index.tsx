@@ -1,17 +1,17 @@
 import React from 'react';
-import { Controller, type UseFormReturn } from 'react-hook-form';
-import { type ServiceRegisterData } from '@pages/ServiceRegister/schemas/serviceRegisterSchema';
-import type FileWithId from '@type/FileWithId';
-import * as S from '@pages/ServiceRegister/ServiceRegister.styles';
-import Button from '@components/Button';
-import Checkbox from '@components/Checkbox';
-import ImageUpload from '@components/ImageUpload';
-import GradientButton from '@components/GradientButton';
-import Spinner from '@components/Spinner';
 import AIIcon from '@assets/icons/ai.svg?react';
 import InfoIcon from '@assets/icons/info.svg?react';
-import ThumbnailNormalImage from '@assets/images/thumbnail-normal.png';
 import ThumbnailErrorImage from '@assets/images/thumbnail-error.png';
+import ThumbnailNormalImage from '@assets/images/thumbnail-normal.png';
+import Button from '@components/Button';
+import Checkbox from '@components/Checkbox';
+import GradientButton from '@components/GradientButton';
+import ImageUpload from '@components/ImageUpload';
+import Spinner from '@components/Spinner';
+import { type ServiceRegisterData } from '@pages/ServiceRegister/schemas/serviceRegisterSchema';
+import * as S from '@pages/ServiceRegister/ServiceRegister.styles';
+import { Controller, type UseFormReturn } from 'react-hook-form';
+import type FileWithId from '@type/FileWithId';
 
 const MAX_PORTFOLIO_IMAGES = 10;
 

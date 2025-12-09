@@ -1,7 +1,7 @@
 import React from 'react';
-import styled from '@emotion/styled';
-import PlusIcon from '@assets/icons/plus.svg?react';
 import MinusIcon from '@assets/icons/minus.svg?react';
+import PlusIcon from '@assets/icons/plus.svg?react';
+import styled from '@emotion/styled';
 
 const QuantityControllerWrapper = styled.div`
   display: flex;

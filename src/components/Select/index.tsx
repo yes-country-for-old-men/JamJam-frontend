@@ -1,8 +1,8 @@
 import React, { type SelectHTMLAttributes } from 'react';
+import ArrowDownIcon from '@assets/icons/arrow-down.svg?react';
+import RequiredIcon from '@assets/icons/required.svg?react';
 import styled from '@emotion/styled';
 import theme from '@styles/theme';
-import RequiredIcon from '@assets/icons/required.svg?react';
-import ArrowDownIcon from '@assets/icons/arrow-down.svg?react';
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;

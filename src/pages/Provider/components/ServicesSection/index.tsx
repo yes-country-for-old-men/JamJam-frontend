@@ -1,7 +1,7 @@
 import React from 'react';
 import { type ProviderDetailContent } from '@apis/provider';
-import * as S from '@pages/Provider/Provider.styles';
 import ServiceCard from '@components/ServiceCard';
+import * as S from '@pages/Provider/Provider.styles';
 
 interface ServicesSectionProps {
   data: ProviderDetailContent;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { type ProviderDetailContent } from '@apis/provider';
-import { getCategoryNameById } from '@utils/dataMappers';
-import * as S from '@pages/Provider/components/ProfileCard/ProfileCard.styles';
-import UserProfileImageIcon from '@assets/icons/user-profile-image.svg?react';
 import LocationIcon from '@assets/icons/location.svg?react';
+import UserProfileImageIcon from '@assets/icons/user-profile-image.svg?react';
+import * as S from '@pages/Provider/components/ProfileCard/ProfileCard.styles';
+import { getCategoryNameById } from '@utils/dataMappers';
 
 interface ProfileCardProps {
   data: ProviderDetailContent;

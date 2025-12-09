@@ -1,8 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import theme from '@styles/theme';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 interface CategoryCardProps {
   id: number;

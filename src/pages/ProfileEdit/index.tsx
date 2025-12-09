@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { isAxiosError } from 'axios';
-import * as S from '@pages/ProfileEdit/ProfileEdit.styles';
-import useProfileForm from '@pages/ProfileEdit/hooks/useProfileForm';
-import useModal from '@hooks/useModal';
 import {
   getProviderProfile,
   updateProviderProfile,
   registerProviderProfile,
   type ProviderRequestWithFiles,
 } from '@apis/provider';
-import ExpertIntroSection from '@pages/ProfileEdit/components/ExpertIntroSection';
-import SkillsSection from '@pages/ProfileEdit/components/SkillsSection';
-import CareerSection from '@pages/ProfileEdit/components/CareerSection';
-import EducationSection from '@pages/ProfileEdit/components/EducationSection';
-import ContactTimeSection from '@pages/ProfileEdit/components/ContactTimeSection';
 import Button from '@components/Button';
 import LOCATIONS from '@constants/locations';
+import useModal from '@hooks/useModal';
+import CareerSection from '@pages/ProfileEdit/components/CareerSection';
+import ContactTimeSection from '@pages/ProfileEdit/components/ContactTimeSection';
+import EducationSection from '@pages/ProfileEdit/components/EducationSection';
+import ExpertIntroSection from '@pages/ProfileEdit/components/ExpertIntroSection';
+import SkillsSection from '@pages/ProfileEdit/components/SkillsSection';
+import useProfileForm from '@pages/ProfileEdit/hooks/useProfileForm';
+import * as S from '@pages/ProfileEdit/ProfileEdit.styles';
+import { isAxiosError } from 'axios';
 
 const ProfileEdit: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);

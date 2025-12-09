@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { isAxiosError } from 'axios';
-import useModal from '@hooks/useModal';
 import { getProviderProfile } from '@apis/provider';
+import useModal from '@hooks/useModal';
+import { isAxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const useServiceRegisterSteps = () => {
   const [step, setStep] = useState(1);

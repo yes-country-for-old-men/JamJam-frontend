@@ -1,10 +1,10 @@
 import React from 'react';
+import DeleteIcon from '@assets/icons/cross.svg?react';
+import CATEGORIES from '@constants/serviceCategories';
 import { type ProfileForm } from '@pages/ProfileEdit/hooks/useProfileForm';
 import useSkillSelection from '@pages/ProfileEdit/hooks/useSkillSelection';
-import type { Skill } from '@type/Provider';
 import * as S from '@pages/ProfileEdit/ProfileEdit.styles';
-import CATEGORIES from '@constants/serviceCategories';
-import DeleteIcon from '@assets/icons/cross.svg?react';
+import type { Skill } from '@type/Provider';
 
 interface SkillsSectionProps {
   form: ProfileForm;

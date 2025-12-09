@@ -1,9 +1,9 @@
 import React from 'react';
+import PasswordIcon from '@assets/icons/password.svg?react';
+import Button from '@components/Button';
+import Input from '@components/Input';
 import { type PasswordCheckForm } from '@pages/UserInfoEdit/hooks/useInfoEditForm';
 import * as S from '@pages/UserInfoEdit/UserInfoEdit.styles';
-import Input from '@components/Input';
-import Button from '@components/Button';
-import PasswordIcon from '@assets/icons/password.svg?react';
 
 interface PasswordCheckProps {
   form: PasswordCheckForm;

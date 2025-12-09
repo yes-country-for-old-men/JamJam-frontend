@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
+import LoginModal from '@components/Modal/LoginModal';
 import useModal from '@hooks/useModal';
 import eventManager from '@utils/eventManager';
-import LoginModal from '@components/Modal/LoginModal';
 
 const EventHandler = () => {
   const { openModal, confirm, alert } = useModal();

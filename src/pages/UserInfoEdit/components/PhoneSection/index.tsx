@@ -1,9 +1,9 @@
 import React from 'react';
-import { type InfoEditForm } from '@pages/UserInfoEdit/hooks/useInfoEditForm';
-import { type MessageState } from '@type/MessageState';
-import * as S from '@pages/UserInfoEdit/UserInfoEdit.styles';
-import Input from '@components/Input';
 import Button from '@components/Button';
+import Input from '@components/Input';
+import { type InfoEditForm } from '@pages/UserInfoEdit/hooks/useInfoEditForm';
+import * as S from '@pages/UserInfoEdit/UserInfoEdit.styles';
+import { type MessageState } from '@type/MessageState';
 
 interface PhoneSectionProps {
   form: InfoEditForm;

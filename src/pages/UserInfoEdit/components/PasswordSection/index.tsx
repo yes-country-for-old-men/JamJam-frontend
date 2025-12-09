@@ -1,7 +1,7 @@
 import React from 'react';
+import Input from '@components/Input';
 import { type InfoEditForm } from '@pages/UserInfoEdit/hooks/useInfoEditForm';
 import * as S from '@pages/UserInfoEdit/UserInfoEdit.styles';
-import Input from '@components/Input';
 
 interface PasswordSectionProps {
   form: InfoEditForm;

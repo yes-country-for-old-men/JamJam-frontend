@@ -1,9 +1,9 @@
 import React from 'react';
-import { Controller, type UseFormReturn } from 'react-hook-form';
+import AIIcon from '@assets/icons/ai.svg?react';
+import GradientButton from '@components/GradientButton';
 import { type ServiceRegisterData } from '@pages/ServiceRegister/schemas/serviceRegisterSchema';
 import * as S from '@pages/ServiceRegister/ServiceRegister.styles';
-import GradientButton from '@components/GradientButton';
-import AIIcon from '@assets/icons/ai.svg?react';
+import { Controller, type UseFormReturn } from 'react-hook-form';
 
 const DESCRIPTION_MAX_LENGTH = 1000;
 

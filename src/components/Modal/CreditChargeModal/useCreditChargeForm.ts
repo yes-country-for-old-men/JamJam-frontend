@@ -1,14 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import {
+  MIN_CHARGE_AMOUNT,
+  MAX_CHARGE_AMOUNT,
+} from '@components/Modal/CreditChargeModal/constants';
+import {
   parseAmount,
   formatDisplayValue,
   clampAmount,
   validateAmount,
 } from '@components/Modal/CreditChargeModal/creditChargeUtils';
-import {
-  MIN_CHARGE_AMOUNT,
-  MAX_CHARGE_AMOUNT,
-} from '@components/Modal/CreditChargeModal/constants';
 
 const useCreditChargeForm = () => {
   const [amount, setAmount] = useState<number>(0);

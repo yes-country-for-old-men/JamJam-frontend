@@ -1,11 +1,11 @@
 import React from 'react';
-import { useAtom } from 'jotai';
 import {
   modalAtom,
   openModalAtom,
   closeModalAtom,
   type ModalState,
 } from '@stores/modalStore';
+import { useAtom } from 'jotai';
 
 const useModal = () => {
   const [modal] = useAtom(modalAtom);

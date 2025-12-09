@@ -1,6 +1,6 @@
 import React from 'react';
-import * as S from '@pages/SignUp/components/CompletionScreen/CompletionScreen.styles';
 import CompletionIcon from '@assets/icons/completion.svg?react';
+import * as S from '@pages/SignUp/components/CompletionScreen/CompletionScreen.styles';
 
 interface CompletionScreenProps {
   userNickname: string;

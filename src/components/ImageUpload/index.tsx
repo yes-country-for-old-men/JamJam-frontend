@@ -1,8 +1,8 @@
 import React, { useState, useRef, useCallback } from 'react';
+import DeleteIcon from '@assets/icons/cross.svg?react';
+import ImageIcon from '@assets/icons/image.svg?react';
 import styled from '@emotion/styled';
 import type FileWithId from '@type/FileWithId';
-import ImageIcon from '@assets/icons/image.svg?react';
-import DeleteIcon from '@assets/icons/cross.svg?react';
 
 const Container = styled.div`
   position: relative;

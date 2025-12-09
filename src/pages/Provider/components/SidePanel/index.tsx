@@ -1,7 +1,7 @@
 import React from 'react';
 import { type ProviderDetailContent } from '@apis/provider';
-import * as S from '@pages/Provider/components/SidePanel/SidePanel.styles';
 import Button from '@components/Button';
+import * as S from '@pages/Provider/components/SidePanel/SidePanel.styles';
 
 interface SidePanelProps {
   data: ProviderDetailContent;

@@ -1,21 +1,21 @@
-import { Navigate } from 'react-router-dom';
-import Main from '@pages/Main';
-import Category from '@pages/Category';
-import Search from '@pages/Search';
-import Provider from '@pages/Provider';
-import Service from '@pages/Service';
-import Order from '@pages/Order';
-import Chat from '@pages/Chat';
-import My from '@pages/My';
-import UserInfoEdit from '@pages/UserInfoEdit';
-import Credit from '@pages/Credit';
-import ProfileEdit from '@pages/ProfileEdit';
-import ServiceRegister from '@pages/ServiceRegister';
-import Forbidden from '@pages/Forbidden';
-import NotFound from '@pages/NotFound';
-import OrderManage from '@pages/OrderManage';
 import ProtectedRoute from '@components/Routes/ProtectedRoute';
 import ProviderRoute from '@components/Routes/ProviderRoute';
+import Category from '@pages/Category';
+import Chat from '@pages/Chat';
+import Credit from '@pages/Credit';
+import Forbidden from '@pages/Forbidden';
+import Main from '@pages/Main';
+import My from '@pages/My';
+import NotFound from '@pages/NotFound';
+import Order from '@pages/Order';
+import OrderManage from '@pages/OrderManage';
+import ProfileEdit from '@pages/ProfileEdit';
+import Provider from '@pages/Provider';
+import Search from '@pages/Search';
+import Service from '@pages/Service';
+import ServiceRegister from '@pages/ServiceRegister';
+import UserInfoEdit from '@pages/UserInfoEdit';
+import { Navigate } from 'react-router-dom';
 
 export const publicRoutes = [
   { index: true, element: <Main /> },

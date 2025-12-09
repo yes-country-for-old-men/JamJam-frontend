@@ -1,6 +1,6 @@
 import React, { useId } from 'react';
-import styled from '@emotion/styled';
 import CheckIcon from '@assets/icons/check.svg?react';
+import styled from '@emotion/styled';
 
 interface CheckboxProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {

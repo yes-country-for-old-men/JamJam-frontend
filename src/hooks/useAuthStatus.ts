@@ -1,5 +1,5 @@
-import useAuthToken from '@hooks/useAuthToken';
 import useUserInfoQuery from '@hooks/queries/useUserInfoQuery';
+import useAuthToken from '@hooks/useAuthToken';
 import { isProvider as isProviderRole } from '@utils/typeGuards';
 
 interface UseAuthStatusReturn {

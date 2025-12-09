@@ -1,6 +1,6 @@
 import apiClient from '@apis/apiClient';
-import type APIResponse from '@type/APIResponse';
 import createMultipartRequest from '@utils/multipartRequest';
+import type APIResponse from '@type/APIResponse';
 
 export interface ServiceRegisterRequest {
   request: {

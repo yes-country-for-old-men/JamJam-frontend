@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
-import PortOne from '@portone/browser-sdk/v2';
 import apiClient from '@apis/apiClient';
-import eventManager from '@utils/eventManager';
+import PortOne from '@portone/browser-sdk/v2';
 import ensurePunctuation from '@utils/ensurePunctuation';
+import eventManager from '@utils/eventManager';
 
 const PAYMENT_MESSAGES = {
   SUCCESS: '결제가 완료되었습니다.',

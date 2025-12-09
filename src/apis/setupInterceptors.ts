@@ -1,10 +1,10 @@
+import eventManager from '@utils/eventManager';
 import {
   AxiosError,
   type AxiosInstance,
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from 'axios';
-import eventManager from '@utils/eventManager';
 
 export const setupInterceptors = (instance: AxiosInstance) => {
   instance.interceptors.request.use(

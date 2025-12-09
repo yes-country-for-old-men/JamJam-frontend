@@ -1,6 +1,6 @@
+import ensurePunctuation from '@utils/ensurePunctuation';
 import { AxiosError } from 'axios';
 import type { ApiError } from '@type/ApiError';
-import ensurePunctuation from '@utils/ensurePunctuation';
 
 const getErrorMessage = (error: ApiError | unknown): string => {
   if (error instanceof AxiosError && error.response?.data.message) {

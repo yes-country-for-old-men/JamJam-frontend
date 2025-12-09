@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import HeaderLogo from './HeaderLogo';
 import HeaderAuth from './HeaderAuth';
+import HeaderLogo from './HeaderLogo';
 
 const Container = styled.header`
   position: fixed;

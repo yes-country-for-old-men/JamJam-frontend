@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
 import { getChatRooms } from '@apis/chat';
+import { useQuery } from '@tanstack/react-query';
 import type { ChatRoomSummary, ChatRoom } from '@type/Chat';
 
 const convertApiChatRoomToLocal = (apiRoom: ChatRoomSummary): ChatRoom => ({

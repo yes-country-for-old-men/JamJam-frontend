@@ -1,12 +1,12 @@
 import React from 'react';
-import { type Step3Form } from '@pages/SignUp/hooks/useSignUpForm';
-import { type MessageState } from '@type/MessageState';
-import * as S from '@pages/SignUp/SignUp.styles';
-import Input from '@components/Input';
-import Button from '@components/Button';
-import ToggleButton from '@components/ToggleButton';
-import MaleIcon from '@assets/icons/male.svg?react';
 import FemaleIcon from '@assets/icons/female.svg?react';
+import MaleIcon from '@assets/icons/male.svg?react';
+import Button from '@components/Button';
+import Input from '@components/Input';
+import ToggleButton from '@components/ToggleButton';
+import { type Step3Form } from '@pages/SignUp/hooks/useSignUpForm';
+import * as S from '@pages/SignUp/SignUp.styles';
+import { type MessageState } from '@type/MessageState';
 import { removePaddingZero, formatPhoneNumber } from '@utils/format';
 
 interface Step3Props {

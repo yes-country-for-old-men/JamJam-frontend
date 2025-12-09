@@ -1,11 +1,11 @@
 import { useForm, type UseFormReturn } from 'react-hook-form';
+import type FileWithId from '@type/FileWithId';
 import type {
   ProviderProfile,
   Career,
   Education,
   License,
 } from '@type/Provider';
-import type FileWithId from '@type/FileWithId';
 
 interface ProfileFormData
   extends Omit<

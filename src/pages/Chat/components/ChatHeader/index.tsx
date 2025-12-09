@@ -1,8 +1,8 @@
 import React from 'react';
-import type { ChatRoom } from '@type/Chat';
-import * as S from '@pages/Chat/components/ChatHeader/ChatHeader.styles';
-import UserProfileImageIcon from '@assets/icons/user-profile-image.svg?react';
 import MenuIcon from '@assets/icons/menu.svg?react';
+import UserProfileImageIcon from '@assets/icons/user-profile-image.svg?react';
+import * as S from '@pages/Chat/components/ChatHeader/ChatHeader.styles';
+import type { ChatRoom } from '@type/Chat';
 
 interface ChatHeaderProps {
   selectedChat: ChatRoom;

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import theme from '@styles/theme';
-import * as S from '@pages/Chat/components/ChatInput/ChatInput.styles';
 import SendIcon from '@assets/icons/send.svg?react';
+import * as S from '@pages/Chat/components/ChatInput/ChatInput.styles';
+import theme from '@styles/theme';
 
 interface ChatInputProps {
   messageText: string;

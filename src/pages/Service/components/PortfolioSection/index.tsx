@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { type ServiceDetailContent } from '@apis/service';
-import * as S from '@pages/Service/Service.styles';
 import LeftIcon from '@assets/icons/left.svg?react';
 import RightIcon from '@assets/icons/right.svg?react';
+import * as S from '@pages/Service/Service.styles';
 
 interface PortfolioSectionProps {
   data: ServiceDetailContent;

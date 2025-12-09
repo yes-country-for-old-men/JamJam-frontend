@@ -1,5 +1,5 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { searchServices, type ServiceSearchRequest } from '@apis/search';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 const useSearchQuery = (params: Omit<ServiceSearchRequest, 'page'>) => {
   return useInfiniteQuery({

@@ -1,10 +1,10 @@
-import { useNavigate } from 'react-router-dom';
-import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import useModal from '@hooks/useModal';
-import useAuthStatus from '@hooks/useAuthStatus';
-import LoginModal from '@components/Modal/LoginModal';
 import UserMenu from '@components/Header/UserMenu';
+import LoginModal from '@components/Modal/LoginModal';
+import styled from '@emotion/styled';
+import useAuthStatus from '@hooks/useAuthStatus';
+import useModal from '@hooks/useModal';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const ANIMATION_VARIANTS = {
   button: {

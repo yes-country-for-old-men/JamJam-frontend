@@ -1,8 +1,8 @@
 import React from 'react';
+import Button from '@components/Button';
+import Input from '@components/Input';
 import { type Step2Form } from '@pages/SignUp/hooks/useSignUpForm';
 import * as S from '@pages/SignUp/SignUp.styles';
-import Input from '@components/Input';
-import Button from '@components/Button';
 
 interface Step2Props {
   form: Step2Form;

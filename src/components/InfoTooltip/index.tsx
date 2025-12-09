@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import * as S from '@components/InfoTooltip/InfoTooltip.styles';
 import InfoIcon from '@assets/icons/info.svg?react';
+import * as S from '@components/InfoTooltip/InfoTooltip.styles';
 
 interface InfoTooltipButtonProps {
   title: string;
