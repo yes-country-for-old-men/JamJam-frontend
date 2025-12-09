@@ -15,22 +15,6 @@ const useServiceRegisterSteps = () => {
   const { confirm } = useModal();
   const navigate = useNavigate();
 
-  const updateServiceNames = (names: string[]) => {
-    setServiceNames(names);
-  };
-
-  const updateGeneratingThumbnail = (isGenerating: boolean) => {
-    setIsGeneratingThumbnail(isGenerating);
-  };
-
-  const updateHasGeneratedThumbnail = (hasGenerated: boolean) => {
-    setHasGeneratedThumbnail(hasGenerated);
-  };
-
-  const updateIsRegistering = (registering: boolean) => {
-    setIsRegistering(registering);
-  };
-
   const goToNextStep = () => {
     setStep(step + 1);
   };
@@ -80,10 +64,10 @@ const useServiceRegisterSteps = () => {
     hasGeneratedThumbnail,
     isRegistering,
     serviceNames,
-    updateServiceNames,
-    updateGeneratingThumbnail,
-    updateHasGeneratedThumbnail,
-    updateIsRegistering,
+    setServiceNames,
+    setIsGeneratingThumbnail,
+    setHasGeneratedThumbnail,
+    setIsRegistering,
     goToNextStep,
     goToPreviousStep,
     goToStep,
