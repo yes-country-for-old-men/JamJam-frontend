@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  modalAtom,
+  modalStackAtom,
   openModalAtom,
   closeModalAtom,
   type ModalState,
@@ -8,7 +8,7 @@ import {
 import { useAtom } from 'jotai';
 
 const useModal = () => {
-  const [modal] = useAtom(modalAtom);
+  const [modalStack] = useAtom(modalStackAtom);
   const [, setOpenModal] = useAtom(openModalAtom);
   const [, setCloseModal] = useAtom(closeModalAtom);
 
@@ -16,43 +16,61 @@ const useModal = () => {
     setOpenModal(modalConfig);
   };
 
-  const closeModal = () => {
-    setCloseModal();
+  const closeModal = (modalId?: string) => {
+    setCloseModal(modalId);
   };
 
   const confirm = (config: {
     title: string;
     content: React.ReactNode;
-    onConfirm: () => void;
     confirmText?: string;
     cancelText?: string;
-  }) => {
-    openModal({
-      id: 'confirm-modal',
-      type: 'confirm',
-      title: config.title,
-      content: config.content,
-      onConfirm: config.onConfirm,
-      confirmText: config.confirmText || '확인',
-      cancelText: config.cancelText || '취소',
-      showCloseButton: false,
+  }): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const modalId = `confirm-modal-${Date.now()}`;
+      openModal({
+        id: modalId,
+        type: 'confirm',
+        title: config.title,
+        content: config.content,
+        confirmText: config.confirmText || '확인',
+        cancelText: config.cancelText || '취소',
+        showCloseButton: false,
+        onConfirm: () => {
+          closeModal(modalId);
+          resolve(true);
+        },
+        onClose: () => {
+          closeModal(modalId);
+          resolve(false);
+        },
+      });
     });
   };
 
   const alert = (config: {
     title: string;
     content: React.ReactNode;
-    onConfirm?: () => void;
     confirmText?: string;
-  }) => {
-    openModal({
-      id: 'alert-modal',
-      type: 'alert',
-      title: config.title,
-      content: config.content,
-      onConfirm: config.onConfirm,
-      confirmText: config.confirmText || '확인',
-      showCloseButton: false,
+  }): Promise<void> => {
+    return new Promise((resolve) => {
+      const modalId = `alert-modal-${Date.now()}`;
+      openModal({
+        id: modalId,
+        type: 'alert',
+        title: config.title,
+        content: config.content,
+        confirmText: config.confirmText || '확인',
+        showCloseButton: false,
+        onConfirm: () => {
+          closeModal(modalId);
+          resolve();
+        },
+        onClose: () => {
+          closeModal(modalId);
+          resolve();
+        },
+      });
     });
   };
 
@@ -62,23 +80,24 @@ const useModal = () => {
       disableBackdropClick?: boolean;
     } = {},
   ) => {
+    const modalId = `loading-modal-${Date.now()}`;
     openModal({
-      id: 'loading-modal',
+      id: modalId,
       type: 'loading',
       loadingText: config.loadingText,
       showCloseButton: false,
       disableBackdropClick: config.disableBackdropClick,
     });
+    return modalId;
   };
 
   return {
-    modal,
+    modalStack,
     openModal,
     closeModal,
     confirm,
     alert,
     loading,
-    isOpen: modal?.isOpen ?? false,
   };
 };
 

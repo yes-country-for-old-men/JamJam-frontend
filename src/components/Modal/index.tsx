@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import CloseIcon from '@assets/icons/close.svg?react';
 import Button from '@components/Button';
 import Spinner from '@components/Spinner';
+import { getModalZIndex } from '@constants/zIndex';
 import styled from '@emotion/styled';
 import useModal from '@hooks/useModal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
 
-const Backdrop = styled(motion.div)`
+const Backdrop = styled(motion.div)<{ zIndex: number }>`
   position: fixed;
   display: flex;
   align-items: center;
@@ -18,7 +19,7 @@ const Backdrop = styled(motion.div)`
   height: 100dvh;
   background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(8px);
-  z-index: 1111;
+  z-index: ${(props) => props.zIndex};
 `;
 
 const ModalContainer = styled(motion.div)`
@@ -103,137 +104,155 @@ const LoadingText = styled(motion.div)`
 `;
 
 const Modal: React.FC = () => {
-  const { modal, closeModal } = useModal();
-
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget && !modal?.disableBackdropClick) {
-      closeModal();
-    }
-  };
-
-  const handleClose = () => {
-    modal?.onClose?.();
-    closeModal();
-  };
-
-  const handleConfirm = () => {
-    modal?.onConfirm?.();
-    closeModal();
-  };
+  const { modalStack, closeModal } = useModal();
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && modal?.isOpen) {
-        handleClose();
+      if (e.key === 'Escape' && modalStack.length > 0) {
+        const topModal = modalStack[modalStack.length - 1];
+        if (!topModal.disableBackdropClick) {
+          topModal.onClose?.();
+          closeModal(topModal.id);
+        }
       }
     };
 
-    if (modal?.isOpen) {
+    if (modalStack.length > 0) {
       document.addEventListener('keydown', handleEscape);
       document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
     }
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = '';
     };
-  }, [modal?.isOpen]);
-
-  const hasTitle = Boolean(modal?.title);
-  const showCloseButton = Boolean(modal?.showCloseButton);
-
-  const renderContent = () => {
-    if (modal?.loadingText !== undefined) {
-      return (
-        <LoadingContent>
-          <Spinner />
-          {modal.loadingText && (
-            <LoadingText
-              initial={{ opacity: 0, y: 10 }}
-              animate={{
-                opacity: [1, 0.5, 1],
-                y: 0,
-              }}
-              transition={{
-                opacity: {
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                },
-                y: {
-                  duration: 0.3,
-                  ease: 'easeOut',
-                },
-              }}
-            >
-              {modal.loadingText}
-            </LoadingText>
-          )}
-        </LoadingContent>
-      );
-    }
-    return modal?.content;
-  };
-
-  const isLoadingModal = modal?.loadingText !== undefined;
+  }, [modalStack, closeModal]);
 
   return createPortal(
     <AnimatePresence>
-      {modal?.isOpen && (
-        <Backdrop
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          onClick={handleBackdropClick}
-        >
-          {isLoadingModal ? (
-            renderContent()
-          ) : (
-            <ModalContainer
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.2 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {(hasTitle || showCloseButton) && (
-                <ModalHeader hasTitle={hasTitle}>
-                  {hasTitle && <ModalTitle>{modal.title}</ModalTitle>}
-                  {showCloseButton && (
-                    <CloseButton onClick={handleClose}>
-                      <CloseIcon />
-                    </CloseButton>
-                  )}
-                </ModalHeader>
-              )}
-              <ModalContent hasHeader={hasTitle || showCloseButton}>
-                {renderContent()}
-              </ModalContent>
-              {(modal.onConfirm || modal.confirmText) && (
-                <ModalFooter>
-                  {modal.cancelText && (
+      {modalStack.map((modal, index) => {
+        const handleBackdropClick = (e: React.MouseEvent) => {
+          if (
+            e.target === e.currentTarget &&
+            !modal.disableBackdropClick &&
+            index === modalStack.length - 1
+          ) {
+            modal.onClose?.();
+            closeModal(modal.id);
+          }
+        };
+
+        const handleClose = () => {
+          modal.onClose?.();
+          closeModal(modal.id);
+        };
+
+        const handleConfirm = () => {
+          modal.onConfirm?.();
+          closeModal(modal.id);
+        };
+
+        const hasTitle = Boolean(modal.title);
+        const showCloseButton = Boolean(modal.showCloseButton);
+
+        const renderContent = () => {
+          if (modal.loadingText !== undefined) {
+            return (
+              <LoadingContent>
+                <Spinner />
+                {modal.loadingText && (
+                  <LoadingText
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{
+                      opacity: [1, 0.5, 1],
+                      y: 0,
+                    }}
+                    transition={{
+                      opacity: {
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                      },
+                      y: {
+                        duration: 0.3,
+                        ease: 'easeOut',
+                      },
+                    }}
+                  >
+                    {modal.loadingText}
+                  </LoadingText>
+                )}
+              </LoadingContent>
+            );
+          }
+          return modal.content;
+        };
+
+        const isLoadingModal = modal.loadingText !== undefined;
+
+        return modal.isOpen ? (
+          <Backdrop
+            key={modal.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={handleBackdropClick}
+            zIndex={getModalZIndex(index)}
+          >
+            {isLoadingModal ? (
+              renderContent()
+            ) : (
+              <ModalContainer
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                transition={{ duration: 0.2 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {(hasTitle || showCloseButton) && (
+                  <ModalHeader hasTitle={hasTitle}>
+                    {hasTitle && <ModalTitle>{modal.title}</ModalTitle>}
+                    {showCloseButton && (
+                      <CloseButton onClick={handleClose}>
+                        <CloseIcon />
+                      </CloseButton>
+                    )}
+                  </ModalHeader>
+                )}
+                <ModalContent hasHeader={hasTitle || showCloseButton}>
+                  {renderContent()}
+                </ModalContent>
+                {(modal.onConfirm || modal.confirmText) && (
+                  <ModalFooter>
+                    {modal.cancelText && (
+                      <FooterButtonWrapper>
+                        <Button
+                          variant="secondary"
+                          onClick={handleClose}
+                          fullWidth
+                        >
+                          {modal.cancelText}
+                        </Button>
+                      </FooterButtonWrapper>
+                    )}
                     <FooterButtonWrapper>
                       <Button
-                        variant="secondary"
-                        onClick={handleClose}
+                        variant="primary"
+                        onClick={handleConfirm}
                         fullWidth
                       >
-                        {modal.cancelText}
+                        {modal.confirmText || '확인'}
                       </Button>
                     </FooterButtonWrapper>
-                  )}
-                  <FooterButtonWrapper>
-                    <Button variant="primary" onClick={handleConfirm} fullWidth>
-                      {modal.confirmText || '확인'}
-                    </Button>
-                  </FooterButtonWrapper>
-                </ModalFooter>
-              )}
-            </ModalContainer>
-          )}
-        </Backdrop>
-      )}
+                  </ModalFooter>
+                )}
+              </ModalContainer>
+            )}
+          </Backdrop>
+        ) : null;
+      })}
     </AnimatePresence>,
     document.body,
   );
