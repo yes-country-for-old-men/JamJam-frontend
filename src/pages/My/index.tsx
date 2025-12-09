@@ -43,7 +43,7 @@ const ProfileImageWrapper = styled.figure`
   height: 64px;
   background-color: ${(props) => props.theme.COLORS.GRAY[6]};
   border-radius: 50%;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   overflow: hidden;
 `;
 
@@ -65,7 +65,7 @@ const UserNickname = styled.div`
 `;
 
 const UserRole = styled.div`
-  background-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+  background-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   width: fit-content;
   border-radius: 16px;
   color: white;
@@ -86,13 +86,11 @@ const MenuItem = styled.button<{ active?: boolean }>`
   background-color: ${(props) =>
     props.active ? props.theme.COLORS.GRAY[6] : undefined};
   border-left: ${(props) =>
-    props.active
-      ? `3px solid ${props.theme.COLORS.JAMJAM_PRIMARY[1]}`
-      : 'none'};
+    props.active ? `3px solid ${props.theme.COLORS.MAIN.PRIMARY}` : 'none'};
   color: ${(props) =>
     props.active
-      ? props.theme.COLORS.LABEL_PRIMARY
-      : props.theme.COLORS.LABEL_SECONDARY};
+      ? props.theme.COLORS.LABEL.PRIMARY
+      : props.theme.COLORS.LABEL.SECONDARY};
   font-size: 16px;
   font-weight: ${(props) => (props.active ? '600' : '400')};
   gap: 8px;

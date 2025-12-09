@@ -83,9 +83,9 @@ export const MessageBubble = styled.div<{
     return css`
       border-radius: ${borderRadius};
       background-color: ${isOwn
-        ? props.theme.COLORS.JAMJAM_PRIMARY[1]
+        ? props.theme.COLORS.MAIN.PRIMARY
         : props.theme.COLORS.GRAY[6]};
-      color: ${isOwn ? 'white' : props.theme.COLORS.LABEL_PRIMARY};
+      color: ${isOwn ? 'white' : props.theme.COLORS.LABEL.PRIMARY};
     `;
   }}
 `;
@@ -94,7 +94,7 @@ export const MessageTimestamp = styled.time<{ isOwn: boolean }>`
   flex-shrink: 0;
   align-self: flex-end;
   font-size: 11px;
-  color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
+  color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
   ${(props) => (props.isOwn ? 'margin-right: 4px;' : 'margin-left: 4px;')}
   white-space: nowrap;
 `;
@@ -106,6 +106,6 @@ export const MessageDateDivider = styled.div`
 
 export const MessageDateBadge = styled.time`
   border-radius: 12px;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   font-size: 12px;
 `;

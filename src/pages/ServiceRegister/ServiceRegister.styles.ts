@@ -31,7 +31,7 @@ export const InvalidMessage = styled.div`
 `;
 
 export const GuideContainer = styled.div`
-  border-left: 3px solid ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+  border-left: 3px solid ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   padding-left: 16px;
   margin-bottom: 24px;
 `;
@@ -43,13 +43,13 @@ export const GuideContent = styled.ul`
 `;
 
 export const GuideHeader = styled.div`
-  color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+  color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   font-size: 15px;
   margin-bottom: 8px;
 `;
 
 export const GuideItem = styled.li`
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   margin-bottom: 8px;
   &:last-child {
     margin-bottom: 0;
@@ -72,18 +72,17 @@ export const DescriptionTextArea = styled.textarea`
   transition: all 0.2s ease;
   &:focus {
     outline: none;
-    box-shadow: inset 0 0 0 1px
-      ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    box-shadow: inset 0 0 0 1px ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   }
   &::placeholder {
-    color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
+    color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
   }
 `;
 
 export const CharacterCounter = styled.div`
   text-align: right;
   font-size: 13px;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   margin: 4px 4px 0 0;
 `;
 
@@ -118,9 +117,9 @@ export const RecommendationChip = styled.button`
   padding: 8px 16px;
   transition: all 0.2s ease;
   &:hover {
-    background-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[2]};
-    border-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
-    color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    background-color: ${(props) => props.theme.COLORS.MAIN.SECONDARY};
+    border-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
+    color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   }
 `;
 
@@ -211,7 +210,7 @@ export const StatusBadge = styled.div<{ isSuccess: boolean }>`
 export const ServiceNameWarning = styled.div`
   display: flex;
   align-items: center;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   font-size: 13px;
   line-height: 1.4;
   gap: 4px;
@@ -220,7 +219,7 @@ export const ServiceNameWarning = styled.div`
   svg {
     width: 12px;
     height: 12px;
-    fill: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+    fill: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   }
 `;
 

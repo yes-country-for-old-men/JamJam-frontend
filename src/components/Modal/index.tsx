@@ -56,13 +56,13 @@ const CloseButton = styled.button`
   justify-content: center;
   width: 32px;
   height: 32px;
-  color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
+  color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
   text-align: center;
   border-radius: 8px;
 
   &:hover {
     background-color: ${(props) => props.theme.COLORS.GRAY[6]};
-    color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+    color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   }
 
   svg {
@@ -71,7 +71,7 @@ const CloseButton = styled.button`
 `;
 
 const ModalContent = styled.div<{ hasHeader: boolean }>`
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   padding: ${(props) => (props.hasHeader ? '0 24px 24px 24px' : '24px')};
   white-space: pre-line;
 `;

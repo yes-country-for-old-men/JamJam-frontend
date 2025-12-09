@@ -56,7 +56,7 @@ const PriceInfo = styled.div`
 
 const ProviderInfo = styled.span`
   font-size: 14px;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
 `;
 
 const ServiceCard: React.FC<ServiceCardProps> = ({

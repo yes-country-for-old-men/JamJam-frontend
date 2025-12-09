@@ -32,7 +32,7 @@ const CheckButton = styled.button<{
   width: ${(props) => props.size}px;
   height: ${(props) => props.size}px;
   background-color: ${(props) =>
-    props.selected ? props.theme.COLORS.JAMJAM_PRIMARY[1] : 'transparent'};
+    props.selected ? props.theme.COLORS.MAIN.PRIMARY : 'transparent'};
   border: ${(props) =>
     props.selected ? 'none' : `2px solid ${props.theme.COLORS.GRAY[4]}`};
   border-radius: 5px;

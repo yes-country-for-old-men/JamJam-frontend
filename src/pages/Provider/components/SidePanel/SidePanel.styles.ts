@@ -26,7 +26,7 @@ export const StatusInfo = styled.div`
 `;
 
 export const StatusLabel = styled.span`
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   font-size: 14px;
   letter-spacing: -0.075em;
 `;

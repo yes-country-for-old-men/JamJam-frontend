@@ -26,17 +26,17 @@ const ImageUploadArea = styled.div<{ isDragOver: boolean; hasImage: boolean }>`
   overflow: hidden;
 
   &:hover {
-    background-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[2]};
-    border-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    background-color: ${(props) => props.theme.COLORS.MAIN.SECONDARY};
+    border-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
 
     ${(props) =>
       !props.hasImage &&
       `
       & svg {
-        fill: ${props.theme.COLORS.JAMJAM_PRIMARY[1]};
+        fill: ${props.theme.COLORS.MAIN.PRIMARY};
       }
       & div {
-        color: ${props.theme.COLORS.JAMJAM_PRIMARY[1]};
+        color: ${props.theme.COLORS.MAIN.PRIMARY};
       }
     `}
   }
@@ -45,13 +45,13 @@ const ImageUploadArea = styled.div<{ isDragOver: boolean; hasImage: boolean }>`
     props.isDragOver &&
     !props.hasImage &&
     `
-    background-color: ${props.theme.COLORS.JAMJAM_PRIMARY[2]};
+    background-color: ${props.theme.COLORS.MAIN.SECONDARY};
 
     & svg {
-      fill: ${props.theme.COLORS.JAMJAM_PRIMARY[1]};
+      fill: ${props.theme.COLORS.MAIN.PRIMARY};
     }
     & div {
-      color: ${props.theme.COLORS.JAMJAM_PRIMARY[1]};
+      color: ${props.theme.COLORS.MAIN.PRIMARY};
     }
   `}
 `;
@@ -62,12 +62,12 @@ const MultipleUploadArea = styled.div<{
 }>`
   background-color: ${(props) =>
     props.isDragOver
-      ? props.theme.COLORS.JAMJAM_PRIMARY[2]
+      ? props.theme.COLORS.MAIN.SECONDARY
       : props.theme.COLORS.GRAY[6]};
   border: 1px dashed
     ${(props) =>
       props.isDragOver
-        ? props.theme.COLORS.JAMJAM_PRIMARY[1]
+        ? props.theme.COLORS.MAIN.PRIMARY
         : props.theme.COLORS.GRAY[4]};
   border-radius: 12px;
   text-align: center;
@@ -80,23 +80,23 @@ const MultipleUploadArea = styled.div<{
     background-color: ${(props) =>
       props.disabled
         ? props.theme.COLORS.GRAY[6]
-        : props.theme.COLORS.JAMJAM_PRIMARY[2]};
+        : props.theme.COLORS.MAIN.SECONDARY};
     border-color: ${(props) =>
       props.disabled
         ? props.theme.COLORS.GRAY[4]
-        : props.theme.COLORS.JAMJAM_PRIMARY[1]};
+        : props.theme.COLORS.MAIN.PRIMARY};
 
     & svg {
       fill: ${(props) =>
         props.disabled
-          ? props.theme.COLORS.LABEL_SECONDARY
-          : props.theme.COLORS.JAMJAM_PRIMARY[1]};
+          ? props.theme.COLORS.LABEL.SECONDARY
+          : props.theme.COLORS.MAIN.PRIMARY};
     }
     & div {
       color: ${(props) =>
         props.disabled
-          ? props.theme.COLORS.LABEL_SECONDARY
-          : props.theme.COLORS.JAMJAM_PRIMARY[1]};
+          ? props.theme.COLORS.LABEL.SECONDARY
+          : props.theme.COLORS.MAIN.PRIMARY};
     }
   }
 
@@ -105,10 +105,10 @@ const MultipleUploadArea = styled.div<{
     !props.disabled &&
     `
     & svg {
-      fill: ${props.theme.COLORS.JAMJAM_PRIMARY[1]};
+      fill: ${props.theme.COLORS.MAIN.PRIMARY};
     }
     & div {
-      color: ${props.theme.COLORS.JAMJAM_PRIMARY[1]};
+      color: ${props.theme.COLORS.MAIN.PRIMARY};
     }
   `}
 `;
@@ -152,14 +152,14 @@ const FileInput = styled.input`
 const UploadText = styled.div`
   font-size: 14px;
   font-weight: 500;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   margin-top: 12px;
 `;
 
 const MultipleUploadText = styled.div`
   font-size: 14px;
   font-weight: 500;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   margin-top: 8px;
 `;
 

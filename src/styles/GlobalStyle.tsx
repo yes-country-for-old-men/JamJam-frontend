@@ -80,7 +80,7 @@ const globalStyles = css`
       'Segoe UI Emoji',
       'Segoe UI Symbol',
       sans-serif;
-    color: ${theme.COLORS.LABEL_PRIMARY};
+    color: ${theme.COLORS.LABEL.PRIMARY};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: -0.025em;

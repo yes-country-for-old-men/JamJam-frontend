@@ -6,17 +6,17 @@ const StyledButton = styled.button<{ selected: boolean }>`
   align-items: center;
   justify-content: center;
   background-color: ${(props) =>
-    props.selected ? `${props.theme.COLORS.JAMJAM_PRIMARY[2]}` : 'white'};
+    props.selected ? `${props.theme.COLORS.MAIN.SECONDARY}` : 'white'};
   border-radius: 10px;
   box-shadow: inset 0 0 0 1px
     ${(props) =>
       props.selected
-        ? props.theme.COLORS.JAMJAM_PRIMARY[1]
+        ? props.theme.COLORS.MAIN.PRIMARY
         : props.theme.COLORS.GRAY[5]};
   color: ${(props) =>
     props.selected
-      ? props.theme.COLORS.JAMJAM_PRIMARY[1]
-      : props.theme.COLORS.LABEL_SECONDARY};
+      ? props.theme.COLORS.MAIN.PRIMARY
+      : props.theme.COLORS.LABEL.SECONDARY};
   font-size: 14px;
   font-weight: 600;
   gap: 8px;
@@ -24,8 +24,7 @@ const StyledButton = styled.button<{ selected: boolean }>`
   transition: all 0.2s ease;
 
   &:hover {
-    box-shadow: inset 0 0 0 1px
-      ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    box-shadow: inset 0 0 0 1px ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   }
 
   &:disabled {
@@ -39,8 +38,8 @@ const IconWrapper = styled.div<{ selected: boolean }>`
   svg {
     fill: ${(props) =>
       props.selected
-        ? props.theme.COLORS.JAMJAM_PRIMARY[1]
-        : props.theme.COLORS.LABEL_SECONDARY};
+        ? props.theme.COLORS.MAIN.PRIMARY
+        : props.theme.COLORS.LABEL.SECONDARY};
   }
 `;
 

@@ -41,11 +41,11 @@ export const SearchInput = styled.input`
   padding: 12px 16px;
 
   &::placeholder {
-    color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
+    color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
   }
 
   &:focus {
-    border-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    border-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   }
 `;
 
@@ -71,7 +71,7 @@ export const EmptyState = styled.section`
 `;
 
 export const EmptyStateText = styled.div`
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   text-align: center;
   word-break: keep-all;
   margin-top: 16px;

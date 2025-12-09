@@ -33,8 +33,8 @@ const CategoryButton = styled(motion.button)<{ isActive?: boolean }>`
   padding: 12px;
   color: ${(props) =>
     props.isActive
-      ? props.theme.COLORS.LABEL_PRIMARY
-      : props.theme.COLORS.LABEL_SECONDARY};
+      ? props.theme.COLORS.LABEL.PRIMARY
+      : props.theme.COLORS.LABEL.SECONDARY};
   font-size: 16px;
   font-weight: 600;
   text-align: center;
@@ -42,7 +42,7 @@ const CategoryButton = styled(motion.button)<{ isActive?: boolean }>`
   border-bottom: 2.5px solid transparent;
 
   &:hover {
-    border-bottom-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    border-bottom-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   }
 `;
 
@@ -55,8 +55,8 @@ const ExpansionButton = styled(motion.button)<{ isExpanded: boolean }>`
   border-bottom: 2.5px solid transparent;
   color: ${(props) =>
     props.isExpanded
-      ? props.theme.COLORS.JAMJAM_PRIMARY[1]
-      : props.theme.COLORS.LABEL_SECONDARY};
+      ? props.theme.COLORS.MAIN.PRIMARY
+      : props.theme.COLORS.LABEL.SECONDARY};
   font-size: 16px;
   font-weight: 600;
   padding: 12px 0;
@@ -79,8 +79,8 @@ const CategoryTabNavigator: React.FC<CategoryTabNavigatorProps> = ({
   const topCategories = CATEGORIES.slice(0, 6);
   const expandedCategories = CATEGORIES.slice(6);
   const iconColor = isExpanded
-    ? theme.COLORS.JAMJAM_PRIMARY[1]
-    : theme.COLORS.LABEL_SECONDARY;
+    ? theme.COLORS.MAIN.PRIMARY
+    : theme.COLORS.LABEL.SECONDARY;
 
   useEffect(() => {
     if (contentRef.current) {

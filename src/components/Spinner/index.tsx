@@ -18,7 +18,7 @@ const Spinner = styled.div<{ size?: number }>`
   background: conic-gradient(
     from 90deg at 50% 50%,
     transparent 0deg,
-    ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]} 360deg
+    ${(props) => props.theme.COLORS.MAIN.PRIMARY} 360deg
   );
   border-radius: 50%;
   animation: ${rotateAnimation} 1s infinite linear;
@@ -32,7 +32,7 @@ const Spinner = styled.div<{ size?: number }>`
     transform: translateY(-50%);
     height: 8px;
     width: 8px;
-    background-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    background-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
     border-radius: 8px;
   }
 `;

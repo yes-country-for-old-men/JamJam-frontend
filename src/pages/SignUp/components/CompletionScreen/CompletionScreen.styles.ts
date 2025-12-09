@@ -24,7 +24,7 @@ export const Title = styled.div`
 
 export const CompletionPrompt = styled.div`
   font-size: 16px;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   margin: 0;
   line-height: 1.6;
   white-space: pre-line;

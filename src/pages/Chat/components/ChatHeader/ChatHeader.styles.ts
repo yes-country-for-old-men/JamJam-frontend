@@ -25,7 +25,7 @@ export const ProfileWrapper = styled.figure`
   height: 36px;
   border-radius: 50%;
   background-color: ${(props) => props.theme.COLORS.GRAY[5]};
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   font-size: 14px;
   flex-shrink: 0;
   overflow: hidden;
@@ -41,7 +41,7 @@ export const ProfileImage = styled.img`
 export const ChatTitle = styled.span`
   font-size: 18px;
   font-weight: 600;
-  color: ${(props) => props.theme.COLORS.LABEL_PRIMARY};
+  color: ${(props) => props.theme.COLORS.LABEL.PRIMARY};
 `;
 
 export const MenuButton = styled.button`
@@ -51,10 +51,10 @@ export const MenuButton = styled.button`
   width: 28px;
   height: 28px;
   border-radius: 8px;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
 
   &:hover {
     background-color: ${(props) => props.theme.COLORS.GRAY[6]};
-    color: ${(props) => props.theme.COLORS.LABEL_PRIMARY};
+    color: ${(props) => props.theme.COLORS.LABEL.PRIMARY};
   }
 `;

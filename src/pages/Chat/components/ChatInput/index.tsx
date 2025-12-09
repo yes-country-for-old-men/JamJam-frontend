@@ -49,7 +49,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
         <SendIcon
           fill={
             messageText.trim() && isConnected
-              ? theme.COLORS.JAMJAM_PRIMARY[1]
+              ? theme.COLORS.MAIN.PRIMARY
               : theme.COLORS.GRAY[2]
           }
         />

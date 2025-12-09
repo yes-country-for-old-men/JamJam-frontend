@@ -17,7 +17,7 @@ const SliderTrack = styled.div<{ left: number; width: number }>`
   left: ${(props) => props.left}%;
   width: ${(props) => props.width}%;
   height: 100%;
-  background-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+  background-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   border-radius: 4px;
 `;
 
@@ -28,7 +28,7 @@ const SliderHandle = styled.div<{ position: number; isDragging: boolean }>`
   width: 20px;
   height: 20px;
   background-color: white;
-  border: 3px solid ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+  border: 3px solid ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   border-radius: 50%;
   cursor: pointer;
   transform: translateX(-50%);

@@ -28,7 +28,7 @@ const SignInButton = styled(motion.button)`
 
 const SignUpButton = styled(motion.button)`
   display: flex;
-  background-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+  background-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   color: white;
   font-size: 14px;
   font-weight: 700;

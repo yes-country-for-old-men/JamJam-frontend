@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const CategoryLabel = styled.button`
-  color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+  color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 8px;
@@ -43,7 +43,7 @@ export const ProviderImageWrapper = styled.figure`
   height: 64px;
   background-color: ${(props) => props.theme.COLORS.GRAY[5]};
   border-radius: 50%;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   overflow: hidden;
   margin: 0;
 `;

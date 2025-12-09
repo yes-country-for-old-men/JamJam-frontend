@@ -95,7 +95,7 @@ const StyledHTMLContent = styled.div`
 
   blockquote {
     background-color: ${(props) => props.theme.COLORS.GRAY[6]};
-    border-left: 3px solid ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    border-left: 3px solid ${(props) => props.theme.COLORS.MAIN.PRIMARY};
     font-style: normal;
     margin: 16px 0;
     padding: 12px 16px;
@@ -106,7 +106,7 @@ const StyledHTMLContent = styled.div`
   }
 
   a {
-    color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
     text-decoration: underline;
 
     &:hover {

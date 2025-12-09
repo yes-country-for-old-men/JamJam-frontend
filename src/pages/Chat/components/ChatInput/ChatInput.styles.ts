@@ -28,11 +28,11 @@ export const ChatTextarea = styled.textarea`
   resize: none;
 
   &:focus {
-    border-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    border-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   }
 
   &::placeholder {
-    color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
+    color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
   }
 `;
 

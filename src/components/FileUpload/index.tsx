@@ -13,7 +13,7 @@ const FileUploadArea = styled.div<{ isDragOver: boolean }>`
   border: 1px dashed
     ${(props) =>
       props.isDragOver
-        ? props.theme.COLORS.JAMJAM_PRIMARY[1]
+        ? props.theme.COLORS.MAIN.PRIMARY
         : props.theme.COLORS.GRAY[4]};
   border-radius: 12px;
   text-align: center;
@@ -22,27 +22,27 @@ const FileUploadArea = styled.div<{ isDragOver: boolean }>`
   cursor: pointer;
 
   &:hover {
-    background-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[2]};
-    border-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    background-color: ${(props) => props.theme.COLORS.MAIN.SECONDARY};
+    border-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
 
     & svg {
-      fill: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+      fill: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
     }
     & div {
-      color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+      color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
     }
   }
 
   ${(props) =>
     props.isDragOver &&
     `
-    background-color: ${props.theme.COLORS.JAMJAM_PRIMARY[2]};
+    background-color: ${props.theme.COLORS.MAIN.SECONDARY};
 
     & svg {
-      fill: ${props.theme.COLORS.JAMJAM_PRIMARY[1]};
+      fill: ${props.theme.COLORS.MAIN.PRIMARY};
     }
     & div {
-      color: ${props.theme.COLORS.JAMJAM_PRIMARY[1]};
+      color: ${props.theme.COLORS.MAIN.PRIMARY};
     }
   `}
 `;
@@ -54,7 +54,7 @@ const FileInput = styled.input`
 const FileUploadText = styled.div`
   font-size: 14px;
   font-weight: 500;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   margin-top: 8px;
 `;
 
@@ -75,7 +75,7 @@ const FileItem = styled.div`
 
 const FileName = styled.span`
   flex: 1;
-  color: ${(props) => props.theme.COLORS.LABEL_PRIMARY};
+  color: ${(props) => props.theme.COLORS.LABEL.PRIMARY};
   margin-right: 8px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -86,11 +86,11 @@ const FileRemoveButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   padding: 2px;
 
   &:hover {
-    color: ${(props) => props.theme.COLORS.LABEL_PRIMARY};
+    color: ${(props) => props.theme.COLORS.LABEL.PRIMARY};
   }
 `;
 

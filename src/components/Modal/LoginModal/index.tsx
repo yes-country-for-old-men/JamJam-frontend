@@ -28,7 +28,7 @@ const FindLinksWrapper = styled.div`
 `;
 
 const FindLink = styled.button`
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   font-size: 12px;
 
   &:hover {
@@ -48,7 +48,7 @@ const SignUpLink = styled.div`
   margin-top: 12px;
 
   a {
-    color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
     font-size: 14px;
     font-weight: 700;
     text-decoration: none;

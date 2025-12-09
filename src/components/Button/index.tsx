@@ -46,7 +46,7 @@ const StyledButton = styled.button<{
       case 'secondary':
         return `
           background-color: white;
-          color: ${props.theme.COLORS.JAMJAM_PRIMARY[1]};
+          color: ${props.theme.COLORS.MAIN.PRIMARY};
           
           &:hover:not(:disabled) {
             background-color: ${props.theme.COLORS.GRAY[6]};
@@ -56,7 +56,7 @@ const StyledButton = styled.button<{
         return `
         background-color: white;
         box-shadow: inset 0 0 0 1px ${props.theme.COLORS.GRAY[4]};
-        color: ${props.theme.COLORS.LABEL_SECONDARY};
+        color: ${props.theme.COLORS.LABEL.SECONDARY};
         
         &:hover:not(:disabled) {
           background-color: ${props.theme.COLORS.GRAY[6]};
@@ -65,7 +65,7 @@ const StyledButton = styled.button<{
       `;
       default:
         return `
-          background-color: ${props.theme.COLORS.JAMJAM_PRIMARY[1]};
+          background-color: ${props.theme.COLORS.MAIN.PRIMARY};
           color: white;
           
           &:hover:not(:disabled) {

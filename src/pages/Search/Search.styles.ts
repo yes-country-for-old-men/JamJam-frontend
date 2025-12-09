@@ -33,7 +33,7 @@ export const SearchTitle = styled.div`
 `;
 
 export const SearchKeyword = styled.span`
-  color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+  color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   font-weight: 700;
 `;
 
@@ -59,7 +59,7 @@ export const NoResults = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
+  color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
   font-size: 18px;
   padding: 80px 24px;
 `;

@@ -19,7 +19,7 @@ const ANIMATION_VARIANTS = {
     },
     hover: {
       scale: 1.05,
-      borderColor: theme.COLORS.JAMJAM_PRIMARY[1],
+      borderColor: theme.COLORS.MAIN.PRIMARY,
     },
     tap: {
       scale: 0.95,

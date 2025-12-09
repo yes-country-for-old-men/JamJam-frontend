@@ -1,16 +1,14 @@
 const theme = {
   COLORS: {
-    JAMJAM_PRIMARY: {
-      1: '#FF2D55',
-      2: '#FFD5DD',
+    MAIN: {
+      PRIMARY: '#FF2D55',
+      SECONDARY: '#FFD5DD',
     },
-    JAMJAM_SECONDARY: {
-      1: '#FFCC00',
-      2: '#FFF5CC',
+    LABEL: {
+      PRIMARY: '#111111',
+      SECONDARY: '#767676',
+      TERTIARY: '#C4C4C6',
     },
-    LABEL_PRIMARY: '#111111',
-    LABEL_SECONDARY: '#767676',
-    LABEL_TERTIARY: '#C4C4C6',
     GRAY: {
       1: 'rgb(142, 142, 147)',
       2: 'rgb(174, 174, 178)',

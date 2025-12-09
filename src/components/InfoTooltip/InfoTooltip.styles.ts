@@ -9,7 +9,7 @@ export const InfoButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   transition: all 0.2s ease;
 `;
 
@@ -45,7 +45,7 @@ export const InfoBubble = styled.div<{ visible: boolean }>`
 `;
 
 export const InfoBubbleTitle = styled.div`
-  color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+  color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   font-weight: 600;
   margin-bottom: 8px;
 `;

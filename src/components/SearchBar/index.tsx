@@ -30,7 +30,7 @@ const ANIMATION_VARIANTS = {
     },
     hover: {
       scale: 1.1,
-      backgroundColor: theme.COLORS.JAMJAM_PRIMARY[2],
+      backgroundColor: theme.COLORS.MAIN.SECONDARY,
       y: '-50%',
     },
     tap: {
@@ -56,7 +56,7 @@ const SearchInput = styled(motion.input)`
   padding: 24px 64px 24px 20px;
 
   &::placeholder {
-    color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
+    color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
   }
 `;
 
@@ -132,7 +132,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         <motion.div
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         >
-          <SearchIcon fill={theme.COLORS.JAMJAM_PRIMARY[1]} />
+          <SearchIcon fill={theme.COLORS.MAIN.PRIMARY} />
         </motion.div>
       </SearchButton>
     </SearchContainer>

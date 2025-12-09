@@ -20,7 +20,7 @@ const Title = styled.div`
 
 const Description = styled.div`
   font-size: 16px;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   text-align: center;
   margin-bottom: 20px;
 `;

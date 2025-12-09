@@ -15,7 +15,7 @@ export const ProfileImageWrapper = styled.figure`
   height: 84px;
   background-color: ${(props) => props.theme.COLORS.GRAY[6]};
   border-radius: 50%;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   overflow: hidden;
   margin: 0;
 `;
@@ -46,9 +46,9 @@ export const ProviderNickname = styled.div`
 `;
 
 export const CategoryBadge = styled.span`
-  background-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[2]};
+  background-color: ${(props) => props.theme.COLORS.MAIN.SECONDARY};
   border-radius: 20px;
-  color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+  color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   font-size: 12px;
   font-weight: 700;
   letter-spacing: -0.05em;

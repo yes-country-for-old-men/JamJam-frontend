@@ -12,11 +12,11 @@ export const RoleCard = styled.div<{ selected: boolean }>`
   justify-content: center;
   aspect-ratio: 1;
   background-color: ${(props) =>
-    props.selected ? `${props.theme.COLORS.JAMJAM_PRIMARY[2]}` : 'white'};
+    props.selected ? `${props.theme.COLORS.MAIN.SECONDARY}` : 'white'};
   border: 1px solid
     ${(props) =>
       props.selected
-        ? props.theme.COLORS.JAMJAM_PRIMARY[1]
+        ? props.theme.COLORS.MAIN.PRIMARY
         : props.theme.COLORS.GRAY[5]};
   border-radius: 12px;
   text-align: center;
@@ -25,7 +25,7 @@ export const RoleCard = styled.div<{ selected: boolean }>`
   transition: all 0.2s ease;
 
   &:hover {
-    border-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    border-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   }
 `;
 
@@ -43,7 +43,7 @@ export const RoleTitle = styled.div`
 `;
 
 export const RoleDescription = styled.div`
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   font-size: 14px;
   line-height: 1.4;
 `;

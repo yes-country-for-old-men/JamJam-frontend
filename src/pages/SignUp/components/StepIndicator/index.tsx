@@ -16,7 +16,7 @@ const StepDot = styled.div<{ active: boolean }>`
   height: 4px;
   background-color: ${(props) =>
     props.active
-      ? props.theme.COLORS.JAMJAM_PRIMARY[1]
+      ? props.theme.COLORS.MAIN.PRIMARY
       : props.theme.COLORS.GRAY[3]};
   border-radius: 2px;
   margin: 0 4px;

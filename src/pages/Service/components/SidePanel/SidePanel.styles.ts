@@ -53,6 +53,6 @@ export const Price = styled.div`
 export const PriceNote = styled.span`
   font-size: 12px;
   font-weight: 400;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   margin-left: 4px;
 `;

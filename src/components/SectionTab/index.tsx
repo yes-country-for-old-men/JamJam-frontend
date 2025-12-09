@@ -14,9 +14,9 @@ const TabButton = styled.button<{ active: boolean }>`
   background-color: transparent;
   border-bottom: 2.5px solid
     ${({ theme, active }) =>
-      active ? theme.COLORS.JAMJAM_PRIMARY[1] : 'transparent'};
+      active ? theme.COLORS.MAIN.PRIMARY : 'transparent'};
   color: ${({ theme, active }) =>
-    active ? theme.COLORS.LABEL_PRIMARY : theme.COLORS.LABEL_SECONDARY};
+    active ? theme.COLORS.LABEL.PRIMARY : theme.COLORS.LABEL.SECONDARY};
   font-weight: ${({ active }) => (active ? '600' : '400')};
   padding: 16px 32px;
 `;

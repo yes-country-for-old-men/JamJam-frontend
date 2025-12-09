@@ -12,12 +12,12 @@ export const Container = styled.div`
 export const PageButton = styled(Button)<{ isActive?: boolean }>`
   padding: 12px;
   background-color: ${({ isActive, theme }) =>
-    isActive ? theme.COLORS.JAMJAM_PRIMARY[1] : 'transparent'};
+    isActive ? theme.COLORS.MAIN.PRIMARY : 'transparent'};
   color: ${({ isActive, theme }) =>
-    isActive ? 'white' : theme.COLORS.LABEL_PRIMARY};
+    isActive ? 'white' : theme.COLORS.LABEL.PRIMARY};
 
   &:hover {
     background-color: ${({ isActive, theme }) =>
-      isActive ? theme.COLORS.JAMJAM_PRIMARY[1] : theme.COLORS.GRAY[6]};
+      isActive ? theme.COLORS.MAIN.PRIMARY : theme.COLORS.GRAY[6]};
   }
 `;

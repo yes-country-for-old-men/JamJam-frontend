@@ -34,7 +34,7 @@ const StyledSelect = styled.select<{ error?: boolean }>`
   border: none;
   border-radius: 10px;
   font-size: 14px;
-  color: ${(props) => props.theme.COLORS.LABEL_PRIMARY};
+  color: ${(props) => props.theme.COLORS.LABEL.PRIMARY};
   box-shadow: inset 0 0 0 1px
     ${(props) =>
       props.error ? props.theme.COLORS.RED : props.theme.COLORS.GRAY[5]};
@@ -51,14 +51,12 @@ const StyledSelect = styled.select<{ error?: boolean }>`
     outline: none;
     box-shadow: inset 0 0 0 1px
       ${(props) =>
-        props.error
-          ? props.theme.COLORS.RED
-          : props.theme.COLORS.JAMJAM_PRIMARY[1]};
+        props.error ? props.theme.COLORS.RED : props.theme.COLORS.MAIN.PRIMARY};
   }
 
   &:disabled {
     background-color: ${(props) => props.theme.COLORS.GRAY[5]};
-    color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
+    color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
     cursor: not-allowed;
   }
 
@@ -116,7 +114,7 @@ const Select = React.memo<SelectProps>(
           </StyledSelect>
           <DropdownIcon disabled={disabled} error={error}>
             <ArrowDownIcon
-              fill={theme.COLORS.LABEL_SECONDARY}
+              fill={theme.COLORS.LABEL.SECONDARY}
               width={12}
               height={12}
             />

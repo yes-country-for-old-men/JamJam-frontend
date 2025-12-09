@@ -40,18 +40,17 @@ const StyledInput = styled.input<{ hasToggle?: boolean }>`
 
   &:focus {
     outline: none;
-    box-shadow: inset 0 0 0 1px
-      ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    box-shadow: inset 0 0 0 1px ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   }
 
   &:disabled {
     background-color: ${(props) => props.theme.COLORS.GRAY[5]};
-    color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
+    color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
     cursor: not-allowed;
   }
 
   &::placeholder {
-    color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
+    color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
   }
 `;
 
@@ -60,7 +59,7 @@ const PasswordToggleIcon = styled.button`
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
+  color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
   display: flex;
   align-items: center;
   justify-content: center;

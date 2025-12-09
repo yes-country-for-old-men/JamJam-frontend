@@ -23,7 +23,7 @@ export const PasswordCheckTitle = styled.div`
 `;
 
 export const PasswordCheckPrompt = styled.div`
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   font-weight: 500;
   text-align: center;
   margin-bottom: 20px;

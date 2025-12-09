@@ -142,7 +142,7 @@ const UserMenu = ({ userInfo }: UserMenuProps) => {
             animate={{ rotate: isDropdownOpen ? 180 : 0 }}
             transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
           >
-            <ArrowDownIcon width={12} fill={theme.COLORS.LABEL_PRIMARY} />
+            <ArrowDownIcon width={12} fill={theme.COLORS.LABEL.PRIMARY} />
           </motion.div>
         </HeaderContent>
       </UserMenuButton>

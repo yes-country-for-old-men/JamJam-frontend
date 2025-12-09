@@ -57,12 +57,11 @@ export const TextArea = styled.textarea`
 
   &:focus {
     outline: none;
-    box-shadow: inset 0 0 0 1px
-      ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    box-shadow: inset 0 0 0 1px ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   }
 
   &::placeholder {
-    color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
+    color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
   }
 `;
 
@@ -114,11 +113,11 @@ export const SkillSearchBox = styled.input`
 
   &:focus {
     outline: none;
-    border-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    border-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   }
 
   &::placeholder {
-    color: ${(props) => props.theme.COLORS.LABEL_TERTIARY};
+    color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
   }
 `;
 
@@ -132,20 +131,20 @@ export const SkillItem = styled.button<{ selected: boolean }>`
   padding: 12px 16px;
   text-align: left;
   background-color: ${(props) =>
-    props.selected ? props.theme.COLORS.JAMJAM_PRIMARY[2] : 'transparent'};
+    props.selected ? props.theme.COLORS.MAIN.SECONDARY : 'transparent'};
   border-radius: 8px;
   margin-bottom: 4px;
   color: ${(props) =>
     props.selected
-      ? props.theme.COLORS.JAMJAM_PRIMARY[1]
-      : props.theme.COLORS.LABEL_PRIMARY};
+      ? props.theme.COLORS.MAIN.PRIMARY
+      : props.theme.COLORS.LABEL.PRIMARY};
   font-size: 14px;
   transition: all 0.2s ease;
 
   &:hover:not(:disabled) {
     background-color: ${(props) =>
       props.selected
-        ? props.theme.COLORS.JAMJAM_PRIMARY[2]
+        ? props.theme.COLORS.MAIN.SECONDARY
         : props.theme.COLORS.GRAY[6]};
   }
 
@@ -191,7 +190,7 @@ export const AddButton = styled.button`
   background-color: ${(props) => props.theme.COLORS.GRAY[6]};
   border: 1px dashed ${(props) => props.theme.COLORS.GRAY[4]};
   border-radius: 12px;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   font-size: 14px;
   font-weight: 500;
   transition: all 0.2s ease;
@@ -199,12 +198,12 @@ export const AddButton = styled.button`
   justify-content: center;
 
   &:hover {
-    background-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[2]};
-    border-color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
-    color: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+    background-color: ${(props) => props.theme.COLORS.MAIN.SECONDARY};
+    border-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
+    color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
 
     & svg {
-      fill: ${(props) => props.theme.COLORS.JAMJAM_PRIMARY[1]};
+      fill: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
     }
   }
 `;
@@ -226,14 +225,14 @@ export const DeleteButton = styled.button`
   right: 12px;
   width: 24px;
   height: 24px;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   font-size: 18px;
   border-radius: 8px;
   transition: all 0.2s ease;
 
   &:hover {
     background-color: ${(props) => props.theme.COLORS.GRAY[5]};
-    color: ${(props) => props.theme.COLORS.LABEL_PRIMARY};
+    color: ${(props) => props.theme.COLORS.LABEL.PRIMARY};
   }
 `;
 
@@ -244,7 +243,7 @@ export const SubSectionContainer = styled.div`
 export const EmptySkillsContainer = styled.div`
   padding: 16px;
   text-align: center;
-  color: ${(props) => props.theme.COLORS.LABEL_SECONDARY};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   font-size: 14px;
   background-color: ${(props) => props.theme.COLORS.GRAY[6]};
   border-radius: 12px;
