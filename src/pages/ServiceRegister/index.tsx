@@ -25,10 +25,10 @@ const ServiceRegister: React.FC = () => {
     hasGeneratedThumbnail,
     isRegistering,
     serviceNames,
-    updateServiceNames,
-    updateGeneratingThumbnail,
-    updateHasGeneratedThumbnail,
-    updateIsRegistering,
+    setServiceNames,
+    setIsGeneratingThumbnail,
+    setHasGeneratedThumbnail,
+    setIsRegistering,
     goToNextStep,
     goToPreviousStep,
   } = useServiceRegisterSteps();
@@ -65,7 +65,7 @@ const ServiceRegister: React.FC = () => {
         description: generatedDescription,
       } = response.data.content;
 
-      updateServiceNames(generatedServiceNames);
+      setServiceNames(generatedServiceNames);
       form.setValue('serviceDetail', generatedDescription);
       form.setValue('category', category);
       goToNextStep();
@@ -89,7 +89,7 @@ const ServiceRegister: React.FC = () => {
     const serviceDetail = form.getValues('serviceDetail');
     const includeTitleInThumbnail = form.getValues('includeTitleInThumbnail');
 
-    updateGeneratingThumbnail(true);
+    setIsGeneratingThumbnail(true);
 
     try {
       const response = await generateAiThumbnail({
@@ -101,14 +101,14 @@ const ServiceRegister: React.FC = () => {
       const { imageBase64 } = response.data.content;
       const thumbnailFile = base64ToFile(imageBase64, 'ai-thumbnail.png');
       form.setValue('thumbnailImage', thumbnailFile);
-      updateHasGeneratedThumbnail(true);
+      setHasGeneratedThumbnail(true);
     } catch {
       alert({
         title: '썸네일 생성 실패',
         content: 'AI 썸네일 생성 중 오류가 발생했습니다.',
       });
     } finally {
-      updateGeneratingThumbnail(false);
+      setIsGeneratingThumbnail(false);
     }
   };
 
@@ -120,7 +120,7 @@ const ServiceRegister: React.FC = () => {
 
     const formValues = form.getValues();
 
-    updateIsRegistering(true);
+    setIsRegistering(true);
 
     try {
       const requestData: ServiceRegisterRequest = {
@@ -149,7 +149,7 @@ const ServiceRegister: React.FC = () => {
         content: '서비스 등록 중 오류가 발생했습니다.',
       });
     } finally {
-      updateIsRegistering(false);
+      setIsRegistering(false);
     }
   };
 
