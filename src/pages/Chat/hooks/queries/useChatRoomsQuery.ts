@@ -17,7 +17,7 @@ const useChatRoomsQuery = (currentUserId: string, page: number = 0) => {
   return useQuery({
     queryKey: ['chatRooms', currentUserId, page],
     queryFn: async () => {
-      const response = await getChatRooms(page, 20);
+      const response = await getChatRooms({ page, size: 20 });
       return response.data.content.rooms.map(convertApiChatRoomToLocal);
     },
     enabled: !!currentUserId,
