@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import theme from '@styles/theme';
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 interface CategoryCardProps {
@@ -11,23 +9,7 @@ interface CategoryCardProps {
   className?: string;
 }
 
-const ANIMATION_VARIANTS = {
-  container: {
-    rest: {
-      scale: 1,
-      borderColor: theme.COLORS.GRAY[5],
-    },
-    hover: {
-      scale: 1.05,
-      borderColor: theme.COLORS.MAIN.PRIMARY,
-    },
-    tap: {
-      scale: 0.95,
-    },
-  },
-} as const;
-
-const Container = styled(motion.div)`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,6 +20,18 @@ const Container = styled(motion.div)`
   border-radius: 10px;
   cursor: pointer;
   gap: 12px;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    border-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 `;
 
 const IconWrapper = styled.div`
@@ -70,15 +64,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
   };
 
   return (
-    <Container
-      className={className}
-      variants={ANIMATION_VARIANTS.container}
-      initial="rest"
-      whileHover="hover"
-      whileTap="tap"
-      onClick={handleClick}
-      transition={{ type: 'tween', duration: 0.2 }}
-    >
+    <Container className={className} onClick={handleClick}>
       <IconWrapper>{icon}</IconWrapper>
       <CategoryTitle>{name}</CategoryTitle>
     </Container>

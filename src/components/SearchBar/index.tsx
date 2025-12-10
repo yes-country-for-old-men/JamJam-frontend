@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import SearchIcon from '@assets/icons/search.svg?react';
 import styled from '@emotion/styled';
 import theme from '@styles/theme';
-import { motion } from 'framer-motion';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface SearchBarProps {
@@ -12,41 +11,27 @@ interface SearchBarProps {
   className?: string;
 }
 
-const ANIMATION_VARIANTS = {
-  searchContainer: {
-    rest: { scale: 1 },
-    hover: { scale: 1.05 },
-    focus: {
-      scale: 1.05,
-      boxShadow: '0 0 20px 5px rgba(0, 0, 0, 0.03)',
-    },
-    tap: { scale: 0.95 },
-  },
-  searchButton: {
-    rest: {
-      scale: 1,
-      backgroundColor: 'transparent',
-      y: '-50%',
-    },
-    hover: {
-      scale: 1.1,
-      backgroundColor: theme.COLORS.MAIN.SECONDARY,
-      y: '-50%',
-    },
-    tap: {
-      scale: 0.9,
-      y: '-50%',
-    },
-  },
-} as const;
-
-const SearchContainer = styled(motion.div)`
+const SearchContainer = styled.div<{ isFocused: boolean }>`
   width: 100%;
   position: relative;
   border-radius: 12px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  transform: scale(${(props) => (props.isFocused ? 1.05 : 1)});
+  box-shadow: ${(props) =>
+    props.isFocused ? '0 0 20px 5px rgba(0, 0, 0, 0.03)' : 'none'};
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 `;
 
-const SearchInput = styled(motion.input)`
+const SearchInput = styled.input`
   width: 100%;
   background-color: white;
   border: none;
@@ -60,16 +45,30 @@ const SearchInput = styled(motion.input)`
   }
 `;
 
-const SearchButton = styled(motion.button)`
+const SearchButton = styled.button`
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   right: 12px;
   top: 50%;
+  transform: translateY(-50%);
   width: 40px;
   height: 40px;
   border-radius: 12px;
+  background-color: transparent;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-50%) scale(1.1);
+    background-color: ${(props) => props.theme.COLORS.MAIN.SECONDARY};
+  }
+
+  &:active {
+    transform: translateY(-50%) scale(0.9);
+  }
 `;
 
 const SearchBar: React.FC<SearchBarProps> = ({
@@ -104,14 +103,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   return (
-    <SearchContainer
-      className={className}
-      variants={ANIMATION_VARIANTS.searchContainer}
-      initial="rest"
-      whileHover="hover"
-      whileTap="tap"
-      animate={isSearchFocused ? 'focus' : 'rest'}
-    >
+    <SearchContainer className={className} isFocused={isSearchFocused}>
       <SearchInput
         type="text"
         placeholder={placeholder}
@@ -120,20 +112,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
         onKeyDown={handleKeyDown}
         onFocus={() => setIsSearchFocused(true)}
         onBlur={() => setIsSearchFocused(false)}
-        layout
       />
-      <SearchButton
-        variants={ANIMATION_VARIANTS.searchButton}
-        initial="rest"
-        whileHover="hover"
-        whileTap="tap"
-        onClick={handleSearch}
-      >
-        <motion.div
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        >
-          <SearchIcon fill={theme.COLORS.MAIN.PRIMARY} />
-        </motion.div>
+      <SearchButton onClick={handleSearch}>
+        <SearchIcon fill={theme.COLORS.MAIN.PRIMARY} />
       </SearchButton>
     </SearchContainer>
   );

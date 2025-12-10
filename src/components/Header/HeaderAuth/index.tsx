@@ -3,30 +3,27 @@ import LoginModal from '@components/Modal/LoginModal';
 import styled from '@emotion/styled';
 import useAuthStatus from '@hooks/useAuthStatus';
 import useModal from '@hooks/useModal';
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-
-const ANIMATION_VARIANTS = {
-  button: {
-    rest: { opacity: 1 },
-    hover: { opacity: 0.7 },
-  },
-} as const;
 
 const HeaderContent = styled.div`
   display: flex;
   align-items: center;
 `;
 
-const SignInButton = styled(motion.button)`
+const SignInButton = styled.button`
   display: flex;
   font-size: 14px;
   font-weight: 600;
   padding: 8px 12px;
   margin-right: 12px;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 
-const SignUpButton = styled(motion.button)`
+const SignUpButton = styled.button`
   display: flex;
   background-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
   color: white;
@@ -34,6 +31,11 @@ const SignUpButton = styled(motion.button)`
   font-weight: 700;
   border-radius: 8px;
   padding: 8px 12px;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 
 const HeaderAuth = () => {
@@ -62,24 +64,8 @@ const HeaderAuth = () => {
 
   return (
     <HeaderContent>
-      <SignInButton
-        variants={ANIMATION_VARIANTS.button}
-        initial="rest"
-        whileHover="hover"
-        transition={{ type: 'tween', duration: 0.2 }}
-        onClick={handleLoginClick}
-      >
-        로그인
-      </SignInButton>
-      <SignUpButton
-        variants={ANIMATION_VARIANTS.button}
-        initial="rest"
-        whileHover="hover"
-        transition={{ type: 'tween', duration: 0.2 }}
-        onClick={handleSignupClick}
-      >
-        회원가입
-      </SignUpButton>
+      <SignInButton onClick={handleLoginClick}>로그인</SignInButton>
+      <SignUpButton onClick={handleSignupClick}>회원가입</SignUpButton>
     </HeaderContent>
   );
 };

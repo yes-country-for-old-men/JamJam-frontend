@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import ArrowDownIcon from '@assets/icons/arrow-down.svg?react';
 import UserProfileImageIcon from '@assets/icons/user-profile-image.svg?react';
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import useLogoutMutation from '@hooks/mutations/useLogoutMutation';
 import useModal from '@hooks/useModal';
 import theme from '@styles/theme';
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 interface UserMenuProps {
@@ -56,7 +56,24 @@ const Nickname = styled.div`
   margin-right: 12px;
 `;
 
-const DropdownMenu = styled(motion.div)`
+const ArrowIconWrapper = styled.div<{ isOpen: boolean }>`
+  display: flex;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: rotate(${(props) => (props.isOpen ? 180 : 0)}deg);
+`;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const DropdownMenu = styled.div`
   position: absolute;
   top: 100%;
   right: 0;
@@ -66,6 +83,7 @@ const DropdownMenu = styled(motion.div)`
   border-radius: 8px;
   overflow: hidden;
   min-width: 120px;
+  animation: ${fadeIn} 0.2s ease-out;
 `;
 
 const DropdownItem = styled.button`
@@ -139,22 +157,14 @@ const UserMenu = ({ userInfo }: UserMenuProps) => {
             )}
           </ProfileImageWrapper>
           <Nickname>{userInfo.nickname} 님</Nickname>
-          <motion.div
-            animate={{ rotate: isDropdownOpen ? 180 : 0 }}
-            transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-          >
+          <ArrowIconWrapper isOpen={isDropdownOpen}>
             <ArrowDownIcon width={12} fill={theme.COLORS.LABEL.PRIMARY} />
-          </motion.div>
+          </ArrowIconWrapper>
         </HeaderContent>
       </UserMenuButton>
 
       {isDropdownOpen && (
-        <DropdownMenu
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.2 }}
-        >
+        <DropdownMenu>
           <DropdownItem onClick={handleMyPageClick}>마이페이지</DropdownItem>
           <DropdownItem onClick={handleLogoutClick}>로그아웃</DropdownItem>
         </DropdownMenu>

@@ -1,10 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import ArrowDownIcon from '@assets/icons/arrow-down.svg?react';
 import CategoryIcon from '@assets/icons/category.svg?react';
 import CATEGORIES from '@constants/serviceCategories';
 import styled from '@emotion/styled';
 import theme from '@styles/theme';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 interface CategoryTabNavigatorProps {
@@ -29,7 +28,7 @@ const CategoryList = styled.ul`
 
 const CategoryItem = styled.li``;
 
-const CategoryButton = styled(motion.button)<{ isActive?: boolean }>`
+const CategoryButton = styled.button<{ isActive?: boolean }>`
   padding: 12px;
   color: ${(props) =>
     props.isActive
@@ -46,7 +45,7 @@ const CategoryButton = styled(motion.button)<{ isActive?: boolean }>`
   }
 `;
 
-const ExpansionButton = styled(motion.button)<{ isExpanded: boolean }>`
+const ExpansionButton = styled.button<{ isExpanded: boolean }>`
   position: absolute;
   left: max(24px, calc(50vw - (600px - 24px)));
   bottom: 0;
@@ -63,30 +62,32 @@ const ExpansionButton = styled(motion.button)<{ isExpanded: boolean }>`
   gap: 8px;
 `;
 
-const ExpandedSection = styled(motion.section)`
-  overflow: hidden;
+const ArrowIconWrapper = styled.div<{ isExpanded: boolean }>`
+  display: flex;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: rotate(${(props) => (props.isExpanded ? 180 : 0)}deg);
 `;
 
-const ExpandedContent = styled.div``;
+const ExpandedSection = styled.section<{ isExpanded: boolean }>`
+  display: grid;
+  grid-template-rows: ${(props) => (props.isExpanded ? '1fr' : '0fr')};
+  transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+`;
+
+const ExpandedContent = styled.div`
+  overflow: hidden;
+`;
 
 const CategoryTabNavigator: React.FC<CategoryTabNavigatorProps> = ({
   currentCategoryId,
 }) => {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [contentHeight, setContentHeight] = useState(0);
-  const contentRef = useRef<HTMLDivElement>(null);
   const topCategories = CATEGORIES.slice(0, 6);
   const expandedCategories = CATEGORIES.slice(6);
   const iconColor = isExpanded
     ? theme.COLORS.MAIN.PRIMARY
     : theme.COLORS.LABEL.SECONDARY;
-
-  useEffect(() => {
-    if (contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
-    }
-  }, [expandedCategories]);
 
   const handleCategoryClick = (newCategoryId: number) => {
     navigate(`/category/${newCategoryId}`);
@@ -106,12 +107,9 @@ const CategoryTabNavigator: React.FC<CategoryTabNavigatorProps> = ({
       >
         <CategoryIcon stroke={iconColor} />
         카테고리
-        <motion.div
-          animate={{ rotate: isExpanded ? 180 : 0 }}
-          transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-        >
+        <ArrowIconWrapper isExpanded={isExpanded}>
           <ArrowDownIcon fill={iconColor} />
-        </motion.div>
+        </ArrowIconWrapper>
       </ExpansionButton>
       <CategoryList role="tablist">
         {topCategories.map((category) => (
@@ -127,37 +125,24 @@ const CategoryTabNavigator: React.FC<CategoryTabNavigatorProps> = ({
           </CategoryItem>
         ))}
       </CategoryList>
-      <AnimatePresence>
-        {isExpanded && (
-          <ExpandedSection
-            id="expanded-categories"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: contentHeight, opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{
-              height: { duration: 0.3, ease: [0.4, 0, 0.2, 1] },
-              opacity: { duration: 0.2, delay: isExpanded ? 0.1 : 0 },
-            }}
-          >
-            <ExpandedContent ref={contentRef}>
-              <CategoryList role="tablist">
-                {expandedCategories.map((category) => (
-                  <CategoryItem key={category.id}>
-                    <CategoryButton
-                      isActive={currentCategoryId === category.id}
-                      onClick={() => handleCategoryClick(category.id)}
-                      role="tab"
-                      aria-selected={currentCategoryId === category.id}
-                    >
-                      {category.name}
-                    </CategoryButton>
-                  </CategoryItem>
-                ))}
-              </CategoryList>
-            </ExpandedContent>
-          </ExpandedSection>
-        )}
-      </AnimatePresence>
+      <ExpandedSection id="expanded-categories" isExpanded={isExpanded}>
+        <ExpandedContent>
+          <CategoryList role="tablist">
+            {expandedCategories.map((category) => (
+              <CategoryItem key={category.id}>
+                <CategoryButton
+                  isActive={currentCategoryId === category.id}
+                  onClick={() => handleCategoryClick(category.id)}
+                  role="tab"
+                  aria-selected={currentCategoryId === category.id}
+                >
+                  {category.name}
+                </CategoryButton>
+              </CategoryItem>
+            ))}
+          </CategoryList>
+        </ExpandedContent>
+      </ExpandedSection>
     </Container>
   );
 };
