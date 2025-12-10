@@ -4,7 +4,7 @@ import {
   openModalAtom,
   closeModalAtom,
   type ModalState,
-} from '@stores/modalStore';
+} from '@atoms/modalAtoms';
 import { useAtom } from 'jotai';
 
 const useModal = () => {

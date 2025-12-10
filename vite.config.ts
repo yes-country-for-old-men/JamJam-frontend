@@ -40,6 +40,7 @@ export default defineConfig(({ mode, command }) => {
       alias: [
         { find: '@apis', replacement: path.resolve(__dirname, 'src/apis') },
         { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
+        { find: '@atoms', replacement: path.resolve(__dirname, 'src/atoms') },
         {
           find: '@components',
           replacement: path.resolve(__dirname, 'src/components'),
@@ -63,7 +64,6 @@ export default defineConfig(({ mode, command }) => {
           find: '@services',
           replacement: path.resolve(__dirname, 'src/services'),
         },
-        { find: '@stores', replacement: path.resolve(__dirname, 'src/stores') },
         { find: '@styles', replacement: path.resolve(__dirname, 'src/styles') },
         { find: '@type', replacement: path.resolve(__dirname, 'src/types') },
         { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },

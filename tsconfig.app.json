@@ -30,6 +30,7 @@
     "paths": {
       "@apis/*": ["src/apis/*"],
       "@assets/*": ["src/assets/*"],
+      "@atoms/*": ["src/atoms/*"],
       "@components/*": ["src/components/*"],
       "@constants/*": ["src/constants/*"],
       "@hooks/*": ["src/hooks/*"],
@@ -38,7 +39,6 @@
       "@routes/*": ["src/routes/*"],
       "@schemas/*": ["src/schemas/*"],
       "@services/*": ["src/services/*"],
-      "@stores/*": ["src/stores/*"],
       "@styles/*": ["src/styles/*"],
       "@type/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"]
