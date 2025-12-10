@@ -1,30 +1,5 @@
 import React from 'react';
-import { Z_INDEX } from '@constants/index';
-import styled from '@emotion/styled';
-
-const TabContainer = styled.nav`
-  position: sticky;
-  display: flex;
-  top: 80px;
-  background-color: ${(props) => props.theme.COLORS.BACKGROUND};
-  border-bottom: 1px solid ${(props) => props.theme.COLORS.GRAY[5]};
-  z-index: ${Z_INDEX.BASE};
-`;
-
-const TabButton = styled.button<{ active: boolean }>`
-  background-color: transparent;
-  border-bottom: 2.5px solid
-    ${({ theme, active }) =>
-      active ? theme.COLORS.MAIN.PRIMARY : 'transparent'};
-  color: ${({ theme, active }) =>
-    active ? theme.COLORS.LABEL.PRIMARY : theme.COLORS.LABEL.SECONDARY};
-  font-weight: ${({ active }) => (active ? '600' : '400')};
-  padding: 16px 32px;
-`;
-
-const ContentContainer = styled.div`
-  padding: 28px 8px;
-`;
+import * as S from './SectionTab.styles';
 
 interface SectionTabProps<T extends readonly string[]> {
   tabs: T;
@@ -41,18 +16,18 @@ const SectionTab = <T extends readonly string[]>({
 }: SectionTabProps<T>) => {
   return (
     <>
-      <TabContainer>
+      <S.TabContainer>
         {tabs.map((tab) => (
-          <TabButton
+          <S.TabButton
             key={tab}
             active={activeTab === tab}
             onClick={() => onTabClick(tab)}
           >
             {tab}
-          </TabButton>
+          </S.TabButton>
         ))}
-      </TabContainer>
-      <ContentContainer>{children}</ContentContainer>
+      </S.TabContainer>
+      <S.ContentContainer>{children}</S.ContentContainer>
     </>
   );
 };

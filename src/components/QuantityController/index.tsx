@@ -1,46 +1,7 @@
 import React from 'react';
 import MinusIcon from '@assets/icons/minus.svg?react';
 import PlusIcon from '@assets/icons/plus.svg?react';
-import styled from '@emotion/styled';
-
-const QuantityControllerWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  border: 1px solid ${(props) => props.theme.COLORS.GRAY[5]};
-  border-radius: 4px;
-`;
-
-const QuantityButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  font-size: 18px;
-
-  &:hover {
-    background-color: ${(props) => props.theme.COLORS.GRAY[6]};
-  }
-
-  &:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-`;
-
-const QuantityInput = styled.input`
-  width: 48px;
-  height: 32px;
-  text-align: center;
-  font-size: 14px;
-  background: none;
-  border: none;
-
-  &:focus {
-    outline: none;
-  }
-`;
+import * as S from './QuantityController.styles';
 
 interface QuantityControllerProps {
   quantity: number;
@@ -67,23 +28,23 @@ const QuantityController: React.FC<QuantityControllerProps> = ({
   };
 
   return (
-    <QuantityControllerWrapper>
-      <QuantityButton onClick={onDecrease} disabled={quantity <= min}>
+    <S.QuantityControllerWrapper>
+      <S.QuantityButton onClick={onDecrease} disabled={quantity <= min}>
         <MinusIcon />
-      </QuantityButton>
-      <QuantityInput
+      </S.QuantityButton>
+      <S.QuantityInput
         value={quantity}
         onChange={handleInputChange}
         min={min}
         max={max}
       />
-      <QuantityButton
+      <S.QuantityButton
         onClick={onIncrease}
         disabled={max ? quantity >= max : false}
       >
         <PlusIcon />
-      </QuantityButton>
-    </QuantityControllerWrapper>
+      </S.QuantityButton>
+    </S.QuantityControllerWrapper>
   );
 };
 

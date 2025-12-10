@@ -1,12 +1,6 @@
 import LogoSVG from '@assets/logo.svg?react';
-import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-
-const LogoButton = styled.button`
-  display: flex;
-  align-items: center;
-  padding: 0;
-`;
+import * as S from './HeaderLogo.styles';
 
 const HeaderLogo = () => {
   const navigate = useNavigate();
@@ -16,9 +10,9 @@ const HeaderLogo = () => {
   };
 
   return (
-    <LogoButton onClick={handleLogoClick}>
+    <S.LogoButton onClick={handleLogoClick}>
       <LogoSVG />
-    </LogoButton>
+    </S.LogoButton>
   );
 };
 

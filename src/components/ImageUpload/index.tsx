@@ -1,254 +1,8 @@
 import React, { useState, useRef, useCallback } from 'react';
 import DeleteIcon from '@assets/icons/cross.svg?react';
 import ImageIcon from '@assets/icons/image.svg?react';
-import { Z_INDEX } from '@constants/index';
-import styled from '@emotion/styled';
+import * as S from './ImageUpload.styles';
 import type FileWithId from '@type/FileWithId';
-
-const Container = styled.div`
-  position: relative;
-`;
-
-const ImageUploadArea = styled.div<{ isDragOver: boolean; hasImage: boolean }>`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background-color: ${(props) => props.theme.COLORS.GRAY[6]};
-  border: none;
-  border-radius: 12px;
-  text-align: center;
-  padding: ${(props) => (props.hasImage ? '0' : '16px')};
-  transition: all 0.2s ease;
-  cursor: pointer;
-  overflow: hidden;
-
-  &:hover {
-    background-color: ${(props) => props.theme.COLORS.MAIN.SECONDARY};
-    border-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
-
-    ${(props) =>
-      !props.hasImage &&
-      `
-      & svg {
-        fill: ${props.theme.COLORS.MAIN.PRIMARY};
-      }
-      & div {
-        color: ${props.theme.COLORS.MAIN.PRIMARY};
-      }
-    `}
-  }
-
-  ${(props) =>
-    props.isDragOver &&
-    !props.hasImage &&
-    `
-    background-color: ${props.theme.COLORS.MAIN.SECONDARY};
-
-    & svg {
-      fill: ${props.theme.COLORS.MAIN.PRIMARY};
-    }
-    & div {
-      color: ${props.theme.COLORS.MAIN.PRIMARY};
-    }
-  `}
-`;
-
-const MultipleUploadArea = styled.div<{
-  isDragOver: boolean;
-  disabled: boolean;
-}>`
-  background-color: ${(props) =>
-    props.isDragOver
-      ? props.theme.COLORS.MAIN.SECONDARY
-      : props.theme.COLORS.GRAY[6]};
-  border: 1px dashed
-    ${(props) =>
-      props.isDragOver
-        ? props.theme.COLORS.MAIN.PRIMARY
-        : props.theme.COLORS.GRAY[4]};
-  border-radius: 12px;
-  text-align: center;
-  padding: 48px;
-  transition: all 0.2s ease;
-  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
-  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
-
-  &:hover {
-    background-color: ${(props) =>
-      props.disabled
-        ? props.theme.COLORS.GRAY[6]
-        : props.theme.COLORS.MAIN.SECONDARY};
-    border-color: ${(props) =>
-      props.disabled
-        ? props.theme.COLORS.GRAY[4]
-        : props.theme.COLORS.MAIN.PRIMARY};
-
-    & svg {
-      fill: ${(props) =>
-        props.disabled
-          ? props.theme.COLORS.LABEL.SECONDARY
-          : props.theme.COLORS.MAIN.PRIMARY};
-    }
-    & div {
-      color: ${(props) =>
-        props.disabled
-          ? props.theme.COLORS.LABEL.SECONDARY
-          : props.theme.COLORS.MAIN.PRIMARY};
-    }
-  }
-
-  ${(props) =>
-    props.isDragOver &&
-    !props.disabled &&
-    `
-    & svg {
-      fill: ${props.theme.COLORS.MAIN.PRIMARY};
-    }
-    & div {
-      color: ${props.theme.COLORS.MAIN.PRIMARY};
-    }
-  `}
-`;
-
-const ImageBackground = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 6px;
-`;
-
-const ImageOverlay = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  border-radius: 6px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-
-  ${ImageUploadArea}:hover & {
-    opacity: 1;
-  }
-`;
-
-const FileInput = styled.input`
-  display: none;
-`;
-
-const UploadText = styled.div`
-  font-size: 14px;
-  font-weight: 500;
-  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
-  margin-top: 12px;
-`;
-
-const MultipleUploadText = styled.div`
-  font-size: 14px;
-  font-weight: 500;
-  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
-  margin-top: 8px;
-`;
-
-const OverlayText = styled.div`
-  font-size: 14px;
-  font-weight: 500;
-  color: white;
-  margin-top: 8px;
-`;
-
-const PlaceholderContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-`;
-
-const DeleteButton = styled.button`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 8px;
-  right: 8px;
-  width: 24px;
-  height: 24px;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 50%;
-  transition: all 0.2s ease;
-  z-index: ${Z_INDEX.IMAGE_OVERLAY};
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.6);
-  }
-
-  & svg {
-    fill: white;
-    width: 10px;
-    height: 10px;
-  }
-`;
-
-const ImagePreviewGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-  margin-top: 16px;
-`;
-
-const ImagePreviewItem = styled.div`
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  background-color: ${(props) => props.theme.COLORS.GRAY[5]};
-  border-radius: 12px;
-  overflow: hidden;
-`;
-
-const PreviewImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-const ImageRemoveButton = styled.button`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 4px;
-  right: 4px;
-  width: 20px;
-  height: 20px;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 50%;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.6);
-  }
-
-  & svg {
-    fill: white;
-    width: 8px;
-    height: 8px;
-  }
-`;
 
 interface ImageUploadProps {
   image?: File | string | null;
@@ -384,8 +138,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   if (multiple) {
     return (
-      <Container style={{ width, height }}>
-        <MultipleUploadArea
+      <S.Container style={{ width, height }}>
+        <S.MultipleUploadArea
           isDragOver={isDragOver}
           disabled={isDisabled}
           onClick={handleUploadAreaClick}
@@ -394,9 +148,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           onDrop={handleDrop}
         >
           <ImageIcon />
-          <MultipleUploadText>{getMultipleUploadText()}</MultipleUploadText>
-        </MultipleUploadArea>
-        <FileInput
+          <S.MultipleUploadText>{getMultipleUploadText()}</S.MultipleUploadText>
+        </S.MultipleUploadArea>
+        <S.FileInput
           ref={fileInputRef}
           type="file"
           accept={accept}
@@ -405,31 +159,31 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           disabled={isDisabled}
         />
         {images.length > 0 && (
-          <ImagePreviewGrid>
+          <S.ImagePreviewGrid>
             {images.map((imageWithId) => (
-              <ImagePreviewItem key={imageWithId.id}>
-                <PreviewImage
+              <S.ImagePreviewItem key={imageWithId.id}>
+                <S.PreviewImage
                   src={URL.createObjectURL(imageWithId.file)}
                   alt="image"
                 />
-                <ImageRemoveButton
+                <S.ImageRemoveButton
                   onClick={() => handleRemoveMultipleImage(imageWithId.id)}
                 >
                   <DeleteIcon />
-                </ImageRemoveButton>
-              </ImagePreviewItem>
+                </S.ImageRemoveButton>
+              </S.ImagePreviewItem>
             ))}
-          </ImagePreviewGrid>
+          </S.ImagePreviewGrid>
         )}
-      </Container>
+      </S.Container>
     );
   }
 
   const imageSrc = getImageSrc();
 
   return (
-    <Container style={{ width, height }}>
-      <ImageUploadArea
+    <S.Container style={{ width, height }}>
+      <S.ImageUploadArea
         isDragOver={isDragOver}
         hasImage={!!image}
         onClick={handleUploadAreaClick}
@@ -439,29 +193,29 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       >
         {imageSrc ? (
           <>
-            <ImageBackground src={imageSrc} alt="uploaded-image" />
-            <ImageOverlay>
+            <S.ImageBackground src={imageSrc} alt="uploaded-image" />
+            <S.ImageOverlay>
               <ImageIcon style={{ fill: 'white' }} />
-              <OverlayText>클릭하여 변경</OverlayText>
-            </ImageOverlay>
-            <DeleteButton onClick={handleRemoveImage}>
+              <S.OverlayText>클릭하여 변경</S.OverlayText>
+            </S.ImageOverlay>
+            <S.DeleteButton onClick={handleRemoveImage}>
               <DeleteIcon />
-            </DeleteButton>
+            </S.DeleteButton>
           </>
         ) : (
-          <PlaceholderContainer>
+          <S.PlaceholderContainer>
             <ImageIcon />
-            <UploadText>{getSingleUploadText()}</UploadText>
-          </PlaceholderContainer>
+            <S.UploadText>{getSingleUploadText()}</S.UploadText>
+          </S.PlaceholderContainer>
         )}
-      </ImageUploadArea>
-      <FileInput
+      </S.ImageUploadArea>
+      <S.FileInput
         ref={fileInputRef}
         type="file"
         accept={accept}
         onChange={handleFileSelect}
       />
-    </Container>
+    </S.Container>
   );
 };
 

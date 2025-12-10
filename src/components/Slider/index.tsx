@@ -2,53 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import useSlider, {
   type SliderRange,
 } from '@components/Slider/hooks/useSlider';
-import styled from '@emotion/styled';
-
-const SliderContainer = styled.div`
-  position: relative;
-  height: 8px;
-  background-color: ${(props) => props.theme.COLORS.GRAY[5]};
-  border-radius: 4px;
-  margin: 0 16px;
-`;
-
-const SliderTrack = styled.div<{ left: number; width: number }>`
-  position: absolute;
-  left: ${(props) => props.left}%;
-  width: ${(props) => props.width}%;
-  height: 100%;
-  background-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
-  border-radius: 4px;
-`;
-
-const SliderHandle = styled.div<{ position: number; isDragging: boolean }>`
-  position: absolute;
-  top: -6px;
-  left: ${(props) => props.position}%;
-  width: 20px;
-  height: 20px;
-  background-color: white;
-  border: 3px solid ${(props) => props.theme.COLORS.MAIN.PRIMARY};
-  border-radius: 50%;
-  cursor: pointer;
-  transform: translateX(-50%);
-  transition: ${(props) => (props.isDragging ? 'none' : 'all 0.2s ease')};
-
-  &:hover {
-    transform: translateX(-50%) scale(1.1);
-  }
-`;
-
-const SliderLabels = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 12px;
-`;
-
-const SliderLabel = styled.span`
-  font-size: 14px;
-  font-weight: 500;
-`;
+import * as S from './Slider.styles';
 
 interface SliderProps {
   min: number;
@@ -106,25 +60,25 @@ const Slider: React.FC<SliderProps> = ({
 
   return (
     <>
-      <SliderContainer ref={sliderRef}>
-        <SliderTrack left={startPosition} width={trackWidth} />
-        <SliderHandle
+      <S.SliderContainer ref={sliderRef}>
+        <S.SliderTrack left={startPosition} width={trackWidth} />
+        <S.SliderHandle
           position={startPosition}
           isDragging={isDragging === 'start'}
           onMouseDown={() => handleMouseDown('start')}
         />
-        <SliderHandle
+        <S.SliderHandle
           position={endPosition}
           isDragging={isDragging === 'end'}
           onMouseDown={() => handleMouseDown('end')}
         />
-      </SliderContainer>
+      </S.SliderContainer>
       {labels && (
-        <SliderLabels>
+        <S.SliderLabels>
           {labels.map((labelValue) => (
-            <SliderLabel key={labelValue}>{labelValue}</SliderLabel>
+            <S.SliderLabel key={labelValue}>{labelValue}</S.SliderLabel>
           ))}
-        </SliderLabels>
+        </S.SliderLabels>
       )}
     </>
   );

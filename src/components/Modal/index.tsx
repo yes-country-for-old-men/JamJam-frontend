@@ -3,105 +3,10 @@ import CloseIcon from '@assets/icons/close.svg?react';
 import Button from '@components/Button';
 import Spinner from '@components/Spinner';
 import { getModalZIndex } from '@constants/zIndex';
-import styled from '@emotion/styled';
 import useModal from '@hooks/useModal';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
-
-const Backdrop = styled(motion.div)<{ zIndex: number }>`
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  left: 0;
-  width: 100dvw;
-  height: 100dvh;
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(8px);
-  z-index: ${(props) => props.zIndex};
-`;
-
-const ModalContainer = styled(motion.div)`
-  position: relative;
-  width: 80dvw;
-  max-width: 360px;
-  background-color: white;
-  border-radius: 16px;
-  box-shadow:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  overflow: hidden;
-`;
-
-const ModalHeader = styled.div<{ hasTitle: boolean }>`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: ${(props) =>
-    props.hasTitle ? 'space-between' : 'flex-end'};
-  padding: 20px 16px 12px 24px;
-`;
-
-const ModalTitle = styled.div`
-  flex: 1;
-  font-size: 18px;
-  font-weight: 700;
-  margin: 0;
-  padding-right: 40px;
-`;
-
-const CloseButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
-  text-align: center;
-  border-radius: 8px;
-
-  &:hover {
-    background-color: ${(props) => props.theme.COLORS.GRAY[6]};
-    color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
-  }
-
-  svg {
-    stroke: currentColor;
-  }
-`;
-
-const ModalContent = styled.div<{ hasHeader: boolean }>`
-  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
-  padding: ${(props) => (props.hasHeader ? '0 24px 24px 24px' : '24px')};
-  white-space: pre-line;
-`;
-
-const ModalFooter = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  padding: 0 24px 24px 24px;
-  gap: 8px;
-`;
-
-const FooterButtonWrapper = styled.div`
-  flex: 1;
-`;
-
-const LoadingContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-`;
-
-const LoadingText = styled(motion.div)`
-  color: white;
-  font-size: 18px;
-  font-weight: 500;
-  text-align: center;
-`;
+import * as S from './Modal.styles';
 
 const Modal: React.FC = () => {
   const { modalStack, closeModal } = useModal();
@@ -159,10 +64,10 @@ const Modal: React.FC = () => {
         const renderContent = () => {
           if (modal.loadingText !== undefined) {
             return (
-              <LoadingContent>
+              <S.LoadingContent>
                 <Spinner />
                 {modal.loadingText && (
-                  <LoadingText
+                  <S.LoadingText
                     initial={{ opacity: 0, y: 10 }}
                     animate={{
                       opacity: [1, 0.5, 1],
@@ -181,9 +86,9 @@ const Modal: React.FC = () => {
                     }}
                   >
                     {modal.loadingText}
-                  </LoadingText>
+                  </S.LoadingText>
                 )}
-              </LoadingContent>
+              </S.LoadingContent>
             );
           }
           return modal.content;
@@ -192,7 +97,7 @@ const Modal: React.FC = () => {
         const isLoadingModal = modal.loadingText !== undefined;
 
         return modal.isOpen ? (
-          <Backdrop
+          <S.Backdrop
             key={modal.id}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -204,7 +109,7 @@ const Modal: React.FC = () => {
             {isLoadingModal ? (
               renderContent()
             ) : (
-              <ModalContainer
+              <S.ModalContainer
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -212,22 +117,22 @@ const Modal: React.FC = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 {(hasTitle || showCloseButton) && (
-                  <ModalHeader hasTitle={hasTitle}>
-                    {hasTitle && <ModalTitle>{modal.title}</ModalTitle>}
+                  <S.ModalHeader hasTitle={hasTitle}>
+                    {hasTitle && <S.ModalTitle>{modal.title}</S.ModalTitle>}
                     {showCloseButton && (
-                      <CloseButton onClick={handleClose}>
+                      <S.CloseButton onClick={handleClose}>
                         <CloseIcon />
-                      </CloseButton>
+                      </S.CloseButton>
                     )}
-                  </ModalHeader>
+                  </S.ModalHeader>
                 )}
-                <ModalContent hasHeader={hasTitle || showCloseButton}>
+                <S.ModalContent hasHeader={hasTitle || showCloseButton}>
                   {renderContent()}
-                </ModalContent>
+                </S.ModalContent>
                 {(modal.onConfirm || modal.confirmText) && (
-                  <ModalFooter>
+                  <S.ModalFooter>
                     {modal.cancelText && (
-                      <FooterButtonWrapper>
+                      <S.FooterButtonWrapper>
                         <Button
                           variant="secondary"
                           onClick={handleClose}
@@ -235,9 +140,9 @@ const Modal: React.FC = () => {
                         >
                           {modal.cancelText}
                         </Button>
-                      </FooterButtonWrapper>
+                      </S.FooterButtonWrapper>
                     )}
-                    <FooterButtonWrapper>
+                    <S.FooterButtonWrapper>
                       <Button
                         variant="primary"
                         onClick={handleConfirm}
@@ -245,12 +150,12 @@ const Modal: React.FC = () => {
                       >
                         {modal.confirmText || '확인'}
                       </Button>
-                    </FooterButtonWrapper>
-                  </ModalFooter>
+                    </S.FooterButtonWrapper>
+                  </S.ModalFooter>
                 )}
-              </ModalContainer>
+              </S.ModalContainer>
             )}
-          </Backdrop>
+          </S.Backdrop>
         ) : null;
       })}
     </AnimatePresence>,

@@ -3,70 +3,10 @@ import { login } from '@apis/auth';
 import LogoIcon from '@assets/icons/logo-icon.svg?react';
 import Button from '@components/Button';
 import Input from '@components/Input';
-import styled from '@emotion/styled';
 import useModal from '@hooks/useModal';
 import { useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-
-const LoginForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-const LogoWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  padding: 16px 0;
-`;
-
-const FindLinksWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-`;
-
-const FindLink = styled.button`
-  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
-  font-size: 12px;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const Divider = styled.span`
-  color: ${(props) => props.theme.COLORS.GRAY[2]};
-  font-size: 13px;
-`;
-
-const SignUpLink = styled.div`
-  font-size: 14px;
-  font-weight: 500;
-  text-align: center;
-  margin-top: 12px;
-
-  a {
-    color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
-    font-size: 14px;
-    font-weight: 700;
-    text-decoration: none;
-    margin-left: 6px;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
-
-const ErrorMessage = styled.div`
-  color: ${(props) => props.theme.COLORS.RED};
-  font-size: 13px;
-  font-weight: 500;
-  text-align: center;
-  margin-top: 4px;
-`;
+import * as S from './LoginModal.styles';
 
 const LoginModal: React.FC = () => {
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
@@ -130,10 +70,10 @@ const LoginModal: React.FC = () => {
   };
 
   return (
-    <LoginForm onSubmit={handleSubmit}>
-      <LogoWrapper>
+    <S.LoginForm onSubmit={handleSubmit}>
+      <S.LogoWrapper>
         <LogoIcon height={36} />
-      </LogoWrapper>
+      </S.LogoWrapper>
       <Input
         id="username"
         type="text"
@@ -166,20 +106,20 @@ const LoginModal: React.FC = () => {
       >
         로그인
       </Button>
-      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-      <FindLinksWrapper>
-        <FindLink type="button" onClick={handleFindUsername}>
+      {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
+      <S.FindLinksWrapper>
+        <S.FindLink type="button" onClick={handleFindUsername}>
           아이디 찾기
-        </FindLink>
-        <Divider>|</Divider>
-        <FindLink type="button" onClick={handleFindPassword}>
+        </S.FindLink>
+        <S.Divider>|</S.Divider>
+        <S.FindLink type="button" onClick={handleFindPassword}>
           비밀번호 찾기
-        </FindLink>
-      </FindLinksWrapper>
-      <SignUpLink>
+        </S.FindLink>
+      </S.FindLinksWrapper>
+      <S.SignUpLink>
         잼잼이 처음이신가요?<a href="/signup">회원가입</a>
-      </SignUpLink>
-    </LoginForm>
+      </S.SignUpLink>
+    </S.LoginForm>
   );
 };
 

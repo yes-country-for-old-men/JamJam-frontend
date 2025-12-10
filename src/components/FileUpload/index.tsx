@@ -1,98 +1,8 @@
 import React, { useState, useRef, useCallback } from 'react';
 import DeleteIcon from '@assets/icons/cross.svg?react';
 import UploadIcon from '@assets/icons/upload.svg?react';
-import styled from '@emotion/styled';
+import * as S from './FileUpload.styles';
 import type FileWithId from '@type/FileWithId';
-
-const Container = styled.div`
-  margin-top: 12px;
-`;
-
-const FileUploadArea = styled.div<{ isDragOver: boolean }>`
-  background-color: ${(props) => props.theme.COLORS.GRAY[6]};
-  border: 1px dashed
-    ${(props) =>
-      props.isDragOver
-        ? props.theme.COLORS.MAIN.PRIMARY
-        : props.theme.COLORS.GRAY[4]};
-  border-radius: 12px;
-  text-align: center;
-  transition: all 0.2s ease;
-  padding: 48px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${(props) => props.theme.COLORS.MAIN.SECONDARY};
-    border-color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
-
-    & svg {
-      fill: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
-    }
-    & div {
-      color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
-    }
-  }
-
-  ${(props) =>
-    props.isDragOver &&
-    `
-    background-color: ${props.theme.COLORS.MAIN.SECONDARY};
-
-    & svg {
-      fill: ${props.theme.COLORS.MAIN.PRIMARY};
-    }
-    & div {
-      color: ${props.theme.COLORS.MAIN.PRIMARY};
-    }
-  `}
-`;
-
-const FileInput = styled.input`
-  display: none;
-`;
-
-const FileUploadText = styled.div`
-  font-size: 14px;
-  font-weight: 500;
-  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
-  margin-top: 8px;
-`;
-
-const FileList = styled.div`
-  margin-top: 12px;
-`;
-
-const FileItem = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: ${(props) => props.theme.COLORS.GRAY[6]};
-  border-radius: 6px;
-  font-size: 14px;
-  padding: 8px 12px;
-  margin-bottom: 4px;
-`;
-
-const FileName = styled.span`
-  flex: 1;
-  color: ${(props) => props.theme.COLORS.LABEL.PRIMARY};
-  margin-right: 8px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-`;
-
-const FileRemoveButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
-  padding: 2px;
-
-  &:hover {
-    color: ${(props) => props.theme.COLORS.LABEL.PRIMARY};
-  }
-`;
 
 interface FileUploadProps {
   files: FileWithId[];
@@ -166,8 +76,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
   };
 
   return (
-    <Container>
-      <FileUploadArea
+    <S.Container>
+      <S.FileUploadArea
         isDragOver={isDragOver}
         onClick={handleUploadAreaClick}
         onDragOver={handleDragOver}
@@ -175,9 +85,9 @@ const FileUpload: React.FC<FileUploadProps> = ({
         onDrop={handleDrop}
       >
         <UploadIcon />
-        <FileUploadText>{getUploadText()}</FileUploadText>
-      </FileUploadArea>
-      <FileInput
+        <S.FileUploadText>{getUploadText()}</S.FileUploadText>
+      </S.FileUploadArea>
+      <S.FileInput
         ref={fileInputRef}
         type="file"
         multiple
@@ -185,18 +95,20 @@ const FileUpload: React.FC<FileUploadProps> = ({
         onChange={handleFileSelect}
       />
       {files.length > 0 && (
-        <FileList>
+        <S.FileList>
           {files.map((fileWithId) => (
-            <FileItem key={fileWithId.id}>
-              <FileName>{fileWithId.file.name}</FileName>
-              <FileRemoveButton onClick={() => handleRemoveFile(fileWithId.id)}>
+            <S.FileItem key={fileWithId.id}>
+              <S.FileName>{fileWithId.file.name}</S.FileName>
+              <S.FileRemoveButton
+                onClick={() => handleRemoveFile(fileWithId.id)}
+              >
                 <DeleteIcon />
-              </FileRemoveButton>
-            </FileItem>
+              </S.FileRemoveButton>
+            </S.FileItem>
           ))}
-        </FileList>
+        </S.FileList>
       )}
-    </Container>
+    </S.Container>
   );
 };
 
