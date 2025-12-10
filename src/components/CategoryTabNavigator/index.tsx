@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ArrowDownIcon from '@assets/icons/arrow-down.svg?react';
 import CategoryIcon from '@assets/icons/category.svg?react';
+import { categoryExpandedAtom } from '@atoms/categoryAtoms';
 import CATEGORIES from '@constants/serviceCategories';
 import styled from '@emotion/styled';
 import theme from '@styles/theme';
+import { useAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
 
 interface CategoryTabNavigatorProps {
@@ -82,7 +84,7 @@ const CategoryTabNavigator: React.FC<CategoryTabNavigatorProps> = ({
   currentCategoryId,
 }) => {
   const navigate = useNavigate();
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useAtom(categoryExpandedAtom);
   const topCategories = CATEGORIES.slice(0, 6);
   const expandedCategories = CATEGORIES.slice(6);
   const iconColor = isExpanded
