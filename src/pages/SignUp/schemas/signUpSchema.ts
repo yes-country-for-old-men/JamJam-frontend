@@ -12,7 +12,7 @@ import {
   phoneSchema,
   verificationCodeSchema,
 } from '@schemas/userInfoSchema';
-import { isValidDate, isEligibleAgeForRole } from '@utils/validation';
+import { isValidDate, isEligibleAgeForRole } from '@utils';
 import { z } from 'zod';
 
 export const step1Schema = z.object({

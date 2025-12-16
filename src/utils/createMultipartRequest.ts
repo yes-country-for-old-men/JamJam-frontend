@@ -1,4 +1,4 @@
-import createFormDataWithJson from '@utils/formDataBuilder';
+import { createFormDataWithJson } from '@utils';
 
 interface MultipartRequestConfig {
   data: FormData;

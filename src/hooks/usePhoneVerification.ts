@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { sendSMS, verifySMS } from '@apis/signUp';
-import getErrorMessage from '@utils/getErrorMessage';
+import { getErrorMessage } from '@utils';
 
 type MessageState = {
   text: string;

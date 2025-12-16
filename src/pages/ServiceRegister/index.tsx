@@ -12,7 +12,7 @@ import ServiceDetailsStep from '@pages/ServiceRegister/components/ServiceDetails
 import useServiceRegisterForm from '@pages/ServiceRegister/hooks/useServiceRegisterForm';
 import useServiceRegisterSteps from '@pages/ServiceRegister/hooks/useServiceRegisterSteps';
 import * as S from '@pages/ServiceRegister/ServiceRegister.styles';
-import base64ToFile from '@utils/base64ToFile';
+import { base64ToFile } from '@utils';
 
 const ServiceRegister: React.FC = () => {
   const { form, formData, updatePrice, updatePortfolioImages } =

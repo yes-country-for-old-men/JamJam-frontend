@@ -1,5 +1,5 @@
-import ensurePunctuation from '@utils/ensurePunctuation';
 import { AxiosError } from 'axios';
+import ensurePunctuation from './ensurePunctuation';
 import type { ApiError } from '@type/ApiError';
 
 const getErrorMessage = (error: ApiError | unknown): string => {

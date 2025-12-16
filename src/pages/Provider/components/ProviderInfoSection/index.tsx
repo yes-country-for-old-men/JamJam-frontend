@@ -4,7 +4,7 @@ import CareerIcon from '@assets/icons/career.svg?react';
 import EducationIcon from '@assets/icons/education.svg?react';
 import LicenseIcon from '@assets/icons/license.svg?react';
 import * as S from '@pages/Provider/Provider.styles';
-import { getSkillNameById } from '@utils/dataMappers';
+import { getSkillNameById } from '@utils';
 
 interface ProviderInfoSectionProps {
   data: ProviderDetailContent;

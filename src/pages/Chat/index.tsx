@@ -23,7 +23,7 @@ import {
   shouldShowProfile,
 } from '@pages/Chat/utils/chatMessagesUtils';
 import { useQueryClient } from '@tanstack/react-query';
-import decodeToken from '@utils/decodeToken';
+import { decodeToken } from '@utils';
 import type { ChatRoom, Message } from '@type/Chat';
 
 const Chat: React.FC = () => {

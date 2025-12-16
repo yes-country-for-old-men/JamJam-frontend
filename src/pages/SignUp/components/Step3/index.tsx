@@ -7,7 +7,7 @@ import ToggleButton from '@components/ToggleButton';
 import { type Step3Form } from '@pages/SignUp/hooks/useSignUpForm';
 import * as S from '@pages/SignUp/SignUp.styles';
 import { type MessageState } from '@type/MessageState';
-import { removePaddingZero, formatPhoneNumber } from '@utils/format';
+import { removePaddingZero, formatPhoneNumber } from '@utils';
 
 interface Step3Props {
   form: Step3Form;

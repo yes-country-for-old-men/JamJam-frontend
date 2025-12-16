@@ -4,7 +4,7 @@ import LocationIcon from '@assets/icons/location.svg?react';
 import UserProfileImageIcon from '@assets/icons/user-profile-image.svg?react';
 import Button from '@components/Button';
 import * as S from '@pages/Service/components/ServiceHeader/ServiceHeader.styles';
-import { getCategoryNameById } from '@utils/dataMappers';
+import { getCategoryNameById } from '@utils';
 
 interface ServiceHeaderProps {
   data: ServiceDetailContent;

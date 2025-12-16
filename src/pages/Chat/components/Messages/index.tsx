@@ -1,7 +1,7 @@
 import React from 'react';
 import UserProfileImageIcon from '@assets/icons/user-profile-image.svg?react';
 import * as S from '@pages/Chat/components/Messages/Messages.styles';
-import { formatTime } from '@utils/format';
+import { formatTime } from '@utils';
 import type { Message, ChatRoom } from '@type/Chat';
 
 interface MessageProps {

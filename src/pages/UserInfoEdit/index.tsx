@@ -14,8 +14,7 @@ import useCheckPasswordMutation from '@pages/UserInfoEdit/hooks/mutations/useChe
 import useUpdateUserInfoMutation from '@pages/UserInfoEdit/hooks/mutations/useUpdateUserInfoMutation';
 import useInfoEditForm from '@pages/UserInfoEdit/hooks/useInfoEditForm';
 import * as S from '@pages/UserInfoEdit/UserInfoEdit.styles';
-import { formatPhoneNumber } from '@utils/format';
-import getErrorMessage from '@utils/getErrorMessage';
+import { formatPhoneNumber, getErrorMessage } from '@utils';
 import type { UpdateUserRequest } from '@apis/user';
 
 const BANKS = Object.entries(BANK_CODE_MAP).map(([code, name]) => ({

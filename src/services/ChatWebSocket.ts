@@ -4,7 +4,7 @@ import {
   type IMessage,
   type IFrame,
 } from '@stomp/stompjs';
-import eventManager from '@utils/eventManager';
+import { eventManager } from '@utils';
 import type {
   StompNewMessageEvent,
   StompChatRoomUpdateEvent,

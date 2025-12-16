@@ -1,6 +1,6 @@
 import useUserInfoQuery from '@hooks/queries/useUserInfoQuery';
 import useAuthToken from '@hooks/useAuthToken';
-import { isProvider as isProviderRole } from '@utils/typeGuards';
+import { isProvider as isProviderRole } from '@utils';
 
 interface UseAuthStatusReturn {
   isLoggedIn: boolean;

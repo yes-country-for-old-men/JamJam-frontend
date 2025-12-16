@@ -1,5 +1,5 @@
 import { storageService } from '@services/storage';
-import eventManager from '@utils/eventManager';
+import { eventManager } from '@utils';
 import {
   AxiosError,
   type AxiosInstance,

@@ -1,5 +1,5 @@
 import apiClient from '@apis/apiClient';
-import createMultipartRequest from '@utils/multipartRequest';
+import { createMultipartRequest } from '@utils';
 import type APIResponse from '@type/APIResponse';
 import type User from '@type/User';
 

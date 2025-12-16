@@ -1,4 +1,4 @@
-import { formatDate } from '@utils/format';
+import { formatDate } from '@utils';
 import type { Message } from '@type/Chat';
 
 type BubblePosition = 'single' | 'first' | 'middle' | 'last';

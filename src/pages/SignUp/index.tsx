@@ -16,7 +16,7 @@ import Step3 from '@pages/SignUp/components/Step3';
 import StepIndicator from '@pages/SignUp/components/StepIndicator';
 import useSignUpForm from '@pages/SignUp/hooks/useSignUpForm';
 import * as S from '@pages/SignUp/SignUp.styles';
-import getErrorMessage from '@utils/getErrorMessage';
+import { getErrorMessage } from '@utils';
 import { useNavigate } from 'react-router-dom';
 
 const SignUp: React.FC = () => {
