@@ -10,7 +10,7 @@ interface UseAuthStatusReturn {
   isError: boolean;
 }
 
-export const useAuthStatus = (): UseAuthStatusReturn => {
+const useAuthStatus = (): UseAuthStatusReturn => {
   const { exists: hasToken } = useAuthToken();
   const { data: userInfo, isLoading, isError } = useUserInfoQuery();
 

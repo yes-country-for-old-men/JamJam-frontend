@@ -52,7 +52,7 @@ const showLoginModal = (): void => {
   eventManager.emit('openLoginModal');
 };
 
-export const setupInterceptors = (instance: AxiosInstance) => {
+const setupInterceptors = (instance: AxiosInstance) => {
   instance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
       const accessToken = storageService.getAccessToken();
