@@ -1,5 +1,5 @@
-import LogoSVG from '@assets/logo.svg?react';
 import { useNavigate } from 'react-router-dom';
+import LogoSVG from '@assets/logo.svg?react';
 import * as S from './HeaderLogo.styles';
 
 const HeaderLogo = () => {

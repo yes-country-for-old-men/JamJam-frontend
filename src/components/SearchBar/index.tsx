@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import SearchIcon from '@assets/icons/search.svg?react';
 import theme from '@styles/theme';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as S from './SearchBar.styles';
 
 interface SearchBarProps {

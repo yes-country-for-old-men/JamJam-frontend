@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import {
   roleSchema,
   nicknameSchema,
@@ -13,7 +14,6 @@ import {
   verificationCodeSchema,
 } from '@schemas/userInfoSchema';
 import { isValidDate, isEligibleAgeForRole } from '@utils';
-import { z } from 'zod';
 
 export const step1Schema = z.object({
   role: roleSchema,

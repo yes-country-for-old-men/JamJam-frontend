@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { createPortal } from 'react-dom';
 import CloseIcon from '@assets/icons/close.svg?react';
 import Button from '@components/Button';
 import Spinner from '@components/Spinner';
 import { getModalZIndex } from '@constants/zIndex';
 import useModal from '@hooks/useModal';
-import { AnimatePresence } from 'framer-motion';
-import { createPortal } from 'react-dom';
 import * as S from './Modal.styles';
 
 const Modal: React.FC = () => {

@@ -1,3 +1,4 @@
+import { Navigate } from 'react-router-dom';
 import ProtectedRoute from '@components/Routes/ProtectedRoute';
 import ProviderRoute from '@components/Routes/ProviderRoute';
 import Category from '@pages/Category';
@@ -15,7 +16,6 @@ import Search from '@pages/Search';
 import Service from '@pages/Service';
 import ServiceRegister from '@pages/ServiceRegister';
 import UserInfoEdit from '@pages/UserInfoEdit';
-import { Navigate } from 'react-router-dom';
 
 export const publicRoutes = [
   { index: true, element: <Main /> },

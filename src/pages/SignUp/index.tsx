@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   clientSignUp,
   providerSignUp,
@@ -17,7 +18,6 @@ import StepIndicator from '@pages/SignUp/components/StepIndicator';
 import useSignUpForm from '@pages/SignUp/hooks/useSignUpForm';
 import * as S from '@pages/SignUp/SignUp.styles';
 import { getErrorMessage } from '@utils';
-import { useNavigate } from 'react-router-dom';
 
 const SignUp: React.FC = () => {
   const [isCompleted, setIsCompleted] = useState(false);

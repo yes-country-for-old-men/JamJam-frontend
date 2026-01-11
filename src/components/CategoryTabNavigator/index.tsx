@@ -1,11 +1,11 @@
 import React from 'react';
+import { useAtom } from 'jotai';
+import { useNavigate } from 'react-router-dom';
 import ArrowDownIcon from '@assets/icons/arrow-down.svg?react';
 import CategoryIcon from '@assets/icons/category.svg?react';
 import { categoryExpandedAtom } from '@atoms/categoryAtoms';
 import CATEGORIES from '@constants/serviceCategories';
 import theme from '@styles/theme';
-import { useAtom } from 'jotai';
-import { useNavigate } from 'react-router-dom';
 import * as S from './CategoryTabNavigator.styles';
 
 interface CategoryTabNavigatorProps {

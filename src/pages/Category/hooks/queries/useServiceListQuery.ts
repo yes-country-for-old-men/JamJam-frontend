@@ -1,5 +1,5 @@
-import { getServiceList, type ServiceListRequest } from '@apis/service';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { getServiceList, type ServiceListRequest } from '@apis/service';
 
 const useServiceListQuery = (params: Omit<ServiceListRequest, 'page'>) => {
   return useInfiniteQuery({

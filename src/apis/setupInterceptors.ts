@@ -1,11 +1,11 @@
-import { storageService } from '@services/storage';
-import { eventManager } from '@utils';
 import {
   AxiosError,
   type AxiosInstance,
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from 'axios';
+import { storageService } from '@services/storage';
+import { eventManager } from '@utils';
 
 interface TokenRefreshQueueItem {
   resolve: (value?: unknown) => void;

@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import {
   currentPasswordSchema,
   nicknameSchema,
@@ -10,7 +11,6 @@ import {
   accountNumberSchema,
   accountHolderSchema,
 } from '@schemas/userInfoSchema';
-import { z } from 'zod';
 
 export const passwordCheckSchema = z.object({
   currentPassword: currentPasswordSchema,

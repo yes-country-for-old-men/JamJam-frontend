@@ -1,5 +1,5 @@
-import { Z_INDEX } from '@constants/index';
 import styled from '@emotion/styled';
+import { Z_INDEX } from '@constants/index';
 
 export const Container = styled.article`
   width: 840px;

@@ -5,6 +5,7 @@ import React, {
   useLayoutEffect,
   useMemo,
 } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import LogoIcon from '@assets/icons/gray-logo-icon.svg?react';
 import * as S from '@pages/Chat/Chat.styles';
 import ChatHeader from '@pages/Chat/components/ChatHeader';
@@ -22,7 +23,6 @@ import {
   getBubblePosition,
   shouldShowProfile,
 } from '@pages/Chat/utils/chatMessagesUtils';
-import { useQueryClient } from '@tanstack/react-query';
 import { decodeToken } from '@utils';
 import type { ChatRoom, Message } from '@type/Chat';
 

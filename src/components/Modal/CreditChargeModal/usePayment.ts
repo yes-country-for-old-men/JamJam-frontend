@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import apiClient from '@apis/apiClient';
 import PortOne from '@portone/browser-sdk/v2';
+import apiClient from '@apis/apiClient';
 import { ensurePunctuation, eventManager } from '@utils';
 
 const PAYMENT_MESSAGES = {

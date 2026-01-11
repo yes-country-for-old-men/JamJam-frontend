@@ -25,6 +25,14 @@
     },
     "project": "./tsconfig.eslint.json"
   },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.app.json"
+      }
+    }
+  },
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
@@ -73,11 +81,6 @@
             "pattern": "react",
             "group": "external",
             "position": "before"
-          },
-          {
-            "pattern": "@/**",
-            "group": "internal",
-            "position": "after"
           }
         ],
         "pathGroupsExcludedImportTypes": ["react"],

@@ -1,7 +1,7 @@
-import ForbiddenIcon from '@assets/icons/forbidden.svg?react';
-import Button from '@components/Button';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
+import ForbiddenIcon from '@assets/icons/forbidden.svg?react';
+import Button from '@components/Button';
 
 const Container = styled.main`
   display: flex;

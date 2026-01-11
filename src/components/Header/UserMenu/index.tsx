@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ArrowDownIcon from '@assets/icons/arrow-down.svg?react';
 import UserProfileImageIcon from '@assets/icons/user-profile-image.svg?react';
 import useLogoutMutation from '@hooks/mutations/useLogoutMutation';
 import useModal from '@hooks/useModal';
 import theme from '@styles/theme';
-import { useNavigate } from 'react-router-dom';
 import * as S from './UserMenu.styles';
 
 interface UserMenuProps {

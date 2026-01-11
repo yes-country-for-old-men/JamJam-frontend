@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import CategoryTabNavigator from '@components/CategoryTabNavigator';
 import SectionTab from '@components/SectionTab';
 import { useTabScroll } from '@hooks/useTabScroll';
@@ -8,7 +9,6 @@ import ServiceInfoSection from '@pages/Service/components/ServiceInfoSection';
 import SidePanel from '@pages/Service/components/SidePanel';
 import useServiceDetailQuery from '@pages/Service/hooks/queries/useServiceDetailQuery';
 import * as S from '@pages/Service/Service.styles';
-import { useParams, Navigate, useNavigate } from 'react-router-dom';
 
 const Service: React.FC = () => {
   const { serviceId } = useParams<{ serviceId: string }>();

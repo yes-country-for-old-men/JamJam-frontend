@@ -1,6 +1,6 @@
 import React from 'react';
-import useAuthStatus from '@hooks/useAuthStatus';
 import { Navigate } from 'react-router-dom';
+import useAuthStatus from '@hooks/useAuthStatus';
 
 interface GuestRouteProps {
   children: React.ReactNode;

@@ -1,3 +1,4 @@
+import { Routes, Route } from 'react-router-dom';
 import EventHandler from '@components/EventHandler';
 import Layout from '@components/Layout';
 import Modal from '@components/Modal';
@@ -9,7 +10,6 @@ import {
   protectedRoutes,
   myPageRoutes,
 } from '@routes/routeConfig';
-import { Routes, Route } from 'react-router-dom';
 
 const App = () => {
   return (

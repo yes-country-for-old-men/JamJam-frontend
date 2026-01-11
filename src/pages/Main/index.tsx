@@ -1,11 +1,11 @@
 import React, { useState, useCallback } from 'react';
+import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 import SearchBar from '@components/SearchBar';
 import CATEGORIES from '@constants/serviceCategories';
 import SLIDE_IMAGES from '@constants/slideImages';
-import styled from '@emotion/styled';
 import Carousel from '@pages/Main/components/Carousel';
 import CategoryCard from '@pages/Main/components/CategoryCard';
-import { motion } from 'framer-motion';
 
 const ANIMATION_VARIANTS = {
   container: {

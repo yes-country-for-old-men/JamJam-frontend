@@ -1,9 +1,9 @@
 import React from 'react';
+import styled from '@emotion/styled';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import AIContentIcon from '@assets/icons/ai-content.svg?react';
 import UserProfileImageIcon from '@assets/icons/user-profile-image.svg?react';
-import styled from '@emotion/styled';
 import useUserInfoQuery from '@hooks/queries/useUserInfoQuery';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;

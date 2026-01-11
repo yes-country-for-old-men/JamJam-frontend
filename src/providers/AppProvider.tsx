@@ -1,9 +1,9 @@
 import React from 'react';
 import { ThemeProvider } from '@emotion/react';
-import GlobalStyle from '@styles/GlobalStyle';
-import theme from '@styles/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
+import GlobalStyle from '@styles/GlobalStyle';
+import theme from '@styles/theme';
 
 const queryClient = new QueryClient();
 

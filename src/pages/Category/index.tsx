@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import CategoryTabNavigator from '@components/CategoryTabNavigator';
 import SearchBar from '@components/SearchBar';
 import ServiceCard from '@components/ServiceCard';
@@ -6,7 +7,6 @@ import Spinner from '@components/Spinner';
 import * as S from '@pages/Category/Category.styles';
 import useServiceListQuery from '@pages/Category/hooks/queries/useServiceListQuery';
 import useCategory from '@pages/Category/hooks/useCategory';
-import { useParams } from 'react-router-dom';
 
 const Category: React.FC = () => {
   const { categoryId } = useParams<{ categoryId: string }>();

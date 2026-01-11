@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { isAxiosError } from 'axios';
 import {
   getProviderProfile,
   updateProviderProfile,
@@ -15,7 +16,6 @@ import ExpertIntroSection from '@pages/ProfileEdit/components/ExpertIntroSection
 import SkillsSection from '@pages/ProfileEdit/components/SkillsSection';
 import useProfileForm from '@pages/ProfileEdit/hooks/useProfileForm';
 import * as S from '@pages/ProfileEdit/ProfileEdit.styles';
-import { isAxiosError } from 'axios';
 
 const ProfileEdit: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);

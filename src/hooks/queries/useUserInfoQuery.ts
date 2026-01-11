@@ -1,6 +1,6 @@
-import { getUserInfo } from '@apis/user';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { getUserInfo } from '@apis/user';
 import type User from '@type/User';
 
 const useUserInfoQuery = () => {

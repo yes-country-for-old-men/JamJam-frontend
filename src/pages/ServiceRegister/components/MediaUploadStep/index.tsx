@@ -1,4 +1,5 @@
 import React from 'react';
+import { Controller, type UseFormReturn } from 'react-hook-form';
 import AIIcon from '@assets/icons/ai.svg?react';
 import InfoIcon from '@assets/icons/info.svg?react';
 import ThumbnailErrorImage from '@assets/images/thumbnail-error.png';
@@ -10,7 +11,6 @@ import ImageUpload from '@components/ImageUpload';
 import Spinner from '@components/Spinner';
 import { type ServiceRegisterData } from '@pages/ServiceRegister/schemas/serviceRegisterSchema';
 import * as S from '@pages/ServiceRegister/ServiceRegister.styles';
-import { Controller, type UseFormReturn } from 'react-hook-form';
 import type FileWithId from '@type/FileWithId';
 
 const MAX_PORTFOLIO_IMAGES = 10;

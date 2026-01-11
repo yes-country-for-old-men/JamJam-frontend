@@ -1,5 +1,5 @@
-import setupInterceptors from '@apis/setupInterceptors';
 import axios from 'axios';
+import setupInterceptors from '@apis/setupInterceptors';
 
 const apiClient = axios.create({
   headers: {
