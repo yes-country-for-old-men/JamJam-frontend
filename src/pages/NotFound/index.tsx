@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import NotFoundIcon from '@assets/icons/not-found.svg?react';
-import Button from '@components/Button';
+import NotFoundIcon from '@/shared/assets/icons/not-found.svg?react';
+import Button from '@/shared/components/Button';
 
 const Container = styled.main`
   display: flex;
