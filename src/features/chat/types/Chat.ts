@@ -1,3 +1,13 @@
+export type MessageType = 'TEXT' | 'IMAGE' | 'FILE';
+export type FileType = 'IMAGE' | 'FILE';
+
+export interface ChatFileInfo {
+  fileUrl: string;
+  fileName: string;
+  fileSize: number;
+  fileType: FileType;
+}
+
 export interface ChatRoom {
   id: number;
   name: string;
@@ -14,6 +24,11 @@ export interface Message {
   isOwn: boolean;
   timestamp: Date;
   status: 'sending' | 'sent' | 'failed';
+  messageType?: MessageType;
+  fileUrl?: string;
+  fileName?: string;
+  fileSize?: number;
+  files?: ChatFileInfo[];
 }
 
 export interface ChatRoomSummary {
@@ -30,11 +45,18 @@ export interface ChatMessage {
   content: string;
   isOwn: boolean;
   sentAt: string;
+  messageType?: MessageType;
+  fileUrl?: string;
+  fileName?: string;
+  fileSize?: number;
+  files?: ChatFileInfo[];
 }
 
 export interface SendMessageRequest {
   roomId: number;
   message: string;
+  messageType?: MessageType;
+  files?: ChatFileInfo[];
 }
 
 export interface MessageReadRequest {
@@ -58,6 +80,11 @@ export interface StompNewMessageEvent {
   senderNickname: string;
   content: string;
   sentAt: string;
+  messageType?: MessageType;
+  fileUrl?: string;
+  fileName?: string;
+  fileSize?: number;
+  files?: ChatFileInfo[];
 }
 
 export interface StompChatRoomUpdateEvent {

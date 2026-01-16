@@ -5,14 +5,23 @@ import type { ChatMessage, Message } from '@/features/chat/types/Chat';
 const convertApiMessageToLocal = (
   apiMessage: ChatMessage & { messageId?: number },
   chatRoomId: number,
-): Message => ({
-  id: apiMessage.messageId || 0,
-  chatRoomId,
-  text: apiMessage.content,
-  isOwn: apiMessage.isOwn,
-  timestamp: new Date(apiMessage.sentAt),
-  status: 'sent',
-});
+): Message => {
+  const firstFile = apiMessage.files?.[0];
+
+  return {
+    id: apiMessage.messageId || 0,
+    chatRoomId,
+    text: apiMessage.content,
+    isOwn: apiMessage.isOwn,
+    timestamp: new Date(apiMessage.sentAt),
+    status: 'sent',
+    messageType: apiMessage.messageType || 'TEXT',
+    fileUrl: firstFile?.fileUrl ?? apiMessage.fileUrl,
+    fileName: firstFile?.fileName ?? apiMessage.fileName,
+    fileSize: firstFile?.fileSize ?? apiMessage.fileSize,
+    files: apiMessage.files,
+  };
+};
 
 const useChatMessagesQuery = (chatRoomId: number | null) => {
   return useInfiniteQuery({

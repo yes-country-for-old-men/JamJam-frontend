@@ -23,14 +23,23 @@ const convertStompChatRoomToLocal = (
 const convertStompMessageToLocal = (
   stompMessage: StompNewMessageEvent,
   currentUserId: string,
-): Message => ({
-  id: stompMessage.messageId,
-  chatRoomId: 0,
-  text: stompMessage.content,
-  isOwn: stompMessage.senderId === currentUserId.toString(),
-  timestamp: new Date(stompMessage.sentAt),
-  status: 'sent',
-});
+): Message => {
+  const firstFile = stompMessage.files?.[0];
+
+  return {
+    id: stompMessage.messageId,
+    chatRoomId: 0,
+    text: stompMessage.content,
+    isOwn: stompMessage.senderId === currentUserId.toString(),
+    timestamp: new Date(stompMessage.sentAt),
+    status: 'sent',
+    messageType: stompMessage.messageType || 'TEXT',
+    fileUrl: firstFile?.fileUrl ?? stompMessage.fileUrl,
+    fileName: firstFile?.fileName ?? stompMessage.fileName,
+    fileSize: firstFile?.fileSize ?? stompMessage.fileSize,
+    files: stompMessage.files,
+  };
+};
 
 interface UseChatProps {
   token: string;
@@ -73,13 +82,31 @@ const useChat = ({
     );
   };
 
+  const removeTempMessage = (message: Message) => {
+    setTempMessages((prev) =>
+      prev.filter((msg) => {
+        if (msg.status !== 'sending' || !msg.isOwn) return true;
+
+        if (message.fileUrl && msg.fileUrl === message.fileUrl) {
+          return false;
+        }
+
+        if (!message.fileUrl && msg.text === message.text) {
+          return false;
+        }
+
+        return true;
+      }),
+    );
+  };
+
   useEffect(() => {
     if (!socket || !isConnected) return;
 
     const handleNewMessage = (data: StompNewMessageEvent) => {
       const newMessage = convertStompMessageToLocal(data, currentUserId);
 
-      removeTempMessagesByText(newMessage.text);
+      removeTempMessage(newMessage);
       addTempMessage(newMessage);
 
       onNewMessage?.(newMessage);

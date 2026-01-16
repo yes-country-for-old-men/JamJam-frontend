@@ -1,5 +1,9 @@
 import apiClient from '@/shared/api/apiClient';
-import type { ChatRoomSummary, ChatMessage } from '@/features/chat/types/Chat';
+import type {
+  ChatRoomSummary,
+  ChatMessage,
+  MessageType,
+} from '@/features/chat/types/Chat';
 import type ApiResponse from '@/shared/types/ApiResponse';
 
 export interface ChatRoomsRequest {
@@ -39,6 +43,13 @@ interface CreateChatRoomContent {
   roomId: number;
 }
 
+interface UploadChatFileResponse {
+  fileUrl: string;
+  fileName: string;
+  fileSize: number;
+  messageType: MessageType;
+}
+
 export const getChatRooms = (params: ChatRoomsRequest = {}) =>
   apiClient.get<ApiResponse<ChatRoomsContent>>('/api/chat/rooms', {
     params: { page: 0, size: 20, ...params },
@@ -63,3 +74,17 @@ export const markAsRead = (chatRoomId: number, data: MarkAsReadRequest) =>
 
 export const leaveChatRoom = (chatRoomId: number) =>
   apiClient.delete<ApiResponse<void>>(`/api/chat/rooms/${chatRoomId}`);
+
+export const uploadChatFiles = (roomId: number, files: File[]) => {
+  const formData = new FormData();
+  files.forEach((file) => formData.append('files', file));
+
+  return apiClient.post<ApiResponse<UploadChatFileResponse[]>>(
+    '/api/chat/upload-file',
+    formData,
+    {
+      params: { roomId },
+      headers: { 'Content-Type': 'multipart/form-data' },
+    },
+  );
+};

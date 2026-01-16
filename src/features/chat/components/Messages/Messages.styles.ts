@@ -48,17 +48,30 @@ export const MessageBubble = styled.div<{
   isOwn: boolean;
   status?: string;
   position: 'single' | 'first' | 'middle' | 'last';
+  messageType?: string;
 }>`
-  max-width: 70%;
+  max-width: max(70%, 280px);
+  padding: ${(props) =>
+    props.messageType === 'IMAGE' || props.messageType === 'FILE'
+      ? '0'
+      : '12px 16px'};
   font-size: 14px;
   line-height: 1.4;
   white-space: pre-wrap;
   word-break: break-word;
-  padding: 12px 16px;
   opacity: ${(props) => (props.status === 'sending' ? 0.7 : 1)};
+  overflow: hidden;
 
   ${(props) => {
-    const { isOwn, position } = props;
+    const { isOwn, position, messageType } = props;
+
+    if (messageType === 'IMAGE' || messageType === 'FILE') {
+      return css`
+        background-color: ${props.theme.COLORS.BACKGROUND};
+        border-radius: 18px;
+      `;
+    }
+
     const baseRadius = '18px';
     const tightRadius = '4px';
 
@@ -108,4 +121,118 @@ export const MessageDateBadge = styled.time`
   border-radius: 12px;
   color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
   font-size: 12px;
+`;
+
+export const FileList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+export const FileMessage = styled.div`
+  display: flex;
+  align-items: center;
+  width: 280px;
+  gap: 12px;
+  padding: 20px;
+  border-bottom: 1px solid ${(props) => props.theme.COLORS.GRAY[5]};
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &:last-of-type {
+    border: none;
+  }
+`;
+
+export const DownloadButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+
+  & svg {
+    width: auto;
+    height: 20px;
+  }
+`;
+
+export const FileDetails = styled.div`
+  flex: 1;
+  min-width: 0;
+`;
+
+export const FileNameText = styled.div`
+  margin-bottom: 2px;
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+export const FileSizeText = styled.div`
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
+  font-size: 12px;
+`;
+
+export const ImageGrid = styled.div<{ count: number }>`
+  display: grid;
+  gap: 1px;
+  width: 280px;
+  background-color: ${(props) => props.theme.COLORS.GRAY[5]};
+
+  ${(props) => {
+    const { count } = props;
+    if (count === 2) {
+      return css`
+        grid-template-columns: 1fr 1fr;
+      `;
+    }
+    if (count === 3) {
+      return css`
+        grid-template-columns: 1fr 1fr;
+        & > *:first-of-type {
+          grid-column: span 2;
+        }
+      `;
+    }
+    if (count === 4) {
+      return css`
+        grid-template-columns: 1fr 1fr;
+      `;
+    }
+    return css`
+      grid-template-columns: repeat(3, 1fr);
+    `;
+  }}
+`;
+
+export const ImageGridItemWrapper = styled.div`
+  cursor: pointer;
+  background-color: ${(props) => props.theme.COLORS.BACKGROUND};
+
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+
+export const ImageGridItem = styled.img`
+  width: 100%;
+  aspect-ratio: 1;
+`;
+
+export const ImageMessage = styled.img`
+  display: block;
+  width: 280px;
+  min-height: 210px;
+  cursor: pointer;
+  object-fit: cover;
+
+  &:hover {
+    opacity: 0.7;
+  }
 `;

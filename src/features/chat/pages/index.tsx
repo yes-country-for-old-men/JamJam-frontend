@@ -24,7 +24,12 @@ import {
 } from '@/features/chat/utils/chatMessagesUtils';
 import LogoIcon from '@/shared/assets/icons/gray-logo-icon.svg?react';
 import { decodeToken } from '@/shared/utils';
-import type { ChatRoom, Message } from '@/features/chat/types/Chat';
+import type {
+  ChatRoom,
+  Message,
+  MessageType,
+  ChatFileInfo,
+} from '@/features/chat/types/Chat';
 
 const Chat: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -178,6 +183,7 @@ const Chat: React.FC = () => {
       isOwn: true,
       timestamp: new Date(),
       status: 'sending',
+      messageType: 'TEXT',
     };
 
     addTempMessage(tempMessage);
@@ -185,6 +191,44 @@ const Chat: React.FC = () => {
     if (socket && isConnected) {
       try {
         socket.sendMessage(selectedChatId, text);
+      } catch {
+        updateTempMessage(tempMessage.id, { status: 'failed' });
+      }
+    } else {
+      updateTempMessage(tempMessage.id, { status: 'failed' });
+    }
+  };
+
+  const sendFileMessage = (
+    files: ChatFileInfo[],
+    messageType: MessageType,
+    message: string,
+  ): void => {
+    if (!selectedChatId || files.length === 0) return;
+
+    const firstFile = files[0];
+    const tempMessage: Message = {
+      id: Date.now(),
+      chatRoomId: selectedChatId,
+      text: message || firstFile.fileName,
+      isOwn: true,
+      timestamp: new Date(),
+      status: 'sending',
+      messageType,
+      fileUrl: firstFile.fileUrl,
+      fileName: firstFile.fileName,
+      fileSize: firstFile.fileSize,
+      files,
+    };
+
+    addTempMessage(tempMessage);
+
+    if (socket && isConnected) {
+      try {
+        socket.sendMessage(selectedChatId, message || '', {
+          messageType,
+          files,
+        });
       } catch {
         updateTempMessage(tempMessage.id, { status: 'failed' });
       }
@@ -359,6 +403,10 @@ const Chat: React.FC = () => {
                       const shouldShowTime =
                         !nextMessage ||
                         nextMessage.isOwn !== message.isOwn ||
+                        nextMessage.messageType === 'IMAGE' ||
+                        nextMessage.messageType === 'FILE' ||
+                        message.messageType === 'IMAGE' ||
+                        message.messageType === 'FILE' ||
                         nextMessage.timestamp.getTime() -
                           message.timestamp.getTime() >=
                           60 * 1000;
@@ -366,6 +414,10 @@ const Chat: React.FC = () => {
                       const isNewMessageGroup =
                         !prevMessage ||
                         prevMessage.isOwn !== message.isOwn ||
+                        prevMessage.messageType === 'IMAGE' ||
+                        prevMessage.messageType === 'FILE' ||
+                        message.messageType === 'IMAGE' ||
+                        message.messageType === 'FILE' ||
                         message.timestamp.getTime() -
                           prevMessage.timestamp.getTime() >=
                           60 * 1000;
@@ -394,8 +446,10 @@ const Chat: React.FC = () => {
               <ChatInput
                 messageText={messageText}
                 isConnected={isConnected}
+                selectedChatId={selectedChatId}
                 onMessageChange={setMessageText}
                 onSendMessage={handleSendMessage}
+                onFileMessage={sendFileMessage}
                 onKeyDown={handleKeyDown}
               />
             </>

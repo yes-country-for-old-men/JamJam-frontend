@@ -11,6 +11,8 @@ import type {
   SendMessageRequest,
   MessageReadRequest,
   SocketEvent,
+  MessageType,
+  ChatFileInfo,
 } from '@/features/chat/types/Chat';
 
 interface EventHandlers {
@@ -199,10 +201,24 @@ class ChatWebSocket {
     });
   }
 
-  sendMessage(roomId: number, message: string): void {
+  sendMessage(
+    roomId: number,
+    message: string,
+    options?: {
+      messageType: MessageType;
+      files: ChatFileInfo[];
+    },
+  ): void {
     const payload: SocketEvent<SendMessageRequest> = {
       type: 'SEND_MESSAGE',
-      content: { roomId, message },
+      content: {
+        roomId,
+        message,
+        ...(options && {
+          messageType: options.messageType,
+          files: options.files,
+        }),
+      },
     };
 
     try {
