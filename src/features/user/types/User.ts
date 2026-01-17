@@ -1,4 +1,6 @@
-export interface Account {
+import type { UserRole } from '@/features/user/types/UserRole';
+
+interface Account {
   accountNumber: string;
   depositor: string;
   bankCode: string;
@@ -11,7 +13,7 @@ export interface User {
   phoneNumber: string;
   loginId: string;
   birth: string;
-  role: 'PROVIDER' | 'CLIENT';
+  role: UserRole;
   gender: 'MALE' | 'FEMALE';
   profileUrl?: string;
   credit: number;
