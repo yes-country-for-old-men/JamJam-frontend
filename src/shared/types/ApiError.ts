@@ -1,6 +1,7 @@
 import type { AxiosError } from 'axios';
 
 export interface ApiErrorResponse {
+  code?: string;
   message?: string;
 }
 
