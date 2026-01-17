@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import usePayment from '@/shared/components/Modal/CreditChargeModal/usePayment';
+import { usePayment } from '@/shared/components/Modal/CreditChargeModal/usePayment';
 
-const useCreditChargeMutation = () => {
+export const useCreditChargeMutation = () => {
   const queryClient = useQueryClient();
   const { requestPayment } = usePayment();
 
@@ -12,5 +12,3 @@ const useCreditChargeMutation = () => {
     },
   });
 };
-
-export default useCreditChargeMutation;

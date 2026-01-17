@@ -5,8 +5,8 @@ import {
   MAX_CHARGE_AMOUNT,
 } from '@/shared/components/Modal/CreditChargeModal/constants';
 import * as S from '@/shared/components/Modal/CreditChargeModal/CreditChargeModal.styles';
-import useCreditChargeForm from '@/shared/components/Modal/CreditChargeModal/useCreditChargeForm';
-import useCreditChargeMutation from '@/shared/components/Modal/CreditChargeModal/useCreditChargeMutation';
+import { useCreditChargeForm } from '@/shared/components/Modal/CreditChargeModal/useCreditChargeForm';
+import { useCreditChargeMutation } from '@/shared/components/Modal/CreditChargeModal/useCreditChargeMutation';
 
 const CreditChargeModal: React.FC = () => {
   const {

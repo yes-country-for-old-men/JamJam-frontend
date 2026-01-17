@@ -4,7 +4,7 @@ import {
   type UpdateUserRequest,
 } from '@/features/user/api/userApi';
 
-const useUpdateUserInfoMutation = () => {
+export const useUpdateUserInfoMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -14,5 +14,3 @@ const useUpdateUserInfoMutation = () => {
     },
   });
 };
-
-export default useUpdateUserInfoMutation;

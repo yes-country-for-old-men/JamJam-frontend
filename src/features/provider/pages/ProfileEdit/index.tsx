@@ -11,11 +11,11 @@ import ContactTimeSection from '@/features/provider/components/ProfileEdit/Conta
 import EducationSection from '@/features/provider/components/ProfileEdit/EducationSection';
 import ExpertIntroSection from '@/features/provider/components/ProfileEdit/ExpertIntroSection';
 import SkillsSection from '@/features/provider/components/ProfileEdit/SkillsSection';
-import useProfileForm from '@/features/provider/hooks/useProfileForm';
+import { useProfileForm } from '@/features/provider/hooks/useProfileForm';
 import * as S from '@/features/provider/pages/ProfileEdit/ProfileEdit.styles';
 import Button from '@/shared/components/Button';
-import LOCATIONS from '@/shared/constants/locations';
-import useModal from '@/shared/hooks/useModal';
+import { LOCATIONS } from '@/shared/constants';
+import { useModal } from '@/shared/hooks/useModal';
 
 const ProfileEdit: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);

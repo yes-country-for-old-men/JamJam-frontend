@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { logout } from '@/features/auth/api/authApi';
 import { storageService } from '@/shared/services/storage';
 
-const useLogoutMutation = () => {
+export const useLogoutMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -14,5 +14,3 @@ const useLogoutMutation = () => {
     },
   });
 };
-
-export default useLogoutMutation;

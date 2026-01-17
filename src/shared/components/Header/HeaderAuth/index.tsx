@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import LoginModal from '@/features/auth/components/LoginModal';
-import useAuthStatus from '@/features/auth/hooks/useAuthStatus';
+import { useAuthStatus } from '@/features/auth/hooks/useAuthStatus';
 import UserMenu from '@/shared/components/Header/UserMenu';
-import useModal from '@/shared/hooks/useModal';
+import { useModal } from '@/shared/hooks/useModal';
 import * as S from './HeaderAuth.styles';
 
 const HeaderAuth = () => {

@@ -7,7 +7,7 @@ import AddIcon from '@/shared/assets/icons/add.svg?react';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
 import FileUpload from '@/shared/components/FileUpload';
 import Input from '@/shared/components/Input';
-import type FileWithId from '@/shared/types/FileWithId';
+import type { FileWithId } from '@/shared/types/FileWithId';
 
 interface CareerSectionProps {
   form: ProfileForm;

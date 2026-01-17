@@ -11,11 +11,11 @@ import ChatInput from '@/features/chat/components/ChatInput';
 import ChatRoomItem from '@/features/chat/components/ChatRoomItem';
 import Messages from '@/features/chat/components/Messages';
 import * as MessagesS from '@/features/chat/components/Messages/Messages.styles';
-import useMarkAsReadMutation from '@/features/chat/hooks/mutations/useMarkAsReadMutation';
-import useChatMessagesQuery from '@/features/chat/hooks/queries/useChatMessagesQuery';
-import useChatRoomsQuery from '@/features/chat/hooks/queries/useChatRoomsQuery';
-import useChat from '@/features/chat/hooks/useChat';
-import useMessageScroll from '@/features/chat/hooks/useMessageScroll';
+import { useMarkAsReadMutation } from '@/features/chat/hooks/mutations/useMarkAsReadMutation';
+import { useChatMessagesQuery } from '@/features/chat/hooks/queries/useChatMessagesQuery';
+import { useChatRoomsQuery } from '@/features/chat/hooks/queries/useChatRoomsQuery';
+import { useChat } from '@/features/chat/hooks/useChat';
+import { useMessageScroll } from '@/features/chat/hooks/useMessageScroll';
 import * as S from '@/features/chat/pages/Chat.styles';
 import {
   groupChatMessages,

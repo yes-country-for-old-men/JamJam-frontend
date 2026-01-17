@@ -1,4 +1,5 @@
 export type UserRole = 'CLIENT' | 'PROVIDER';
+
 export type OrderStatus =
   | 'REQUESTED'
   | 'PREPARING'

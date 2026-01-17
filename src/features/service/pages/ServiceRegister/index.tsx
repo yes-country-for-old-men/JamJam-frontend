@@ -8,10 +8,10 @@ import {
 import IntroductionStep from '@/features/service/components/ServiceRegister/IntroductionStep';
 import MediaUploadStep from '@/features/service/components/ServiceRegister/MediaUploadStep';
 import ServiceDetailsStep from '@/features/service/components/ServiceRegister/ServiceDetailsStep';
-import useServiceRegisterForm from '@/features/service/hooks/useServiceRegisterForm';
-import useServiceRegisterSteps from '@/features/service/hooks/useServiceRegisterSteps';
+import { useServiceRegisterForm } from '@/features/service/hooks/useServiceRegisterForm';
+import { useServiceRegisterSteps } from '@/features/service/hooks/useServiceRegisterSteps';
 import * as S from '@/features/service/pages/ServiceRegister/ServiceRegister.styles';
-import useModal from '@/shared/hooks/useModal';
+import { useModal } from '@/shared/hooks/useModal';
 import { base64ToFile } from '@/shared/utils';
 
 const ServiceRegister: React.FC = () => {

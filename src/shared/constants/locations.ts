@@ -1,4 +1,4 @@
-const LOCATIONS = [
+export const LOCATIONS = [
   { id: 1, name: '서울특별시' },
   { id: 2, name: '인천광역시' },
   { id: 3, name: '경기도' },
@@ -17,5 +17,3 @@ const LOCATIONS = [
   { id: 16, name: '강원특별자치도' },
   { id: 17, name: '제주특별자치도' },
 ];
-
-export default LOCATIONS;

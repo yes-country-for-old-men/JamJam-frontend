@@ -1,6 +1,6 @@
 import { useRef, useCallback } from 'react';
 
-const useMessageScroll = () => {
+export const useMessageScroll = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const isLoadingMoreRef = useRef<boolean>(false);
@@ -61,5 +61,3 @@ const useMessageScroll = () => {
     maintainScrollPosition,
   };
 };
-
-export default useMessageScroll;

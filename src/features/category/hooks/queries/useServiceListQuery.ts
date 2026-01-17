@@ -4,7 +4,9 @@ import {
   type ServiceListRequest,
 } from '@/features/service/api/serviceApi';
 
-const useServiceListQuery = (params: Omit<ServiceListRequest, 'page'>) => {
+export const useServiceListQuery = (
+  params: Omit<ServiceListRequest, 'page'>,
+) => {
   return useInfiniteQuery({
     queryKey: ['serviceList', params],
     queryFn: ({ pageParam = 0 }) =>
@@ -19,5 +21,3 @@ const useServiceListQuery = (params: Omit<ServiceListRequest, 'page'>) => {
     initialPageParam: 0,
   });
 };
-
-export default useServiceListQuery;

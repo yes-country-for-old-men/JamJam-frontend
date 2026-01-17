@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Z_INDEX } from '@/shared/constants/index';
+import { Z_INDEX } from '@/shared/constants';
 
 export const TabContainer = styled.nav`
   position: sticky;

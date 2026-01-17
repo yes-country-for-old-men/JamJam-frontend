@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import ChatWebSocket from '@/features/chat/services/ChatWebSocket';
+import { ChatWebSocket } from '@/features/chat/services/ChatWebSocket';
 
-const useWebSocket = (token: string, currentUserId: string) => {
+export const useWebSocket = (token: string, currentUserId: string) => {
   const [socket, setSocket] = useState<ChatWebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
@@ -34,5 +34,3 @@ const useWebSocket = (token: string, currentUserId: string) => {
 
   return { socket, isConnected };
 };
-
-export default useWebSocket;

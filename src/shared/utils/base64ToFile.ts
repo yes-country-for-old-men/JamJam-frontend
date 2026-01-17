@@ -1,4 +1,4 @@
-const base64ToFile = (
+export const base64ToFile = (
   base64String: string,
   filename: string = 'thumbnail.png',
 ): File => {
@@ -13,5 +13,3 @@ const base64ToFile = (
 
   return new File([byteArray], filename, { type: 'image/png' });
 };
-
-export default base64ToFile;

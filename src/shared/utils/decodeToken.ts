@@ -1,4 +1,4 @@
-const decodeToken = (token: string): { userId: string } | null => {
+export const decodeToken = (token: string): { userId: string } | null => {
   try {
     const payload = token.split('.')[1];
     const decoded = JSON.parse(atob(payload));
@@ -8,5 +8,3 @@ const decodeToken = (token: string): { userId: string } | null => {
     return null;
   }
 };
-
-export default decodeToken;

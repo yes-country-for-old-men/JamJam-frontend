@@ -5,15 +5,15 @@ import BasicInfoSection from '@/features/user/components/UserInfoEdit/BasicInfoS
 import PasswordCheck from '@/features/user/components/UserInfoEdit/PasswordCheck';
 import PasswordSection from '@/features/user/components/UserInfoEdit/PasswordSection';
 import PhoneSection from '@/features/user/components/UserInfoEdit/PhoneSection';
-import useCheckPasswordMutation from '@/features/user/hooks/mutations/useCheckPasswordMutation';
-import useUpdateUserInfoMutation from '@/features/user/hooks/mutations/useUpdateUserInfoMutation';
-import useInfoEditForm from '@/features/user/hooks/useInfoEditForm';
-import useUserInfoQuery from '@/features/user/hooks/useUserInfoQuery';
+import { useCheckPasswordMutation } from '@/features/user/hooks/mutations/useCheckPasswordMutation';
+import { useUpdateUserInfoMutation } from '@/features/user/hooks/mutations/useUpdateUserInfoMutation';
+import { useInfoEditForm } from '@/features/user/hooks/useInfoEditForm';
+import { useUserInfoQuery } from '@/features/user/hooks/useUserInfoQuery';
 import * as S from '@/features/user/pages/UserInfoEdit/UserInfoEdit.styles';
 import Button from '@/shared/components/Button';
-import BANK_CODE_MAP from '@/shared/constants/bankCodes';
-import useModal from '@/shared/hooks/useModal';
-import usePhoneVerification from '@/shared/hooks/usePhoneVerification';
+import { BANK_CODE_MAP } from '@/shared/constants';
+import { useModal } from '@/shared/hooks/useModal';
+import { usePhoneVerification } from '@/shared/hooks/usePhoneVerification';
 import { formatPhoneNumber, getErrorMessage } from '@/shared/utils';
 import type { UpdateUserRequest } from '@/features/user/api/userApi';
 

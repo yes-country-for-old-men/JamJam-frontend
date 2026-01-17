@@ -11,7 +11,7 @@ import Checkbox from '@/shared/components/Checkbox';
 import GradientButton from '@/shared/components/GradientButton';
 import ImageUpload from '@/shared/components/ImageUpload';
 import Spinner from '@/shared/components/Spinner';
-import type FileWithId from '@/shared/types/FileWithId';
+import type { FileWithId } from '@/shared/types/FileWithId';
 
 const MAX_PORTFOLIO_IMAGES = 10;
 

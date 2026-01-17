@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import PortOne from '@portone/browser-sdk/v2';
-import apiClient from '@/shared/api/apiClient';
+import { apiClient } from '@/shared/api/apiClient';
 import { ensurePunctuation, eventManager } from '@/shared/utils';
 
 const PAYMENT_MESSAGES = {
@@ -43,7 +43,7 @@ const completePayment = async (data: PaymentCompleteRequest) => {
   return apiClient.post('/api/payment/complete', data);
 };
 
-const usePayment = () => {
+export const usePayment = () => {
   const requestPayment = useCallback(async (chargeAmount: number) => {
     const paymentId = crypto.randomUUID();
 
@@ -106,5 +106,3 @@ const usePayment = () => {
 
   return { requestPayment };
 };
-
-export default usePayment;

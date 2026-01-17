@@ -5,7 +5,7 @@ import type {
   Education,
   License,
 } from '@/features/provider/types/Provider';
-import type FileWithId from '@/shared/types/FileWithId';
+import type { FileWithId } from '@/shared/types/FileWithId';
 
 interface ProfileFormData
   extends Omit<
@@ -26,7 +26,7 @@ interface ProfileFormData
 
 export type ProfileForm = UseFormReturn<ProfileFormData>;
 
-const useProfileForm = () => {
+export const useProfileForm = () => {
   const form = useForm<ProfileFormData>({
     defaultValues: {
       introduction: '',
@@ -42,5 +42,3 @@ const useProfileForm = () => {
 
   return { form };
 };
-
-export default useProfileForm;

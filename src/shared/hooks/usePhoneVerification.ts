@@ -7,7 +7,7 @@ type MessageState = {
   type: 'success' | 'error' | 'info';
 } | null;
 
-const usePhoneVerification = () => {
+export const usePhoneVerification = () => {
   const [isVerificationSent, setIsVerificationSent] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const [verificationCountdown, setVerificationCountdown] = useState(0);
@@ -122,5 +122,3 @@ const usePhoneVerification = () => {
     formatCountdown,
   };
 };
-
-export default usePhoneVerification;

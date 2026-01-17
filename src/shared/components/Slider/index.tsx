@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
-import useSlider, {
+import {
+  useSlider,
   type SliderRange,
 } from '@/shared/components/Slider/hooks/useSlider';
 import * as S from './Slider.styles';

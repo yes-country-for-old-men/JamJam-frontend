@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getProviderPage } from '@/features/provider/api/providerApi';
 
-const useProviderDetailQuery = (userId: number | null) => {
+export const useProviderDetailQuery = (userId: number | null) => {
   return useQuery({
     queryKey: ['providerDetail', userId],
     queryFn: () => getProviderPage(userId!),
@@ -9,5 +9,3 @@ const useProviderDetailQuery = (userId: number | null) => {
     staleTime: 10 * 60 * 1000,
   });
 };
-
-export default useProviderDetailQuery;

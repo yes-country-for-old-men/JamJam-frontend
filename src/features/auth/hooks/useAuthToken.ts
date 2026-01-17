@@ -8,7 +8,7 @@ interface UseAuthTokenReturn {
   remove: () => void;
 }
 
-const useAuthToken = (): UseAuthTokenReturn => {
+export const useAuthToken = (): UseAuthTokenReturn => {
   const [token, setTokenState] = useState<string | null>(
     storageService.getAccessToken(),
   );
@@ -32,5 +32,3 @@ const useAuthToken = (): UseAuthTokenReturn => {
     remove,
   };
 };
-
-export default useAuthToken;

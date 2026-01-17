@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import LoginModal from '@/features/auth/components/LoginModal';
-import useModal from '@/shared/hooks/useModal';
+import { useModal } from '@/shared/hooks/useModal';
 import { eventManager } from '@/shared/utils';
 
 const EventHandler = () => {

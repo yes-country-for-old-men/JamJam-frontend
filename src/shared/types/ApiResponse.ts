@@ -1,4 +1,4 @@
-export default interface ApiResponse<T> {
+export interface ApiResponse<T> {
   code: string;
   message: string;
   content: T;

@@ -1,4 +1,4 @@
-import apiClient from '@/shared/api/apiClient';
+import { apiClient } from '@/shared/api/apiClient';
 import { createMultipartRequest } from '@/shared/utils';
 import type {
   ProviderProfile,
@@ -8,7 +8,7 @@ import type {
   License,
   ContactHours,
 } from '@/features/provider/types/Provider';
-import type ApiResponse from '@/shared/types/ApiResponse';
+import type { ApiResponse } from '@/shared/types/ApiResponse';
 
 export interface CareerWithFile extends Career {
   file?: File;

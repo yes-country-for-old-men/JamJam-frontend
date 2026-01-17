@@ -7,7 +7,7 @@ import {
   type ModalState,
 } from '@/shared/atoms/modalAtoms';
 
-const useModal = () => {
+export const useModal = () => {
   const [modalStack] = useAtom(modalStackAtom);
   const [, setOpenModal] = useAtom(openModalAtom);
   const [, setCloseModal] = useAtom(closeModalAtom);
@@ -115,5 +115,3 @@ const useModal = () => {
     loading,
   };
 };
-
-export default useModal;

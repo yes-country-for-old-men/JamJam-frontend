@@ -1,4 +1,4 @@
-import createFormDataWithJson from './createFormDataWithJson';
+import { createFormDataWithJson } from './createFormDataWithJson';
 
 interface MultipartRequestConfig {
   data: FormData;
@@ -17,5 +17,3 @@ export const createMultipartRequest = <T extends Record<string, unknown>>(
     headers: { 'Content-Type': 'multipart/form-data' },
   };
 };
-
-export default createMultipartRequest;

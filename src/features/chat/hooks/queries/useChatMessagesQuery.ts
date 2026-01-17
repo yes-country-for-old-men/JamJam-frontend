@@ -23,7 +23,7 @@ const convertApiMessageToLocal = (
   };
 };
 
-const useChatMessagesQuery = (chatRoomId: number | null) => {
+export const useChatMessagesQuery = (chatRoomId: number | null) => {
   return useInfiniteQuery({
     queryKey: ['chatMessages', chatRoomId],
     queryFn: async ({ pageParam = 0 }) => {
@@ -51,5 +51,3 @@ const useChatMessagesQuery = (chatRoomId: number | null) => {
     initialPageParam: 0,
   });
 };
-
-export default useChatMessagesQuery;

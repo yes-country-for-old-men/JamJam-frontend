@@ -4,8 +4,8 @@ import { createPortal } from 'react-dom';
 import CloseIcon from '@/shared/assets/icons/close.svg?react';
 import Button from '@/shared/components/Button';
 import Spinner from '@/shared/components/Spinner';
-import { getModalZIndex } from '@/shared/constants/zIndex';
-import useModal from '@/shared/hooks/useModal';
+import { getModalZIndex } from '@/shared/constants';
+import { useModal } from '@/shared/hooks/useModal';
 import * as S from './Modal.styles';
 
 const Modal: React.FC = () => {

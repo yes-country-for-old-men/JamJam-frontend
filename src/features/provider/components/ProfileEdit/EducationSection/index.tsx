@@ -8,7 +8,7 @@ import FileUpload from '@/shared/components/FileUpload';
 import Input from '@/shared/components/Input';
 import Select from '@/shared/components/Select';
 import type { Education, License } from '@/features/provider/types/Provider';
-import type FileWithId from '@/shared/types/FileWithId';
+import type { FileWithId } from '@/shared/types/FileWithId';
 
 interface EducationSectionProps {
   form: ProfileForm;

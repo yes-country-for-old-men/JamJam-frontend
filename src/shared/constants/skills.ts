@@ -1,4 +1,4 @@
-const SKILLS_BY_CATEGORY = {
+export const SKILLS_BY_CATEGORY = {
   1: [
     { id: 1, name: '사업계획서 작성' },
     { id: 2, name: '시장조사' },
@@ -220,5 +220,3 @@ const SKILLS_BY_CATEGORY = {
     { id: 196, name: '실버케어 서비스' },
   ],
 } as const;
-
-export default SKILLS_BY_CATEGORY;

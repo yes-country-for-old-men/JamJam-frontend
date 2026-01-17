@@ -1,10 +1,10 @@
-import apiClient from '@/shared/api/apiClient';
+import { apiClient } from '@/shared/api/apiClient';
 import type {
   ChatRoomSummary,
   ChatMessage,
   MessageType,
 } from '@/features/chat/types/Chat';
-import type ApiResponse from '@/shared/types/ApiResponse';
+import type { ApiResponse } from '@/shared/types/ApiResponse';
 
 export interface ChatRoomsRequest {
   page?: number;

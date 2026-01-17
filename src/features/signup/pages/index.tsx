@@ -11,12 +11,12 @@ import Step1 from '@/features/signup/components/Step1';
 import Step2 from '@/features/signup/components/Step2';
 import Step3 from '@/features/signup/components/Step3';
 import StepIndicator from '@/features/signup/components/StepIndicator';
-import useSignUpForm from '@/features/signup/hooks/useSignUpForm';
+import { useSignUpForm } from '@/features/signup/hooks/useSignUpForm';
 import * as S from '@/features/signup/pages/SignUp.styles';
 import LogoIcon from '@/shared/assets/icons/logo-icon.svg?react';
 import Button from '@/shared/components/Button';
-import useModal from '@/shared/hooks/useModal';
-import usePhoneVerification from '@/shared/hooks/usePhoneVerification';
+import { useModal } from '@/shared/hooks/useModal';
+import { usePhoneVerification } from '@/shared/hooks/usePhoneVerification';
 import { getErrorMessage } from '@/shared/utils';
 
 const SignUp: React.FC = () => {

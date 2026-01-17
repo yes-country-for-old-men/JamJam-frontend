@@ -1,5 +1,4 @@
-import CATEGORIES from '@/features/category/constants/serviceCategories';
-import SKILLS_BY_CATEGORY from '@/shared/constants/skills';
+import { CATEGORIES, SKILLS_BY_CATEGORY } from '@/shared/constants';
 
 const categoryMap = new Map(
   CATEGORIES.map((category) => [category.id, category.name]),

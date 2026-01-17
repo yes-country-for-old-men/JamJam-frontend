@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { getUserInfo } from '@/features/user/api/userApi';
-import type User from '@/features/user/types/User';
+import type { User } from '@/features/user/types/User';
 
-const useUserInfoQuery = () => {
+export const useUserInfoQuery = () => {
   const hasToken = !!localStorage.getItem('accessToken');
 
   return useQuery<User, AxiosError>({
@@ -14,5 +14,3 @@ const useUserInfoQuery = () => {
     retry: false,
   });
 };
-
-export default useUserInfoQuery;

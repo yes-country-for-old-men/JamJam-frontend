@@ -6,7 +6,7 @@ interface MarkAsReadParams {
   messageId: number;
 }
 
-const useMarkAsReadMutation = () => {
+export const useMarkAsReadMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -26,5 +26,3 @@ const useMarkAsReadMutation = () => {
     },
   });
 };
-
-export default useMarkAsReadMutation;

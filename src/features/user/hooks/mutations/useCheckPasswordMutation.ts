@@ -4,10 +4,8 @@ import {
   type CheckPasswordRequest,
 } from '@/features/user/api/userApi';
 
-const useCheckPasswordMutation = () => {
+export const useCheckPasswordMutation = () => {
   return useMutation({
     mutationFn: (data: CheckPasswordRequest) => checkPassword(data),
   });
 };
-
-export default useCheckPasswordMutation;

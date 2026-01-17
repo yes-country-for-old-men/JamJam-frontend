@@ -1,6 +1,7 @@
-export { default as BANK_CODE_MAP } from './bankCodes';
-export { default as LOCATIONS } from './locations';
-export { default as SKILLS } from './skills';
-export { default as SLIDE_IMAGES } from './slideImages';
+export { BANK_CODE_MAP } from './banks';
+export { LOCATIONS } from './locations';
+export { CATEGORIES } from './categories';
+export { SKILLS_BY_CATEGORY } from './skills';
+export { SLIDE_IMAGES } from './slideImages';
 export { STORAGE_KEYS } from './storage';
 export { Z_INDEX, getModalZIndex } from './zIndex';

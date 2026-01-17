@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react';
 import { Controller, type UseFormReturn } from 'react-hook-form';
-import CATEGORIES from '@/features/category/constants/serviceCategories';
 import * as S from '@/features/service/pages/ServiceRegister/ServiceRegister.styles';
 import { type ServiceRegisterData } from '@/features/service/schemas/serviceRegisterSchema';
 import Button from '@/shared/components/Button';
 import Input from '@/shared/components/Input';
 import RichTextEditor from '@/shared/components/RichTextEditor';
 import Select from '@/shared/components/Select';
+import { CATEGORIES } from '@/shared/constants';
 
 interface ServiceDetailsStepProps {
   form: UseFormReturn<ServiceRegisterData>;

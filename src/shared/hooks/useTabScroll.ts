@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useScrollSpy from '@/shared/hooks/useScrollSpy';
+import { useScrollSpy } from '@/shared/hooks/useScrollSpy';
 
 interface UseTabScrollProps<T extends readonly string[]> {
   tabs: T;
@@ -59,5 +59,3 @@ export const useTabScroll = <T extends readonly string[]>({
     scrollToSection,
   };
 };
-
-export default useTabScroll;

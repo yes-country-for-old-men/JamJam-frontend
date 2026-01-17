@@ -10,7 +10,7 @@ import {
   validateAmount,
 } from '@/shared/components/Modal/CreditChargeModal/creditChargeUtils';
 
-const useCreditChargeForm = () => {
+export const useCreditChargeForm = () => {
   const [amount, setAmount] = useState<number>(0);
   const [displayValue, setDisplayValue] = useState<string>('');
 
@@ -51,5 +51,3 @@ const useCreditChargeForm = () => {
     updateAmount,
   };
 };
-
-export default useCreditChargeForm;

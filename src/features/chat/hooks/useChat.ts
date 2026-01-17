@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import useWebSocket from '@/shared/hooks/useWebSocket';
+import { useWebSocket } from '@/shared/hooks/useWebSocket';
 import type {
   ChatRoom,
   Message,
@@ -49,7 +49,7 @@ interface UseChatProps {
   onNewMessage?: (message: Message) => void;
 }
 
-const useChat = ({
+export const useChat = ({
   token,
   currentUserId,
   selectedChatId,
@@ -146,5 +146,3 @@ const useChat = ({
     removeTempMessagesByText,
   };
 };
-
-export default useChat;

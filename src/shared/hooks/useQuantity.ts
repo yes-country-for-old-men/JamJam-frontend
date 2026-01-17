@@ -6,7 +6,7 @@ interface UseQuantityOptions {
   max?: number;
 }
 
-const useQuantity = (options: UseQuantityOptions = {}) => {
+export const useQuantity = (options: UseQuantityOptions = {}) => {
   const { initialQuantity = 1, min = 1, max } = options;
   const [quantity, setQuantity] = useState(initialQuantity);
 
@@ -40,5 +40,3 @@ const useQuantity = (options: UseQuantityOptions = {}) => {
     reset,
   };
 };
-
-export default useQuantity;

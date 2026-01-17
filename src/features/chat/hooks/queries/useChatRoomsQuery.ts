@@ -13,7 +13,7 @@ const convertApiChatRoomToLocal = (apiRoom: ChatRoomSummary): ChatRoom => ({
   profileUrl: apiRoom.profileUrl || '',
 });
 
-const useChatRoomsQuery = (currentUserId: string, page: number = 0) => {
+export const useChatRoomsQuery = (currentUserId: string, page: number = 0) => {
   return useQuery({
     queryKey: ['chatRooms', currentUserId, page],
     queryFn: async () => {
@@ -24,5 +24,3 @@ const useChatRoomsQuery = (currentUserId: string, page: number = 0) => {
     staleTime: 30 * 1000,
   });
 };
-
-export default useChatRoomsQuery;

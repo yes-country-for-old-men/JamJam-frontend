@@ -5,13 +5,13 @@ import {
   serviceRegisterSchema,
   type ServiceRegisterData,
 } from '@/features/service/schemas/serviceRegisterSchema';
-import type FileWithId from '@/shared/types/FileWithId';
+import type { FileWithId } from '@/shared/types/FileWithId';
 
 interface ServiceFormData extends ServiceRegisterData {
   priceDisplay: string;
 }
 
-const useServiceRegisterForm = () => {
+export const useServiceRegisterForm = () => {
   const form = useForm<ServiceRegisterData>({
     resolver: zodResolver(serviceRegisterSchema),
     defaultValues: {
@@ -67,5 +67,3 @@ const useServiceRegisterForm = () => {
     updatePortfolioImages,
   };
 };
-
-export default useServiceRegisterForm;

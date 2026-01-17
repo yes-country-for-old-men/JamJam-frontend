@@ -1,4 +1,4 @@
-export default interface FileWithId {
+export interface FileWithId {
   id: string | number;
   file: File;
 }

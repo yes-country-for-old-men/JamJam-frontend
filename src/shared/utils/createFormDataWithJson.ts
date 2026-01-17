@@ -1,4 +1,4 @@
-const createFormDataWithJson = <T extends Record<string, unknown>>(
+export const createFormDataWithJson = <T extends Record<string, unknown>>(
   request: T,
   files?: Record<string, File | File[] | undefined>,
 ): FormData => {
@@ -25,5 +25,3 @@ const createFormDataWithJson = <T extends Record<string, unknown>>(
 
   return formData;
 };
-
-export default createFormDataWithJson;

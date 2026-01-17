@@ -1,4 +1,4 @@
-const ensurePunctuation = (text: string): string => {
+export const ensurePunctuation = (text: string): string => {
   if (!text) return text;
 
   const trimmedText = text.trim();
@@ -12,5 +12,3 @@ const ensurePunctuation = (text: string): string => {
 
   return `${text}.`;
 };
-
-export default ensurePunctuation;

@@ -6,7 +6,7 @@ interface UseSearchProps {
   isFetchingNextPage: boolean;
 }
 
-const useSearch = ({
+export const useSearch = ({
   fetchNextPage,
   hasNextPage,
   isFetchingNextPage,
@@ -40,5 +40,3 @@ const useSearch = ({
     observerRef,
   };
 };
-
-export default useSearch;

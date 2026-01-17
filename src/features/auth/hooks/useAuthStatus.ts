@@ -1,5 +1,5 @@
-import useAuthToken from '@/features/auth/hooks/useAuthToken';
-import useUserInfoQuery from '@/features/user/hooks/useUserInfoQuery';
+import { useAuthToken } from '@/features/auth/hooks/useAuthToken';
+import { useUserInfoQuery } from '@/features/user/hooks/useUserInfoQuery';
 import { isProvider as isProviderRole } from '@/shared/utils';
 
 interface UseAuthStatusReturn {
@@ -10,7 +10,7 @@ interface UseAuthStatusReturn {
   isError: boolean;
 }
 
-const useAuthStatus = (): UseAuthStatusReturn => {
+export const useAuthStatus = (): UseAuthStatusReturn => {
   const { exists: hasToken } = useAuthToken();
   const { data: userInfo, isLoading, isError } = useUserInfoQuery();
 
@@ -25,5 +25,3 @@ const useAuthStatus = (): UseAuthStatusReturn => {
     isError,
   };
 };
-
-export default useAuthStatus;

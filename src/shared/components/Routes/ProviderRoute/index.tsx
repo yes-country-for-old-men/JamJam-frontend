@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import LoginModal from '@/features/auth/components/LoginModal';
-import useAuthStatus from '@/features/auth/hooks/useAuthStatus';
-import useModal from '@/shared/hooks/useModal';
+import { useAuthStatus } from '@/features/auth/hooks/useAuthStatus';
+import { useModal } from '@/shared/hooks/useModal';
 
 interface ProviderRouteProps {
   children: React.ReactNode;

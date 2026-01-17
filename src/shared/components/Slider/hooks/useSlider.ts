@@ -13,7 +13,13 @@ interface UseSliderProps {
   onChange: (value: SliderRange) => void;
 }
 
-const useSlider = ({ min, max, step = 1, value, onChange }: UseSliderProps) => {
+export const useSlider = ({
+  min,
+  max,
+  step = 1,
+  value,
+  onChange,
+}: UseSliderProps) => {
   const [isDragging, setIsDragging] = useState<'start' | 'end' | null>(null);
 
   const handleMouseDown = useCallback((type: 'start' | 'end') => {
@@ -62,5 +68,3 @@ const useSlider = ({ min, max, step = 1, value, onChange }: UseSliderProps) => {
     getPosition,
   };
 };
-
-export default useSlider;

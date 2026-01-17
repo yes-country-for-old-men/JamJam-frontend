@@ -1,5 +1,5 @@
-import apiClient from '@/shared/api/apiClient';
-import type ApiResponse from '@/shared/types/ApiResponse';
+import { apiClient } from '@/shared/api/apiClient';
+import type { ApiResponse } from '@/shared/types/ApiResponse';
 
 type CheckContent = {
   available: boolean;

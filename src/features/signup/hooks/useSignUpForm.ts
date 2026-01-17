@@ -14,7 +14,7 @@ export type Step1Form = UseFormReturn<Step1Data>;
 export type Step2Form = UseFormReturn<Step2Data>;
 export type Step3Form = UseFormReturn<Step3Data>;
 
-const useSignUpForm = () => {
+export const useSignUpForm = () => {
   const [step, setStep] = useState(1);
 
   const step1Form = useForm<Step1Data>({
@@ -59,5 +59,3 @@ const useSignUpForm = () => {
     selectedRole,
   };
 };
-
-export default useSignUpForm;

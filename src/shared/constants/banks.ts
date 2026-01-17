@@ -1,4 +1,4 @@
-const BANK_CODE_MAP = {
+export const BANK_CODE_MAP = {
   '001': '한국은행',
   '002': '산업은행',
   '003': '기업은행',
@@ -21,5 +21,3 @@ const BANK_CODE_MAP = {
   '090': '카카오뱅크',
   '092': '토스뱅크',
 };
-
-export default BANK_CODE_MAP;

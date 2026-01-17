@@ -1,6 +1,6 @@
-import apiClient from '@/shared/api/apiClient';
+import { apiClient } from '@/shared/api/apiClient';
 import { createMultipartRequest } from '@/shared/utils';
-import type ApiResponse from '@/shared/types/ApiResponse';
+import type { ApiResponse } from '@/shared/types/ApiResponse';
 
 export interface ServiceRegisterRequest {
   request: {
@@ -10,6 +10,19 @@ export interface ServiceRegisterRequest {
     description: string;
   };
   thumbnail: File;
+  portfolioImages?: File[];
+}
+
+export interface ServiceUpdateRequest {
+  serviceId: number;
+  request: {
+    serviceName: string;
+    description: string;
+    salary: number;
+    categoryId: number;
+    deleteImageIds?: number[];
+  };
+  thumbnail?: File;
   portfolioImages?: File[];
 }
 
@@ -109,6 +122,19 @@ export const deleteService = (params: ServiceDeleteRequest) =>
   apiClient.delete<ApiResponse<void>>('/api/service/delete', {
     params,
   });
+
+export const updateService = (data: ServiceUpdateRequest) => {
+  const { data: formData, headers } = createMultipartRequest(data.request, {
+    thumbnail: data.thumbnail,
+    portfolioImages: data.portfolioImages,
+  });
+
+  return apiClient.patch<ApiResponse<void>>(
+    `/api/service/edit?serviceId=${data.serviceId}`,
+    formData,
+    { headers },
+  );
+};
 
 export const getServiceList = (params: ServiceListRequest) =>
   apiClient.get<ApiResponse<ServiceListContent>>('/api/service/service-list', {

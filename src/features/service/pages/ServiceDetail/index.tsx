@@ -1,18 +1,24 @@
 import React, { useRef } from 'react';
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
+import { useAuthStatus } from '@/features/auth/hooks/useAuthStatus';
 import PortfolioSection from '@/features/service/components/ServiceDetail/PortfolioSection';
 import ServiceHeader from '@/features/service/components/ServiceDetail/ServiceHeader';
 import ServiceInfoSection from '@/features/service/components/ServiceDetail/ServiceInfoSection';
 import SidePanel from '@/features/service/components/ServiceDetail/SidePanel';
-import useServiceDetailQuery from '@/features/service/hooks/queries/useServiceDetailQuery';
+import { useServiceDetailQuery } from '@/features/service/hooks/queries/useServiceDetailQuery';
 import * as S from '@/features/service/pages/ServiceDetail/Service.styles';
 import CategoryTabNavigator from '@/shared/components/CategoryTabNavigator';
 import SectionTab from '@/shared/components/SectionTab';
 import { useTabScroll } from '@/shared/hooks/useTabScroll';
+import { decodeToken } from '@/shared/utils';
 
 const Service: React.FC = () => {
   const { serviceId } = useParams<{ serviceId: string }>();
   const navigate = useNavigate();
+  const { userInfo } = useAuthStatus();
+
+  const token = localStorage.getItem('accessToken') || '';
+  const currentUserId = decodeToken(token)?.userId;
 
   const parsedServiceId = serviceId ? parseInt(serviceId, 10) : null;
   const { data, isLoading, error } = useServiceDetailQuery(parsedServiceId);
@@ -22,6 +28,12 @@ const Service: React.FC = () => {
 
   const serviceData = data?.data?.code === 'SUCCESS' ? data.data.content : null;
   const hasPortfolio = serviceData && serviceData.portfolioImages.length > 0;
+
+  const isOwner =
+    currentUserId && serviceData
+      ? String(serviceData.userId) === currentUserId
+      : false;
+  const isClient = userInfo?.role === 'CLIENT';
 
   const sectionRefs = hasPortfolio
     ? [serviceInfoRef, portfolioRef]
@@ -45,6 +57,12 @@ const Service: React.FC = () => {
   const handleOrderClick = () => {
     if (serviceData) {
       navigate('/order', { state: { serviceData } });
+    }
+  };
+
+  const handleEditClick = () => {
+    if (serviceData) {
+      navigate(`/my/service-edit/${serviceData.serviceId}`);
     }
   };
 
@@ -88,7 +106,13 @@ const Service: React.FC = () => {
             )}
           </SectionTab>
         </S.MainContent>
-        <SidePanel data={serviceData} onOrderClick={handleOrderClick} />
+        <SidePanel
+          data={serviceData}
+          isOwner={isOwner}
+          isClient={isClient}
+          onOrderClick={handleOrderClick}
+          onEditClick={handleEditClick}
+        />
       </S.Container>
     </>
   );

@@ -10,7 +10,7 @@ import {
 export type PasswordCheckForm = UseFormReturn<PasswordCheckData>;
 export type InfoEditForm = UseFormReturn<EditInfoData>;
 
-const useInfoEditForm = () => {
+export const useInfoEditForm = () => {
   const passwordForm = useForm<PasswordCheckData>({
     resolver: zodResolver(passwordCheckSchema),
     defaultValues: { currentPassword: '' },
@@ -37,5 +37,3 @@ const useInfoEditForm = () => {
     editForm,
   };
 };
-
-export default useInfoEditForm;

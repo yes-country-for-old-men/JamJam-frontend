@@ -3,7 +3,7 @@ import SlideImage2 from '@/shared/assets/images/slide2.jpeg';
 import SlideImage3 from '@/shared/assets/images/slide3.jpeg';
 import SlideImage4 from '@/shared/assets/images/slide4.jpeg';
 
-const SLIDE_IMAGES = [
+export const SLIDE_IMAGES = [
   {
     id: 1,
     thumbnailUrl: SlideImage1,
@@ -21,5 +21,3 @@ const SLIDE_IMAGES = [
     thumbnailUrl: SlideImage4,
   },
 ];
-
-export default SLIDE_IMAGES;

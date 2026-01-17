@@ -4,7 +4,7 @@ import ProfileCard from '@/features/provider/components/Provider/ProfileCard';
 import ProviderInfoSection from '@/features/provider/components/Provider/ProviderInfoSection';
 import ServicesSection from '@/features/provider/components/Provider/ServicesSection';
 import SidePanel from '@/features/provider/components/Provider/SidePanel';
-import useProviderDetailQuery from '@/features/provider/hooks/queries/useProviderDetailQuery';
+import { useProviderDetailQuery } from '@/features/provider/hooks/queries/useProviderDetailQuery';
 import * as S from '@/features/provider/pages/Provider/Provider.styles';
 import SectionTab from '@/shared/components/SectionTab';
 import { useTabScroll } from '@/shared/hooks/useTabScroll';

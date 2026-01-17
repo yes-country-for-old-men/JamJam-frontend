@@ -51,7 +51,7 @@ const isRefreshTokenExpired = (
   return AUTH_ERROR_CODE.REFRESH_TOKEN_ERROR.some((code) => code === errorCode);
 };
 
-const setupInterceptors = (instance: AxiosInstance) => {
+export const setupInterceptors = (instance: AxiosInstance) => {
   instance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
       const accessToken = storageService.getAccessToken();
@@ -140,5 +140,3 @@ const setupInterceptors = (instance: AxiosInstance) => {
     },
   );
 };
-
-export default setupInterceptors;

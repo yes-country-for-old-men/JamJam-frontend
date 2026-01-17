@@ -1,12 +1,10 @@
 import axios from 'axios';
-import setupInterceptors from '@/shared/api/setupInterceptors';
+import { setupInterceptors } from '@/shared/api/setupInterceptors';
 
-const apiClient = axios.create({
+export const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
 setupInterceptors(apiClient);
-
-export default apiClient;

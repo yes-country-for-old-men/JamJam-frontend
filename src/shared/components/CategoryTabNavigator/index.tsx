@@ -2,9 +2,9 @@ import React from 'react';
 import { useAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
 import { categoryExpandedAtom } from '@/features/category/atoms/categoryAtoms';
-import CATEGORIES from '@/features/category/constants/serviceCategories';
 import ArrowDownIcon from '@/shared/assets/icons/arrow-down.svg?react';
 import CategoryIcon from '@/shared/assets/icons/category.svg?react';
+import { CATEGORIES } from '@/shared/constants';
 import theme from '@/shared/styles/theme';
 import * as S from './CategoryTabNavigator.styles';
 

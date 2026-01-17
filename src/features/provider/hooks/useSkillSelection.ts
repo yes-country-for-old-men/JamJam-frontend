@@ -1,8 +1,7 @@
 import { useState, useMemo } from 'react';
-import CATEGORIES from '@/features/category/constants/serviceCategories';
-import SKILLS_BY_CATEGORY from '@/shared/constants/skills';
+import { CATEGORIES, SKILLS_BY_CATEGORY } from '@/shared/constants';
 
-const useSkillSelection = () => {
+export const useSkillSelection = () => {
   const [selectedCategory, setSelectedCategory] = useState(CATEGORIES[0].id);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -33,5 +32,3 @@ const useSkillSelection = () => {
     clearSearch,
   };
 };
-
-export default useSkillSelection;

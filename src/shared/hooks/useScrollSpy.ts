@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-const useScrollSpy = (sectionRefs: React.RefObject<HTMLElement | null>[]) => {
+export const useScrollSpy = (
+  sectionRefs: React.RefObject<HTMLElement | null>[],
+) => {
   const [activeSection, setActiveSection] = useState(0);
 
   useEffect(() => {
@@ -61,5 +63,3 @@ const useScrollSpy = (sectionRefs: React.RefObject<HTMLElement | null>[]) => {
 
   return activeSection;
 };
-
-export default useScrollSpy;

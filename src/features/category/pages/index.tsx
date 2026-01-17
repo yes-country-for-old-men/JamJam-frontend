@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import useServiceListQuery from '@/features/category/hooks/queries/useServiceListQuery';
-import useCategory from '@/features/category/hooks/useCategory';
+import { useServiceListQuery } from '@/features/category/hooks/queries/useServiceListQuery';
+import { useCategory } from '@/features/category/hooks/useCategory';
 import * as S from '@/features/category/pages/Category.styles';
 import CategoryTabNavigator from '@/shared/components/CategoryTabNavigator';
 import SearchBar from '@/shared/components/SearchBar';

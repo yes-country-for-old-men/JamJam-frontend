@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default interface Category {
+export interface Category {
   id: number;
   name: string;
   icon: React.ReactNode;

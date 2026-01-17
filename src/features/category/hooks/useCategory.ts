@@ -1,5 +1,5 @@
 import { useCallback, useRef, useMemo, useEffect } from 'react';
-import CATEGORIES from '@/features/category/constants/serviceCategories';
+import { CATEGORIES } from '@/shared/constants';
 
 interface UseCategoryProps {
   categoryId: string | undefined;
@@ -8,7 +8,7 @@ interface UseCategoryProps {
   isFetchingNextPage: boolean;
 }
 
-const useCategory = ({
+export const useCategory = ({
   categoryId,
   fetchNextPage,
   hasNextPage,
@@ -48,5 +48,3 @@ const useCategory = ({
     observerRef,
   };
 };
-
-export default useCategory;

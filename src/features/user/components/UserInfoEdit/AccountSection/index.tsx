@@ -3,7 +3,7 @@ import { type InfoEditForm } from '@/features/user/hooks/useInfoEditForm';
 import * as S from '@/features/user/pages/UserInfoEdit/UserInfoEdit.styles';
 import Input from '@/shared/components/Input';
 import Select from '@/shared/components/Select';
-import BANK_CODE_MAP from '@/shared/constants/bankCodes';
+import { BANK_CODE_MAP } from '@/shared/constants';
 
 const BANKS = Object.entries(BANK_CODE_MAP).map(([code, name]) => ({
   code,

@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
 import UploadIcon from '@/shared/assets/icons/upload.svg?react';
 import * as S from './FileUpload.styles';
-import type FileWithId from '@/shared/types/FileWithId';
+import type { FileWithId } from '@/shared/types/FileWithId';
 
 interface FileUploadProps {
   files: FileWithId[];

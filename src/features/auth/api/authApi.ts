@@ -1,5 +1,5 @@
-import apiClient from '@/shared/api/apiClient';
-import type ApiResponse from '@/shared/types/ApiResponse';
+import { apiClient } from '@/shared/api/apiClient';
+import type { ApiResponse } from '@/shared/types/ApiResponse';
 
 export interface LoginRequest {
   loginId: string;

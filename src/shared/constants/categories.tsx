@@ -10,7 +10,7 @@ import MarketingIcon from '@/shared/assets/icons/category/marketing.svg?react';
 import PhotographIcon from '@/shared/assets/icons/category/photograph.svg?react';
 import TranslationIcon from '@/shared/assets/icons/category/translation.svg?react';
 import WriteIcon from '@/shared/assets/icons/category/write.svg?react';
-import type Category from '@/features/category/types/Category';
+import type { Category } from '@/features/category/types/Category';
 
 const ICON_SIZE = 72;
 
@@ -29,7 +29,7 @@ export const CATEGORY_IDS = {
   LIVING: 12,
 } as const;
 
-const CATEGORIES: readonly Category[] = [
+export const CATEGORIES: readonly Category[] = [
   {
     id: CATEGORY_IDS.BUSINESS,
     name: '경영 · 기획',
@@ -91,5 +91,3 @@ const CATEGORIES: readonly Category[] = [
     icon: <LivingIcon width={ICON_SIZE} height={ICON_SIZE} />,
   },
 ];
-
-export default CATEGORIES;

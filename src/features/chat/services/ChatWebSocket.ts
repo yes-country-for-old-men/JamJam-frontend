@@ -30,7 +30,7 @@ const showAlert = (title: string, content: string) => {
   });
 };
 
-class ChatWebSocket {
+export class ChatWebSocket {
   private client: Client | null = null;
   private token: string;
   private userId: string;
@@ -269,5 +269,3 @@ class ChatWebSocket {
     this.connectReject = null;
   }
 }
-
-export default ChatWebSocket;

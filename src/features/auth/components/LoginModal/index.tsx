@@ -5,7 +5,7 @@ import { login } from '@/features/auth/api/authApi';
 import LogoIcon from '@/shared/assets/icons/logo-icon.svg?react';
 import Button from '@/shared/components/Button';
 import Input from '@/shared/components/Input';
-import useModal from '@/shared/hooks/useModal';
+import { useModal } from '@/shared/hooks/useModal';
 import * as S from './LoginModal.styles';
 
 const LoginModal: React.FC = () => {

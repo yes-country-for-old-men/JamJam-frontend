@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { getProviderProfile } from '@/features/provider/api/providerApi';
-import useModal from '@/shared/hooks/useModal';
+import { useModal } from '@/shared/hooks/useModal';
 
-const useServiceRegisterSteps = () => {
+export const useServiceRegisterSteps = () => {
   const [step, setStep] = useState(1);
   const [isGeneratingThumbnail, setIsGeneratingThumbnail] = useState(false);
   const [hasGeneratedThumbnail, setHasGeneratedThumbnail] = useState(false);
@@ -76,5 +76,3 @@ const useServiceRegisterSteps = () => {
     goToStep,
   };
 };
-
-export default useServiceRegisterSteps;

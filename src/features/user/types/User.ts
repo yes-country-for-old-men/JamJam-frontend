@@ -5,7 +5,7 @@ export interface Account {
   bankName: string;
 }
 
-export default interface User {
+export interface User {
   name: string;
   nickname: string;
   phoneNumber: string;

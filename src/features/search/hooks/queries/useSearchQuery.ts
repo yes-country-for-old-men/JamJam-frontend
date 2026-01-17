@@ -4,7 +4,7 @@ import {
   type ServiceSearchRequest,
 } from '@/features/search/api/searchApi';
 
-const useSearchQuery = (params: Omit<ServiceSearchRequest, 'page'>) => {
+export const useSearchQuery = (params: Omit<ServiceSearchRequest, 'page'>) => {
   return useInfiniteQuery({
     queryKey: ['searchServices', params],
     queryFn: ({ pageParam = 0 }) =>
@@ -20,5 +20,3 @@ const useSearchQuery = (params: Omit<ServiceSearchRequest, 'page'>) => {
     initialPageParam: 0,
   });
 };
-
-export default useSearchQuery;
