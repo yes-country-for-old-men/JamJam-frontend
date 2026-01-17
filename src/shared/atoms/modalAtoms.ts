@@ -14,7 +14,6 @@ export interface ModalState {
   cancelText?: string;
   showCloseButton?: boolean;
   disableBackdropClick?: boolean;
-  resolvePromise?: (value: boolean) => void;
 }
 
 export const modalStackAtom = atom<ModalState[]>([]);
@@ -23,6 +22,10 @@ export const openModalAtom = atom(
   null,
   (get, set, modal: Omit<ModalState, 'isOpen'>) => {
     const stack = get(modalStackAtom);
+    const existingModal = stack.find((m) => m.id === modal.id);
+    if (existingModal) {
+      return;
+    }
     set(modalStackAtom, [...stack, { ...modal, isOpen: true }]);
   },
 );

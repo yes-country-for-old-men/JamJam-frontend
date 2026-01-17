@@ -5,7 +5,6 @@ import {
   type InternalAxiosRequestConfig,
 } from 'axios';
 import { storageService } from '@/shared/services/storage';
-import { eventManager } from '@/shared/utils';
 
 interface TokenRefreshQueueItem {
   resolve: (value?: unknown) => void;
@@ -48,10 +47,6 @@ const isRefreshTokenExpired = (errorCode?: string): boolean => {
   return AUTH_ERROR_CODE.REFRESH_TOKEN_EXPIRED.includes(errorCode as never);
 };
 
-const showLoginModal = (): void => {
-  eventManager.emit('openLoginModal');
-};
-
 const setupInterceptors = (instance: AxiosInstance) => {
   instance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
@@ -79,7 +74,6 @@ const setupInterceptors = (instance: AxiosInstance) => {
           error.response?.status === 403
         ) {
           storageService.removeAccessToken();
-          showLoginModal();
         }
         return Promise.reject(error);
       }
@@ -130,14 +124,12 @@ const setupInterceptors = (instance: AxiosInstance) => {
           processTokenRefreshQueue(refreshError as AxiosError, null);
           isRefreshingToken = false;
           storageService.removeAccessToken();
-          showLoginModal();
           return Promise.reject(refreshError);
         }
       }
 
       if (isRefreshTokenExpired(errorCode)) {
         storageService.removeAccessToken();
-        showLoginModal();
       }
 
       return Promise.reject(error);

@@ -50,19 +50,11 @@ export const myPageRoutes = {
     { index: true, element: <Navigate to="info-edit" replace /> },
     {
       path: 'info-edit',
-      element: (
-        <ProtectedRoute>
-          <UserInfoEdit />
-        </ProtectedRoute>
-      ),
+      element: <UserInfoEdit />,
     },
     {
       path: 'credit',
-      element: (
-        <ProtectedRoute>
-          <Credit />
-        </ProtectedRoute>
-      ),
+      element: <Credit />,
     },
     {
       path: 'profile-edit',
