@@ -13,6 +13,5 @@ export {
   formatDeadlineISO,
 } from './formatters';
 export { isValidDate, isEligibleAgeForRole } from './validators';
-export { isProvider, isClient, isOrderStatus } from './typeGuards';
 export { getCategoryNameById, getSkillNameById } from './dataMappers';
 export { getErrorMessage } from './getErrorMessage';
