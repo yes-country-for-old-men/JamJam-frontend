@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
 import UploadIcon from '@/shared/assets/icons/upload.svg?react';
 import * as S from './FileUpload.styles';
@@ -18,57 +18,48 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = useState(false);
 
-  const handleFileSelect = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const selectedFiles = Array.from(event.target.files || []);
-      const newFilesWithId = selectedFiles.map((file) => ({
-        id: crypto.randomUUID(),
-        file,
-      }));
-      onFilesChange([...files, ...newFilesWithId]);
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
-    },
-    [files, onFilesChange],
-  );
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(event.target.files || []);
+    const newFilesWithId = selectedFiles.map((file) => ({
+      id: crypto.randomUUID(),
+      file,
+    }));
+    onFilesChange([...files, ...newFilesWithId]);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
-  const handleRemoveFile = useCallback(
-    (fileId: string | number) => {
-      const newFiles = files.filter((fileWithId) => fileWithId.id !== fileId);
-      onFilesChange(newFiles);
-    },
-    [files, onFilesChange],
-  );
+  const handleRemoveFile = (fileId: string | number) => {
+    const newFiles = files.filter((fileWithId) => fileWithId.id !== fileId);
+    onFilesChange(newFiles);
+  };
 
-  const handleUploadAreaClick = useCallback(() => {
+  const handleUploadAreaClick = () => {
     fileInputRef.current?.click();
-  }, []);
+  };
 
-  const handleDragOver = useCallback((event: React.DragEvent) => {
+  const handleDragOver = (event: React.DragEvent) => {
     event.preventDefault();
     setIsDragOver(true);
-  }, []);
+  };
 
-  const handleDragLeave = useCallback((event: React.DragEvent) => {
+  const handleDragLeave = (event: React.DragEvent) => {
     event.preventDefault();
     setIsDragOver(false);
-  }, []);
+  };
 
-  const handleDrop = useCallback(
-    (event: React.DragEvent) => {
-      event.preventDefault();
-      setIsDragOver(false);
+  const handleDrop = (event: React.DragEvent) => {
+    event.preventDefault();
+    setIsDragOver(false);
 
-      const droppedFiles = Array.from(event.dataTransfer.files);
-      const newFilesWithId = droppedFiles.map((file) => ({
-        id: crypto.randomUUID(),
-        file,
-      }));
-      onFilesChange([...files, ...newFilesWithId]);
-    },
-    [files, onFilesChange],
-  );
+    const droppedFiles = Array.from(event.dataTransfer.files);
+    const newFilesWithId = droppedFiles.map((file) => ({
+      id: crypto.randomUUID(),
+      file,
+    }));
+    onFilesChange([...files, ...newFilesWithId]);
+  };
 
   const getUploadText = () => {
     if (isDragOver) return '파일을 놓으세요';

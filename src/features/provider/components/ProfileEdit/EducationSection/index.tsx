@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import DocumentsTooltip from '@/features/provider/components/ProfileEdit/DocumentsTooltip';
 import { type ProfileForm } from '@/features/provider/hooks/useProfileForm';
 import * as S from '@/features/provider/pages/ProfileEdit/ProfileEdit.styles';
@@ -18,7 +18,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ form }) => {
   const educations = form.watch('educations');
   const licenses = form.watch('licenses');
 
-  const addEducation = useCallback(() => {
+  const addEducation = () => {
     const newEducation: Education & { documents: FileWithId[] } = {
       id: Date.now(),
       school: '',
@@ -27,56 +27,52 @@ const EducationSection: React.FC<EducationSectionProps> = ({ form }) => {
       documents: [],
     };
     form.setValue('educations', [...educations, newEducation]);
-  }, [educations, form]);
+  };
 
-  const removeEducation = useCallback(
-    (id: number) => {
-      form.setValue(
-        'educations',
-        educations.filter((edu) => edu.id !== id),
-      );
-    },
-    [educations, form],
-  );
+  const removeEducation = (id: number) => {
+    form.setValue(
+      'educations',
+      educations.filter((edu) => edu.id !== id),
+    );
+  };
 
-  const updateEducation = useCallback(
-    (id: number, field: string, value: string | FileWithId[]) => {
-      const updatedEducations = educations.map((edu) =>
-        edu.id === id ? { ...edu, [field]: value } : edu,
-      );
-      form.setValue('educations', updatedEducations);
-    },
-    [educations, form],
-  );
+  const updateEducation = (
+    id: number,
+    field: string,
+    value: string | FileWithId[],
+  ) => {
+    const updatedEducations = educations.map((edu) =>
+      edu.id === id ? { ...edu, [field]: value } : edu,
+    );
+    form.setValue('educations', updatedEducations);
+  };
 
-  const addLicense = useCallback(() => {
+  const addLicense = () => {
     const newLicense: License & { documents: FileWithId[] } = {
       id: Date.now(),
       name: '',
       documents: [],
     };
     form.setValue('licenses', [...licenses, newLicense]);
-  }, [licenses, form]);
+  };
 
-  const removeLicense = useCallback(
-    (id: number) => {
-      form.setValue(
-        'licenses',
-        licenses.filter((license) => license.id !== id),
-      );
-    },
-    [licenses, form],
-  );
+  const removeLicense = (id: number) => {
+    form.setValue(
+      'licenses',
+      licenses.filter((license) => license.id !== id),
+    );
+  };
 
-  const updateLicense = useCallback(
-    (id: number, field: string, value: string | FileWithId[]) => {
-      const updatedLicenses = licenses.map((license) =>
-        license.id === id ? { ...license, [field]: value } : license,
-      );
-      form.setValue('licenses', updatedLicenses);
-    },
-    [licenses, form],
-  );
+  const updateLicense = (
+    id: number,
+    field: string,
+    value: string | FileWithId[],
+  ) => {
+    const updatedLicenses = licenses.map((license) =>
+      license.id === id ? { ...license, [field]: value } : license,
+    );
+    form.setValue('licenses', updatedLicenses);
+  };
 
   return (
     <S.Section>

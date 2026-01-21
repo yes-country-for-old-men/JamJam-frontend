@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useRef } from 'react';
 
 export const useMessageScroll = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -9,14 +9,14 @@ export const useMessageScroll = () => {
     scrollHeight: number;
   } | null>(null);
 
-  const scrollToBottom = useCallback(() => {
+  const scrollToBottom = () => {
     const container = messagesContainerRef.current;
     if (container) {
       container.scrollTop = container.scrollHeight;
     }
-  }, []);
+  };
 
-  const handleScroll = useCallback((onLoadMore: () => void) => {
+  const handleScroll = (onLoadMore: () => void) => {
     const container = messagesContainerRef.current;
     if (container && !isLoadingMoreRef.current) {
       const { scrollTop, scrollHeight } = container;
@@ -31,9 +31,9 @@ export const useMessageScroll = () => {
         });
       }
     }
-  }, []);
+  };
 
-  const maintainScrollPosition = useCallback(() => {
+  const maintainScrollPosition = () => {
     if (!isLoadingMoreRef.current || !scrollPositionRef.current) return;
 
     const container = messagesContainerRef.current;
@@ -51,7 +51,7 @@ export const useMessageScroll = () => {
         scrollPositionRef.current = null;
       });
     }
-  }, []);
+  };
 
   return {
     messagesEndRef,

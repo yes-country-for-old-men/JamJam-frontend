@@ -10,53 +10,49 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   error?: boolean;
 }
 
-const Select = React.memo<SelectProps>(
-  ({
-    id,
-    label,
-    style,
-    required = false,
-    error = false,
-    disabled = false,
-    className,
-    children,
-    ...rest
-  }) => {
-    return (
-      <S.SelectGroup>
-        {label && (
-          <S.Label htmlFor={id}>
-            {label}
-            {required && <RequiredIcon />}
-          </S.Label>
-        )}
-        <S.SelectContainer>
-          <S.StyledSelect
-            id={id}
-            style={style}
-            required={required}
-            error={error}
-            disabled={disabled}
-            className={className}
-            aria-required={required}
-            aria-invalid={error}
-            {...rest}
-          >
-            {children}
-          </S.StyledSelect>
-          <S.DropdownIcon disabled={disabled} error={error}>
-            <ArrowDownIcon
-              fill={theme.COLORS.LABEL.SECONDARY}
-              width={12}
-              height={12}
-            />
-          </S.DropdownIcon>
-        </S.SelectContainer>
-      </S.SelectGroup>
-    );
-  },
-);
-
-Select.displayName = 'Select';
+const Select = ({
+  id,
+  label,
+  style,
+  required = false,
+  error = false,
+  disabled = false,
+  className,
+  children,
+  ...rest
+}: SelectProps) => {
+  return (
+    <S.SelectGroup>
+      {label && (
+        <S.Label htmlFor={id}>
+          {label}
+          {required && <RequiredIcon />}
+        </S.Label>
+      )}
+      <S.SelectContainer>
+        <S.StyledSelect
+          id={id}
+          style={style}
+          required={required}
+          error={error}
+          disabled={disabled}
+          className={className}
+          aria-required={required}
+          aria-invalid={error}
+          {...rest}
+        >
+          {children}
+        </S.StyledSelect>
+        <S.DropdownIcon disabled={disabled} error={error}>
+          <ArrowDownIcon
+            fill={theme.COLORS.LABEL.SECONDARY}
+            width={12}
+            height={12}
+          />
+        </S.DropdownIcon>
+      </S.SelectContainer>
+    </S.SelectGroup>
+  );
+};
 
 export default Select;

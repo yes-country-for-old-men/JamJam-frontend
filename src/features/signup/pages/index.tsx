@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   clientSignUp,
@@ -49,25 +49,25 @@ const SignUp: React.FC = () => {
     formatCountdown,
   } = usePhoneVerification();
 
-  const handleLogoClick = useCallback(() => {
+  const handleLogoClick = () => {
     navigate('/');
-  }, [navigate]);
+  };
 
-  const handleGoHome = useCallback(() => {
+  const handleGoHome = () => {
     navigate('/');
-  }, [navigate]);
+  };
 
-  const handleNicknameChange = useCallback(() => {
+  const handleNicknameChange = () => {
     setIsNicknameAvailable(null);
     step2Form.clearErrors('nickname');
-  }, [step2Form]);
+  };
 
-  const handleIdChange = useCallback(() => {
+  const handleIdChange = () => {
     setIsIdAvailable(null);
     step2Form.clearErrors('id');
-  }, [step2Form]);
+  };
 
-  const handleNicknameCheck = useCallback(async () => {
+  const handleNicknameCheck = async () => {
     const nickname = step2Form.getValues('nickname');
     const validation = await step2Form.trigger('nickname');
 
@@ -96,9 +96,9 @@ const SignUp: React.FC = () => {
     } finally {
       setIsCheckingNickname(false);
     }
-  }, [step2Form, alert]);
+  };
 
-  const handleIdCheck = useCallback(async () => {
+  const handleIdCheck = async () => {
     const id = step2Form.getValues('id');
     const validation = await step2Form.trigger('id');
 
@@ -127,9 +127,9 @@ const SignUp: React.FC = () => {
     } finally {
       setIsCheckingId(false);
     }
-  }, [step2Form, alert]);
+  };
 
-  const handleSendVerification = useCallback(async () => {
+  const handleSendVerification = async () => {
     step3Form.clearErrors('phone');
     step3Form.clearErrors('verificationCode');
 
@@ -145,9 +145,9 @@ const SignUp: React.FC = () => {
     }
 
     await sendVerification(phone);
-  }, [step3Form, sendVerification]);
+  };
 
-  const handleVerifyCode = useCallback(async () => {
+  const handleVerifyCode = async () => {
     const verificationCode = step3Form.getValues('verificationCode');
     const phone = step3Form.getValues('phone');
 
@@ -156,15 +156,15 @@ const SignUp: React.FC = () => {
     }
 
     await verifyCode(phone, verificationCode);
-  }, [step3Form, verifyCode]);
+  };
 
-  const handleBack = useCallback(() => {
+  const handleBack = () => {
     if (step > 1) {
       setStep(step - 1);
     }
-  }, [step, setStep]);
+  };
 
-  const handleNext = useCallback(() => {
+  const handleNext = () => {
     if (step === 1) {
       step1Form.handleSubmit(() => {
         setStep(2);
@@ -188,9 +188,9 @@ const SignUp: React.FC = () => {
         setStep(3);
       })();
     }
-  }, [step, step1Form, step2Form, setStep, isNicknameAvailable, isIdAvailable]);
+  };
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = () => {
     step3Form.handleSubmit(async (data) => {
       if (!isVerificationSent) {
         step3Form.setError('phone', {
@@ -243,14 +243,7 @@ const SignUp: React.FC = () => {
         setIsSubmitting(false);
       }
     })();
-  }, [
-    step3Form,
-    isVerificationSent,
-    isPhoneVerified,
-    step1Form,
-    step2Form,
-    alert,
-  ]);
+  };
 
   const getTitleText = () => {
     switch (step) {

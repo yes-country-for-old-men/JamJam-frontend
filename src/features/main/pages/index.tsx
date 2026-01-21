@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import Carousel from '@/features/main/components/Carousel';
@@ -132,9 +132,9 @@ const CategoryGrid = styled(motion.div)`
 const Main: React.FC = () => {
   const [searchValue, setSearchValue] = useState('');
 
-  const handleSearchChange = useCallback((value: string) => {
+  const handleSearchChange = (value: string) => {
     setSearchValue(value);
-  }, []);
+  };
 
   return (
     <Container>

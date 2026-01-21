@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { storageService } from '@/shared/services/storage';
 
 interface UseAuthTokenReturn {
@@ -13,17 +13,17 @@ export const useAuthToken = (): UseAuthTokenReturn => {
     storageService.getAccessToken(),
   );
 
-  const set = useCallback((newToken: string) => {
+  const set = (newToken: string) => {
     storageService.setAccessToken(newToken);
     setTokenState(newToken);
-  }, []);
+  };
 
-  const remove = useCallback(() => {
+  const remove = () => {
     storageService.removeAccessToken();
     setTokenState(null);
-  }, []);
+  };
 
-  const get = useCallback(() => token, [token]);
+  const get = () => token;
 
   return {
     exists: !!token,

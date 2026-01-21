@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Controller, type UseFormReturn } from 'react-hook-form';
 import * as S from '@/features/service/pages/ServiceRegister/ServiceRegister.styles';
 import { type ServiceRegisterData } from '@/features/service/schemas/serviceRegisterSchema';
@@ -30,14 +30,11 @@ const ServiceDetailsStep: React.FC<ServiceDetailsStepProps> = ({
     return parseInt(cleanStr, 10) || 0;
   };
 
-  const handlePriceChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const numericValue = parsePrice(e.target.value);
-      const formattedValue = numericValue.toLocaleString();
-      onPriceChange(formattedValue);
-    },
-    [onPriceChange],
-  );
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const numericValue = parsePrice(e.target.value);
+    const formattedValue = numericValue.toLocaleString();
+    onPriceChange(formattedValue);
+  };
 
   const handleRecommendationClick = (recommendation: string) => {
     form.setValue('serviceName', recommendation);

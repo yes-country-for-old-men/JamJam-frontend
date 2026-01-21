@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import DocumentsTooltip from '@/features/provider/components/ProfileEdit/DocumentsTooltip';
 import { type ProfileForm } from '@/features/provider/hooks/useProfileForm';
 import * as S from '@/features/provider/pages/ProfileEdit/ProfileEdit.styles';
@@ -16,7 +16,7 @@ interface CareerSectionProps {
 const CareerSection: React.FC<CareerSectionProps> = ({ form }) => {
   const careers = form.watch('careers');
 
-  const addCareer = useCallback(() => {
+  const addCareer = () => {
     const newCareer: Career & { documents: FileWithId[] } = {
       id: Date.now(),
       company: '',
@@ -24,27 +24,25 @@ const CareerSection: React.FC<CareerSectionProps> = ({ form }) => {
       documents: [],
     };
     form.setValue('careers', [...careers, newCareer]);
-  }, [careers, form]);
+  };
 
-  const removeCareer = useCallback(
-    (id: number) => {
-      form.setValue(
-        'careers',
-        careers.filter((career) => career.id !== id),
-      );
-    },
-    [careers, form],
-  );
+  const removeCareer = (id: number) => {
+    form.setValue(
+      'careers',
+      careers.filter((career) => career.id !== id),
+    );
+  };
 
-  const updateCareer = useCallback(
-    (id: number, field: string, value: string | FileWithId[]) => {
-      const updatedCareers = careers.map((career) =>
-        career.id === id ? { ...career, [field]: value } : career,
-      );
-      form.setValue('careers', updatedCareers);
-    },
-    [careers, form],
-  );
+  const updateCareer = (
+    id: number,
+    field: string,
+    value: string | FileWithId[],
+  ) => {
+    const updatedCareers = careers.map((career) =>
+      career.id === id ? { ...career, [field]: value } : career,
+    );
+    form.setValue('careers', updatedCareers);
+  };
 
   return (
     <S.Section>

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
 import ImageIcon from '@/shared/assets/icons/image.svg?react';
 import * as S from './ImageUpload.styles';
@@ -30,100 +30,80 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = useState(false);
 
-  const getImageSrc = useCallback(() => {
+  const getImageSrc = () => {
     if (!image) return null;
     if (typeof image === 'string') return image;
     return URL.createObjectURL(image);
-  }, [image]);
+  };
 
   const remainingSlots = multiple ? maxImages - images.length : 0;
   const isDisabled = multiple && remainingSlots <= 0;
 
-  const processImageFiles = useCallback(
-    (files: File[]) => {
-      const imageFiles = files.filter((file) => file.type.startsWith('image/'));
+  const processImageFiles = (files: File[]) => {
+    const imageFiles = files.filter((file) => file.type.startsWith('image/'));
 
-      if (multiple && onImagesChange) {
-        const filesToAdd = imageFiles.slice(0, remainingSlots);
-        const newFilesWithId = filesToAdd.map((file) => ({
-          id: crypto.randomUUID(),
-          file,
-        }));
-        onImagesChange([...images, ...newFilesWithId]);
-      } else if (onImageChange && imageFiles.length > 0) {
-        onImageChange(imageFiles[0]);
-      }
-    },
-    [multiple, onImageChange, onImagesChange, images, remainingSlots],
-  );
+    if (multiple && onImagesChange) {
+      const filesToAdd = imageFiles.slice(0, remainingSlots);
+      const newFilesWithId = filesToAdd.map((file) => ({
+        id: crypto.randomUUID(),
+        file,
+      }));
+      onImagesChange([...images, ...newFilesWithId]);
+    } else if (onImageChange && imageFiles.length > 0) {
+      onImageChange(imageFiles[0]);
+    }
+  };
 
-  const handleFileSelect = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const selectedFiles = Array.from(event.target.files || []);
-      processImageFiles(selectedFiles);
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(event.target.files || []);
+    processImageFiles(selectedFiles);
 
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
-    },
-    [processImageFiles],
-  );
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
-  const handleRemoveImage = useCallback(
-    (event: React.MouseEvent) => {
-      event.stopPropagation();
-      if (onImageChange) {
-        onImageChange(null);
-      }
-    },
-    [onImageChange],
-  );
+  const handleRemoveImage = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    if (onImageChange) {
+      onImageChange(null);
+    }
+  };
 
-  const handleRemoveMultipleImage = useCallback(
-    (fileId: string | number) => {
-      if (onImagesChange) {
-        const newImages = images.filter(
-          (fileWithId) => fileWithId.id !== fileId,
-        );
-        onImagesChange(newImages);
-      }
-    },
-    [images, onImagesChange],
-  );
+  const handleRemoveMultipleImage = (fileId: string | number) => {
+    if (onImagesChange) {
+      const newImages = images.filter((fileWithId) => fileWithId.id !== fileId);
+      onImagesChange(newImages);
+    }
+  };
 
-  const handleUploadAreaClick = useCallback(() => {
+  const handleUploadAreaClick = () => {
     if (!isDisabled) {
       fileInputRef.current?.click();
     }
-  }, [isDisabled]);
+  };
 
-  const handleDragOver = useCallback(
-    (event: React.DragEvent) => {
-      event.preventDefault();
-      if (!isDisabled) {
-        setIsDragOver(true);
-      }
-    },
-    [isDisabled],
-  );
+  const handleDragOver = (event: React.DragEvent) => {
+    event.preventDefault();
+    if (!isDisabled) {
+      setIsDragOver(true);
+    }
+  };
 
-  const handleDragLeave = useCallback((event: React.DragEvent) => {
+  const handleDragLeave = (event: React.DragEvent) => {
     event.preventDefault();
     setIsDragOver(false);
-  }, []);
+  };
 
-  const handleDrop = useCallback(
-    (event: React.DragEvent) => {
-      event.preventDefault();
-      setIsDragOver(false);
+  const handleDrop = (event: React.DragEvent) => {
+    event.preventDefault();
+    setIsDragOver(false);
 
-      if (isDisabled) return;
+    if (isDisabled) return;
 
-      const droppedFiles = Array.from(event.dataTransfer.files);
-      processImageFiles(droppedFiles);
-    },
-    [processImageFiles, isDisabled],
-  );
+    const droppedFiles = Array.from(event.dataTransfer.files);
+    processImageFiles(droppedFiles);
+  };
 
   const getMultipleUploadText = () => {
     if (isDragOver) return '파일을 놓으세요';

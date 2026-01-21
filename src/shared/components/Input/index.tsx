@@ -11,70 +11,66 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
 }
 
-const Input = React.memo<InputProps>(
-  ({
-    id,
-    label,
-    style,
-    required = false,
-    className,
-    showPasswordToggle = false,
-    type,
-    error,
-    ...rest
-  }) => {
-    const [showPassword, setShowPassword] = useState(false);
+const Input = ({
+  id,
+  label,
+  style,
+  required = false,
+  className,
+  showPasswordToggle = false,
+  type,
+  error,
+  ...rest
+}: InputProps) => {
+  const [showPassword, setShowPassword] = useState(false);
 
-    const getInputType = () => {
-      if (showPasswordToggle && type === 'password') {
-        return showPassword ? 'text' : 'password';
-      }
-      return type;
-    };
+  const getInputType = () => {
+    if (showPasswordToggle && type === 'password') {
+      return showPassword ? 'text' : 'password';
+    }
+    return type;
+  };
 
-    const shouldShowToggle = showPasswordToggle && type === 'password';
+  const shouldShowToggle = showPasswordToggle && type === 'password';
 
-    return (
-      <S.InputGroup>
-        {label && (
-          <S.Label htmlFor={id}>
-            {label}
-            {required && <RequiredIcon />}
-          </S.Label>
+  return (
+    <S.InputGroup>
+      {label && (
+        <S.Label htmlFor={id}>
+          {label}
+          {required && <RequiredIcon />}
+        </S.Label>
+      )}
+      <S.InputContainer>
+        <S.StyledInput
+          id={id}
+          style={style}
+          required={required}
+          type={getInputType()}
+          hasToggle={shouldShowToggle}
+          className={className}
+          aria-required={required}
+          aria-invalid={!!error}
+          aria-describedby={error ? `${id}-error` : undefined}
+          {...rest}
+        />
+        {shouldShowToggle && (
+          <S.PasswordToggleIcon
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
+          >
+            {showPassword ? (
+              <InvisibleIcon width={16} height={16} />
+            ) : (
+              <VisibleIcon width={16} height={16} />
+            )}
+          </S.PasswordToggleIcon>
         )}
-        <S.InputContainer>
-          <S.StyledInput
-            id={id}
-            style={style}
-            required={required}
-            type={getInputType()}
-            hasToggle={shouldShowToggle}
-            className={className}
-            aria-required={required}
-            aria-invalid={!!error}
-            aria-describedby={error ? `${id}-error` : undefined}
-            {...rest}
-          />
-          {shouldShowToggle && (
-            <S.PasswordToggleIcon
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
-            >
-              {showPassword ? (
-                <InvisibleIcon width={16} height={16} />
-              ) : (
-                <VisibleIcon width={16} height={16} />
-              )}
-            </S.PasswordToggleIcon>
-          )}
-        </S.InputContainer>
-        {error && <S.ErrorMessage id={`${id}-error`}>{error}</S.ErrorMessage>}
-      </S.InputGroup>
-    );
-  },
-);
-
-Input.displayName = 'Input';
+      </S.InputContainer>
+      {error && <S.ErrorMessage id={`${id}-error`}>{error}</S.ErrorMessage>}
+    </S.InputGroup>
+  );
+};
 
 export default Input;
