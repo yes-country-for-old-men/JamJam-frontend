@@ -1,133 +1,10 @@
 import React, { useState } from 'react';
-import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import Carousel from '@/features/main/components/Carousel';
 import CategoryCard from '@/features/main/components/CategoryCard';
 import SearchBar from '@/shared/components/SearchBar';
 import { CATEGORIES, SLIDE_IMAGES } from '@/shared/constants';
-
-const ANIMATION_VARIANTS = {
-  container: {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  },
-  item: {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 300,
-        damping: 24,
-      },
-    },
-  },
-  gridContainer: {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  },
-  gridItem: {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 300,
-        damping: 24,
-      },
-    },
-    hover: {
-      y: -8,
-      transition: {
-        type: 'spring',
-        stiffness: 400,
-        damping: 20,
-      },
-    },
-  },
-} as const;
-
-const Container = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: max-content;
-  overflow-x: auto;
-  padding: 0;
-`;
-
-const ScrollableContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 1200px;
-  gap: 72px;
-  padding: 72px 24px;
-`;
-
-const TopSection = styled(motion.div)`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  gap: 64px;
-`;
-
-const LeftSection = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  align-items: flex-start;
-  justify-content: center;
-`;
-
-const Title = styled(motion.div)`
-  font-size: 42px;
-  font-weight: 700;
-  text-align: start;
-  line-height: 1.4;
-  white-space: pre-line;
-  margin-bottom: 36px;
-  word-break: keep-all;
-`;
-
-const SearchBarWrapper = styled(motion.div)`
-  width: 100%;
-  min-width: 300px;
-`;
-
-const CarouselWrapper = styled(motion.div)`
-  flex-shrink: 0;
-`;
-
-const CategorySection = styled(motion.div)`
-  width: 100%;
-`;
-
-const CategoryGrid = styled(motion.div)`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  width: 100%;
-  gap: 24px;
-`;
+import * as S from './Main.styles';
 
 const Main: React.FC = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -136,46 +13,57 @@ const Main: React.FC = () => {
     setSearchValue(value);
   };
 
+  const SPRING_TRANSITION = {
+    type: 'spring' as const,
+    stiffness: 300,
+    damping: 30,
+  };
+
   return (
-    <Container>
-      <ScrollableContent>
-        <TopSection
-          variants={ANIMATION_VARIANTS.container}
-          initial="hidden"
-          animate="visible"
-        >
-          <LeftSection variants={ANIMATION_VARIANTS.item}>
-            <Title variants={ANIMATION_VARIANTS.item}>
+    <S.Container>
+      <S.ScrollableContent>
+        <S.TopSection initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <S.LeftSection
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ ...SPRING_TRANSITION, delay: 0.1 }}
+          >
+            <S.Title
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ ...SPRING_TRANSITION, delay: 0.2 }}
+            >
               잊혀지는 경력이 아니라,{'\n'}이어지는 기회가 되도록
-            </Title>
-            <SearchBarWrapper variants={ANIMATION_VARIANTS.item}>
+            </S.Title>
+            <S.SearchBarWrapper
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ ...SPRING_TRANSITION, delay: 0.2 }}
+            >
               <SearchBar
                 value={searchValue}
                 onChange={handleSearchChange}
                 placeholder="필요한 손길을 찾아보세요"
               />
-            </SearchBarWrapper>
-          </LeftSection>
-          <CarouselWrapper variants={ANIMATION_VARIANTS.item}>
-            <Carousel slides={SLIDE_IMAGES} />
-          </CarouselWrapper>
-        </TopSection>
-
-        <CategorySection
-          variants={ANIMATION_VARIANTS.item}
-          initial="hidden"
-          animate="visible"
-        >
-          <CategoryGrid
-            variants={ANIMATION_VARIANTS.gridContainer}
-            initial="hidden"
-            animate="visible"
+            </S.SearchBarWrapper>
+          </S.LeftSection>
+          <S.CarouselWrapper
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ ...SPRING_TRANSITION, delay: 0.3 }}
           >
-            {CATEGORIES.map((category) => (
+            <Carousel slides={SLIDE_IMAGES} />
+          </S.CarouselWrapper>
+        </S.TopSection>
+        <S.CategorySection>
+          <S.CategoryGrid>
+            {CATEGORIES.map((category, index) => (
               <motion.div
                 key={category.id}
-                variants={ANIMATION_VARIANTS.gridItem}
-                whileHover="hover"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                whileHover={{ y: -8 }}
+                transition={{ ...SPRING_TRANSITION, delay: 0.4 + index * 0.05 }}
               >
                 <CategoryCard
                   id={category.id}
@@ -184,10 +72,10 @@ const Main: React.FC = () => {
                 />
               </motion.div>
             ))}
-          </CategoryGrid>
-        </CategorySection>
-      </ScrollableContent>
-    </Container>
+          </S.CategoryGrid>
+        </S.CategorySection>
+      </S.ScrollableContent>
+    </S.Container>
   );
 };
 
