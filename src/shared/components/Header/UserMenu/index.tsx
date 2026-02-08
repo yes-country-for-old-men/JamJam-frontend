@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from '@/features/auth/hooks/useLogoutMutation';
 import ArrowDownIcon from '@/shared/assets/icons/arrow-down.svg?react';
 import UserProfileImageIcon from '@/shared/assets/icons/user-profile-image.svg?react';
-import { useModal } from '@/shared/hooks/useModal';
+import { useDialog } from '@/shared/hooks/useDialog';
 import theme from '@/shared/styles/theme';
 import * as S from './UserMenu.styles';
 
@@ -16,7 +16,7 @@ interface UserMenuProps {
 
 const UserMenu = ({ userInfo }: UserMenuProps) => {
   const navigate = useNavigate();
-  const { confirm } = useModal();
+  const { confirm } = useDialog();
   const { mutate: logout } = useLogoutMutation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);

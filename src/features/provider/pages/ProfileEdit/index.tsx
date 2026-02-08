@@ -15,7 +15,7 @@ import { useProfileForm } from '@/features/provider/hooks/useProfileForm';
 import * as S from '@/features/provider/pages/ProfileEdit/ProfileEdit.styles';
 import Button from '@/shared/components/Button';
 import { LOCATIONS } from '@/shared/constants';
-import { useModal } from '@/shared/hooks/useModal';
+import { useDialog } from '@/shared/hooks/useDialog';
 
 const ProfileEdit: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +23,7 @@ const ProfileEdit: React.FC = () => {
   const [hasExistingProfile, setHasExistingProfile] = useState(false);
 
   const { form } = useProfileForm();
-  const { alert } = useModal();
+  const { alert } = useDialog();
 
   useEffect(() => {
     const loadProfile = async () => {

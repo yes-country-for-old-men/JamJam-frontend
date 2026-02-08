@@ -11,7 +11,7 @@ import ServiceDetailsStep from '@/features/service/components/ServiceRegister/Se
 import { useServiceRegisterForm } from '@/features/service/hooks/useServiceRegisterForm';
 import { useServiceRegisterSteps } from '@/features/service/hooks/useServiceRegisterSteps';
 import * as S from '@/features/service/pages/ServiceRegister/ServiceRegister.styles';
-import { useModal } from '@/shared/hooks/useModal';
+import { useDialog } from '@/shared/hooks/useDialog';
 import { base64ToFile } from '@/shared/utils';
 
 const ServiceRegister: React.FC = () => {
@@ -33,7 +33,7 @@ const ServiceRegister: React.FC = () => {
     goToPreviousStep,
   } = useServiceRegisterSteps();
 
-  const { alert, loading, closeModal } = useModal();
+  const { alert, loading } = useDialog();
 
   const parsePrice = (str: string): number => {
     const cleanStr = str.replace(/\D/g, '');
@@ -52,7 +52,7 @@ const ServiceRegister: React.FC = () => {
     }
 
     const description = form.getValues('description');
-    loading({ loadingText: 'AI가 콘텐츠를 생성하고 있습니다' });
+    const close = loading({ text: 'AI가 콘텐츠를 생성하고 있습니다' });
 
     try {
       const response = await generateService({
@@ -75,7 +75,7 @@ const ServiceRegister: React.FC = () => {
         content: 'AI 콘텐츠 생성 중 오류가 발생했습니다.',
       });
     } finally {
-      closeModal();
+      close();
     }
   };
 

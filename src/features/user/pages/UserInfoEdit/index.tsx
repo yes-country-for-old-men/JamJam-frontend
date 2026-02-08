@@ -12,7 +12,7 @@ import { useUserInfoQuery } from '@/features/user/hooks/useUserInfoQuery';
 import * as S from '@/features/user/pages/UserInfoEdit/UserInfoEdit.styles';
 import Button from '@/shared/components/Button';
 import { BANK_CODE_MAP } from '@/shared/constants';
-import { useModal } from '@/shared/hooks/useModal';
+import { useDialog } from '@/shared/hooks/useDialog';
 import { usePhoneVerification } from '@/shared/hooks/usePhoneVerification';
 import { formatPhoneNumber, getErrorMessage } from '@/shared/utils';
 import type { UpdateUserRequest } from '@/features/user/api/userApi';
@@ -58,7 +58,7 @@ const UserInfoEdit: React.FC = () => {
   >(null);
   const [isCheckingNickname, setIsCheckingNickname] = useState(false);
 
-  const { alert } = useModal();
+  const { alert } = useDialog();
   const { passwordForm, editForm } = useInfoEditForm();
 
   const { data: userInfo, refetch: refetchUserInfo } = useUserInfoQuery();

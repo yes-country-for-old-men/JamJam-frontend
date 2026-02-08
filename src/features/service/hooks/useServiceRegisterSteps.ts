@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { getProviderProfile } from '@/features/provider/api/providerApi';
-import { useModal } from '@/shared/hooks/useModal';
+import { useDialog } from '@/shared/hooks/useDialog';
 
 export const useServiceRegisterSteps = () => {
   const [step, setStep] = useState(1);
@@ -12,7 +12,7 @@ export const useServiceRegisterSteps = () => {
   const [serviceNames, setServiceNames] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { confirm } = useModal();
+  const { confirm } = useDialog();
   const navigate = useNavigate();
 
   const goToNextStep = () => {

@@ -15,7 +15,7 @@ import { useSignUpForm } from '@/features/signup/hooks/useSignUpForm';
 import * as S from '@/features/signup/pages/SignUp.styles';
 import LogoIcon from '@/shared/assets/icons/logo-icon.svg?react';
 import Button from '@/shared/components/Button';
-import { useModal } from '@/shared/hooks/useModal';
+import { useDialog } from '@/shared/hooks/useDialog';
 import { usePhoneVerification } from '@/shared/hooks/usePhoneVerification';
 import { getErrorMessage } from '@/shared/utils';
 
@@ -32,7 +32,7 @@ const SignUp: React.FC = () => {
   const [isCheckingId, setIsCheckingId] = useState(false);
 
   const navigate = useNavigate();
-  const { alert } = useModal();
+  const { alert } = useDialog();
 
   const { step, setStep, step1Form, step2Form, step3Form } = useSignUpForm();
 
