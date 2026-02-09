@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import SignUp from '@/features/signup/pages';
+import Dialog from '@/shared/components/Dialog';
 import EventHandler from '@/shared/components/EventHandler';
 import Layout from '@/shared/components/Layout';
-import Modal from '@/shared/components/Modal';
 import GuestRoute from '@/shared/components/Routes/GuestRoute';
 import ScrollInitializer from '@/shared/components/ScrollInitializer';
 import {
@@ -49,7 +49,7 @@ const App = () => {
         </Route>
       </Routes>
       <EventHandler />
-      <Modal />
+      <Dialog />
     </>
   );
 };
