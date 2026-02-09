@@ -5,15 +5,19 @@ import { login } from '@/features/auth/api/authApi';
 import LogoIcon from '@/shared/assets/icons/logo-icon.svg?react';
 import Button from '@/shared/components/Button';
 import Input from '@/shared/components/Input';
-import { useModal } from '@/shared/hooks/useModal';
+import Modal from '@/shared/components/Modal';
 import * as S from './LoginModal.styles';
 
-const LoginModal: React.FC = () => {
+interface LoginModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { closeModal } = useModal();
   const queryClient = useQueryClient();
 
   const handleLogin = async () => {
@@ -35,7 +39,7 @@ const LoginModal: React.FC = () => {
       await queryClient.invalidateQueries({ queryKey: ['userInfo'] });
       window.location.reload();
 
-      closeModal();
+      onClose();
     } catch (error) {
       if (error instanceof AxiosError && error.response?.status === 401) {
         setErrorMessage('아이디 또는 비밀번호가 올바르지 않습니다.');
@@ -70,56 +74,58 @@ const LoginModal: React.FC = () => {
   };
 
   return (
-    <S.LoginForm onSubmit={handleSubmit}>
-      <S.LogoWrapper>
-        <LogoIcon height={36} />
-      </S.LogoWrapper>
-      <Input
-        id="username"
-        type="text"
-        label="아이디"
-        value={loginForm.username}
-        onChange={(e) =>
-          setLoginForm((prev) => ({ ...prev, username: e.target.value }))
-        }
-        onKeyDown={handleKeyDown}
-        placeholder="아이디를 입력하세요"
-        disabled={isLoading}
-      />
-      <Input
-        id="password"
-        type="password"
-        label="비밀번호"
-        value={loginForm.password}
-        onChange={(e) =>
-          setLoginForm((prev) => ({ ...prev, password: e.target.value }))
-        }
-        onKeyDown={handleKeyDown}
-        placeholder="비밀번호를 입력하세요"
-        disabled={isLoading}
-      />
-      <Button
-        type="submit"
-        onClick={handleLogin}
-        fullWidth
-        disabled={isLoading}
-      >
-        로그인
-      </Button>
-      {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
-      <S.FindLinksWrapper>
-        <S.FindLink type="button" onClick={handleFindUsername}>
-          아이디 찾기
-        </S.FindLink>
-        <S.Divider>|</S.Divider>
-        <S.FindLink type="button" onClick={handleFindPassword}>
-          비밀번호 찾기
-        </S.FindLink>
-      </S.FindLinksWrapper>
-      <S.SignUpLink>
-        잼잼이 처음이신가요?<a href="/signup">회원가입</a>
-      </S.SignUpLink>
-    </S.LoginForm>
+    <Modal isOpen={isOpen} onClose={onClose} showCloseButton={false}>
+      <S.LoginForm onSubmit={handleSubmit}>
+        <S.LogoWrapper>
+          <LogoIcon height={36} />
+        </S.LogoWrapper>
+        <Input
+          id="username"
+          type="text"
+          label="아이디"
+          value={loginForm.username}
+          onChange={(e) =>
+            setLoginForm((prev) => ({ ...prev, username: e.target.value }))
+          }
+          onKeyDown={handleKeyDown}
+          placeholder="아이디를 입력하세요"
+          disabled={isLoading}
+        />
+        <Input
+          id="password"
+          type="password"
+          label="비밀번호"
+          value={loginForm.password}
+          onChange={(e) =>
+            setLoginForm((prev) => ({ ...prev, password: e.target.value }))
+          }
+          onKeyDown={handleKeyDown}
+          placeholder="비밀번호를 입력하세요"
+          disabled={isLoading}
+        />
+        <Button
+          type="submit"
+          onClick={handleLogin}
+          fullWidth
+          disabled={isLoading}
+        >
+          로그인
+        </Button>
+        {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
+        <S.FindLinksWrapper>
+          <S.FindLink type="button" onClick={handleFindUsername}>
+            아이디 찾기
+          </S.FindLink>
+          <S.Divider>|</S.Divider>
+          <S.FindLink type="button" onClick={handleFindPassword}>
+            비밀번호 찾기
+          </S.FindLink>
+        </S.FindLinksWrapper>
+        <S.SignUpLink>
+          잼잼이 처음이신가요?<a href="/signup">회원가입</a>
+        </S.SignUpLink>
+      </S.LoginForm>
+    </Modal>
   );
 };
 

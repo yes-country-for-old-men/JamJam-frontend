@@ -1,20 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import LoginModal from '@/features/auth/components/LoginModal';
 import { useAuthStatus } from '@/features/auth/hooks/useAuthStatus';
 import UserMenu from '@/shared/components/Header/UserMenu';
-import { useModal } from '@/shared/hooks/useModal';
+import { eventManager } from '@/shared/utils';
 import * as S from './HeaderAuth.styles';
 
 const HeaderAuth = () => {
   const navigate = useNavigate();
-  const { openModal } = useModal();
   const { isLoggedIn, isLoading, userInfo } = useAuthStatus();
 
   const handleLoginClick = () => {
-    openModal({
-      id: 'login-modal',
-      content: <LoginModal />,
-    });
+    eventManager.emit('openLoginModal');
   };
 
   const handleSignupClick = () => {

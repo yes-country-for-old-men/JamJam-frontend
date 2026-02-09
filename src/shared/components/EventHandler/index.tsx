@@ -1,17 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import LoginModal from '@/features/auth/components/LoginModal';
-import { useModal } from '@/shared/hooks/useModal';
+import { useDialog } from '@/shared/hooks/useDialog';
 import { eventManager } from '@/shared/utils';
 
 const EventHandler = () => {
-  const { openModal, confirm, alert } = useModal();
+  const { confirm, alert } = useDialog();
+  const [loginOpen, setLoginOpen] = useState(false);
 
   useEffect(() => {
     const handleOpenLoginModal = () => {
-      openModal({
-        id: 'login-modal',
-        content: <LoginModal />,
-      });
+      setLoginOpen(true);
     };
 
     const handleConfirm = (data: {
@@ -41,9 +39,9 @@ const EventHandler = () => {
       eventManager.off('confirm', handleConfirm);
       eventManager.off('alert', handleAlert);
     };
-  }, [openModal, confirm, alert]);
+  }, [confirm, alert]);
 
-  return null;
+  return <LoginModal isOpen={loginOpen} onClose={() => setLoginOpen(false)} />;
 };
 
 export default EventHandler;

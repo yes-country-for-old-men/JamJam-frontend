@@ -1,25 +1,20 @@
 import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import LoginModal from '@/features/auth/components/LoginModal';
 import { useAuthStatus } from '@/features/auth/hooks/useAuthStatus';
-import { useModal } from '@/shared/hooks/useModal';
+import { eventManager } from '@/shared/utils';
 
 interface ProviderRouteProps {
   children: React.ReactNode;
 }
 
 const ProviderRoute = ({ children }: ProviderRouteProps) => {
-  const { openModal } = useModal();
   const { isLoggedIn, isProvider, isLoading } = useAuthStatus();
 
   useEffect(() => {
     if (!isLoggedIn && !isLoading) {
-      openModal({
-        id: 'login-modal',
-        content: <LoginModal />,
-      });
+      eventManager.emit('openLoginModal');
     }
-  }, [isLoggedIn, isLoading, openModal]);
+  }, [isLoggedIn, isLoading]);
 
   if (isLoading || !isLoggedIn) {
     return null;
