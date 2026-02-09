@@ -1,6 +1,9 @@
 import { useCallback } from 'react';
 import PortOne from '@portone/browser-sdk/v2';
-import { apiClient } from '@/shared/api/apiClient';
+import {
+  completePayment,
+  savePaymentOrder,
+} from '@/features/credit/api/creditApi';
 import { ensurePunctuation, eventManager } from '@/shared/utils';
 
 const PAYMENT_MESSAGES = {
@@ -14,15 +17,6 @@ const PAYMENT_MESSAGES = {
   },
 } as const;
 
-interface PaymentOrderRequest {
-  paymentUid: string;
-  price: number;
-}
-
-interface PaymentCompleteRequest {
-  paymentUid: string;
-}
-
 const showPaymentAlert = (
   title: string,
   content: string,
@@ -33,14 +27,6 @@ const showPaymentAlert = (
     content: ensurePunctuation(content),
     onConfirm,
   });
-};
-
-const savePaymentOrder = async (data: PaymentOrderRequest) => {
-  return apiClient.post('/api/payment/order', data);
-};
-
-const completePayment = async (data: PaymentCompleteRequest) => {
-  return apiClient.post('/api/payment/complete', data);
 };
 
 export const usePayment = () => {

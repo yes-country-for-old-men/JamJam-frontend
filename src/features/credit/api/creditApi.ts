@@ -20,7 +20,24 @@ export type CreditHistoryContent = {
   hasNext: boolean;
 };
 
+export interface PaymentOrderRequest {
+  paymentUid: string;
+  price: number;
+}
+
+export interface PaymentCompleteRequest {
+  paymentUid: string;
+}
+
 export const getCreditHistory = (params: CreditHistoryRequest) =>
   apiClient.get<ApiResponse<CreditHistoryContent>>('/api/user/credit-history', {
     params,
   });
+
+export const savePaymentOrder = async (data: PaymentOrderRequest) => {
+  return apiClient.post('/api/payment/order', data);
+};
+
+export const completePayment = async (data: PaymentCompleteRequest) => {
+  return apiClient.post('/api/payment/complete', data);
+};
