@@ -1,6 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
 import UploadIcon from '@/shared/assets/icons/upload.svg?react';
+import useDropZone from '@/shared/hooks/useDropZone';
+import useFileList from '@/shared/hooks/useFileList';
 import * as S from './FileUpload.styles';
 import type { FileWithId } from '@/shared/types/FileWithId';
 
@@ -16,67 +18,38 @@ const FileUpload: React.FC<FileUploadProps> = ({
   accept = '*',
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isDragOver, setIsDragOver] = useState(false);
 
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = Array.from(event.target.files || []);
-    const newFilesWithId = selectedFiles.map((file) => ({
-      id: crypto.randomUUID(),
-      file,
-    }));
-    onFilesChange([...files, ...newFilesWithId]);
+  const { addFiles, removeFile } = useFileList({
+    files,
+    onChange: onFilesChange,
+  });
+
+  const handleDrop = useCallback(
+    (droppedFiles: File[]) => addFiles(droppedFiles),
+    [addFiles],
+  );
+
+  const { isDragOver, dropZoneProps } = useDropZone({ onDrop: handleDrop });
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(e.target.files || []);
+    addFiles(selectedFiles);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
-  };
-
-  const handleRemoveFile = (fileId: string | number) => {
-    const newFiles = files.filter((fileWithId) => fileWithId.id !== fileId);
-    onFilesChange(newFiles);
-  };
-
-  const handleUploadAreaClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleDragOver = (event: React.DragEvent) => {
-    event.preventDefault();
-    setIsDragOver(true);
-  };
-
-  const handleDragLeave = (event: React.DragEvent) => {
-    event.preventDefault();
-    setIsDragOver(false);
-  };
-
-  const handleDrop = (event: React.DragEvent) => {
-    event.preventDefault();
-    setIsDragOver(false);
-
-    const droppedFiles = Array.from(event.dataTransfer.files);
-    const newFilesWithId = droppedFiles.map((file) => ({
-      id: crypto.randomUUID(),
-      file,
-    }));
-    onFilesChange([...files, ...newFilesWithId]);
-  };
-
-  const getUploadText = () => {
-    if (isDragOver) return '파일을 놓으세요';
-    return '여기로 파일을 끌어오거나 클릭';
   };
 
   return (
     <S.Container>
       <S.FileUploadArea
         isDragOver={isDragOver}
-        onClick={handleUploadAreaClick}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
+        onClick={() => fileInputRef.current?.click()}
+        {...dropZoneProps}
       >
         <UploadIcon />
-        <S.FileUploadText>{getUploadText()}</S.FileUploadText>
+        <S.FileUploadText>
+          {isDragOver ? '파일을 놓으세요' : '여기로 파일을 끌어오거나 클릭'}
+        </S.FileUploadText>
       </S.FileUploadArea>
       <S.FileInput
         ref={fileInputRef}
@@ -90,9 +63,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
           {files.map((fileWithId) => (
             <S.FileItem key={fileWithId.id}>
               <S.FileName>{fileWithId.file.name}</S.FileName>
-              <S.FileRemoveButton
-                onClick={() => handleRemoveFile(fileWithId.id)}
-              >
+              <S.FileRemoveButton onClick={() => removeFile(fileWithId.id)}>
                 <DeleteIcon />
               </S.FileRemoveButton>
             </S.FileItem>
