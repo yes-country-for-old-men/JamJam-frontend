@@ -2,8 +2,8 @@ import React from 'react';
 import { type InfoEditForm } from '@/features/user/hooks/useInfoEditForm';
 import * as S from '@/features/user/pages/UserInfoEdit/UserInfoEdit.styles';
 import Button from '@/shared/components/Button';
-import ImageUpload from '@/shared/components/ImageUpload';
 import Input from '@/shared/components/Input';
+import SingleImageUpload from '@/shared/components/SingleImageUpload';
 
 interface BasicInfoSectionProps {
   form: InfoEditForm;
@@ -40,8 +40,8 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({
       <S.SectionHeader>기본 정보</S.SectionHeader>
       <S.FieldGroup>
         <S.FieldLabel>프로필 사진</S.FieldLabel>
-        <ImageUpload
-          image={form.watch('profileUrl')}
+        <SingleImageUpload
+          image={form.watch('profileUrl') ?? null}
           onImageChange={(image) => form.setValue('profileUrl', image)}
           width={160}
           height={160}

@@ -9,7 +9,8 @@ import ThumbnailNormalImage from '@/shared/assets/images/thumbnail-normal.png';
 import Button from '@/shared/components/Button';
 import Checkbox from '@/shared/components/Checkbox';
 import GradientButton from '@/shared/components/GradientButton';
-import ImageUpload from '@/shared/components/ImageUpload';
+import MultiImageUpload from '@/shared/components/MultiImageUpload';
+import SingleImageUpload from '@/shared/components/SingleImageUpload';
 import Spinner from '@/shared/components/Spinner';
 import type { FileWithId } from '@/shared/types/FileWithId';
 
@@ -46,7 +47,7 @@ const MediaUploadStep: React.FC<MediaUploadStepProps> = ({
               name="thumbnailImage"
               control={form.control}
               render={({ field }) => (
-                <ImageUpload
+                <SingleImageUpload
                   image={field.value}
                   onImageChange={field.onChange}
                   width={280}
@@ -112,13 +113,12 @@ const MediaUploadStep: React.FC<MediaUploadStepProps> = ({
           name="portfolioImages"
           control={form.control}
           render={({ field }) => (
-            <ImageUpload
-              images={field.value}
+            <MultiImageUpload
+              images={field.value ?? []}
               onImagesChange={(images) => {
                 field.onChange(images);
                 onPortfolioImagesChange(images);
               }}
-              multiple
               maxImages={MAX_PORTFOLIO_IMAGES}
             />
           )}
