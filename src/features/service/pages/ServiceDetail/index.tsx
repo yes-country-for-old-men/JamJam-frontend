@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import { useAuthStatus } from '@/features/auth/hooks/useAuthStatus';
+import { createChatRoom } from '@/features/chat/api/chatApi';
+import { inquireService } from '@/features/service/api/serviceApi';
 import PortfolioSection from '@/features/service/components/ServiceDetail/PortfolioSection';
 import ServiceHeader from '@/features/service/components/ServiceDetail/ServiceHeader';
 import ServiceInfoSection from '@/features/service/components/ServiceDetail/ServiceInfoSection';
@@ -9,13 +11,15 @@ import { useServiceDetailQuery } from '@/features/service/hooks/queries/useServi
 import * as S from '@/features/service/pages/ServiceDetail/Service.styles';
 import CategoryTabNavigator from '@/shared/components/CategoryTabNavigator';
 import SectionTab from '@/shared/components/SectionTab';
+import { useDialog } from '@/shared/hooks/useDialog';
 import { useTabScroll } from '@/shared/hooks/useTabScroll';
-import { decodeToken } from '@/shared/utils';
+import { decodeToken, eventManager } from '@/shared/utils';
 
 const Service: React.FC = () => {
   const { serviceId } = useParams<{ serviceId: string }>();
   const navigate = useNavigate();
-  const { userInfo } = useAuthStatus();
+  const { isLoggedIn, userInfo } = useAuthStatus();
+  const { alert } = useDialog();
 
   const token = localStorage.getItem('accessToken') || '';
   const currentUserId = decodeToken(token)?.userId;
@@ -34,6 +38,7 @@ const Service: React.FC = () => {
       ? String(serviceData.userId) === currentUserId
       : false;
   const isClient = userInfo?.role === 'CLIENT';
+  const isProvider = userInfo?.role === 'PROVIDER';
 
   const sectionRefs = hasPortfolio
     ? [serviceInfoRef, portfolioRef]
@@ -66,6 +71,33 @@ const Service: React.FC = () => {
     }
   };
 
+  const handleProviderClick = () => {
+    if (serviceData) {
+      navigate(`/provider/${serviceData.userId}`);
+    }
+  };
+
+  const handleInquiryClick = async () => {
+    if (!isLoggedIn) {
+      eventManager.emit('openLoginModal');
+      return;
+    }
+
+    if (!parsedServiceId || !serviceData) return;
+
+    try {
+      await inquireService({ serviceId: parsedServiceId });
+      const response = await createChatRoom({ otherId: serviceData.userId });
+      const { roomId } = response.data.content;
+      navigate('/chat', { state: { roomId } });
+    } catch {
+      await alert({
+        title: '문의 실패',
+        content: '문의 처리 중 오류가 발생했습니다.',
+      });
+    }
+  };
+
   if (!serviceId || Number.isNaN(parsedServiceId!)) {
     return <Navigate to="/not-found" replace />;
   }
@@ -89,7 +121,10 @@ const Service: React.FC = () => {
         <S.MainContent>
           <ServiceHeader
             data={serviceData}
+            isProvider={isProvider}
             onCategoryClick={handleCategoryClick}
+            onInquiryClick={handleInquiryClick}
+            onProviderClick={handleProviderClick}
           />
           <SectionTab
             tabs={TABS}

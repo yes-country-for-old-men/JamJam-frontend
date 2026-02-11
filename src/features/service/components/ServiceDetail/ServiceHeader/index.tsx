@@ -8,12 +8,18 @@ import { getCategoryNameById } from '@/shared/utils';
 
 interface ServiceHeaderProps {
   data: ServiceDetailContent;
+  isProvider: boolean;
   onCategoryClick: () => void;
+  onInquiryClick: () => void;
+  onProviderClick: () => void;
 }
 
 const ServiceHeader: React.FC<ServiceHeaderProps> = ({
   data,
+  isProvider,
   onCategoryClick,
+  onInquiryClick,
+  onProviderClick,
 }) => (
   <>
     <S.CategoryLabel onClick={onCategoryClick}>
@@ -21,7 +27,7 @@ const ServiceHeader: React.FC<ServiceHeaderProps> = ({
     </S.CategoryLabel>
     <S.ServiceTitle>{data.serviceName}</S.ServiceTitle>
     <S.ProviderSection>
-      <S.ProviderProfile>
+      <S.ProviderProfile onClick={onProviderClick}>
         <S.ProviderImageWrapper>
           {data.profileUrl ? (
             <S.ProviderImage src={data.profileUrl} alt={data.nickName} />
@@ -37,7 +43,7 @@ const ServiceHeader: React.FC<ServiceHeaderProps> = ({
           </S.ProviderLocation>
         </S.ProviderInfo>
       </S.ProviderProfile>
-      <Button>문의하기</Button>
+      {!isProvider && <Button onClick={onInquiryClick}>문의하기</Button>}
     </S.ProviderSection>
   </>
 );

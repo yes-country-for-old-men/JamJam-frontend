@@ -140,3 +140,10 @@ export const getServiceList = (params: ServiceListRequest) =>
   apiClient.get<ApiResponse<ServiceListContent>>('/api/service/service-list', {
     params,
   });
+
+interface ServiceInquiryRequest {
+  serviceId: number;
+}
+
+export const inquireService = (params: ServiceInquiryRequest) =>
+  apiClient.post<ApiResponse<void>>('/api/service/inquiry', null, { params });

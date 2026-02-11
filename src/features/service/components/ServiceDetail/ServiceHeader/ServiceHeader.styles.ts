@@ -33,6 +33,7 @@ export const ProviderProfile = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+  cursor: pointer;
 `;
 
 export const ProviderImageWrapper = styled.figure`
