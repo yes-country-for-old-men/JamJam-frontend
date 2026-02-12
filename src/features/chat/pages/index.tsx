@@ -4,13 +4,16 @@ import React, {
   useRef,
   useLayoutEffect,
   useMemo,
+  useCallback,
 } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { useLocation } from 'react-router-dom';
 import ChatHeader from '@/features/chat/components/ChatHeader';
 import ChatInput from '@/features/chat/components/ChatInput';
 import ChatRoomItem from '@/features/chat/components/ChatRoomItem';
 import Messages from '@/features/chat/components/Messages';
-import * as MessagesS from '@/features/chat/components/Messages/Messages.styles';
+import OrderDetailModal from '@/features/chat/components/OrderDetailModal';
+import PriceInputModal from '@/features/chat/components/PriceInputModal';
 import { useMarkAsReadMutation } from '@/features/chat/hooks/mutations/useMarkAsReadMutation';
 import { useChatMessagesQuery } from '@/features/chat/hooks/queries/useChatMessagesQuery';
 import { useChatRoomsQuery } from '@/features/chat/hooks/queries/useChatRoomsQuery';
@@ -22,7 +25,14 @@ import {
   getBubblePosition,
   shouldShowProfile,
 } from '@/features/chat/utils/chatMessagesUtils';
+import {
+  processPayment,
+  confirmOrder,
+  requestPayment,
+  getOrderDetail,
+} from '@/features/order/api/orderApi';
 import LogoIcon from '@/shared/assets/icons/gray-logo-icon.svg?react';
+import { useDialog } from '@/shared/hooks/useDialog';
 import { decodeToken } from '@/shared/utils';
 import type {
   ChatRoom,
@@ -30,15 +40,29 @@ import type {
   MessageType,
   ChatFileInfo,
 } from '@/features/chat/types/Chat';
+import type { OrderDetailContent } from '@/features/order/api/orderApi';
 
 const Chat: React.FC = () => {
+  const location = useLocation();
+  const navigationRoomId = location.state.roomId;
   const [searchQuery, setSearchQuery] = useState('');
   const [messageText, setMessageText] = useState('');
   const [previousMessagesLength, setPreviousMessagesLength] = useState(0);
   const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
   const [realtimeChatRooms, setRealtimeChatRooms] = useState<ChatRoom[]>([]);
-
+  const [isPaymentProcessing, setIsPaymentProcessing] = useState(false);
+  const [isConfirmProcessing, setIsConfirmProcessing] = useState(false);
+  const [isRequestPaymentProcessing, setIsRequestPaymentProcessing] =
+    useState(false);
+  const [orderDetail, setOrderDetail] = useState<OrderDetailContent | null>(
+    null,
+  );
+  const [priceInputState, setPriceInputState] = useState<{
+    isOpen: boolean;
+    orderId: number | null;
+  }>({ isOpen: false, orderId: null });
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const { alert, confirm } = useDialog();
 
   const token = localStorage.getItem('accessToken') || '';
   const currentUserId = decodeToken(token)?.userId || '';
@@ -273,6 +297,115 @@ const Chat: React.FC = () => {
     }
   };
 
+  const handlePayment = useCallback(
+    async (orderId: number, price: number) => {
+      const isConfirmed = await confirm({
+        title: '결제 확인',
+        content: `${price.toLocaleString()}원을 결제하시겠습니까?`,
+      });
+
+      if (!isConfirmed) return;
+
+      setIsPaymentProcessing(true);
+      try {
+        await processPayment({ orderId, price });
+        await alert({
+          title: '결제 완료',
+          content: '결제가 성공적으로 처리되었습니다.',
+        });
+      } catch {
+        await alert({
+          title: '결제 실패',
+          content: '결제 처리 중 오류가 발생했습니다.',
+        });
+      } finally {
+        setIsPaymentProcessing(false);
+      }
+    },
+    [alert, confirm],
+  );
+
+  const handleConfirmOrder = useCallback(
+    async (orderId: number) => {
+      const isConfirmed = await confirm({
+        title: '구매 확정',
+        content: '구매를 확정하시겠습니까? 확정 후에는 취소가 불가능합니다.',
+      });
+
+      if (!isConfirmed) return;
+
+      setIsConfirmProcessing(true);
+      try {
+        await confirmOrder({ orderId });
+        await alert({
+          title: '구매 확정 완료',
+          content: '구매가 확정되었습니다.',
+        });
+      } catch {
+        await alert({
+          title: '구매 확정 실패',
+          content: '구매 확정 처리 중 오류가 발생했습니다.',
+        });
+      } finally {
+        setIsConfirmProcessing(false);
+      }
+    },
+    [alert, confirm],
+  );
+
+  const handleRequestPayment = useCallback((orderId: number) => {
+    setPriceInputState({ isOpen: true, orderId });
+  }, []);
+
+  const handleRequestPaymentSubmit = useCallback(
+    async (price: number) => {
+      const { orderId } = priceInputState;
+      if (!orderId) return;
+
+      setPriceInputState({ isOpen: false, orderId: null });
+
+      if (Number.isNaN(price) || price <= 0) {
+        await alert({
+          title: '입력 오류',
+          content: '올바른 금액을 입력해 주세요.',
+        });
+        return;
+      }
+
+      setIsRequestPaymentProcessing(true);
+      try {
+        await requestPayment({ orderId, price });
+        await alert({
+          title: '결제 요청 완료',
+          content: '결제 요청이 전송되었습니다.',
+        });
+      } catch {
+        await alert({
+          title: '결제 요청 실패',
+          content: '결제 요청 처리 중 오류가 발생했습니다.',
+        });
+      } finally {
+        setIsRequestPaymentProcessing(false);
+      }
+    },
+    [alert, priceInputState.orderId],
+  );
+
+  const handleViewOrderDetail = useCallback(
+    async (orderId: number) => {
+      try {
+        const response = await getOrderDetail({ orderId });
+        setOrderDetail(response.data.content);
+      } catch {
+        await alert({
+          title: '주문 조회 실패',
+          content: '주문 상세 정보를 불러오는 중 오류가 발생했습니다.',
+        });
+      }
+    },
+    [alert],
+  );
+
   const selectedChat = chatRooms.find((chat) => chat.id === selectedChatId);
   const filteredChatRooms = chatRooms.filter((chat) =>
     chat.name.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -306,27 +439,33 @@ const Chat: React.FC = () => {
     maintainScrollPosition();
   }, [messages.length, maintainScrollPosition]);
 
+  const lastMessage = messages[messages.length - 1];
+  const lastMessageId = lastMessage?.id;
+  const lastMessageIsOwn = lastMessage?.isOwn;
+
   useEffect(() => {
-    if (selectedChatId && messages.length > 0) {
-      const lastMessage = messages[messages.length - 1];
+    if (selectedChatId && lastMessageId && !lastMessageIsOwn) {
+      const timeoutId = setTimeout(() => {
+        markMessageAsRead(selectedChatId, lastMessageId);
+      }, 500);
 
-      if (lastMessage && !lastMessage.isOwn && lastMessage.id) {
-        const timeoutId = setTimeout(() => {
-          markMessageAsRead(selectedChatId, lastMessage.id);
-        }, 500);
-
-        return () => clearTimeout(timeoutId);
-      }
+      return () => clearTimeout(timeoutId);
     }
 
     return undefined;
-  }, [selectedChatId, messages]);
+  }, [selectedChatId, lastMessageId, lastMessageIsOwn]);
 
   useEffect(() => {
     if (queryChatRooms.length > 0 && realtimeChatRooms.length === 0) {
       setRealtimeChatRooms(queryChatRooms);
     }
   }, [queryChatRooms, realtimeChatRooms.length]);
+
+  useEffect(() => {
+    if (navigationRoomId && chatRooms.length > 0 && !selectedChatId) {
+      selectChat(navigationRoomId);
+    }
+  }, [navigationRoomId, chatRooms.length]);
 
   if (loading) {
     return (
@@ -379,18 +518,25 @@ const Chat: React.FC = () => {
         <S.MainArea>
           {selectedChat ? (
             <>
-              <ChatHeader selectedChat={selectedChat} />
-              <MessagesS.Container
+              <ChatHeader
+                selectedChat={selectedChat}
+                onLeaveChatRoom={() => {
+                  const leavingId = selectedChatId;
+                  setSelectedChatId(null);
+                  setRealtimeChatRooms((prev) =>
+                    prev.filter((room) => room.id !== leavingId),
+                  );
+                }}
+              />
+              <S.MessagesContainer
                 ref={messagesContainerRef}
                 onScroll={handleMessagesScroll}
               >
                 {Object.entries(groupedMessages).map(([date, dayMessages]) => (
                   <div key={date}>
-                    <MessagesS.MessageDateDivider>
-                      <MessagesS.MessageDateBadge>
-                        {date}
-                      </MessagesS.MessageDateBadge>
-                    </MessagesS.MessageDateDivider>
+                    <S.MessageDateDivider>
+                      <S.MessageDateBadge>{date}</S.MessageDateBadge>
+                    </S.MessageDateDivider>
                     {dayMessages.map((message, index) => {
                       const position = getBubblePosition(dayMessages, index);
                       const prevMessage =
@@ -400,13 +546,21 @@ const Chat: React.FC = () => {
                           ? dayMessages[index + 1]
                           : null;
 
+                      const isCardType = (type?: MessageType) =>
+                        type === 'IMAGE' ||
+                        type === 'FILE' ||
+                        type === 'REQUEST_PAYMENT' ||
+                        type === 'REQUEST_FORM' ||
+                        type === 'PAYMENT_COMPLETED' ||
+                        type === 'ORDER_CANCELLED' ||
+                        type === 'WORK_COMPLETED' ||
+                        type === 'SERVICE_INQUIRY';
+
                       const shouldShowTime =
                         !nextMessage ||
                         nextMessage.isOwn !== message.isOwn ||
-                        nextMessage.messageType === 'IMAGE' ||
-                        nextMessage.messageType === 'FILE' ||
-                        message.messageType === 'IMAGE' ||
-                        message.messageType === 'FILE' ||
+                        isCardType(nextMessage.messageType) ||
+                        isCardType(message.messageType) ||
                         nextMessage.timestamp.getTime() -
                           message.timestamp.getTime() >=
                           60 * 1000;
@@ -414,10 +568,8 @@ const Chat: React.FC = () => {
                       const isNewMessageGroup =
                         !prevMessage ||
                         prevMessage.isOwn !== message.isOwn ||
-                        prevMessage.messageType === 'IMAGE' ||
-                        prevMessage.messageType === 'FILE' ||
-                        message.messageType === 'IMAGE' ||
-                        message.messageType === 'FILE' ||
+                        isCardType(prevMessage.messageType) ||
+                        isCardType(message.messageType) ||
                         message.timestamp.getTime() -
                           prevMessage.timestamp.getTime() >=
                           60 * 1000;
@@ -436,13 +588,22 @@ const Chat: React.FC = () => {
                           shouldShowProfile={shouldShowSenderProfile}
                           isNewMessageGroup={isNewMessageGroup}
                           selectedChat={selectedChat}
+                          onPayment={handlePayment}
+                          isPaymentProcessing={isPaymentProcessing}
+                          onConfirmOrder={handleConfirmOrder}
+                          isConfirmProcessing={isConfirmProcessing}
+                          onRequestPayment={handleRequestPayment}
+                          isRequestPaymentProcessing={
+                            isRequestPaymentProcessing
+                          }
+                          onViewOrderDetail={handleViewOrderDetail}
                         />
                       );
                     })}
                   </div>
                 ))}
                 <div ref={messagesEndRef} />
-              </MessagesS.Container>
+              </S.MessagesContainer>
               <ChatInput
                 messageText={messageText}
                 isConnected={isConnected}
@@ -463,6 +624,16 @@ const Chat: React.FC = () => {
           )}
         </S.MainArea>
       </S.ChatContainer>
+      <OrderDetailModal
+        isOpen={orderDetail !== null}
+        onClose={() => setOrderDetail(null)}
+        orderDetail={orderDetail}
+      />
+      <PriceInputModal
+        isOpen={priceInputState.isOpen}
+        onClose={() => setPriceInputState({ isOpen: false, orderId: null })}
+        onSubmit={handleRequestPaymentSubmit}
+      />
     </S.Container>
   );
 };

@@ -77,3 +77,23 @@ export const EmptyStateText = styled.div`
   margin-top: 16px;
   padding: 0 12px;
 `;
+
+export const MessagesContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 12px;
+  padding: 0 24px;
+  overflow-y: auto;
+`;
+
+export const MessageDateDivider = styled.div`
+  text-align: center;
+  margin: 16px 0;
+`;
+
+export const MessageDateBadge = styled.time`
+  border-radius: 12px;
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
+  font-size: 12px;
+`;
