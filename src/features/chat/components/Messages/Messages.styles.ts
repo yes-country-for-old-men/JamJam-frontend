@@ -1,15 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-export const Container = styled.main`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 12px;
-  padding: 0 24px;
-  overflow-y: auto;
-`;
-
 export const MessageGroup = styled.div<{ isOwn: boolean }>`
   display: flex;
   flex-direction: column;
@@ -65,8 +56,20 @@ export const MessageBubble = styled.div<{
   ${(props) => {
     const { isOwn, position, messageType } = props;
 
-    if (messageType === 'IMAGE' || messageType === 'FILE') {
+    const isCardType =
+      messageType === 'IMAGE' ||
+      messageType === 'FILE' ||
+      messageType === 'REQUEST_PAYMENT' ||
+      messageType === 'REQUEST_FORM' ||
+      messageType === 'PAYMENT_COMPLETED' ||
+      messageType === 'ORDER_CANCELLED' ||
+      messageType === 'WORK_COMPLETED' ||
+      messageType === 'WORK_CONFIRMED' ||
+      messageType === 'SERVICE_INQUIRY';
+
+    if (isCardType) {
       return css`
+        padding: 0;
         background-color: ${props.theme.COLORS.BACKGROUND};
         border-radius: 18px;
       `;
@@ -110,17 +113,6 @@ export const MessageTimestamp = styled.time<{ isOwn: boolean }>`
   color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
   ${(props) => (props.isOwn ? 'margin-right: 4px;' : 'margin-left: 4px;')}
   white-space: nowrap;
-`;
-
-export const MessageDateDivider = styled.div`
-  text-align: center;
-  margin: 16px 0;
-`;
-
-export const MessageDateBadge = styled.time`
-  border-radius: 12px;
-  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
-  font-size: 12px;
 `;
 
 export const FileList = styled.div`
@@ -235,4 +227,43 @@ export const ImageMessage = styled.img`
   &:hover {
     opacity: 0.7;
   }
+`;
+
+export const OrderCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  border-radius: 12px;
+  background-color: ${(props) => props.theme.COLORS.BACKGROUND};
+  overflow: hidden;
+`;
+
+export const OrderCardThumbnail = styled.img`
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+`;
+
+export const OrderCardContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+`;
+
+export const OrderCardTitle = styled.h4`
+  font-size: 15px;
+  font-weight: 700;
+`;
+
+export const OrderCardDescription = styled.p`
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
+  font-size: 13px;
+  line-height: 1.4;
+`;
+
+export const OrderCardAmount = styled.p`
+  color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
+  font-size: 18px;
+  font-weight: 700;
 `;

@@ -1,5 +1,23 @@
-export type MessageType = 'TEXT' | 'IMAGE' | 'FILE';
+export type MessageType =
+  | 'TEXT'
+  | 'IMAGE'
+  | 'FILE'
+  | 'REQUEST_PAYMENT'
+  | 'REQUEST_FORM'
+  | 'PAYMENT_COMPLETED'
+  | 'ORDER_CANCELLED'
+  | 'WORK_COMPLETED'
+  | 'WORK_CONFIRMED'
+  | 'SERVICE_INQUIRY';
+
 export type FileType = 'IMAGE' | 'FILE';
+
+export interface OrderMessageContent {
+  serviceId: number;
+  serviceName: string;
+  serviceThumbnail?: string;
+  orderId?: number;
+}
 
 export interface ChatFileInfo {
   fileUrl: string;
@@ -29,6 +47,8 @@ export interface Message {
   fileName?: string;
   fileSize?: number;
   files?: ChatFileInfo[];
+  orderId?: number;
+  orderContent?: OrderMessageContent;
 }
 
 export interface ChatRoomSummary {
@@ -50,6 +70,8 @@ export interface ChatMessage {
   fileName?: string;
   fileSize?: number;
   files?: ChatFileInfo[];
+  orderId?: number;
+  orderContent?: OrderMessageContent;
 }
 
 export interface SendMessageRequest {
@@ -85,6 +107,8 @@ export interface StompNewMessageEvent {
   fileName?: string;
   fileSize?: number;
   files?: ChatFileInfo[];
+  orderId?: number;
+  orderContent?: OrderMessageContent;
 }
 
 export interface StompChatRoomUpdateEvent {

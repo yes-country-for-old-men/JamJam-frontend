@@ -38,6 +38,8 @@ const convertStompMessageToLocal = (
     fileName: firstFile?.fileName ?? stompMessage.fileName,
     fileSize: firstFile?.fileSize ?? stompMessage.fileSize,
     files: stompMessage.files,
+    orderId: stompMessage.orderId,
+    orderContent: stompMessage.orderContent,
   };
 };
 

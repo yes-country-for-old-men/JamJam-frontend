@@ -20,6 +20,8 @@ const convertApiMessageToLocal = (
     fileName: firstFile?.fileName ?? apiMessage.fileName,
     fileSize: firstFile?.fileSize ?? apiMessage.fileSize,
     files: apiMessage.files,
+    orderId: apiMessage.orderId,
+    orderContent: apiMessage.orderContent,
   };
 };
 
