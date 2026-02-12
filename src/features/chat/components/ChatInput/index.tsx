@@ -6,7 +6,7 @@ import CrossIcon from '@/shared/assets/icons/cross.svg?react';
 import FileIcon from '@/shared/assets/icons/file.svg?react';
 import PictureIcon from '@/shared/assets/icons/picture.svg?react';
 import SendIcon from '@/shared/assets/icons/send.svg?react';
-import { useModal } from '@/shared/hooks/useModal';
+import { useDialog } from '@/shared/hooks/useDialog';
 import type {
   MessageType,
   ChatFileInfo,
@@ -88,7 +88,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFiles, setSelectedFiles] = useState<SelectedFile[]>([]);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
-  const { alert } = useModal();
+  const { alert } = useDialog();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     onMessageChange(e.target.value);

@@ -1,3 +1,4 @@
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
 export const Container = styled.header`
@@ -44,6 +45,10 @@ export const ChatTitle = styled.span`
   color: ${(props) => props.theme.COLORS.LABEL.PRIMARY};
 `;
 
+export const MenuWrapper = styled.div`
+  position: relative;
+`;
+
 export const MenuButton = styled.button`
   display: flex;
   align-items: center;
@@ -56,5 +61,42 @@ export const MenuButton = styled.button`
   &:hover {
     background-color: ${(props) => props.theme.COLORS.GRAY[6]};
     color: ${(props) => props.theme.COLORS.LABEL.PRIMARY};
+  }
+`;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+export const DropdownMenu = styled.div`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background-color: ${(props) => props.theme.COLORS.BACKGROUND};
+  border: 1px solid ${(props) => props.theme.COLORS.GRAY[3]};
+  border-radius: 8px;
+  overflow: hidden;
+  min-width: 120px;
+  animation: ${fadeIn} 0.2s ease-out;
+`;
+
+export const DropdownItem = styled.button`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+
+  &:hover {
+    background-color: ${(props) => props.theme.COLORS.GRAY[5]};
   }
 `;
