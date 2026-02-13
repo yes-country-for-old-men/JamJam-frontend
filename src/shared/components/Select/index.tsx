@@ -1,4 +1,4 @@
-import React, { type SelectHTMLAttributes } from 'react';
+import { type SelectHTMLAttributes } from 'react';
 import ArrowDownIcon from '@/shared/assets/icons/arrow-down.svg?react';
 import RequiredIcon from '@/shared/assets/icons/required.svg?react';
 import theme from '@/shared/styles/theme';

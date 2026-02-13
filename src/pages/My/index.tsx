@@ -26,6 +26,7 @@ const My: React.FC = () => {
       : [
           { key: 'info-edit', label: '회원 정보 수정' },
           { key: 'credit', label: '잼잼 크레딧' },
+          { key: 'order-history', label: '내 주문 관리' },
         ];
 
   const currentPath = location.pathname.split('/').pop();

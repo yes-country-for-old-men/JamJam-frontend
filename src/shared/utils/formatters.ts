@@ -60,3 +60,7 @@ export const formatDeadlineISO = (deadline: {
   const formattedDay = day.padStart(2, '0');
   return `${year}-${formattedMonth}-${formattedDay}T23:59:59`;
 };
+
+export const formatPrice = (price: number): string => {
+  return price.toLocaleString('ko-KR');
+};

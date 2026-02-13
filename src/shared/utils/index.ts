@@ -11,6 +11,7 @@ export {
   formatDate,
   formatRelativeTime,
   formatDeadlineISO,
+  formatPrice,
 } from './formatters';
 export { isValidDate, isEligibleAgeForRole } from './validators';
 export { getCategoryNameById, getSkillNameById } from './dataMappers';
