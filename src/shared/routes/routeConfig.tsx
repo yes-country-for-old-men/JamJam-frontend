@@ -26,7 +26,6 @@ export const publicRoutes = [
   { path: 'search', element: <Search /> },
   { path: 'provider/:userId', element: <Provider /> },
   { path: 'service/:serviceId', element: <Service /> },
-  { path: 'order', element: <OrderCreate /> },
   { path: 'forbidden', element: <Forbidden /> },
   { path: 'not-found', element: <NotFound /> },
   { path: '*', element: <NotFound /> },
@@ -39,6 +38,14 @@ export const protectedRoutes = [
       <ProtectedRoute>
         <Chat />
       </ProtectedRoute>
+    ),
+  },
+  {
+    path: 'order',
+    element: (
+      <ClientRoute>
+        <OrderCreate />
+      </ClientRoute>
     ),
   },
 ];

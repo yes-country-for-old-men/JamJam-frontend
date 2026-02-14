@@ -6,7 +6,6 @@ import Button from '@/shared/components/Button';
 interface ServiceSidePanelProps {
   data: ServiceDetailContent;
   isOwner: boolean;
-  isClient: boolean;
   onOrderClick: () => void;
   onEditClick: () => void;
 }
@@ -14,7 +13,6 @@ interface ServiceSidePanelProps {
 const SidePanel: React.FC<ServiceSidePanelProps> = ({
   data,
   isOwner,
-  isClient,
   onOrderClick,
   onEditClick,
 }) => {
@@ -27,15 +25,11 @@ const SidePanel: React.FC<ServiceSidePanelProps> = ({
       );
     }
 
-    if (isClient) {
-      return (
-        <Button fullWidth onClick={onOrderClick}>
-          서비스 의뢰
-        </Button>
-      );
-    }
-
-    return null;
+    return (
+      <Button fullWidth onClick={onOrderClick}>
+        서비스 의뢰
+      </Button>
+    );
   };
 
   return (

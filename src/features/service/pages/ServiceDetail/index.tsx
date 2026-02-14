@@ -37,7 +37,6 @@ const Service: React.FC = () => {
     currentUserId && serviceData
       ? String(serviceData.userId) === currentUserId
       : false;
-  const isClient = userInfo?.role === 'CLIENT';
   const isProvider = userInfo?.role === 'PROVIDER';
 
   const sectionRefs = hasPortfolio
@@ -144,7 +143,6 @@ const Service: React.FC = () => {
         <SidePanel
           data={serviceData}
           isOwner={isOwner}
-          isClient={isClient}
           onOrderClick={handleOrderClick}
           onEditClick={handleEditClick}
         />
