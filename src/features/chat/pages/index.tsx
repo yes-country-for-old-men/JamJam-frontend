@@ -44,7 +44,7 @@ import type { OrderDetailContent } from '@/features/order/api/orderApi';
 
 const Chat: React.FC = () => {
   const location = useLocation();
-  const navigationRoomId = location.state.roomId;
+  const navigationRoomId = location.state?.roomId;
   const [searchQuery, setSearchQuery] = useState('');
   const [messageText, setMessageText] = useState('');
   const [previousMessagesLength, setPreviousMessagesLength] = useState(0);
