@@ -43,9 +43,6 @@ export interface Message {
   timestamp: Date;
   status: 'sending' | 'sent' | 'failed';
   messageType?: MessageType;
-  fileUrl?: string;
-  fileName?: string;
-  fileSize?: number;
   files?: ChatFileInfo[];
   orderId?: number;
   orderContent?: OrderMessageContent;
@@ -66,9 +63,6 @@ export interface ChatMessage {
   isOwn: boolean;
   sentAt: string;
   messageType?: MessageType;
-  fileUrl?: string;
-  fileName?: string;
-  fileSize?: number;
   files?: ChatFileInfo[];
   orderId?: number;
   orderContent?: OrderMessageContent;
@@ -103,9 +97,6 @@ export interface StompNewMessageEvent {
   content: string;
   sentAt: string;
   messageType?: MessageType;
-  fileUrl?: string;
-  fileName?: string;
-  fileSize?: number;
   files?: ChatFileInfo[];
   orderId?: number;
   orderContent?: OrderMessageContent;

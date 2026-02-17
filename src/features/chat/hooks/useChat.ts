@@ -24,8 +24,6 @@ const convertStompMessageToLocal = (
   stompMessage: StompNewMessageEvent,
   currentUserId: string,
 ): Message => {
-  const firstFile = stompMessage.files?.[0];
-
   return {
     id: stompMessage.messageId,
     chatRoomId: 0,
@@ -34,9 +32,6 @@ const convertStompMessageToLocal = (
     timestamp: new Date(stompMessage.sentAt),
     status: 'sent',
     messageType: stompMessage.messageType || 'TEXT',
-    fileUrl: firstFile?.fileUrl ?? stompMessage.fileUrl,
-    fileName: firstFile?.fileName ?? stompMessage.fileName,
-    fileSize: firstFile?.fileSize ?? stompMessage.fileSize,
     files: stompMessage.files,
     orderId: stompMessage.orderId,
     orderContent: stompMessage.orderContent,
@@ -89,11 +84,12 @@ export const useChat = ({
       prev.filter((msg) => {
         if (msg.status !== 'sending' || !msg.isOwn) return true;
 
-        if (message.fileUrl && msg.fileUrl === message.fileUrl) {
+        const messageFileUrl = message.files?.[0]?.fileUrl;
+        if (messageFileUrl && msg.files?.[0]?.fileUrl === messageFileUrl) {
           return false;
         }
 
-        if (!message.fileUrl && msg.text === message.text) {
+        if (!messageFileUrl && msg.text === message.text) {
           return false;
         }
 

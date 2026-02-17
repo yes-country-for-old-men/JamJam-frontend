@@ -6,8 +6,6 @@ const convertApiMessageToLocal = (
   apiMessage: ChatMessage & { messageId?: number },
   chatRoomId: number,
 ): Message => {
-  const firstFile = apiMessage.files?.[0];
-
   return {
     id: apiMessage.messageId || 0,
     chatRoomId,
@@ -16,9 +14,6 @@ const convertApiMessageToLocal = (
     timestamp: new Date(apiMessage.sentAt),
     status: 'sent',
     messageType: apiMessage.messageType || 'TEXT',
-    fileUrl: firstFile?.fileUrl ?? apiMessage.fileUrl,
-    fileName: firstFile?.fileName ?? apiMessage.fileName,
-    fileSize: firstFile?.fileSize ?? apiMessage.fileSize,
     files: apiMessage.files,
     orderId: apiMessage.orderId,
     orderContent: apiMessage.orderContent,

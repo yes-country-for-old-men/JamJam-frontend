@@ -230,18 +230,14 @@ const Chat: React.FC = () => {
   ): void => {
     if (!selectedChatId || files.length === 0) return;
 
-    const firstFile = files[0];
     const tempMessage: Message = {
       id: Date.now(),
       chatRoomId: selectedChatId,
-      text: message || firstFile.fileName,
+      text: message || files[0].fileName,
       isOwn: true,
       timestamp: new Date(),
       status: 'sending',
       messageType,
-      fileUrl: firstFile.fileUrl,
-      fileName: firstFile.fileName,
-      fileSize: firstFile.fileSize,
       files,
     };
 
