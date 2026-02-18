@@ -12,11 +12,16 @@ export const Container = styled.div`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 1360px;
   margin: 0 auto;
   gap: 32px;
   padding: 48px 0;
+`;
+
+export const Section = styled(motion.section)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const TitleSection = styled.div`
@@ -45,8 +50,4 @@ export const SubTitle = styled.h2`
 export const SearchSection = styled.div`
   width: 100%;
   max-width: 480px;
-`;
-
-export const Section = styled(motion.div)`
-  width: 100%;
 `;
