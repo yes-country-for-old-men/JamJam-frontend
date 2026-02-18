@@ -6,15 +6,9 @@ interface CategoryCardProps {
   id: number;
   name: string;
   icon: React.ReactNode;
-  className?: string;
 }
 
-const CategoryCard: React.FC<CategoryCardProps> = ({
-  id,
-  name,
-  icon,
-  className,
-}) => {
+const CategoryCard: React.FC<CategoryCardProps> = ({ id, name, icon }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -22,9 +16,9 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
   };
 
   return (
-    <S.Container className={className} onClick={handleClick}>
+    <S.Container onClick={handleClick}>
       <S.IconWrapper>{icon}</S.IconWrapper>
-      <S.CategoryTitle>{name}</S.CategoryTitle>
+      <S.CategoryName>{name}</S.CategoryName>
     </S.Container>
   );
 };

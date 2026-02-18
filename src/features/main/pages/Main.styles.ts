@@ -5,66 +5,48 @@ export const Container = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   min-width: max-content;
   overflow-x: auto;
-  padding: 0;
 `;
 
-export const ScrollableContent = styled.div`
+export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 1200px;
-  gap: 72px;
-  padding: 72px 24px;
+  width: 1360px;
+  margin: 0 auto;
+  gap: 32px;
+  padding: 48px 0;
 `;
 
-export const TopSection = styled(motion.div)`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  gap: 64px;
-`;
-
-export const LeftSection = styled(motion.div)`
+export const TitleSection = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
-  align-items: flex-start;
-  justify-content: center;
+  align-items: center;
 `;
 
-export const Title = styled(motion.div)`
-  font-size: 42px;
+export const Title = styled.h1`
+  margin-bottom: 8px;
+  font-family: A2z;
+  font-size: 28px;
   font-weight: 700;
-  text-align: start;
-  line-height: 1.4;
+  text-align: center;
   white-space: pre-line;
-  margin-bottom: 36px;
   word-break: keep-all;
 `;
 
-export const SearchBarWrapper = styled(motion.div)`
-  width: 100%;
-  min-width: 300px;
+export const SubTitle = styled.h2`
+  margin-bottom: 32px;
+  font-size: 18px;
+  font-weight: 400;
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
 `;
 
-export const CarouselWrapper = styled(motion.div)`
-  flex-shrink: 0;
+export const SearchSection = styled.div`
+  width: 100%;
+  max-width: 480px;
 `;
 
-export const CategorySection = styled.section`
+export const Section = styled(motion.div)`
   width: 100%;
-`;
-
-export const CategoryGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  width: 100%;
-  gap: 24px;
 `;

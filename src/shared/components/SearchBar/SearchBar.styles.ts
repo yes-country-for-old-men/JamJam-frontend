@@ -26,8 +26,8 @@ export const SearchInput = styled.input`
   border: none;
   outline: none;
   border-radius: 12px;
-  font-size: 18px;
-  padding: 24px 64px 24px 20px;
+  font-size: 16px;
+  padding: 20px 60px 20px 16px;
 
   &::placeholder {
     color: ${(props) => props.theme.COLORS.LABEL.TERTIARY};
@@ -42,13 +42,18 @@ export const SearchButton = styled.button`
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 12px;
   background-color: transparent;
   transition:
     transform 0.2s ease,
     background-color 0.2s ease;
+
+  & svg {
+    width: auto;
+    height: 20px;
+  }
 
   &:hover {
     transform: translateY(-50%) scale(1.1);
