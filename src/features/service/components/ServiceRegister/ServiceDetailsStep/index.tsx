@@ -3,10 +3,12 @@ import { Controller, type UseFormReturn } from 'react-hook-form';
 import * as S from '@/features/service/pages/ServiceRegister/ServiceRegister.styles';
 import { type ServiceRegisterData } from '@/features/service/schemas/serviceRegisterSchema';
 import Button from '@/shared/components/Button';
+import FormMessage from '@/shared/components/FormMessage';
 import Input from '@/shared/components/Input';
 import RichTextEditor from '@/shared/components/RichTextEditor';
 import Select from '@/shared/components/Select';
 import { CATEGORIES } from '@/shared/constants';
+import { parsePrice } from '@/shared/utils';
 
 interface ServiceDetailsStepProps {
   form: UseFormReturn<ServiceRegisterData>;
@@ -25,11 +27,6 @@ const ServiceDetailsStep: React.FC<ServiceDetailsStepProps> = ({
   onNext,
   onPrevious,
 }) => {
-  const parsePrice = (str: string): number => {
-    const cleanStr = str.replace(/\D/g, '');
-    return parseInt(cleanStr, 10) || 0;
-  };
-
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const numericValue = parsePrice(e.target.value);
     const formattedValue = numericValue.toLocaleString();
@@ -56,9 +53,10 @@ const ServiceDetailsStep: React.FC<ServiceDetailsStepProps> = ({
           )}
         />
         {form.formState.errors.serviceName && (
-          <S.InvalidMessage>
-            {form.formState.errors.serviceName.message}
-          </S.InvalidMessage>
+          <FormMessage
+            type="error"
+            message={form.formState.errors.serviceName.message || ''}
+          />
         )}
         {serviceNames.length > 0 && (
           <S.RecommendationWrapper>
@@ -87,9 +85,10 @@ const ServiceDetailsStep: React.FC<ServiceDetailsStepProps> = ({
           )}
         />
         {form.formState.errors.serviceDetail && (
-          <S.InvalidMessage>
-            {form.formState.errors.serviceDetail.message}
-          </S.InvalidMessage>
+          <FormMessage
+            type="error"
+            message={form.formState.errors.serviceDetail.message || ''}
+          />
         )}
       </S.Section>
       <S.Section>
@@ -116,9 +115,10 @@ const ServiceDetailsStep: React.FC<ServiceDetailsStepProps> = ({
           )}
         />
         {form.formState.errors.category && (
-          <S.InvalidMessage>
-            {form.formState.errors.category.message}
-          </S.InvalidMessage>
+          <FormMessage
+            type="error"
+            message={form.formState.errors.category.message || ''}
+          />
         )}
       </S.Section>
       <S.Section>
@@ -130,9 +130,10 @@ const ServiceDetailsStep: React.FC<ServiceDetailsStepProps> = ({
           placeholder="가격을 입력해 주세요"
         />
         {form.formState.errors.price && (
-          <S.InvalidMessage>
-            {form.formState.errors.price.message}
-          </S.InvalidMessage>
+          <FormMessage
+            type="error"
+            message={form.formState.errors.price.message || ''}
+          />
         )}
       </S.Section>
       <S.NavigationButtonsWrapper>

@@ -2,6 +2,7 @@ import React from 'react';
 import { type Step2Form } from '@/features/signup/hooks/useSignUpForm';
 import * as S from '@/features/signup/pages/SignUp.styles';
 import Button from '@/shared/components/Button';
+import FormMessage from '@/shared/components/FormMessage';
 import Input from '@/shared/components/Input';
 
 interface Step2Props {
@@ -34,26 +35,30 @@ const Step2: React.FC<Step2Props> = ({
 
   const getNicknameMessage = () => {
     if (nicknameError) {
-      return <S.InvalidMessage>{nicknameError.message}</S.InvalidMessage>;
+      return <FormMessage type="error" message={nicknameError.message || ''} />;
     }
     if (isNicknameAvailable === true) {
-      return <S.SuccessMessage>사용 가능한 닉네임입니다.</S.SuccessMessage>;
+      return <FormMessage type="success" message="사용 가능한 닉네임입니다." />;
     }
     if (isNicknameAvailable === false) {
-      return <S.InvalidMessage>이미 사용 중인 닉네임입니다.</S.InvalidMessage>;
+      return (
+        <FormMessage type="error" message="이미 사용 중인 닉네임입니다." />
+      );
     }
     return null;
   };
 
   const getIdMessage = () => {
     if (idError) {
-      return <S.InvalidMessage>{idError.message}</S.InvalidMessage>;
+      return <FormMessage type="error" message={idError.message || ''} />;
     }
     if (isIdAvailable === true) {
-      return <S.SuccessMessage>사용 가능한 아이디입니다.</S.SuccessMessage>;
+      return <FormMessage type="success" message="사용 가능한 아이디입니다." />;
     }
     if (isIdAvailable === false) {
-      return <S.InvalidMessage>이미 사용 중인 아이디입니다.</S.InvalidMessage>;
+      return (
+        <FormMessage type="error" message="이미 사용 중인 아이디입니다." />
+      );
     }
     return null;
   };
@@ -62,16 +67,16 @@ const Step2: React.FC<Step2Props> = ({
     <S.FormSection>
       <S.InputWrapper>
         <S.FormLabel>닉네임</S.FormLabel>
-        <S.NicknameInputContainer>
-          <S.NicknameInput>
+        <S.FlexInputGroup>
+          <S.FlexInputWrapper>
             <Input
               placeholder="10자 이내의 한글, 영문, 숫자 조합"
               {...form.register('nickname', {
                 onChange: onNicknameChange,
               })}
             />
-          </S.NicknameInput>
-          <S.ButtonWrapper>
+          </S.FlexInputWrapper>
+          <S.ActionButtonWrapper>
             <Button
               type="button"
               fullWidth
@@ -80,23 +85,22 @@ const Step2: React.FC<Step2Props> = ({
             >
               중복 확인
             </Button>
-          </S.ButtonWrapper>
-        </S.NicknameInputContainer>
+          </S.ActionButtonWrapper>
+        </S.FlexInputGroup>
         {getNicknameMessage()}
       </S.InputWrapper>
-
       <S.InputWrapper>
         <S.FormLabel>아이디</S.FormLabel>
-        <S.IdInputContainer>
-          <S.IdInput>
+        <S.FlexInputGroup>
+          <S.FlexInputWrapper>
             <Input
               placeholder="소문자로 시작, 소문자와 숫자만 허용"
               {...form.register('id', {
                 onChange: onIdChange,
               })}
             />
-          </S.IdInput>
-          <S.ButtonWrapper>
+          </S.FlexInputWrapper>
+          <S.ActionButtonWrapper>
             <Button
               type="button"
               fullWidth
@@ -105,11 +109,10 @@ const Step2: React.FC<Step2Props> = ({
             >
               중복 확인
             </Button>
-          </S.ButtonWrapper>
-        </S.IdInputContainer>
+          </S.ActionButtonWrapper>
+        </S.FlexInputGroup>
         {getIdMessage()}
       </S.InputWrapper>
-
       <S.InputWrapper>
         <Input
           label="비밀번호"
@@ -119,10 +122,9 @@ const Step2: React.FC<Step2Props> = ({
           {...form.register('password')}
         />
         {passwordError && (
-          <S.InvalidMessage>{passwordError.message}</S.InvalidMessage>
+          <FormMessage type="error" message={passwordError.message || ''} />
         )}
       </S.InputWrapper>
-
       <S.InputWrapper>
         <Input
           label="비밀번호 확인"
@@ -132,7 +134,10 @@ const Step2: React.FC<Step2Props> = ({
           {...form.register('confirmPassword')}
         />
         {confirmPasswordError && (
-          <S.InvalidMessage>{confirmPasswordError.message}</S.InvalidMessage>
+          <FormMessage
+            type="error"
+            message={confirmPasswordError.message || ''}
+          />
         )}
       </S.InputWrapper>
     </S.FormSection>

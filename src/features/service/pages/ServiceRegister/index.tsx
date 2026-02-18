@@ -12,7 +12,7 @@ import { useServiceRegisterForm } from '@/features/service/hooks/useServiceRegis
 import { useServiceRegisterSteps } from '@/features/service/hooks/useServiceRegisterSteps';
 import * as S from '@/features/service/pages/ServiceRegister/ServiceRegister.styles';
 import { useDialog } from '@/shared/hooks/useDialog';
-import { base64ToFile } from '@/shared/utils';
+import { base64ToFile, parsePrice } from '@/shared/utils';
 
 const ServiceRegister: React.FC = () => {
   const { form, formData, updatePrice, updatePortfolioImages } =
@@ -34,11 +34,6 @@ const ServiceRegister: React.FC = () => {
   } = useServiceRegisterSteps();
 
   const { alert, loading } = useDialog();
-
-  const parsePrice = (str: string): number => {
-    const cleanStr = str.replace(/\D/g, '');
-    return parseInt(cleanStr, 10) || 0;
-  };
 
   const handlePriceChange = (value: string) => {
     const numericValue = parsePrice(value);

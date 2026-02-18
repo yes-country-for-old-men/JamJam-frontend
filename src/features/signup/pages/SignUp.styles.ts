@@ -76,37 +76,17 @@ export const DateInputContainer = styled.div`
   gap: 12px;
 `;
 
-export const IdInputContainer = styled.div`
+export const FlexInputGroup = styled.div`
   display: flex;
   gap: 8px;
   align-items: flex-end;
 `;
 
-export const IdInput = styled.div`
+export const FlexInputWrapper = styled.div`
   flex: 1;
 `;
 
-export const NicknameInputContainer = styled.div`
-  display: flex;
-  gap: 8px;
-  align-items: flex-end;
-`;
-
-export const NicknameInput = styled.div`
-  flex: 1;
-`;
-
-export const PhoneInputContainer = styled.div`
-  display: flex;
-  gap: 8px;
-  align-items: flex-end;
-`;
-
-export const PhoneInput = styled.div`
-  flex: 1;
-`;
-
-export const ButtonWrapper = styled.div`
+export const ActionButtonWrapper = styled.div`
   width: 100px;
 `;
 
@@ -124,6 +104,6 @@ export const GenderToggleContainer = styled.div`
   gap: 12px;
 `;
 
-export const CountdownText = styled.span`
+export const TimerText = styled.span`
   font-weight: 600;
 `;

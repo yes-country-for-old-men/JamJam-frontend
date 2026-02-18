@@ -15,6 +15,7 @@ import {
 } from '@/features/service/schemas/serviceEditSchema';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
 import Button from '@/shared/components/Button';
+import FormMessage from '@/shared/components/FormMessage';
 import Input from '@/shared/components/Input';
 import MultiImageUpload from '@/shared/components/MultiImageUpload';
 import RichTextEditor from '@/shared/components/RichTextEditor';
@@ -22,6 +23,7 @@ import Select from '@/shared/components/Select';
 import SingleImageUpload from '@/shared/components/SingleImageUpload';
 import { CATEGORIES } from '@/shared/constants';
 import { useDialog } from '@/shared/hooks/useDialog';
+import { parsePrice } from '@/shared/utils';
 import type { FileWithId } from '@/shared/types/FileWithId';
 
 const ServiceEdit: React.FC = () => {
@@ -73,11 +75,6 @@ const ServiceEdit: React.FC = () => {
 
   const priceValue = form.watch('price');
   const priceDisplay = priceValue ? priceValue.toLocaleString() : '';
-
-  const parsePrice = (str: string): number => {
-    const cleanStr = str.replace(/\D/g, '');
-    return parseInt(cleanStr, 10) || 0;
-  };
 
   const handlePriceChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -191,9 +188,10 @@ const ServiceEdit: React.FC = () => {
           )}
         />
         {form.formState.errors.serviceName && (
-          <S.InvalidMessage>
-            {form.formState.errors.serviceName.message}
-          </S.InvalidMessage>
+          <FormMessage
+            type="error"
+            message={form.formState.errors.serviceName.message || ''}
+          />
         )}
       </S.Section>
       <S.Section>
@@ -210,9 +208,10 @@ const ServiceEdit: React.FC = () => {
           )}
         />
         {form.formState.errors.serviceDetail && (
-          <S.InvalidMessage>
-            {form.formState.errors.serviceDetail.message}
-          </S.InvalidMessage>
+          <FormMessage
+            type="error"
+            message={form.formState.errors.serviceDetail.message || ''}
+          />
         )}
       </S.Section>
       <S.Section>
@@ -239,9 +238,10 @@ const ServiceEdit: React.FC = () => {
           )}
         />
         {form.formState.errors.category && (
-          <S.InvalidMessage>
-            {form.formState.errors.category.message}
-          </S.InvalidMessage>
+          <FormMessage
+            type="error"
+            message={form.formState.errors.category.message || ''}
+          />
         )}
       </S.Section>
       <S.Section>
@@ -253,9 +253,10 @@ const ServiceEdit: React.FC = () => {
           placeholder="가격을 입력해 주세요"
         />
         {form.formState.errors.price && (
-          <S.InvalidMessage>
-            {form.formState.errors.price.message}
-          </S.InvalidMessage>
+          <FormMessage
+            type="error"
+            message={form.formState.errors.price.message || ''}
+          />
         )}
       </S.Section>
       <S.Section>
@@ -273,9 +274,10 @@ const ServiceEdit: React.FC = () => {
           )}
         />
         {form.formState.errors.thumbnailImage?.message && (
-          <S.InvalidMessage>
-            {form.formState.errors.thumbnailImage.message as string}
-          </S.InvalidMessage>
+          <FormMessage
+            type="error"
+            message={form.formState.errors.thumbnailImage.message as string}
+          />
         )}
       </S.Section>
       <S.Section>

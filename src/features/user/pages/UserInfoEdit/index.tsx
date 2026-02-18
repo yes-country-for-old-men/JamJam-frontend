@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { checkNickname } from '@/features/signup/api/signUpApi';
 import AccountSection from '@/features/user/components/UserInfoEdit/AccountSection';
 import BasicInfoSection from '@/features/user/components/UserInfoEdit/BasicInfoSection';
 import PasswordCheck from '@/features/user/components/UserInfoEdit/PasswordCheck';
@@ -13,6 +12,7 @@ import * as S from '@/features/user/pages/UserInfoEdit/UserInfoEdit.styles';
 import Button from '@/shared/components/Button';
 import { BANK_CODE_MAP } from '@/shared/constants';
 import { useDialog } from '@/shared/hooks/useDialog';
+import { useNicknameCheck } from '@/shared/hooks/useNicknameCheck';
 import { usePhoneVerification } from '@/shared/hooks/usePhoneVerification';
 import { formatPhoneNumber, getErrorMessage } from '@/shared/utils';
 import type { UpdateUserRequest } from '@/features/user/api/userApi';
@@ -53,13 +53,16 @@ const UserInfoEdit: React.FC = () => {
   );
   const [originalNickname, setOriginalNickname] = useState('');
 
-  const [isNicknameAvailable, setIsNicknameAvailable] = useState<
-    boolean | null
-  >(null);
-  const [isCheckingNickname, setIsCheckingNickname] = useState(false);
-
   const { alert } = useDialog();
   const { passwordForm, editForm } = useInfoEditForm();
+
+  const {
+    isNicknameAvailable,
+    isCheckingNickname,
+    handleNicknameCheck,
+    handleNicknameChange,
+    resetNicknameCheck,
+  } = useNicknameCheck(editForm);
 
   const { data: userInfo, refetch: refetchUserInfo } = useUserInfoQuery();
   const checkPasswordMutation = useCheckPasswordMutation();
@@ -73,11 +76,13 @@ const UserInfoEdit: React.FC = () => {
     verificationMessage,
     isSendingSMS,
     isVerifyingSMS,
-    sendVerification,
-    verifyCode,
     resetVerification,
     formatCountdown,
+    createFormHandlers,
   } = usePhoneVerification();
+
+  const { handleSendVerification, handleVerifyCode } =
+    createFormHandlers(editForm);
 
   useEffect(() => {
     if (userInfo) {
@@ -104,42 +109,6 @@ const UserInfoEdit: React.FC = () => {
       setOriginalPhone(userInfo.phoneNumber || '');
     }
   }, [userInfo, editForm]);
-
-  const handleNicknameChange = useCallback(() => {
-    setIsNicknameAvailable(null);
-    editForm.clearErrors('nickname');
-  }, [editForm]);
-
-  const handleNicknameCheck = useCallback(async () => {
-    const nickname = editForm.getValues('nickname');
-    const validation = await editForm.trigger('nickname');
-
-    if (!validation) {
-      return;
-    }
-
-    setIsCheckingNickname(true);
-    try {
-      const response = await checkNickname(nickname);
-      const isAvailable = response.data.content.available;
-      setIsNicknameAvailable(isAvailable);
-
-      if (!isAvailable) {
-        editForm.setError('nickname', {
-          message: '이미 사용 중인 닉네임입니다.',
-        });
-      } else {
-        editForm.clearErrors('nickname');
-      }
-    } catch (error) {
-      await alert({
-        title: '중복 확인 실패',
-        content: getErrorMessage(error),
-      });
-    } finally {
-      setIsCheckingNickname(false);
-    }
-  }, [editForm, alert]);
 
   const getChangeFlags = useCallback(
     (formData: UserInfoFormData): ChangeFlags => {
@@ -286,7 +255,7 @@ const UserInfoEdit: React.FC = () => {
 
       if (isNicknameChanged) {
         setOriginalNickname(formData.nickname);
-        setIsNicknameAvailable(null);
+        resetNicknameCheck();
       }
 
       if (isPhoneChanged) {
@@ -300,7 +269,7 @@ const UserInfoEdit: React.FC = () => {
         );
       }
     },
-    [editForm, resetVerification],
+    [editForm, resetVerification, resetNicknameCheck],
   );
 
   const handlePasswordVerify = async (): Promise<void> => {
@@ -340,33 +309,6 @@ const UserInfoEdit: React.FC = () => {
     },
     [editForm, originalPhone, resetVerification],
   );
-
-  const handleSendVerification = useCallback(async (): Promise<void> => {
-    editForm.clearErrors('phone');
-    editForm.clearErrors('verificationCode');
-
-    const phone = editForm.getValues('phone');
-    if (!phone) {
-      editForm.setError('phone', { message: '휴대폰 번호를 입력해 주세요.' });
-      return;
-    }
-
-    const isValid = await editForm.trigger('phone');
-    if (!isValid) {
-      return;
-    }
-
-    await sendVerification(phone);
-  }, [editForm, sendVerification]);
-
-  const handleVerifyCode = useCallback(async (): Promise<void> => {
-    const verificationCode = editForm.getValues('verificationCode');
-    const phone = editForm.getValues('phone');
-
-    if (!verificationCode) return;
-
-    await verifyCode(phone, verificationCode);
-  }, [editForm, verifyCode]);
 
   const handleSubmit = useCallback((): void => {
     editForm.handleSubmit(async (formData: UserInfoFormData) => {

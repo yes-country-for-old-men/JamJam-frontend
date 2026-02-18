@@ -4,6 +4,7 @@ import * as S from '@/features/signup/pages/SignUp.styles';
 import FemaleIcon from '@/shared/assets/icons/female.svg?react';
 import MaleIcon from '@/shared/assets/icons/male.svg?react';
 import Button from '@/shared/components/Button';
+import FormMessage from '@/shared/components/FormMessage';
 import Input from '@/shared/components/Input';
 import ToggleButton from '@/shared/components/ToggleButton';
 import { type MessageState } from '@/shared/types/MessageState';
@@ -38,24 +39,9 @@ const Step3: React.FC<Step3Props> = ({
 }) => {
   const { errors } = form.formState;
 
-  const renderMessage = (message: MessageState) => {
-    if (!message) return null;
-
-    switch (message.type) {
-      case 'success':
-        return <S.SuccessMessage>{message.text}</S.SuccessMessage>;
-      case 'error':
-        return <S.InvalidMessage>{message.text}</S.InvalidMessage>;
-      case 'info':
-        return <S.InfoMessage>{message.text}</S.InfoMessage>;
-      default:
-        return null;
-    }
-  };
-
   return (
     <S.FormSection>
-      <div>
+      <S.InputWrapper>
         <Input
           label="이름"
           placeholder="홍길동"
@@ -70,11 +56,10 @@ const Step3: React.FC<Step3Props> = ({
           })}
         />
         {errors.name && (
-          <S.InvalidMessage>{errors.name.message}</S.InvalidMessage>
+          <FormMessage type="error" message={errors.name.message || ''} />
         )}
-      </div>
-
-      <div>
+      </S.InputWrapper>
+      <S.InputWrapper>
         <S.FormLabel>생년월일</S.FormLabel>
         <S.DateInputContainer>
           <Input
@@ -123,15 +108,18 @@ const Step3: React.FC<Step3Props> = ({
           />
         </S.DateInputContainer>
         {(errors.birthYear || errors.birthMonth || errors.birthDay) && (
-          <S.InvalidMessage>
-            {errors.birthYear?.message ||
+          <FormMessage
+            type="error"
+            message={
+              errors.birthYear?.message ||
               errors.birthMonth?.message ||
-              errors.birthDay?.message}
-          </S.InvalidMessage>
+              errors.birthDay?.message ||
+              ''
+            }
+          />
         )}
-      </div>
-
-      <div>
+      </S.InputWrapper>
+      <S.InputWrapper>
         <S.FormLabel>성별</S.FormLabel>
         <S.GenderToggleContainer>
           <ToggleButton
@@ -148,14 +136,13 @@ const Step3: React.FC<Step3Props> = ({
           />
         </S.GenderToggleContainer>
         {errors.gender && (
-          <S.InvalidMessage>{errors.gender.message}</S.InvalidMessage>
+          <FormMessage type="error" message={errors.gender.message || ''} />
         )}
-      </div>
-
-      <div>
+      </S.InputWrapper>
+      <S.InputWrapper>
         <S.FormLabel>휴대폰 번호</S.FormLabel>
-        <S.PhoneInputContainer>
-          <S.PhoneInput>
+        <S.FlexInputGroup>
+          <S.FlexInputWrapper>
             <Input
               placeholder="하이픈(-) 제외하고 입력"
               {...form.register('phone', {
@@ -166,8 +153,8 @@ const Step3: React.FC<Step3Props> = ({
               })}
               maxLength={13}
             />
-          </S.PhoneInput>
-          <S.ButtonWrapper>
+          </S.FlexInputWrapper>
+          <S.ActionButtonWrapper>
             <Button
               type="button"
               fullWidth
@@ -176,35 +163,38 @@ const Step3: React.FC<Step3Props> = ({
             >
               {isVerificationSent ? '재전송' : '인증번호 전송'}
             </Button>
-          </S.ButtonWrapper>
-        </S.PhoneInputContainer>
-        {errors.phone
-          ? renderMessage({ text: errors.phone.message || '', type: 'error' })
-          : renderMessage(phoneMessage)}
-      </div>
-
+          </S.ActionButtonWrapper>
+        </S.FlexInputGroup>
+        {errors.phone ? (
+          <FormMessage type="error" message={errors.phone.message || ''} />
+        ) : (
+          phoneMessage && (
+            <FormMessage type={phoneMessage.type} message={phoneMessage.text} />
+          )
+        )}
+      </S.InputWrapper>
       {isVerificationSent && (
-        <div>
+        <S.InputWrapper>
           <S.FormLabel>
             인증번호
             {verificationCountdown > 0 && (
-              <S.CountdownText>
+              <S.TimerText>
                 {' '}
                 ({formatCountdown(verificationCountdown)})
-              </S.CountdownText>
+              </S.TimerText>
             )}
           </S.FormLabel>
-          <S.PhoneInputContainer>
-            <S.PhoneInput>
+          <S.FlexInputGroup>
+            <S.FlexInputWrapper>
               <Input
                 placeholder="인증번호 6자리를 입력해 주세요"
                 {...form.register('verificationCode')}
                 maxLength={6}
                 disabled={isPhoneVerified}
               />
-            </S.PhoneInput>
+            </S.FlexInputWrapper>
             {!isPhoneVerified && (
-              <S.ButtonWrapper>
+              <S.ActionButtonWrapper>
                 <Button
                   type="button"
                   fullWidth
@@ -213,17 +203,23 @@ const Step3: React.FC<Step3Props> = ({
                 >
                   인증 확인
                 </Button>
-              </S.ButtonWrapper>
+              </S.ActionButtonWrapper>
             )}
-          </S.PhoneInputContainer>
-          {verificationMessage
-            ? renderMessage(verificationMessage)
-            : errors.verificationCode &&
-              renderMessage({
-                text: errors.verificationCode.message || '',
-                type: 'error',
-              })}
-        </div>
+          </S.FlexInputGroup>
+          {verificationMessage ? (
+            <FormMessage
+              type={verificationMessage.type}
+              message={verificationMessage.text}
+            />
+          ) : (
+            errors.verificationCode && (
+              <FormMessage
+                type="error"
+                message={errors.verificationCode.message || ''}
+              />
+            )
+          )}
+        </S.InputWrapper>
       )}
     </S.FormSection>
   );

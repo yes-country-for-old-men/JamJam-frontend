@@ -2,6 +2,7 @@ import React from 'react';
 import { type InfoEditForm } from '@/features/user/hooks/useInfoEditForm';
 import * as S from '@/features/user/pages/UserInfoEdit/UserInfoEdit.styles';
 import Button from '@/shared/components/Button';
+import FormMessage from '@/shared/components/FormMessage';
 import Input from '@/shared/components/Input';
 import { type MessageState } from '@/shared/types/MessageState';
 
@@ -37,21 +38,6 @@ const PhoneSection: React.FC<PhoneSectionProps> = ({
   const phoneError = form.formState.errors.phone;
   const verificationCodeError = form.formState.errors.verificationCode;
 
-  const renderMessage = (message: MessageState) => {
-    if (!message) return null;
-
-    switch (message.type) {
-      case 'success':
-        return <S.SuccessMessage>{message.text}</S.SuccessMessage>;
-      case 'error':
-        return <S.InvalidMessage>{message.text}</S.InvalidMessage>;
-      case 'info':
-        return <S.InfoMessage>{message.text}</S.InfoMessage>;
-      default:
-        return null;
-    }
-  };
-
   return (
     <S.ContentSection>
       <S.SectionHeader>휴대폰 번호</S.SectionHeader>
@@ -78,9 +64,13 @@ const PhoneSection: React.FC<PhoneSectionProps> = ({
             </Button>
           </S.ActionButtonWrapper>
         </S.FlexInputGroup>
-        {phoneError
-          ? renderMessage({ text: phoneError.message || '', type: 'error' })
-          : renderMessage(phoneMessage)}
+        {phoneError ? (
+          <FormMessage type="error" message={phoneError.message || ''} />
+        ) : (
+          phoneMessage && (
+            <FormMessage type={phoneMessage.type} message={phoneMessage.text} />
+          )
+        )}
       </S.FieldGroup>
       {isVerificationSent && (
         <S.FieldGroup>
@@ -115,13 +105,19 @@ const PhoneSection: React.FC<PhoneSectionProps> = ({
               </S.ActionButtonWrapper>
             )}
           </S.FlexInputGroup>
-          {verificationMessage
-            ? renderMessage(verificationMessage)
-            : verificationCodeError &&
-              renderMessage({
-                text: verificationCodeError.message || '',
-                type: 'error',
-              })}
+          {verificationMessage ? (
+            <FormMessage
+              type={verificationMessage.type}
+              message={verificationMessage.text}
+            />
+          ) : (
+            verificationCodeError && (
+              <FormMessage
+                type="error"
+                message={verificationCodeError.message || ''}
+              />
+            )
+          )}
         </S.FieldGroup>
       )}
     </S.ContentSection>

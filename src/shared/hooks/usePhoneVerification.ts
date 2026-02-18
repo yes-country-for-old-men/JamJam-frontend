@@ -7,6 +7,16 @@ type MessageState = {
   type: 'success' | 'error' | 'info';
 } | null;
 
+interface PhoneVerificationForm {
+  getValues: (field: 'phone' | 'verificationCode') => string;
+  trigger: (field: 'phone') => Promise<boolean>;
+  setError: (
+    field: 'phone' | 'verificationCode',
+    error: { message: string },
+  ) => void;
+  clearErrors: (field: 'phone' | 'verificationCode') => void;
+}
+
 export const usePhoneVerification = () => {
   const [isVerificationSent, setIsVerificationSent] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
@@ -108,6 +118,41 @@ export const usePhoneVerification = () => {
     setVerificationCountdown(0);
   }, []);
 
+  const createFormHandlers = useCallback(
+    (form: PhoneVerificationForm) => ({
+      handleSendVerification: async () => {
+        form.clearErrors('phone');
+        form.clearErrors('verificationCode');
+
+        const phone = form.getValues('phone');
+        if (!phone) {
+          form.setError('phone', {
+            message: '휴대폰 번호를 입력해 주세요.',
+          });
+          return;
+        }
+
+        const isValid = await form.trigger('phone');
+        if (!isValid) {
+          return;
+        }
+
+        await sendVerification(phone);
+      },
+      handleVerifyCode: async () => {
+        const verificationCode = form.getValues('verificationCode');
+        const phone = form.getValues('phone');
+
+        if (!verificationCode) {
+          return;
+        }
+
+        await verifyCode(phone, verificationCode);
+      },
+    }),
+    [sendVerification, verifyCode],
+  );
+
   return {
     isVerificationSent,
     isPhoneVerified,
@@ -120,5 +165,6 @@ export const usePhoneVerification = () => {
     verifyCode,
     resetVerification,
     formatCountdown,
+    createFormHandlers,
   };
 };

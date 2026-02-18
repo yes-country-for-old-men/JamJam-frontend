@@ -2,6 +2,7 @@ import React from 'react';
 import { type InfoEditForm } from '@/features/user/hooks/useInfoEditForm';
 import * as S from '@/features/user/pages/UserInfoEdit/UserInfoEdit.styles';
 import Button from '@/shared/components/Button';
+import FormMessage from '@/shared/components/FormMessage';
 import Input from '@/shared/components/Input';
 import SingleImageUpload from '@/shared/components/SingleImageUpload';
 
@@ -24,13 +25,15 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({
 
   const getNicknameMessage = () => {
     if (nicknameError) {
-      return <S.InvalidMessage>{nicknameError.message}</S.InvalidMessage>;
+      return <FormMessage type="error" message={nicknameError.message || ''} />;
     }
     if (isNicknameAvailable === true) {
-      return <S.SuccessMessage>사용 가능한 닉네임입니다.</S.SuccessMessage>;
+      return <FormMessage type="success" message="사용 가능한 닉네임입니다." />;
     }
     if (isNicknameAvailable === false) {
-      return <S.InvalidMessage>이미 사용 중인 닉네임입니다.</S.InvalidMessage>;
+      return (
+        <FormMessage type="error" message="이미 사용 중인 닉네임입니다." />
+      );
     }
     return null;
   };

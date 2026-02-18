@@ -13,6 +13,7 @@ export {
   formatDeadlineISO,
   formatPrice,
 } from './formatters';
+export { parsePrice } from './parsers';
 export { isValidDate, isEligibleAgeForRole } from './validators';
 export { getCategoryNameById, getSkillNameById } from './dataMappers';
 export { getErrorMessage } from './getErrorMessage';

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import {
   clientSignUp,
   providerSignUp,
-  checkNickname,
   checkLoginId,
 } from '@/features/signup/api/signUpApi';
 import CompletionScreen from '@/features/signup/components/CompletionScreen';
@@ -16,6 +15,7 @@ import * as S from '@/features/signup/pages/SignUp.styles';
 import LogoIcon from '@/shared/assets/icons/logo-icon.svg?react';
 import Button from '@/shared/components/Button';
 import { useDialog } from '@/shared/hooks/useDialog';
+import { useNicknameCheck } from '@/shared/hooks/useNicknameCheck';
 import { usePhoneVerification } from '@/shared/hooks/usePhoneVerification';
 import { getErrorMessage } from '@/shared/utils';
 
@@ -24,17 +24,20 @@ const SignUp: React.FC = () => {
   const [completedUserNickname, setCompletedUserNickname] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [isNicknameAvailable, setIsNicknameAvailable] = useState<
-    boolean | null
-  >(null);
   const [isIdAvailable, setIsIdAvailable] = useState<boolean | null>(null);
-  const [isCheckingNickname, setIsCheckingNickname] = useState(false);
   const [isCheckingId, setIsCheckingId] = useState(false);
 
   const navigate = useNavigate();
   const { alert } = useDialog();
 
   const { step, setStep, step1Form, step2Form, step3Form } = useSignUpForm();
+
+  const {
+    isNicknameAvailable,
+    isCheckingNickname,
+    handleNicknameCheck,
+    handleNicknameChange,
+  } = useNicknameCheck(step2Form);
 
   const {
     isVerificationSent,
@@ -44,10 +47,12 @@ const SignUp: React.FC = () => {
     verificationMessage,
     isSendingSMS,
     isVerifyingSMS,
-    sendVerification,
-    verifyCode,
     formatCountdown,
+    createFormHandlers,
   } = usePhoneVerification();
+
+  const { handleSendVerification, handleVerifyCode } =
+    createFormHandlers(step3Form);
 
   const handleLogoClick = () => {
     navigate('/');
@@ -57,45 +62,9 @@ const SignUp: React.FC = () => {
     navigate('/');
   };
 
-  const handleNicknameChange = () => {
-    setIsNicknameAvailable(null);
-    step2Form.clearErrors('nickname');
-  };
-
   const handleIdChange = () => {
     setIsIdAvailable(null);
     step2Form.clearErrors('id');
-  };
-
-  const handleNicknameCheck = async () => {
-    const nickname = step2Form.getValues('nickname');
-    const validation = await step2Form.trigger('nickname');
-
-    if (!validation) {
-      return;
-    }
-
-    setIsCheckingNickname(true);
-    try {
-      const response = await checkNickname(nickname);
-      const isAvailable = response.data.content.available;
-      setIsNicknameAvailable(isAvailable);
-
-      if (!isAvailable) {
-        step2Form.setError('nickname', {
-          message: '이미 사용 중인 닉네임입니다.',
-        });
-      } else {
-        step2Form.clearErrors('nickname');
-      }
-    } catch (error) {
-      await alert({
-        title: '중복 확인 실패',
-        content: getErrorMessage(error),
-      });
-    } finally {
-      setIsCheckingNickname(false);
-    }
   };
 
   const handleIdCheck = async () => {
@@ -127,35 +96,6 @@ const SignUp: React.FC = () => {
     } finally {
       setIsCheckingId(false);
     }
-  };
-
-  const handleSendVerification = async () => {
-    step3Form.clearErrors('phone');
-    step3Form.clearErrors('verificationCode');
-
-    const phone = step3Form.getValues('phone');
-    if (!phone) {
-      step3Form.setError('phone', { message: '휴대폰 번호를 입력해 주세요.' });
-      return;
-    }
-
-    const isValid = await step3Form.trigger('phone');
-    if (!isValid) {
-      return;
-    }
-
-    await sendVerification(phone);
-  };
-
-  const handleVerifyCode = async () => {
-    const verificationCode = step3Form.getValues('verificationCode');
-    const phone = step3Form.getValues('phone');
-
-    if (!verificationCode) {
-      return;
-    }
-
-    await verifyCode(phone, verificationCode);
   };
 
   const handleBack = () => {

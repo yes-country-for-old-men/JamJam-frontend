@@ -8,6 +8,7 @@ import ThumbnailErrorImage from '@/shared/assets/images/thumbnail-error.png';
 import ThumbnailNormalImage from '@/shared/assets/images/thumbnail-normal.png';
 import Button from '@/shared/components/Button';
 import Checkbox from '@/shared/components/Checkbox';
+import FormMessage from '@/shared/components/FormMessage';
 import GradientButton from '@/shared/components/GradientButton';
 import MultiImageUpload from '@/shared/components/MultiImageUpload';
 import SingleImageUpload from '@/shared/components/SingleImageUpload';
@@ -102,9 +103,10 @@ const MediaUploadStep: React.FC<MediaUploadStepProps> = ({
           </S.ThumbnailGenerateSection>
         </S.ThumbnailUploadArea>
         {form.formState.errors.thumbnailImage?.message && (
-          <S.InvalidMessage>
-            {form.formState.errors.thumbnailImage.message as string}
-          </S.InvalidMessage>
+          <FormMessage
+            type="error"
+            message={form.formState.errors.thumbnailImage.message as string}
+          />
         )}
       </S.Section>
       <S.Label>포트폴리오 사진</S.Label>
@@ -124,9 +126,10 @@ const MediaUploadStep: React.FC<MediaUploadStepProps> = ({
           )}
         />
         {form.formState.errors.portfolioImages?.message && (
-          <S.InvalidMessage>
-            {form.formState.errors.portfolioImages.message as string}
-          </S.InvalidMessage>
+          <FormMessage
+            type="error"
+            message={form.formState.errors.portfolioImages.message as string}
+          />
         )}
       </S.Section>
       <S.NavigationButtonsWrapper>
