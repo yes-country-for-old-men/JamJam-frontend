@@ -431,7 +431,7 @@ const Chat: React.FC = () => {
     setPreviousMessagesLength(messages.length);
   }, [messages.length]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     maintainScrollPosition();
   }, [messages.length, maintainScrollPosition]);
 

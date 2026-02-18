@@ -25,10 +25,7 @@ export const useMessageScroll = () => {
       if (scrollTop <= scrollThreshold) {
         scrollPositionRef.current = { scrollTop, scrollHeight };
         isLoadingMoreRef.current = true;
-
-        requestAnimationFrame(() => {
-          onLoadMore();
-        });
+        onLoadMore();
       }
     }
   };
@@ -38,18 +35,16 @@ export const useMessageScroll = () => {
 
     const container = messagesContainerRef.current;
     if (container) {
-      requestAnimationFrame(() => {
-        const heightDifference =
-          container.scrollHeight - scrollPositionRef.current!.scrollHeight;
+      const heightDifference =
+        container.scrollHeight - scrollPositionRef.current.scrollHeight;
 
-        if (heightDifference > 0) {
-          container.scrollTop =
-            scrollPositionRef.current!.scrollTop + heightDifference;
-        }
+      if (heightDifference > 0) {
+        container.scrollTop =
+          scrollPositionRef.current.scrollTop + heightDifference;
+      }
 
-        isLoadingMoreRef.current = false;
-        scrollPositionRef.current = null;
-      });
+      isLoadingMoreRef.current = false;
+      scrollPositionRef.current = null;
     }
   };
 
