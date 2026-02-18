@@ -44,14 +44,13 @@ export const useServiceRegisterSteps = () => {
       };
 
       try {
-        const response = await getProviderProfile();
-        if (!response.data.content) {
-          await showProfileRequiredModal();
-          return;
-        }
+        await getProviderProfile();
         setIsLoading(false);
       } catch (error) {
-        if (isAxiosError(error) && error.response?.status === 404) {
+        if (
+          isAxiosError(error) &&
+          error.response?.data.code === 'PROVIDER_NOT_FOUND'
+        ) {
           await showProfileRequiredModal();
         }
       }
