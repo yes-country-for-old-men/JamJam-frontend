@@ -51,7 +51,7 @@ export const FileUploadText = styled.div`
   font-size: 14px;
   font-weight: 500;
   color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
-  margin-top: 8px;
+  margin-top: 4px;
 `;
 
 export const FileList = styled.div`

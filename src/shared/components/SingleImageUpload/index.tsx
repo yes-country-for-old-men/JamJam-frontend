@@ -1,6 +1,7 @@
 import React, { useRef, useCallback } from 'react';
+import AddImageIcon from '@/shared/assets/icons/add-image.svg?react';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
-import ImageIcon from '@/shared/assets/icons/image.svg?react';
+import ReplaceImageIcon from '@/shared/assets/icons/replace-image.svg?react';
 import useDropZone from '@/shared/hooks/useDropZone';
 import useObjectUrl from '@/shared/hooks/useObjectUrl';
 import * as S from './SingleImageUpload.styles';
@@ -66,7 +67,7 @@ const SingleImageUpload: React.FC<SingleImageUploadProps> = ({
           <>
             <S.ImageBackground src={imageSrc} alt="uploaded-image" />
             <S.ImageOverlay>
-              <ImageIcon style={{ fill: 'white' }} />
+              <ReplaceImageIcon style={{ fill: 'white' }} />
               <S.OverlayText>클릭하여 변경</S.OverlayText>
             </S.ImageOverlay>
             <S.DeleteButton onClick={handleRemove}>
@@ -75,7 +76,7 @@ const SingleImageUpload: React.FC<SingleImageUploadProps> = ({
           </>
         ) : (
           <S.PlaceholderContainer>
-            <ImageIcon />
+            <AddImageIcon />
             <S.UploadText>
               {isDragOver ? '파일을 놓으세요' : '사진 업로드'}
             </S.UploadText>

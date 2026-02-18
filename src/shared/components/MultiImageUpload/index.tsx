@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import ImageIcon from '@/shared/assets/icons/image.svg?react';
+import AddImageIcon from '@/shared/assets/icons/add-image.svg?react';
 import useDropZone from '@/shared/hooks/useDropZone';
 import useFileList from '@/shared/hooks/useFileList';
 import ImagePreviewItem from './ImagePreviewItem';
@@ -68,7 +68,7 @@ const MultiImageUpload: React.FC<MultiImageUploadProps> = ({
         onClick={handleClick}
         {...dropZoneProps}
       >
-        <ImageIcon />
+        <AddImageIcon />
         <S.UploadText>{getUploadText()}</S.UploadText>
       </S.MultipleUploadArea>
       <S.FileInput

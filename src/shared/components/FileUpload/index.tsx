@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
-import UploadIcon from '@/shared/assets/icons/upload.svg?react';
+import UploadIcon from '@/shared/assets/icons/file-upload.svg?react';
 import useDropZone from '@/shared/hooks/useDropZone';
 import useFileList from '@/shared/hooks/useFileList';
 import * as S from './FileUpload.styles';

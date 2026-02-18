@@ -96,7 +96,7 @@ export const UploadText = styled.div`
   font-size: 14px;
   font-weight: 500;
   color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
-  margin-top: 12px;
+  margin-top: 4px;
 `;
 
 export const OverlayText = styled.div`
