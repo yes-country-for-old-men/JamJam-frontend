@@ -1,9 +1,3 @@
-import {
-  Client,
-  StompConfig,
-  type IMessage,
-  type IFrame,
-} from '@stomp/stompjs';
 import { eventManager } from '@/shared/utils';
 import type {
   StompNewMessageEvent,
@@ -14,6 +8,7 @@ import type {
   MessageType,
   ChatFileInfo,
 } from '@/features/chat/types/Chat';
+import type { Client, StompConfig, IMessage, IFrame } from '@stomp/stompjs';
 
 interface EventHandlers {
   onNewMessage?: (data: StompNewMessageEvent) => void;
@@ -53,28 +48,28 @@ export class ChatWebSocket {
 
   connect(): Promise<void> {
     return new Promise((resolve, reject) => {
-      try {
-        this.connectResolve = resolve;
-        this.connectReject = reject;
+      this.connectResolve = resolve;
+      this.connectReject = reject;
 
-        const stompConfig: StompConfig = {
-          brokerURL: this.url,
-          connectHeaders: { Authorization: `Bearer ${this.token}` },
-          debug: () => {},
-          reconnectDelay: this.reconnectDelay,
-          heartbeatIncoming: 10000,
-          heartbeatOutgoing: 10000,
-          onConnect: this.handleConnect.bind(this),
-          onStompError: this.handleStompError.bind(this),
-          onWebSocketError: this.handleWebSocketError.bind(this),
-          onDisconnect: this.handleDisconnect.bind(this),
-        };
+      import('@stomp/stompjs')
+        .then(({ Client }) => {
+          const stompConfig: StompConfig = {
+            brokerURL: this.url,
+            connectHeaders: { Authorization: `Bearer ${this.token}` },
+            debug: () => {},
+            reconnectDelay: this.reconnectDelay,
+            heartbeatIncoming: 10000,
+            heartbeatOutgoing: 10000,
+            onConnect: this.handleConnect.bind(this),
+            onStompError: this.handleStompError.bind(this),
+            onWebSocketError: this.handleWebSocketError.bind(this),
+            onDisconnect: this.handleDisconnect.bind(this),
+          };
 
-        this.client = new Client(stompConfig);
-        this.client.activate();
-      } catch (error) {
-        reject(error);
-      }
+          this.client = new Client(stompConfig);
+          this.client.activate();
+        })
+        .catch(reject);
     });
   }
 

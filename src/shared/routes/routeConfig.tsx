@@ -1,24 +1,28 @@
+import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
-import Category from '@/features/category/pages';
-import Chat from '@/features/chat/pages';
-import Credit from '@/features/credit/pages/Credit';
-import Main from '@/features/main/pages';
-import OrderCreate from '@/features/order/pages/OrderCreate';
-import OrderHistory from '@/features/order/pages/OrderHistory';
-import OrderManage from '@/features/order/pages/OrderManage';
-import ProfileEdit from '@/features/provider/pages/ProfileEdit';
-import Provider from '@/features/provider/pages/Provider';
-import Search from '@/features/search/pages';
-import Service from '@/features/service/pages/ServiceDetail';
-import ServiceEdit from '@/features/service/pages/ServiceEdit';
-import ServiceRegister from '@/features/service/pages/ServiceRegister';
-import UserInfoEdit from '@/features/user/pages/UserInfoEdit';
-import Forbidden from '@/pages/Forbidden';
-import My from '@/pages/My';
-import NotFound from '@/pages/NotFound';
 import ClientRoute from '@/shared/components/Routes/ClientRoute';
 import ProtectedRoute from '@/shared/components/Routes/ProtectedRoute';
 import ProviderRoute from '@/shared/components/Routes/ProviderRoute';
+
+const Category = lazy(() => import('@/features/category/pages'));
+const Chat = lazy(() => import('@/features/chat/pages'));
+const Credit = lazy(() => import('@/features/credit/pages/Credit'));
+const Main = lazy(() => import('@/features/main/pages'));
+const OrderCreate = lazy(() => import('@/features/order/pages/OrderCreate'));
+const OrderHistory = lazy(() => import('@/features/order/pages/OrderHistory'));
+const OrderManage = lazy(() => import('@/features/order/pages/OrderManage'));
+const ProfileEdit = lazy(() => import('@/features/provider/pages/ProfileEdit'));
+const Provider = lazy(() => import('@/features/provider/pages/Provider'));
+const Search = lazy(() => import('@/features/search/pages'));
+const Service = lazy(() => import('@/features/service/pages/ServiceDetail'));
+const ServiceEdit = lazy(() => import('@/features/service/pages/ServiceEdit'));
+const ServiceRegister = lazy(
+  () => import('@/features/service/pages/ServiceRegister'),
+);
+const UserInfoEdit = lazy(() => import('@/features/user/pages/UserInfoEdit'));
+const Forbidden = lazy(() => import('@/pages/Forbidden'));
+const My = lazy(() => import('@/pages/My'));
+const NotFound = lazy(() => import('@/pages/NotFound'));
 
 export const publicRoutes = [
   { index: true, element: <Main /> },

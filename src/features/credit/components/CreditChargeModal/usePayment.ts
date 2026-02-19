@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import PortOne from '@portone/browser-sdk/v2';
 import {
   completePayment,
   savePaymentOrder,
@@ -47,6 +46,7 @@ export const usePayment = () => {
     }
 
     try {
+      const { default: PortOne } = await import('@portone/browser-sdk/v2');
       const response = await PortOne.requestPayment({
         storeId: import.meta.env.VITE_PORTONE_STORE_ID,
         paymentId,

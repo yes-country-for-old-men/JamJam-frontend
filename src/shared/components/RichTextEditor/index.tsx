@@ -34,7 +34,7 @@ const createEditorConfig = (height: number) => ({
     'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css',
   ],
   content_style: `
-    body { 
+    body {
       font-family: ${FONT_FAMILY} !important;
       font-size: 14px !important;
       padding: 0 16px !important;
@@ -44,39 +44,39 @@ const createEditorConfig = (height: number) => ({
       -webkit-font-smoothing: antialiased !important;
       -moz-osx-font-smoothing: grayscale !important;
     }
-    
+
     * {
       font-family: ${FONT_FAMILY} !important;
       letter-spacing: ${LETTER_SPACING} !important;
     }
-    
+
     h1, h2, h3, h4, h5, h6 {
       font-weight: 600 !important;
       margin: 16px 0 8px 0 !important;
     }
-    
+
     h1 { font-size: 24px !important; }
     h2 { font-size: 20px !important; }
     h3 { font-size: 18px !important; }
     h4 { font-size: 16px !important; }
     h5 { font-size: 14px !important; }
     h6 { font-size: 13px !important; }
-    
+
     p {
       margin: 8px 0 !important;
       line-height: 1.6 !important;
     }
-    
+
     ul, ol {
       margin: 8px 0 !important;
       padding-left: 20px !important;
     }
-    
+
     li {
       margin: 4px 0 !important;
       line-height: 1.5 !important;
     }
-    
+
     strong, b { font-weight: 600 !important; }
     em, i { font-style: italic !important; }
   `,
