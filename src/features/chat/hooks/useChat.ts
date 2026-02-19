@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useWebSocket } from '@/shared/hooks/useWebSocket';
+import { useWebSocket } from '@/features/chat/hooks/useWebSocket';
 import type {
   ChatRoom,
   Message,

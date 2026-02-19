@@ -8,121 +8,107 @@ import type {
   MessageType,
   ChatFileInfo,
 } from '@/features/chat/types/Chat';
-import type { Client, StompConfig, IMessage, IFrame } from '@stomp/stompjs';
+import type { Client, IMessage, IFrame } from '@stomp/stompjs';
 
 interface EventHandlers {
   onNewMessage?: (data: StompNewMessageEvent) => void;
   onChatRoomUpdate?: (
     data: StompChatRoomUpdateEvent | StompChatRoomUpdateEvent[],
   ) => void;
-  onConnectionChange?: (isConnected: boolean) => void;
 }
 
+const DEFAULT_STOMP_CONFIG = {
+  maxReconnectAttempts: 5,
+  reconnectDelayMs: 1000,
+  heartbeatIntervalMs: 10000,
+} as const;
+
 const showAlert = (title: string, content: string) => {
-  eventManager.emit('alert', {
-    title,
-    content,
-  });
+  eventManager.emit('alert', { title, content });
 };
 
-export class ChatWebSocket {
+class ChatWebSocket {
   private client: Client | null = null;
-  private token: string;
-  private userId: string;
+  private userId: string | null = null;
+  private isConnecting = false;
   private reconnectAttempts = 0;
-  private maxReconnectAttempts = 5;
-  private reconnectDelay = 1000;
-  private url: string;
-  private isAuthenticated = false;
-  private connectResolve: ((value: void) => void) | null = null;
-  private connectReject: ((reason?: unknown) => void) | null = null;
   private eventHandlers: EventHandlers = {};
+  private connectionChangeHandler: ((isConnected: boolean) => void) | null =
+    null;
   private subscriptions: Map<string, unknown> = new Map();
   private currentRoomId: number | null = null;
 
-  constructor(token: string, userId: string, url: string) {
-    this.token = token;
+  connect(token: string, userId: string): Promise<void> {
+    if (this.client?.connected) return Promise.resolve();
+    if (this.isConnecting)
+      return Promise.reject(new Error('Connection already in progress'));
+
     this.userId = userId;
-    this.url = url;
-  }
+    this.isConnecting = true;
 
-  connect(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.connectResolve = resolve;
-      this.connectReject = reject;
-
       import('@stomp/stompjs')
         .then(({ Client }) => {
-          const stompConfig: StompConfig = {
-            brokerURL: this.url,
-            connectHeaders: { Authorization: `Bearer ${this.token}` },
-            debug: () => {},
-            reconnectDelay: this.reconnectDelay,
-            heartbeatIncoming: 10000,
-            heartbeatOutgoing: 10000,
-            onConnect: this.handleConnect.bind(this),
-            onStompError: this.handleStompError.bind(this),
-            onWebSocketError: this.handleWebSocketError.bind(this),
-            onDisconnect: this.handleDisconnect.bind(this),
-          };
+          this.client = new Client({
+            brokerURL: import.meta.env.VITE_WS_URL,
+            connectHeaders: { Authorization: `Bearer ${token}` },
+            // eslint-disable-next-line no-console
+            debug: import.meta.env.DEV ? (msg) => console.log(msg) : () => {},
+            reconnectDelay: 0,
+            heartbeatIncoming: DEFAULT_STOMP_CONFIG.heartbeatIntervalMs,
+            heartbeatOutgoing: DEFAULT_STOMP_CONFIG.heartbeatIntervalMs,
+            onConnect: () => {
+              this.isConnecting = false;
+              this.reconnectAttempts = 0;
+              this.setupSubscriptions();
+              this.connectionChangeHandler?.(true);
+              resolve();
+            },
+            onStompError: (frame: IFrame) => {
+              this.isConnecting = false;
+              reject(
+                new Error(frame.headers?.message || 'STOMP connection error'),
+              );
+            },
+            onWebSocketError: (error: unknown) => {
+              this.isConnecting = false;
+              reject(error);
+            },
+            onDisconnect: () => {
+              this.connectionChangeHandler?.(false);
+              this.attemptReconnect();
+            },
+          });
 
-          this.client = new Client(stompConfig);
           this.client.activate();
         })
-        .catch(reject);
+        .catch((error) => {
+          this.isConnecting = false;
+          reject(error);
+        });
     });
   }
 
-  private handleConnect(): void {
-    this.reconnectAttempts = 0;
-    this.isAuthenticated = true;
-    this.setupSubscriptions();
-    this.eventHandlers.onConnectionChange?.(true);
-
-    if (this.connectResolve) {
-      this.connectResolve();
-      this.connectResolve = null;
-      this.connectReject = null;
-    }
+  private shouldReconnect(): boolean {
+    return this.userId !== null;
   }
 
-  private handleStompError(frame: IFrame): void {
-    this.isAuthenticated = false;
-    this.eventHandlers.onConnectionChange?.(false);
-
-    if (this.connectReject) {
-      const errorMessage = frame.headers?.message || 'Unknown STOMP error';
-      this.connectReject(new Error(`STOMP Error: ${errorMessage}`));
-      this.connectResolve = null;
-      this.connectReject = null;
+  private static parseMessage(message: IMessage): SocketEvent<unknown> | null {
+    try {
+      return JSON.parse(message.body) as SocketEvent<unknown>;
+    } catch {
+      return null;
     }
-  }
-
-  private handleWebSocketError(error: unknown): void {
-    this.isAuthenticated = false;
-    this.eventHandlers.onConnectionChange?.(false);
-
-    if (this.connectReject) {
-      this.connectReject(error);
-      this.connectResolve = null;
-      this.connectReject = null;
-    }
-  }
-
-  private handleDisconnect(): void {
-    this.isAuthenticated = false;
-    this.eventHandlers.onConnectionChange?.(false);
-    this.attemptReconnect();
   }
 
   private setupSubscriptions(): void {
-    if (!this.client?.connected) return;
+    if (!this.client?.connected || !this.userId) return;
 
-    const topicRoomUpdatesSubscription = this.client.subscribe(
+    const subscription = this.client.subscribe(
       `/topic/user-room-updates/${this.userId}`,
       this.handleMessage.bind(this),
     );
-    this.subscriptions.set('topic-room-updates', topicRoomUpdatesSubscription);
+    this.subscriptions.set('topic-room-updates', subscription);
   }
 
   private subscribeToRoom(roomId: number): void {
@@ -133,12 +119,11 @@ export class ChatWebSocket {
     }
 
     this.currentRoomId = roomId;
-    const roomTopic = `/topic/room/${roomId}`;
 
     if (this.subscriptions.has(`room-${roomId}`)) return;
 
     const subscription = this.client.subscribe(
-      roomTopic,
+      `/topic/room/${roomId}`,
       this.handleMessage.bind(this),
     );
     this.subscriptions.set(`room-${roomId}`, subscription);
@@ -153,7 +138,8 @@ export class ChatWebSocket {
   }
 
   private handleMessage(message: IMessage): void {
-    const data = JSON.parse(message.body) as SocketEvent<unknown>;
+    const data = ChatWebSocket.parseMessage(message);
+    if (!data) return;
 
     switch (data.type) {
       case 'NEW_MESSAGE':
@@ -170,22 +156,25 @@ export class ChatWebSocket {
   }
 
   private attemptReconnect(): void {
-    if (this.reconnectAttempts < this.maxReconnectAttempts) {
-      this.reconnectAttempts += 1;
-
-      setTimeout(() => {
-        this.connect().catch(() => undefined);
-      }, this.reconnectDelay * this.reconnectAttempts);
-    } else {
+    if (this.reconnectAttempts >= DEFAULT_STOMP_CONFIG.maxReconnectAttempts) {
       showAlert('연결 실패', '네트워크 연결이 불안정합니다.');
+      return;
     }
+
+    this.reconnectAttempts += 1;
+
+    setTimeout(() => {
+      if (this.shouldReconnect() && this.client) {
+        this.client.activate();
+      }
+    }, DEFAULT_STOMP_CONFIG.reconnectDelayMs * this.reconnectAttempts);
   }
 
   private publishMessage(
     destination: string,
     payload: SocketEvent<unknown>,
   ): void {
-    if (!this.client?.connected || !this.isAuthenticated) {
+    if (!this.client?.connected) {
       throw new Error();
     }
 
@@ -239,28 +228,31 @@ export class ChatWebSocket {
     this.subscribeToRoom(roomId);
   }
 
-  leaveRoom(roomId: number): void {
-    this.unsubscribeFromRoom(roomId);
-  }
-
   onAllMessages(callbacks: EventHandlers): void {
     this.eventHandlers = callbacks;
   }
 
+  onConnectionChange(handler: (isConnected: boolean) => void): void {
+    this.connectionChangeHandler = handler;
+  }
+
   disconnect(): void {
+    this.userId = null;
+
     this.subscriptions.forEach((subscription) => {
       (subscription as { unsubscribe: () => void }).unsubscribe();
     });
     this.subscriptions.clear();
+    this.currentRoomId = null;
 
     if (this.client) {
       this.client.deactivate();
       this.client = null;
     }
 
-    this.isAuthenticated = false;
-    this.currentRoomId = null;
-    this.connectResolve = null;
-    this.connectReject = null;
+    this.isConnecting = false;
+    this.reconnectAttempts = 0;
   }
 }
+
+export const chatWebSocket = new ChatWebSocket();
