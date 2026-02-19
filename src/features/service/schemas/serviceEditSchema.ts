@@ -18,7 +18,12 @@ export const serviceEditSchema = z.object({
   serviceDetail: serviceDetailSchema,
   category: categorySchema,
   price: priceSchema,
-  thumbnailImage: z.union([z.instanceof(File), z.string()]),
+  thumbnailImage: z.union([
+    z.instanceof(File).refine((file) => file.size <= 10 * 1024 * 1024, {
+      message: '10MB 보다 큰 이미지는 업로드할 수 없습니다.',
+    }),
+    z.string(),
+  ]),
   portfolioImages: z.array(portfolioImageSchema).optional(),
 });
 
