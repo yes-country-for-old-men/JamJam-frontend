@@ -1,7 +1,7 @@
-import SlideImage1 from '@/shared/assets/images/slide1.jpeg';
-import SlideImage2 from '@/shared/assets/images/slide2.jpeg';
-import SlideImage3 from '@/shared/assets/images/slide3.jpeg';
-import SlideImage4 from '@/shared/assets/images/slide4.jpeg';
+import SlideImage1 from '@/shared/assets/images/slide1.jpeg?format=webp&as=url';
+import SlideImage2 from '@/shared/assets/images/slide2.jpeg?format=webp&as=url';
+import SlideImage3 from '@/shared/assets/images/slide3.jpeg?format=webp&as=url';
+import SlideImage4 from '@/shared/assets/images/slide4.jpeg?format=webp&as=url';
 
 export const SLIDE_IMAGES = [
   {

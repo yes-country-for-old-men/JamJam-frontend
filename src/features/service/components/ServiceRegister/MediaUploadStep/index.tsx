@@ -4,8 +4,8 @@ import * as S from '@/features/service/pages/ServiceRegister/ServiceRegister.sty
 import { type ServiceRegisterData } from '@/features/service/schemas/serviceRegisterSchema';
 import AIIcon from '@/shared/assets/icons/ai.svg?react';
 import InfoIcon from '@/shared/assets/icons/info.svg?react';
-import ThumbnailErrorImage from '@/shared/assets/images/thumbnail-error.png';
-import ThumbnailNormalImage from '@/shared/assets/images/thumbnail-normal.png';
+import ThumbnailErrorImage from '@/shared/assets/images/thumbnail-error.png?format=webp&as=url';
+import ThumbnailNormalImage from '@/shared/assets/images/thumbnail-normal.png?format=webp&as=url';
 import Button from '@/shared/components/Button';
 import Checkbox from '@/shared/components/Checkbox';
 import FormMessage from '@/shared/components/FormMessage';

@@ -2,8 +2,6 @@ import { Global, css } from '@emotion/react';
 import theme from '@/shared/styles/theme';
 
 const globalStyles = css`
-  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
-
   @font-face {
     font-family: 'A2z';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-7Bold.woff2')

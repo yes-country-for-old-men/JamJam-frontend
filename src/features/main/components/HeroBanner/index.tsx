@@ -45,6 +45,7 @@ const HeroBanner: React.FC = () => {
                 src={slide.thumbnailUrl}
                 alt={`slide-${slide.id}`}
                 draggable={false}
+                loading={index === BANNER_CONFIG.CLONE_COUNT ? 'eager' : 'lazy'}
               />
             </S.SlideInner>
           </S.Slide>
