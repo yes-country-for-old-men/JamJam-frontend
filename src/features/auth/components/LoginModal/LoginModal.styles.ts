@@ -34,17 +34,17 @@ export const Divider = styled.span`
 `;
 
 export const SignUpLink = styled.div`
+  margin-top: 12px;
   font-size: 14px;
   font-weight: 500;
   text-align: center;
-  margin-top: 12px;
 
   a {
+    margin-left: 6px;
     color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
     font-size: 14px;
     font-weight: 700;
     text-decoration: none;
-    margin-left: 6px;
 
     &:hover {
       text-decoration: underline;
@@ -53,9 +53,24 @@ export const SignUpLink = styled.div`
 `;
 
 export const ErrorMessage = styled.div`
+  margin-top: 4px;
   color: ${(props) => props.theme.COLORS.RED};
   font-size: 13px;
   font-weight: 500;
   text-align: center;
-  margin-top: 4px;
+`;
+
+export const ResultBox = styled.div`
+  padding: 24px;
+  background-color: ${(props) => props.theme.COLORS.GRAY[6]};
+  border-radius: 12px;
+  text-align: center;
+  font-size: 15px;
+`;
+
+export const ResultId = styled.div`
+  margin-top: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: ${(props) => props.theme.COLORS.MAIN.PRIMARY};
 `;
