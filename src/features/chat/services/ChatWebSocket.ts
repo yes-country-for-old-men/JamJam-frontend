@@ -36,7 +36,6 @@ class ChatWebSocket {
   private connectionChangeHandler: ((isConnected: boolean) => void) | null =
     null;
   private subscriptions: Map<string, unknown> = new Map();
-  private currentRoomId: number | null = null;
 
   connect(token: string, userId: string): Promise<void> {
     if (this.client?.connected) return Promise.resolve();
@@ -102,39 +101,25 @@ class ChatWebSocket {
   }
 
   private setupSubscriptions(): void {
-    if (!this.client?.connected || !this.userId) return;
-
-    const subscription = this.client.subscribe(
-      `/topic/user-room-updates/${this.userId}`,
-      this.handleMessage.bind(this),
-    );
-    this.subscriptions.set('topic-room-updates', subscription);
-  }
-
-  private subscribeToRoom(roomId: number): void {
     if (!this.client?.connected) return;
 
-    if (this.currentRoomId && this.currentRoomId !== roomId) {
-      this.unsubscribeFromRoom(this.currentRoomId);
-    }
-
-    this.currentRoomId = roomId;
-
-    if (this.subscriptions.has(`room-${roomId}`)) return;
-
-    const subscription = this.client.subscribe(
-      `/topic/room/${roomId}`,
+    const chatSub = this.client.subscribe(
+      '/user/queue/chat',
       this.handleMessage.bind(this),
     );
-    this.subscriptions.set(`room-${roomId}`, subscription);
-  }
+    this.subscriptions.set('user-queue-chat', chatSub);
 
-  private unsubscribeFromRoom(roomId: number): void {
-    const subscription = this.subscriptions.get(`room-${roomId}`);
-    if (subscription) {
-      (subscription as { unsubscribe: () => void }).unsubscribe();
-      this.subscriptions.delete(`room-${roomId}`);
-    }
+    const roomUpdatesSub = this.client.subscribe(
+      '/user/queue/room-updates',
+      this.handleMessage.bind(this),
+    );
+    this.subscriptions.set('user-queue-room-updates', roomUpdatesSub);
+
+    const messagesSub = this.client.subscribe(
+      '/user/queue/messages',
+      this.handleMessage.bind(this),
+    );
+    this.subscriptions.set('user-queue-messages', messagesSub);
   }
 
   private handleMessage(message: IMessage): void {
@@ -224,10 +209,6 @@ class ChatWebSocket {
     this.publishMessage('/app/chat', payload);
   }
 
-  joinRoom(roomId: number): void {
-    this.subscribeToRoom(roomId);
-  }
-
   onAllMessages(callbacks: EventHandlers): void {
     this.eventHandlers = callbacks;
   }
@@ -243,7 +224,6 @@ class ChatWebSocket {
       (subscription as { unsubscribe: () => void }).unsubscribe();
     });
     this.subscriptions.clear();
-    this.currentRoomId = null;
 
     if (this.client) {
       this.client.deactivate();

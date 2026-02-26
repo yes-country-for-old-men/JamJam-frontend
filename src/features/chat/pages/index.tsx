@@ -191,10 +191,6 @@ const Chat: React.FC = () => {
   const selectChat = async (chatId: number) => {
     setSelectedChatId(chatId);
     clearTempMessages();
-
-    if (socket && isConnected) {
-      socket.joinRoom(chatId);
-    }
   };
 
   const sendMessage = (text: string): void => {
