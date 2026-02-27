@@ -1,7 +1,7 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import { type ProfileForm } from '@/features/provider/hooks/useProfileForm';
-import * as S from '@/features/provider/pages/ProfileEdit/ProfileEdit.styles';
+import * as S from '@/pages/provider-edit/ProfileEdit.styles';
 import Select from '@/shared/components/Select';
 import { CATEGORIES, LOCATIONS } from '@/shared/constants';
 

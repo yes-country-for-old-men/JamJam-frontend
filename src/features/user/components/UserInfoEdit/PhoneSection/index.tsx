@@ -1,6 +1,6 @@
 import React from 'react';
 import { type InfoEditForm } from '@/features/user/hooks/useInfoEditForm';
-import * as S from '@/features/user/pages/UserInfoEdit/UserInfoEdit.styles';
+import * as S from '@/pages/user-info-edit/UserInfoEdit.styles';
 import Button from '@/shared/components/Button';
 import FormMessage from '@/shared/components/FormMessage';
 import Input from '@/shared/components/Input';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { type ProviderDetailContent } from '@/features/provider/api/providerApi';
-import * as S from '@/features/provider/pages/Provider/Provider.styles';
+import * as S from '@/pages/provider/Provider.styles';
 import ServiceCard from '@/shared/components/ServiceCard';
 
 interface ServicesSectionProps {

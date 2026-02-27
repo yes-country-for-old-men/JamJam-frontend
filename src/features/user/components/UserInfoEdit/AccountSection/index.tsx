@@ -1,6 +1,6 @@
 import React from 'react';
 import { type InfoEditForm } from '@/features/user/hooks/useInfoEditForm';
-import * as S from '@/features/user/pages/UserInfoEdit/UserInfoEdit.styles';
+import * as S from '@/pages/user-info-edit/UserInfoEdit.styles';
 import Input from '@/shared/components/Input';
 import Select from '@/shared/components/Select';
 import { BANK_CODE_MAP } from '@/shared/constants';

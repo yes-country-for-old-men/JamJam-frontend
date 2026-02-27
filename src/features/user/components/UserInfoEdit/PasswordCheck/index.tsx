@@ -1,6 +1,6 @@
 import React from 'react';
 import { type PasswordCheckForm } from '@/features/user/hooks/useInfoEditForm';
-import * as S from '@/features/user/pages/UserInfoEdit/UserInfoEdit.styles';
+import * as S from '@/pages/user-info-edit/UserInfoEdit.styles';
 import PasswordIcon from '@/shared/assets/icons/password.svg?react';
 import Button from '@/shared/components/Button';
 import Input from '@/shared/components/Input';

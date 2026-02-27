@@ -1,7 +1,7 @@
 import React from 'react';
 import { Controller, type UseFormReturn } from 'react-hook-form';
-import * as S from '@/features/service/pages/ServiceRegister/ServiceRegister.styles';
 import { type ServiceRegisterData } from '@/features/service/schemas/serviceRegisterSchema';
+import * as S from '@/pages/service-register/ServiceRegister.styles';
 import AIIcon from '@/shared/assets/icons/ai.svg?react';
 import FormMessage from '@/shared/components/FormMessage';
 import GradientButton from '@/shared/components/GradientButton';

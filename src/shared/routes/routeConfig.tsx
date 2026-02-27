@@ -4,25 +4,23 @@ import ClientRoute from '@/shared/components/Routes/ClientRoute';
 import ProtectedRoute from '@/shared/components/Routes/ProtectedRoute';
 import ProviderRoute from '@/shared/components/Routes/ProviderRoute';
 
-const Category = lazy(() => import('@/features/category/pages'));
-const Chat = lazy(() => import('@/features/chat/pages'));
-const Credit = lazy(() => import('@/features/credit/pages/Credit'));
-const Main = lazy(() => import('@/features/main/pages'));
-const OrderCreate = lazy(() => import('@/features/order/pages/OrderCreate'));
-const OrderHistory = lazy(() => import('@/features/order/pages/OrderHistory'));
-const OrderManage = lazy(() => import('@/features/order/pages/OrderManage'));
-const ProfileEdit = lazy(() => import('@/features/provider/pages/ProfileEdit'));
-const Provider = lazy(() => import('@/features/provider/pages/Provider'));
-const Search = lazy(() => import('@/features/search/pages'));
-const Service = lazy(() => import('@/features/service/pages/ServiceDetail'));
-const ServiceEdit = lazy(() => import('@/features/service/pages/ServiceEdit'));
-const ServiceRegister = lazy(
-  () => import('@/features/service/pages/ServiceRegister'),
-);
-const UserInfoEdit = lazy(() => import('@/features/user/pages/UserInfoEdit'));
-const Forbidden = lazy(() => import('@/pages/Forbidden'));
-const My = lazy(() => import('@/pages/My'));
-const NotFound = lazy(() => import('@/pages/NotFound'));
+const Category = lazy(() => import('@/pages/category'));
+const Chat = lazy(() => import('@/pages/chat'));
+const Credit = lazy(() => import('@/pages/credit'));
+const Main = lazy(() => import('@/pages/main'));
+const OrderCreate = lazy(() => import('@/pages/order-create'));
+const OrderHistory = lazy(() => import('@/pages/order-history'));
+const OrderManage = lazy(() => import('@/pages/order-manage'));
+const ProfileEdit = lazy(() => import('@/pages/provider-edit'));
+const Provider = lazy(() => import('@/pages/provider'));
+const Search = lazy(() => import('@/pages/search'));
+const Service = lazy(() => import('@/pages/service-detail'));
+const ServiceEdit = lazy(() => import('@/pages/service-edit'));
+const ServiceRegister = lazy(() => import('@/pages/service-register'));
+const UserInfoEdit = lazy(() => import('@/pages/user-info-edit'));
+const Forbidden = lazy(() => import('@/pages/forbidden'));
+const My = lazy(() => import('@/pages/my'));
+const NotFound = lazy(() => import('@/pages/not-found'));
 
 export const publicRoutes = [
   { index: true, element: <Main /> },

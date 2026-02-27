@@ -1,7 +1,7 @@
 import React from 'react';
 import { Controller, type UseFormReturn } from 'react-hook-form';
-import * as S from '@/features/service/pages/ServiceRegister/ServiceRegister.styles';
 import { type ServiceRegisterData } from '@/features/service/schemas/serviceRegisterSchema';
+import * as S from '@/pages/service-register/ServiceRegister.styles';
 import Button from '@/shared/components/Button';
 import FormMessage from '@/shared/components/FormMessage';
 import Input from '@/shared/components/Input';

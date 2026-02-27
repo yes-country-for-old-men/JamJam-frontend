@@ -1,7 +1,7 @@
 import React from 'react';
 import { type ProfileForm } from '@/features/provider/hooks/useProfileForm';
 import { useSkillSelection } from '@/features/provider/hooks/useSkillSelection';
-import * as S from '@/features/provider/pages/ProfileEdit/ProfileEdit.styles';
+import * as S from '@/pages/provider-edit/ProfileEdit.styles';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
 import { CATEGORIES } from '@/shared/constants';
 import type { Skill } from '@/features/provider/types/Provider';

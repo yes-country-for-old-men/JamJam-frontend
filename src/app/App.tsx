@@ -12,7 +12,7 @@ import {
   myPageRoutes,
 } from '@/shared/routes/routeConfig';
 
-const SignUp = lazy(() => import('@/features/signup/pages'));
+const SignUp = lazy(() => import('@/pages/signup'));
 
 const PageFallback = () => (
   <div

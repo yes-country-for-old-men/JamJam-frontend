@@ -1,6 +1,6 @@
 import React from 'react';
 import { type Step3Form } from '@/features/signup/hooks/useSignUpForm';
-import * as S from '@/features/signup/pages/SignUp.styles';
+import * as S from '@/pages/signup/SignUp.styles';
 import FemaleIcon from '@/shared/assets/icons/female.svg?react';
 import MaleIcon from '@/shared/assets/icons/male.svg?react';
 import Button from '@/shared/components/Button';

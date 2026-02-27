@@ -1,6 +1,6 @@
 import React from 'react';
 import { type Step2Form } from '@/features/signup/hooks/useSignUpForm';
-import * as S from '@/features/signup/pages/SignUp.styles';
+import * as S from '@/pages/signup/SignUp.styles';
 import Button from '@/shared/components/Button';
 import FormMessage from '@/shared/components/FormMessage';
 import Input from '@/shared/components/Input';

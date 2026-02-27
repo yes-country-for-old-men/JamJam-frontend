@@ -1,6 +1,6 @@
 import React from 'react';
 import { type ServiceDetailContent } from '@/features/service/api/serviceApi';
-import * as S from '@/features/service/pages/ServiceDetail/Service.styles';
+import * as S from '@/pages/service-detail/Service.styles';
 import HTMLContent from '@/shared/components/HTMLContent';
 
 interface ServiceInfoSectionProps {
