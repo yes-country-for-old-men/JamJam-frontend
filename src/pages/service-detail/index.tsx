@@ -4,16 +4,16 @@ import { createChatRoom } from '@/entities/chat/api/chatApi';
 import { inquireService } from '@/entities/service/api/serviceApi';
 import { useServiceDetailQuery } from '@/entities/service/model/useServiceDetailQuery';
 import { useAuthStatus } from '@/features/auth/hooks/useAuthStatus';
-import PortfolioSection from '@/features/service/components/ServiceDetail/PortfolioSection';
-import ServiceHeader from '@/features/service/components/ServiceDetail/ServiceHeader';
-import ServiceInfoSection from '@/features/service/components/ServiceDetail/ServiceInfoSection';
-import SidePanel from '@/features/service/components/ServiceDetail/SidePanel';
 import * as S from '@/pages/service-detail/Service.styles';
 import CategoryTabNavigator from '@/shared/components/CategoryTabNavigator';
 import SectionTab from '@/shared/components/SectionTab';
 import { useDialog } from '@/shared/hooks/useDialog';
 import { useTabScroll } from '@/shared/hooks/useTabScroll';
 import { decodeToken, eventManager } from '@/shared/utils';
+import PortfolioSection from '@/widgets/service-detail/ui/PortfolioSection';
+import ServiceHeader from '@/widgets/service-detail/ui/ServiceHeader';
+import ServiceInfoSection from '@/widgets/service-detail/ui/ServiceInfoSection';
+import SidePanel from '@/widgets/service-detail/ui/SidePanel';
 
 const Service: React.FC = () => {
   const { serviceId } = useParams<{ serviceId: string }>();

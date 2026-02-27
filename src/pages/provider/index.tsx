@@ -3,15 +3,15 @@ import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import { createChatRoom } from '@/entities/chat/api/chatApi';
 import { useProviderDetailQuery } from '@/entities/provider/model/useProviderDetailQuery';
 import { useAuthStatus } from '@/features/auth/hooks/useAuthStatus';
-import ProfileCard from '@/features/provider/components/Provider/ProfileCard';
-import ProviderInfoSection from '@/features/provider/components/Provider/ProviderInfoSection';
-import ServicesSection from '@/features/provider/components/Provider/ServicesSection';
-import SidePanel from '@/features/provider/components/Provider/SidePanel';
 import * as S from '@/pages/provider/Provider.styles';
 import SectionTab from '@/shared/components/SectionTab';
 import { useDialog } from '@/shared/hooks/useDialog';
 import { useTabScroll } from '@/shared/hooks/useTabScroll';
 import { eventManager } from '@/shared/utils';
+import ProfileCard from '@/widgets/provider-profile/ui/ProfileCard';
+import ProviderInfoSection from '@/widgets/provider-profile/ui/ProviderInfoSection';
+import ServicesSection from '@/widgets/provider-profile/ui/ServicesSection';
+import SidePanel from '@/widgets/provider-profile/ui/SidePanel';
 
 const Provider: React.FC = () => {
   const { userId } = useParams<{ userId: string }>();

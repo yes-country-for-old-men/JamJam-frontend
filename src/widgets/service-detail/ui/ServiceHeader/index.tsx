@@ -1,10 +1,10 @@
 import React from 'react';
 import { type ServiceDetailContent } from '@/entities/service/api/serviceApi';
-import * as S from '@/features/service/components/ServiceDetail/ServiceHeader/ServiceHeader.styles';
 import LocationIcon from '@/shared/assets/icons/location.svg?react';
 import UserProfileImageIcon from '@/shared/assets/icons/user-profile-image.svg?react';
 import Button from '@/shared/components/Button';
 import { getCategoryNameById } from '@/shared/utils';
+import * as S from '@/widgets/service-detail/ui/ServiceHeader/ServiceHeader.styles';
 
 interface ServiceHeaderProps {
   data: ServiceDetailContent;

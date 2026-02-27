@@ -1,7 +1,7 @@
 import React from 'react';
 import { type ServiceDetailContent } from '@/entities/service/api/serviceApi';
-import * as S from '@/features/service/components/ServiceDetail/SidePanel/SidePanel.styles';
 import Button from '@/shared/components/Button';
+import * as S from '@/widgets/service-detail/ui/SidePanel/SidePanel.styles';
 
 interface ServiceSidePanelProps {
   data: ServiceDetailContent;

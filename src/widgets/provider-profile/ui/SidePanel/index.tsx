@@ -1,7 +1,7 @@
 import React from 'react';
 import { type ProviderDetailContent } from '@/entities/provider/api/providerApi';
-import * as S from '@/features/provider/components/Provider/SidePanel/SidePanel.styles';
 import Button from '@/shared/components/Button';
+import * as S from '@/widgets/provider-profile/ui/SidePanel/SidePanel.styles';
 
 interface SidePanelProps {
   data: ProviderDetailContent;
