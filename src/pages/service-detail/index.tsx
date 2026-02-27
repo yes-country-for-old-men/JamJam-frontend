@@ -3,7 +3,7 @@ import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import { createChatRoom } from '@/entities/chat/api/chatApi';
 import { inquireService } from '@/entities/service/api/serviceApi';
 import { useServiceDetailQuery } from '@/entities/service/model/useServiceDetailQuery';
-import { useAuthStatus } from '@/features/auth/hooks/useAuthStatus';
+import { useAuthStatus } from '@/features/auth/model/useAuthStatus';
 import * as S from '@/pages/service-detail/Service.styles';
 import CategoryTabNavigator from '@/shared/components/CategoryTabNavigator';
 import SectionTab from '@/shared/components/SectionTab';

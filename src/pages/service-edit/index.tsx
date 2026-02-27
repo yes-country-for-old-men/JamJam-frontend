@@ -11,7 +11,7 @@ import { useServiceDetailQuery } from '@/entities/service/model/useServiceDetail
 import {
   serviceEditSchema,
   type ServiceEditData,
-} from '@/features/service/schemas/serviceEditSchema';
+} from '@/features/service/model/serviceEditSchema';
 import * as S from '@/pages/service-edit/ServiceEdit.styles';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
 import Button from '@/shared/components/Button';

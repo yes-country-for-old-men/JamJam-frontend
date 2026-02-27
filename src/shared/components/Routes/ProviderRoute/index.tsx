@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuthStatus } from '@/features/auth/hooks/useAuthStatus';
+import { useAuthStatus } from '@/features/auth/model/useAuthStatus';
 import { eventManager } from '@/shared/utils';
 
 interface ProviderRouteProps {

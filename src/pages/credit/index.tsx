@@ -4,7 +4,7 @@ import {
   type CreditHistoryItem,
 } from '@/entities/credit/api/creditApi';
 import { useUserInfoQuery } from '@/entities/user/model/useUserInfoQuery';
-import CreditChargeModal from '@/features/credit/components/CreditChargeModal';
+import CreditChargeModal from '@/features/credit/ui/CreditChargeModal';
 import Button from '@/shared/components/Button';
 import Pagination from '@/shared/components/Pagination';
 import Select from '@/shared/components/Select';

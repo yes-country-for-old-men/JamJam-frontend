@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import LoginModal from '@/features/auth/components/LoginModal';
+import LoginModal from '@/features/auth/ui/LoginModal';
 import { useDialog } from '@/shared/hooks/useDialog';
 import { eventManager } from '@/shared/utils';
 

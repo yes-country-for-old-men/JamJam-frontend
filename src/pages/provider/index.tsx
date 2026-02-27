@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import { createChatRoom } from '@/entities/chat/api/chatApi';
 import { useProviderDetailQuery } from '@/entities/provider/model/useProviderDetailQuery';
-import { useAuthStatus } from '@/features/auth/hooks/useAuthStatus';
+import { useAuthStatus } from '@/features/auth/model/useAuthStatus';
 import * as S from '@/pages/provider/Provider.styles';
 import SectionTab from '@/shared/components/SectionTab';
 import { useDialog } from '@/shared/hooks/useDialog';

@@ -16,20 +16,20 @@ import {
   requestPayment,
   getOrderDetail,
 } from '@/entities/order/api/orderApi';
-import ChatHeader from '@/features/chat/components/ChatHeader';
-import ChatInput from '@/features/chat/components/ChatInput';
-import ChatRoomItem from '@/features/chat/components/ChatRoomItem';
-import Messages from '@/features/chat/components/Messages';
-import OrderDetailModal from '@/features/chat/components/OrderDetailModal';
-import PriceInputModal from '@/features/chat/components/PriceInputModal';
-import { useMarkAsReadMutation } from '@/features/chat/hooks/mutations/useMarkAsReadMutation';
-import { useChat } from '@/features/chat/hooks/useChat';
-import { useMessageScroll } from '@/features/chat/hooks/useMessageScroll';
 import {
   groupChatMessages,
   getBubblePosition,
   shouldShowProfile,
-} from '@/features/chat/utils/chatMessagesUtils';
+} from '@/features/chat/lib/chatMessagesUtils';
+import { useMarkAsReadMutation } from '@/features/chat/model/mutations/useMarkAsReadMutation';
+import { useChat } from '@/features/chat/model/useChat';
+import { useMessageScroll } from '@/features/chat/model/useMessageScroll';
+import ChatHeader from '@/features/chat/ui/ChatHeader';
+import ChatInput from '@/features/chat/ui/ChatInput';
+import ChatRoomItem from '@/features/chat/ui/ChatRoomItem';
+import Messages from '@/features/chat/ui/Messages';
+import OrderDetailModal from '@/features/chat/ui/OrderDetailModal';
+import PriceInputModal from '@/features/chat/ui/PriceInputModal';
 import * as S from '@/pages/chat/Chat.styles';
 import LogoIcon from '@/shared/assets/icons/gray-logo-icon.svg?react';
 import { useDialog } from '@/shared/hooks/useDialog';

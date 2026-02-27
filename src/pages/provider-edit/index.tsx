@@ -6,12 +6,12 @@ import {
   registerProviderProfile,
   type ProviderRequestWithFiles,
 } from '@/entities/provider/api/providerApi';
-import CareerSection from '@/features/provider/components/ProfileEdit/CareerSection';
-import ContactTimeSection from '@/features/provider/components/ProfileEdit/ContactTimeSection';
-import EducationSection from '@/features/provider/components/ProfileEdit/EducationSection';
-import ExpertIntroSection from '@/features/provider/components/ProfileEdit/ExpertIntroSection';
-import SkillsSection from '@/features/provider/components/ProfileEdit/SkillsSection';
-import { useProfileForm } from '@/features/provider/hooks/useProfileForm';
+import { useProfileForm } from '@/features/provider/model/useProfileForm';
+import CareerSection from '@/features/provider/ui/ProfileEdit/CareerSection';
+import ContactTimeSection from '@/features/provider/ui/ProfileEdit/ContactTimeSection';
+import EducationSection from '@/features/provider/ui/ProfileEdit/EducationSection';
+import ExpertIntroSection from '@/features/provider/ui/ProfileEdit/ExpertIntroSection';
+import SkillsSection from '@/features/provider/ui/ProfileEdit/SkillsSection';
 import * as S from '@/pages/provider-edit/ProfileEdit.styles';
 import Button from '@/shared/components/Button';
 import { LOCATIONS } from '@/shared/constants';

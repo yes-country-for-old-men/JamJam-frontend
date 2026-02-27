@@ -5,11 +5,11 @@ import {
   registerService,
   type ServiceRegisterRequest,
 } from '@/entities/service/api/serviceApi';
-import IntroductionStep from '@/features/service/components/ServiceRegister/IntroductionStep';
-import MediaUploadStep from '@/features/service/components/ServiceRegister/MediaUploadStep';
-import ServiceDetailsStep from '@/features/service/components/ServiceRegister/ServiceDetailsStep';
-import { useServiceRegisterForm } from '@/features/service/hooks/useServiceRegisterForm';
-import { useServiceRegisterSteps } from '@/features/service/hooks/useServiceRegisterSteps';
+import { useServiceRegisterForm } from '@/features/service/model/useServiceRegisterForm';
+import { useServiceRegisterSteps } from '@/features/service/model/useServiceRegisterSteps';
+import IntroductionStep from '@/features/service/ui/ServiceRegister/IntroductionStep';
+import MediaUploadStep from '@/features/service/ui/ServiceRegister/MediaUploadStep';
+import ServiceDetailsStep from '@/features/service/ui/ServiceRegister/ServiceDetailsStep';
 import * as S from '@/pages/service-register/ServiceRegister.styles';
 import { useDialog } from '@/shared/hooks/useDialog';
 import { base64ToFile, parsePrice } from '@/shared/utils';

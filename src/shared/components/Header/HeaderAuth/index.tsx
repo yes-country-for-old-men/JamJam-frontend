@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useAuthStatus } from '@/features/auth/hooks/useAuthStatus';
+import { useAuthStatus } from '@/features/auth/model/useAuthStatus';
 import UserMenu from '@/shared/components/Header/UserMenu';
 import { eventManager } from '@/shared/utils';
 import * as S from './HeaderAuth.styles';

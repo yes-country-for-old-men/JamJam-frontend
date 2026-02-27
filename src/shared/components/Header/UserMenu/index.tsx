@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLogoutMutation } from '@/features/auth/hooks/useLogoutMutation';
+import { useLogoutMutation } from '@/features/auth/model/useLogoutMutation';
 import ArrowDownIcon from '@/shared/assets/icons/arrow-down.svg?react';
 import UserProfileImageIcon from '@/shared/assets/icons/user-profile-image.svg?react';
 import { useDialog } from '@/shared/hooks/useDialog';

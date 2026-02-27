@@ -5,13 +5,13 @@ import {
 } from '@/entities/order/api/orderApi';
 import { useOrderDetailQuery } from '@/entities/order/model/useOrderDetailQuery';
 import { useOrderListQuery } from '@/entities/order/model/useOrderListQuery';
-import CancelReasonModal from '@/features/order/components/CancelReasonModal';
-import { ORDER_TABS } from '@/features/order/constants/orderTabs';
-import { useChangeOrderStatusMutation } from '@/features/order/hooks/mutations/useChangeOrderStatusMutation';
+import { ORDER_TABS } from '@/features/order/config/orderTabs';
 import {
   formatOrderDate,
   formatDeadline,
-} from '@/features/order/utils/orderFormatters';
+} from '@/features/order/lib/orderFormatters';
+import { useChangeOrderStatusMutation } from '@/features/order/model/mutations/useChangeOrderStatusMutation';
+import CancelReasonModal from '@/features/order/ui/CancelReasonModal';
 import LogoIcon from '@/shared/assets/icons/gray-logo-icon.svg?react';
 import Button from '@/shared/components/Button';
 import * as S from './OrderManagePanel.styles';

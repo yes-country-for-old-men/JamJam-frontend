@@ -1,6 +1,6 @@
 import React from 'react';
-import CategorySection from '@/features/main/components/CategorySection';
-import HeroBanner from '@/features/main/components/HeroBanner';
+import CategorySection from '@/features/main/ui/CategorySection';
+import HeroBanner from '@/features/main/ui/HeroBanner';
 import SearchBar from '@/shared/components/SearchBar';
 import * as S from './Main.styles';
 

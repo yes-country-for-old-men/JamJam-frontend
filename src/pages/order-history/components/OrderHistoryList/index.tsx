@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOrderDetailQuery } from '@/entities/order/model/useOrderDetailQuery';
-import OrderDetailModal from '@/features/chat/components/OrderDetailModal';
-import CancelReasonModal from '@/features/order/components/CancelReasonModal';
-import { useCancelOrderMutation } from '@/features/order/hooks/mutations/useCancelOrderMutation';
-import { useConfirmOrderMutation } from '@/features/order/hooks/mutations/useConfirmOrderMutation';
-import { getStatusLabel } from '@/features/order/utils/orderFormatters';
+import OrderDetailModal from '@/features/chat/ui/OrderDetailModal';
+import { getStatusLabel } from '@/features/order/lib/orderFormatters';
+import { useCancelOrderMutation } from '@/features/order/model/mutations/useCancelOrderMutation';
+import { useConfirmOrderMutation } from '@/features/order/model/mutations/useConfirmOrderMutation';
+import CancelReasonModal from '@/features/order/ui/CancelReasonModal';
 import LogoIcon from '@/shared/assets/icons/gray-logo-icon.svg?react';
 import Button from '@/shared/components/Button';
 import { formatDate, formatPrice } from '@/shared/utils';

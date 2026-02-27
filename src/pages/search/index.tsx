@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useSearchQuery } from '@/features/search/hooks/queries/useSearchQuery';
-import { useSearch } from '@/features/search/hooks/useSearch';
+import { useSearchQuery } from '@/features/search/model/queries/useSearchQuery';
+import { useSearch } from '@/features/search/model/useSearch';
 import * as S from '@/pages/search/Search.styles';
 import CategoryTabNavigator from '@/shared/components/CategoryTabNavigator';
 import SearchBar from '@/shared/components/SearchBar';

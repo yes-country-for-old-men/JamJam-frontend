@@ -5,12 +5,12 @@ import {
   providerSignUp,
   checkLoginId,
 } from '@/features/signup/api/signUpApi';
-import CompletionScreen from '@/features/signup/components/CompletionScreen';
-import Step1 from '@/features/signup/components/Step1';
-import Step2 from '@/features/signup/components/Step2';
-import Step3 from '@/features/signup/components/Step3';
-import StepIndicator from '@/features/signup/components/StepIndicator';
-import { useSignUpForm } from '@/features/signup/hooks/useSignUpForm';
+import { useSignUpForm } from '@/features/signup/model/useSignUpForm';
+import CompletionScreen from '@/features/signup/ui/CompletionScreen';
+import Step1 from '@/features/signup/ui/Step1';
+import Step2 from '@/features/signup/ui/Step2';
+import Step3 from '@/features/signup/ui/Step3';
+import StepIndicator from '@/features/signup/ui/StepIndicator';
 import * as S from '@/pages/signup/SignUp.styles';
 import LogoIcon from '@/shared/assets/icons/logo-icon.svg?react';
 import Button from '@/shared/components/Button';
