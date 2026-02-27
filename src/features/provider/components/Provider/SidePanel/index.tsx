@@ -1,5 +1,5 @@
 import React from 'react';
-import { type ProviderDetailContent } from '@/features/provider/api/providerApi';
+import { type ProviderDetailContent } from '@/entities/provider/api/providerApi';
 import * as S from '@/features/provider/components/Provider/SidePanel/SidePanel.styles';
 import Button from '@/shared/components/Button';
 

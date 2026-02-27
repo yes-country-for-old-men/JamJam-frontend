@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { type ServiceDetailContent } from '@/features/service/api/serviceApi';
+import { type ServiceDetailContent } from '@/entities/service/api/serviceApi';
 import ArrowDownIcon from '@/shared/assets/icons/arrow-down.svg?react';
 import Button from '@/shared/components/Button';
 import Checkbox from '@/shared/components/Checkbox';

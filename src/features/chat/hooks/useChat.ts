@@ -5,7 +5,7 @@ import type {
   Message,
   StompNewMessageEvent,
   StompChatRoomUpdateEvent,
-} from '@/features/chat/types/Chat';
+} from '@/entities/chat/model/Chat';
 
 const convertStompChatRoomToLocal = (
   stompRoom: StompChatRoomUpdateEvent,

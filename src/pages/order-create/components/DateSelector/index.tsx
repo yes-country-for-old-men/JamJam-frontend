@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from '@/shared/components/Select';
 import * as S from './DateSelector.styles';
-import type { DeadlineData } from '@/features/order/types/Order';
+import type { DeadlineData } from '@/entities/order/model/Order';
 
 interface DateSelectorProps {
   formData: { deadline: DeadlineData };

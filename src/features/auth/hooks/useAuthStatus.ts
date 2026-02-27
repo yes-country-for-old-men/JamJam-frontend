@@ -1,5 +1,5 @@
+import { useUserInfoQuery } from '@/entities/user/model/useUserInfoQuery';
 import { useAuthToken } from '@/features/auth/hooks/useAuthToken';
-import { useUserInfoQuery } from '@/features/user/hooks/useUserInfoQuery';
 
 interface UseAuthStatusReturn {
   isLoggedIn: boolean;

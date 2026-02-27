@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { type ServiceDetailContent } from '@/features/service/api/serviceApi';
+import { type ServiceDetailContent } from '@/entities/service/api/serviceApi';
 import * as S from '@/pages/service-detail/Service.styles';
 import LeftIcon from '@/shared/assets/icons/left.svg?react';
 import RightIcon from '@/shared/assets/icons/right.svg?react';

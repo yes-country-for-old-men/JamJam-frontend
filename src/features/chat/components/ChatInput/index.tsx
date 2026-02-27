@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { uploadChatFiles } from '@/features/chat/api/chatApi';
+import { uploadChatFiles } from '@/entities/chat/api/chatApi';
 import * as S from '@/features/chat/components/ChatInput/ChatInput.styles';
 import AttachmentIcon from '@/shared/assets/icons/attachment.svg?react';
 import CrossIcon from '@/shared/assets/icons/cross.svg?react';
@@ -11,7 +11,7 @@ import type {
   MessageType,
   ChatFileInfo,
   FileType,
-} from '@/features/chat/types/Chat';
+} from '@/entities/chat/model/Chat';
 
 interface ChatInputProps {
   messageText: string;

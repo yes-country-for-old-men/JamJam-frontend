@@ -1,6 +1,6 @@
 import React from 'react';
+import { type ContactHours } from '@/entities/provider/model/Provider';
 import { type ProfileForm } from '@/features/provider/hooks/useProfileForm';
-import { type ContactHours } from '@/features/provider/types/Provider';
 import * as S from '@/pages/provider-edit/ProfileEdit.styles';
 import Slider from '@/shared/components/Slider';
 import { type SliderRange } from '@/shared/components/Slider/hooks/useSlider';

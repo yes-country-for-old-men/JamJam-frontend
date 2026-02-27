@@ -1,5 +1,5 @@
 import React from 'react';
-import { type ProviderDetailContent } from '@/features/provider/api/providerApi';
+import { type ProviderDetailContent } from '@/entities/provider/api/providerApi';
 import * as S from '@/pages/provider/Provider.styles';
 import CareerIcon from '@/shared/assets/icons/career.svg?react';
 import EducationIcon from '@/shared/assets/icons/education.svg?react';

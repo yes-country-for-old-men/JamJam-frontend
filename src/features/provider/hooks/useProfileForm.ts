@@ -4,7 +4,7 @@ import type {
   Career,
   Education,
   License,
-} from '@/features/provider/types/Provider';
+} from '@/entities/provider/model/Provider';
 import type { FileWithId } from '@/shared/types/FileWithId';
 
 interface ProfileFormData

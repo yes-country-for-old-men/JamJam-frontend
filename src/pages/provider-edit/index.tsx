@@ -5,7 +5,7 @@ import {
   updateProviderProfile,
   registerProviderProfile,
   type ProviderRequestWithFiles,
-} from '@/features/provider/api/providerApi';
+} from '@/entities/provider/api/providerApi';
 import CareerSection from '@/features/provider/components/ProfileEdit/CareerSection';
 import ContactTimeSection from '@/features/provider/components/ProfileEdit/ContactTimeSection';
 import EducationSection from '@/features/provider/components/ProfileEdit/EducationSection';

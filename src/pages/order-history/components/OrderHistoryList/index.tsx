@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useOrderDetailQuery } from '@/entities/order/model/useOrderDetailQuery';
 import OrderDetailModal from '@/features/chat/components/OrderDetailModal';
 import CancelReasonModal from '@/features/order/components/CancelReasonModal';
 import { useCancelOrderMutation } from '@/features/order/hooks/mutations/useCancelOrderMutation';
 import { useConfirmOrderMutation } from '@/features/order/hooks/mutations/useConfirmOrderMutation';
-import { useOrderDetailQuery } from '@/features/order/hooks/queries/useOrderDetailQuery';
 import { getStatusLabel } from '@/features/order/utils/orderFormatters';
 import LogoIcon from '@/shared/assets/icons/gray-logo-icon.svg?react';
 import Button from '@/shared/components/Button';
@@ -13,7 +13,7 @@ import * as S from './OrderHistoryList.styles';
 import type {
   MyOrderListContent,
   MyOrderListItem,
-} from '@/features/order/api/orderApi';
+} from '@/entities/order/api/orderApi';
 
 interface OrderHistoryListProps {
   orderList?: MyOrderListContent;

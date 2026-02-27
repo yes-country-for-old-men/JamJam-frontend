@@ -7,7 +7,7 @@ import type {
   SocketEvent,
   MessageType,
   ChatFileInfo,
-} from '@/features/chat/types/Chat';
+} from '@/entities/chat/model/Chat';
 import type { Client, IMessage, IFrame } from '@stomp/stompjs';
 
 interface EventHandlers {

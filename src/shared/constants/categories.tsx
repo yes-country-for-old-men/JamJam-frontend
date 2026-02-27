@@ -10,7 +10,7 @@ import MarketingIcon from '@/shared/assets/icons/category/marketing.svg?react';
 import PhotographIcon from '@/shared/assets/icons/category/photograph.svg?react';
 import TranslationIcon from '@/shared/assets/icons/category/translation.svg?react';
 import WriteIcon from '@/shared/assets/icons/category/write.svg?react';
-import type { Category } from '@/features/category/types/Category';
+import type { Category } from '@/entities/category/model/Category';
 
 const ICON_SIZE = 72;
 

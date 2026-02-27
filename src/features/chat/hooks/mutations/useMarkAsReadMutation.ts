@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { markAsRead } from '@/features/chat/api/chatApi';
+import { markAsRead } from '@/entities/chat/api/chatApi';
 
 interface MarkAsReadParams {
   chatRoomId: number;

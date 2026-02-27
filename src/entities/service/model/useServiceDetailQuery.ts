@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getServiceDetail } from '@/features/service/api/serviceApi';
+import { getServiceDetail } from '@/entities/service/api/serviceApi';
 
 export const useServiceDetailQuery = (serviceId: number | null) => {
   return useQuery({

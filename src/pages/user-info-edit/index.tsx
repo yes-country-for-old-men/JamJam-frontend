@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { useUserInfoQuery } from '@/entities/user/model/useUserInfoQuery';
 import AccountSection from '@/features/user/components/UserInfoEdit/AccountSection';
 import BasicInfoSection from '@/features/user/components/UserInfoEdit/BasicInfoSection';
 import PasswordCheck from '@/features/user/components/UserInfoEdit/PasswordCheck';
@@ -7,7 +8,6 @@ import PhoneSection from '@/features/user/components/UserInfoEdit/PhoneSection';
 import { useCheckPasswordMutation } from '@/features/user/hooks/mutations/useCheckPasswordMutation';
 import { useUpdateUserInfoMutation } from '@/features/user/hooks/mutations/useUpdateUserInfoMutation';
 import { useInfoEditForm } from '@/features/user/hooks/useInfoEditForm';
-import { useUserInfoQuery } from '@/features/user/hooks/useUserInfoQuery';
 import * as S from '@/pages/user-info-edit/UserInfoEdit.styles';
 import Button from '@/shared/components/Button';
 import { BANK_CODE_MAP } from '@/shared/constants';
@@ -15,7 +15,7 @@ import { useDialog } from '@/shared/hooks/useDialog';
 import { useNicknameCheck } from '@/shared/hooks/useNicknameCheck';
 import { usePhoneVerification } from '@/shared/hooks/usePhoneVerification';
 import { formatPhoneNumber, getErrorMessage } from '@/shared/utils';
-import type { UpdateUserRequest } from '@/features/user/api/userApi';
+import type { UpdateUserRequest } from '@/entities/user/api/userApi';
 
 const BANKS = Object.entries(BANK_CODE_MAP).map(([code, name]) => ({
   code,

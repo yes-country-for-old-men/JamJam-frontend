@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { useUserInfoQuery } from '@/features/user/hooks/useUserInfoQuery';
+import { useUserInfoQuery } from '@/entities/user/model/useUserInfoQuery';
 import AIContentIcon from '@/shared/assets/icons/ai-content.svg?react';
 import UserProfileImageIcon from '@/shared/assets/icons/user-profile-image.svg?react';
 import * as S from './My.styles';

@@ -2,7 +2,7 @@ import React from 'react';
 import * as S from '@/features/chat/components/ChatRoomItem/ChatRoomItem.styles';
 import UserProfileImageIcon from '@/shared/assets/icons/user-profile-image.svg?react';
 import { formatRelativeTime } from '@/shared/utils';
-import type { ChatRoom } from '@/features/chat/types/Chat';
+import type { ChatRoom } from '@/entities/chat/model/Chat';
 
 interface ChatRoomItemProps {
   chatRoom: ChatRoom;

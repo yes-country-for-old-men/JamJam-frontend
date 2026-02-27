@@ -1,4 +1,4 @@
-import type { UserRole } from '@/features/user/types/UserRole';
+import type { UserRole } from '@/entities/user/model/UserRole';
 
 interface Account {
   accountNumber: string;

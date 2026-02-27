@@ -4,7 +4,7 @@ import { useSkillSelection } from '@/features/provider/hooks/useSkillSelection';
 import * as S from '@/pages/provider-edit/ProfileEdit.styles';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
 import { CATEGORIES } from '@/shared/constants';
-import type { Skill } from '@/features/provider/types/Provider';
+import type { Skill } from '@/entities/provider/model/Provider';
 
 interface SkillsSectionProps {
   form: ProfileForm;

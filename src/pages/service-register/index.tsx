@@ -4,7 +4,7 @@ import {
   generateAiThumbnail,
   registerService,
   type ServiceRegisterRequest,
-} from '@/features/service/api/serviceApi';
+} from '@/entities/service/api/serviceApi';
 import IntroductionStep from '@/features/service/components/ServiceRegister/IntroductionStep';
 import MediaUploadStep from '@/features/service/components/ServiceRegister/MediaUploadStep';
 import ServiceDetailsStep from '@/features/service/components/ServiceRegister/ServiceDetailsStep';

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getOrderList, type OrderStatus } from '@/features/order/api/orderApi';
+import { getOrderList, type OrderStatus } from '@/entities/order/api/orderApi';
 
 export const useOrderListQuery = (orderStatus: OrderStatus) => {
   return useQuery({

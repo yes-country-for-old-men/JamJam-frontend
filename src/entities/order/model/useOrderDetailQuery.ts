@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getOrderDetail } from '@/features/order/api/orderApi';
+import { getOrderDetail } from '@/entities/order/api/orderApi';
 
 export const useOrderDetailQuery = (orderId: number | null) => {
   return useQuery({

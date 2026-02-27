@@ -1,4 +1,4 @@
-import type { OrderStatus } from '@/features/order/api/orderApi';
+import type { OrderStatus } from '@/entities/order/api/orderApi';
 
 export const formatOrderDate = (dateStr: string): string => {
   const date = new Date(dateStr);

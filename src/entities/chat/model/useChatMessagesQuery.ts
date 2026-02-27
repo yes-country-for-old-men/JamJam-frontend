@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getChatMessages } from '@/features/chat/api/chatApi';
-import type { ChatMessage, Message } from '@/features/chat/types/Chat';
+import { getChatMessages } from '@/entities/chat/api/chatApi';
+import type { ChatMessage, Message } from '@/entities/chat/model/Chat';
 
 const convertApiMessageToLocal = (
   apiMessage: ChatMessage & { messageId?: number },

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getProviderPage } from '@/features/provider/api/providerApi';
+import { getProviderPage } from '@/entities/provider/api/providerApi';
 
 export const useProviderDetailQuery = (userId: number | null) => {
   return useQuery({

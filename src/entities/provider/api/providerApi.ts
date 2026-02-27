@@ -7,7 +7,7 @@ import type {
   Education,
   License,
   ContactHours,
-} from '@/features/provider/types/Provider';
+} from '@/entities/provider/model/Provider';
 import type { ApiResponse } from '@/shared/types/ApiResponse';
 
 export interface CareerWithFile extends Career {

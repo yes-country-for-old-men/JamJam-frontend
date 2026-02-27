@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
+import { createChatRoom } from '@/entities/chat/api/chatApi';
+import { useProviderDetailQuery } from '@/entities/provider/model/useProviderDetailQuery';
 import { useAuthStatus } from '@/features/auth/hooks/useAuthStatus';
-import { createChatRoom } from '@/features/chat/api/chatApi';
 import ProfileCard from '@/features/provider/components/Provider/ProfileCard';
 import ProviderInfoSection from '@/features/provider/components/Provider/ProviderInfoSection';
 import ServicesSection from '@/features/provider/components/Provider/ServicesSection';
 import SidePanel from '@/features/provider/components/Provider/SidePanel';
-import { useProviderDetailQuery } from '@/features/provider/hooks/queries/useProviderDetailQuery';
 import * as S from '@/pages/provider/Provider.styles';
 import SectionTab from '@/shared/components/SectionTab';
 import { useDialog } from '@/shared/hooks/useDialog';

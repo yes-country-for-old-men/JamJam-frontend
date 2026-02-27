@@ -1,5 +1,5 @@
 import React from 'react';
-import { type ServiceDetailContent } from '@/features/service/api/serviceApi';
+import { type ServiceDetailContent } from '@/entities/service/api/serviceApi';
 import * as S from '@/features/service/components/ServiceDetail/SidePanel/SidePanel.styles';
 import Button from '@/shared/components/Button';
 

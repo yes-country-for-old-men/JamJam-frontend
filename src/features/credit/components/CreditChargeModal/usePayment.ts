@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import {
   completePayment,
   savePaymentOrder,
-} from '@/features/credit/api/creditApi';
+} from '@/entities/credit/api/creditApi';
 import { ensurePunctuation, eventManager } from '@/shared/utils';
 
 const PAYMENT_MESSAGES = {

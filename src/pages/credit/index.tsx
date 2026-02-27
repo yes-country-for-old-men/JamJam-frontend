@@ -2,9 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import {
   getCreditHistory,
   type CreditHistoryItem,
-} from '@/features/credit/api/creditApi';
+} from '@/entities/credit/api/creditApi';
+import { useUserInfoQuery } from '@/entities/user/model/useUserInfoQuery';
 import CreditChargeModal from '@/features/credit/components/CreditChargeModal';
-import { useUserInfoQuery } from '@/features/user/hooks/useUserInfoQuery';
 import Button from '@/shared/components/Button';
 import Pagination from '@/shared/components/Pagination';
 import Select from '@/shared/components/Select';

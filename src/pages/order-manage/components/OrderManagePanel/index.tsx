@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import {
   type OrderStatus,
   type OrderCountContent,
-} from '@/features/order/api/orderApi';
+} from '@/entities/order/api/orderApi';
+import { useOrderDetailQuery } from '@/entities/order/model/useOrderDetailQuery';
+import { useOrderListQuery } from '@/entities/order/model/useOrderListQuery';
 import CancelReasonModal from '@/features/order/components/CancelReasonModal';
 import { ORDER_TABS } from '@/features/order/constants/orderTabs';
 import { useChangeOrderStatusMutation } from '@/features/order/hooks/mutations/useChangeOrderStatusMutation';
-import { useOrderDetailQuery } from '@/features/order/hooks/queries/useOrderDetailQuery';
-import { useOrderListQuery } from '@/features/order/hooks/queries/useOrderListQuery';
 import {
   formatOrderDate,
   formatDeadline,

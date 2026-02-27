@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import {
   getServiceList,
   type ServiceListRequest,
-} from '@/features/service/api/serviceApi';
+} from '@/entities/service/api/serviceApi';
 
 export const useServiceListQuery = (
   params: Omit<ServiceListRequest, 'page'>,

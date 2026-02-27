@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
-import { categoryExpandedAtom } from '@/features/category/atoms/categoryAtoms';
+import { categoryExpandedAtom } from '@/entities/category/model/categoryAtoms';
 import ArrowDownIcon from '@/shared/assets/icons/arrow-down.svg?react';
 import CategoryIcon from '@/shared/assets/icons/category.svg?react';
 import { CATEGORIES } from '@/shared/constants';

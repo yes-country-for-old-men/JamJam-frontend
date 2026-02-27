@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { OrderFormData } from '@/features/order/types/Order';
+import type { OrderFormData } from '@/entities/order/model/Order';
 import type { FileWithId } from '@/shared/types/FileWithId';
 
 export const useOrderForm = () => {

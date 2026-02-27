@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from '@/shared/components/Modal';
 import * as S from './OrderDetailModal.styles';
-import type { OrderDetailContent } from '@/features/order/api/orderApi';
+import type { OrderDetailContent } from '@/entities/order/api/orderApi';
 
 interface OrderDetailModalProps {
   isOpen: boolean;

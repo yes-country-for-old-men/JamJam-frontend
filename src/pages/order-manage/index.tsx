@@ -1,5 +1,5 @@
 import React from 'react';
-import { useOrderCountQuery } from '@/features/order/hooks/queries/useOrderCountQuery';
+import { useOrderCountQuery } from '@/entities/order/model/useOrderCountQuery';
 import OrderManagePanel from '@/pages/order-manage/components/OrderManagePanel';
 import * as S from './OrderManage.styles';
 

@@ -10,7 +10,7 @@ import type {
   ChatRoom,
   ChatFileInfo,
   OrderMessageContent,
-} from '@/features/chat/types/Chat';
+} from '@/entities/chat/model/Chat';
 
 interface MessageProps {
   message: Message;

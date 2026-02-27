@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMyOrderListQuery } from '@/features/order/hooks/queries/useMyOrderListQuery';
+import { useMyOrderListQuery } from '@/entities/order/model/useMyOrderListQuery';
 import OrderHistoryList from '@/pages/order-history/components/OrderHistoryList';
 import * as S from './OrderHistory.styles';
 

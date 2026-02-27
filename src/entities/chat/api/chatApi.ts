@@ -3,7 +3,7 @@ import type {
   ChatRoomSummary,
   ChatMessage,
   MessageType,
-} from '@/features/chat/types/Chat';
+} from '@/entities/chat/model/Chat';
 import type { ApiResponse } from '@/shared/types/ApiResponse';
 
 export interface ChatRoomsRequest {

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getOrderCount } from '@/features/order/api/orderApi';
+import { getOrderCount } from '@/entities/order/api/orderApi';
 
 export const useOrderCountQuery = () => {
   return useQuery({

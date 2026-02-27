@@ -1,4 +1,4 @@
-import type { User } from '@/features/user/types/User';
+import type { User } from '@/entities/user/model/User';
 
 export interface Education {
   id: number;

@@ -3,15 +3,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import {
   registerOrder,
   type OrderRegisterRequest,
-} from '@/features/order/api/orderApi';
-import { type ServiceDetailContent } from '@/features/service/api/serviceApi';
+} from '@/entities/order/api/orderApi';
+import { type ServiceDetailContent } from '@/entities/service/api/serviceApi';
 import OrderFormSection from '@/pages/order-create/components/OrderFormSection';
 import SidePanel from '@/pages/order-create/components/SidePanel';
 import { useOrderForm } from '@/pages/order-create/hooks/useOrderForm';
 import * as S from '@/pages/order-create/OrderCreate.styles';
 import { useDialog } from '@/shared/hooks/useDialog';
 import { formatDeadlineISO } from '@/shared/utils';
-import type { OrderFormData } from '@/features/order/types/Order';
+import type { OrderFormData } from '@/entities/order/model/Order';
 
 const OrderCreate: React.FC = () => {
   const location = useLocation();

@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { leaveChatRoom } from '@/features/chat/api/chatApi';
+import { leaveChatRoom } from '@/entities/chat/api/chatApi';
 import * as S from '@/features/chat/components/ChatHeader/ChatHeader.styles';
 import MenuIcon from '@/shared/assets/icons/menu.svg?react';
 import UserProfileImageIcon from '@/shared/assets/icons/user-profile-image.svg?react';
 import { useDialog } from '@/shared/hooks/useDialog';
-import type { ChatRoom } from '@/features/chat/types/Chat';
+import type { ChatRoom } from '@/entities/chat/model/Chat';
 
 interface ChatHeaderProps {
   selectedChat: ChatRoom;

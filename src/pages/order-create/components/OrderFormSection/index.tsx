@@ -3,7 +3,7 @@ import DateSelector from '@/pages/order-create/components/DateSelector';
 import FileUpload from '@/shared/components/FileUpload';
 import Input from '@/shared/components/Input';
 import * as S from './OrderFormSection.styles';
-import type { OrderFormData } from '@/features/order/types/Order';
+import type { OrderFormData } from '@/entities/order/model/Order';
 import type { FileWithId } from '@/shared/types/FileWithId';
 
 interface OrderFormSectionProps {

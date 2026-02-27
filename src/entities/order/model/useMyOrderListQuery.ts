@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getMyOrderList } from '@/features/order/api/orderApi';
+import { getMyOrderList } from '@/entities/order/api/orderApi';
 
 export const useMyOrderListQuery = () => {
   return useQuery({

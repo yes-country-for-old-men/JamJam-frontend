@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   updateUserInfo,
   type UpdateUserRequest,
-} from '@/features/user/api/userApi';
+} from '@/entities/user/api/userApi';
 
 export const useUpdateUserInfoMutation = () => {
   const queryClient = useQueryClient();

@@ -1,6 +1,6 @@
 import { apiClient } from '@/shared/api/apiClient';
 import { createMultipartRequest } from '@/shared/utils';
-import type { User } from '@/features/user/types/User';
+import type { User } from '@/entities/user/model/User';
 import type { ApiResponse } from '@/shared/types/ApiResponse';
 
 export interface UpdateUserRequest {

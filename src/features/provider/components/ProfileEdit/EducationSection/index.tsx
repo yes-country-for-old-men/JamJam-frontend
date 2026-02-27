@@ -7,7 +7,7 @@ import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
 import FileUpload from '@/shared/components/FileUpload';
 import Input from '@/shared/components/Input';
 import Select from '@/shared/components/Select';
-import type { Education, License } from '@/features/provider/types/Provider';
+import type { Education, License } from '@/entities/provider/model/Provider';
 import type { FileWithId } from '@/shared/types/FileWithId';
 
 interface EducationSectionProps {

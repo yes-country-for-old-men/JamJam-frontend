@@ -1,7 +1,7 @@
 import React from 'react';
+import { type Career } from '@/entities/provider/model/Provider';
 import DocumentsTooltip from '@/features/provider/components/ProfileEdit/DocumentsTooltip';
 import { type ProfileForm } from '@/features/provider/hooks/useProfileForm';
-import { type Career } from '@/features/provider/types/Provider';
 import * as S from '@/pages/provider-edit/ProfileEdit.styles';
 import AddIcon from '@/shared/assets/icons/add.svg?react';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';

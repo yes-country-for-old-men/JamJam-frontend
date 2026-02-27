@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { cancelOrder } from '@/features/order/api/orderApi';
+import { cancelOrder } from '@/entities/order/api/orderApi';
 
 export const useCancelOrderMutation = () => {
   const queryClient = useQueryClient();

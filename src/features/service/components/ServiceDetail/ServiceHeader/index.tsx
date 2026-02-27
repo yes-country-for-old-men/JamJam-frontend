@@ -1,5 +1,5 @@
 import React from 'react';
-import { type ServiceDetailContent } from '@/features/service/api/serviceApi';
+import { type ServiceDetailContent } from '@/entities/service/api/serviceApi';
 import * as S from '@/features/service/components/ServiceDetail/ServiceHeader/ServiceHeader.styles';
 import LocationIcon from '@/shared/assets/icons/location.svg?react';
 import UserProfileImageIcon from '@/shared/assets/icons/user-profile-image.svg?react';

@@ -8,6 +8,14 @@ import React, {
 } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
+import { useChatMessagesQuery } from '@/entities/chat/model/useChatMessagesQuery';
+import { useChatRoomsQuery } from '@/entities/chat/model/useChatRoomsQuery';
+import {
+  processPayment,
+  confirmOrder,
+  requestPayment,
+  getOrderDetail,
+} from '@/entities/order/api/orderApi';
 import ChatHeader from '@/features/chat/components/ChatHeader';
 import ChatInput from '@/features/chat/components/ChatInput';
 import ChatRoomItem from '@/features/chat/components/ChatRoomItem';
@@ -15,8 +23,6 @@ import Messages from '@/features/chat/components/Messages';
 import OrderDetailModal from '@/features/chat/components/OrderDetailModal';
 import PriceInputModal from '@/features/chat/components/PriceInputModal';
 import { useMarkAsReadMutation } from '@/features/chat/hooks/mutations/useMarkAsReadMutation';
-import { useChatMessagesQuery } from '@/features/chat/hooks/queries/useChatMessagesQuery';
-import { useChatRoomsQuery } from '@/features/chat/hooks/queries/useChatRoomsQuery';
 import { useChat } from '@/features/chat/hooks/useChat';
 import { useMessageScroll } from '@/features/chat/hooks/useMessageScroll';
 import {
@@ -24,12 +30,6 @@ import {
   getBubblePosition,
   shouldShowProfile,
 } from '@/features/chat/utils/chatMessagesUtils';
-import {
-  processPayment,
-  confirmOrder,
-  requestPayment,
-  getOrderDetail,
-} from '@/features/order/api/orderApi';
 import * as S from '@/pages/chat/Chat.styles';
 import LogoIcon from '@/shared/assets/icons/gray-logo-icon.svg?react';
 import { useDialog } from '@/shared/hooks/useDialog';
@@ -39,8 +39,8 @@ import type {
   Message,
   MessageType,
   ChatFileInfo,
-} from '@/features/chat/types/Chat';
-import type { OrderDetailContent } from '@/features/order/api/orderApi';
+} from '@/entities/chat/model/Chat';
+import type { OrderDetailContent } from '@/entities/order/api/orderApi';
 
 const Chat: React.FC = () => {
   const location = useLocation();

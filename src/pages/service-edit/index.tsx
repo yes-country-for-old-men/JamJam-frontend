@@ -6,8 +6,8 @@ import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import {
   updateService,
   type ServiceUpdateRequest,
-} from '@/features/service/api/serviceApi';
-import { useServiceDetailQuery } from '@/features/service/hooks/queries/useServiceDetailQuery';
+} from '@/entities/service/api/serviceApi';
+import { useServiceDetailQuery } from '@/entities/service/model/useServiceDetailQuery';
 import {
   serviceEditSchema,
   type ServiceEditData,

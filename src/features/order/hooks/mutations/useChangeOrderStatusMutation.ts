@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   changeOrderStatus,
   type OrderStatus,
-} from '@/features/order/api/orderApi';
+} from '@/entities/order/api/orderApi';
 
 interface ChangeOrderStatusParams {
   orderId: number;

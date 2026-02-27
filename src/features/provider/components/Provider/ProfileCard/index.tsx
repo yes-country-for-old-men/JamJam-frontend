@@ -1,5 +1,5 @@
 import React from 'react';
-import { type ProviderDetailContent } from '@/features/provider/api/providerApi';
+import { type ProviderDetailContent } from '@/entities/provider/api/providerApi';
 import * as S from '@/features/provider/components/Provider/ProfileCard/ProfileCard.styles';
 import LocationIcon from '@/shared/assets/icons/location.svg?react';
 import UserProfileImageIcon from '@/shared/assets/icons/user-profile-image.svg?react';

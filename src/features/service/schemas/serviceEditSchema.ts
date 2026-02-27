@@ -4,7 +4,7 @@ import {
   serviceDetailSchema,
   categorySchema,
   priceSchema,
-} from '@/features/service/schemas/serviceSchema';
+} from '@/entities/service/model/serviceSchema';
 
 const portfolioImageSchema = z.object({
   id: z.union([z.string(), z.number()]),
