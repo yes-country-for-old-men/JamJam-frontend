@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal from '@/shared/components/Modal';
+import Modal from '@/shared/ui/Modal';
 import * as S from './OrderDetailModal.styles';
 import type { OrderDetailContent } from '@/entities/order/api/orderApi';
 

@@ -3,7 +3,7 @@ import { type ProfileForm } from '@/features/provider/model/useProfileForm';
 import { useSkillSelection } from '@/features/provider/model/useSkillSelection';
 import * as S from '@/pages/provider-edit/ProfileEdit.styles';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
-import { CATEGORIES } from '@/shared/constants';
+import { CATEGORIES } from '@/shared/config';
 import type { Skill } from '@/entities/provider/model/Provider';
 
 interface SkillsSectionProps {

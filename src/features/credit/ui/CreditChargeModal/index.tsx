@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import Button from '@/shared/components/Button';
-import Modal from '@/shared/components/Modal';
+import Button from '@/shared/ui/Button';
+import Modal from '@/shared/ui/Modal';
 import * as S from './CreditChargeModal.styles';
 import { useCreditChargeForm, MAX_CHARGE_AMOUNT } from './useCreditChargeForm';
 import { usePayment } from './usePayment';

@@ -4,7 +4,7 @@ import { leaveChatRoom } from '@/entities/chat/api/chatApi';
 import * as S from '@/features/chat/ui/ChatHeader/ChatHeader.styles';
 import MenuIcon from '@/shared/assets/icons/menu.svg?react';
 import UserProfileImageIcon from '@/shared/assets/icons/user-profile-image.svg?react';
-import { useDialog } from '@/shared/hooks/useDialog';
+import { useDialog } from '@/shared/lib/useDialog';
 import type { ChatRoom } from '@/entities/chat/model/Chat';
 
 interface ChatHeaderProps {

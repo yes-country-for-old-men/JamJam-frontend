@@ -13,7 +13,7 @@ import {
 import { useChangeOrderStatusMutation } from '@/features/order/model/mutations/useChangeOrderStatusMutation';
 import CancelReasonModal from '@/features/order/ui/CancelReasonModal';
 import LogoIcon from '@/shared/assets/icons/gray-logo-icon.svg?react';
-import Button from '@/shared/components/Button';
+import Button from '@/shared/ui/Button';
 import * as S from './OrderManagePanel.styles';
 
 interface OrderManagePanelProps {

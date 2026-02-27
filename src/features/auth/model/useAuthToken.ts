@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { storageService } from '@/shared/services/storage';
+import { storageService } from '@/shared/lib/storage';
 
 interface UseAuthTokenReturn {
   exists: boolean;

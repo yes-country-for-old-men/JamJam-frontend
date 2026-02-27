@@ -3,8 +3,8 @@ import { Controller, type UseFormReturn } from 'react-hook-form';
 import { type ServiceRegisterData } from '@/features/service/model/serviceRegisterSchema';
 import * as S from '@/pages/service-register/ServiceRegister.styles';
 import AIIcon from '@/shared/assets/icons/ai.svg?react';
-import FormMessage from '@/shared/components/FormMessage';
-import GradientButton from '@/shared/components/GradientButton';
+import FormMessage from '@/shared/ui/FormMessage';
+import GradientButton from '@/shared/ui/GradientButton';
 
 const DESCRIPTION_MAX_LENGTH = 1000;
 

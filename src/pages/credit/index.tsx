@@ -5,10 +5,10 @@ import {
 } from '@/entities/credit/api/creditApi';
 import { useUserInfoQuery } from '@/entities/user/model/useUserInfoQuery';
 import CreditChargeModal from '@/features/credit/ui/CreditChargeModal';
-import Button from '@/shared/components/Button';
-import Pagination from '@/shared/components/Pagination';
-import Select from '@/shared/components/Select';
-import { formatDate } from '@/shared/utils';
+import { formatDate } from '@/shared/lib';
+import Button from '@/shared/ui/Button';
+import Pagination from '@/shared/ui/Pagination';
+import Select from '@/shared/ui/Select';
 import * as S from './Credit.styles';
 
 const Credit: React.FC = () => {

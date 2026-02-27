@@ -2,8 +2,8 @@ import React from 'react';
 import { type ContactHours } from '@/entities/provider/model/Provider';
 import { type ProfileForm } from '@/features/provider/model/useProfileForm';
 import * as S from '@/pages/provider-edit/ProfileEdit.styles';
-import Slider from '@/shared/components/Slider';
-import { type SliderRange } from '@/shared/components/Slider/hooks/useSlider';
+import Slider from '@/shared/ui/Slider';
+import { type SliderRange } from '@/shared/ui/Slider/hooks/useSlider';
 
 interface ContactTimeSectionProps {
   form: ProfileForm;

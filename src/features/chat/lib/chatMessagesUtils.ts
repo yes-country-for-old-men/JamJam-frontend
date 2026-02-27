@@ -1,4 +1,4 @@
-import { formatDate } from '@/shared/utils';
+import { formatDate } from '@/shared/lib';
 import type { Message } from '@/entities/chat/model/Chat';
 
 type BubblePosition = 'single' | 'first' | 'middle' | 'last';

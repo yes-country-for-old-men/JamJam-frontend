@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { CATEGORIES, SKILLS_BY_CATEGORY } from '@/shared/constants';
+import { CATEGORIES, SKILLS_BY_CATEGORY } from '@/shared/config';
 
 export const useSkillSelection = () => {
   const [selectedCategory, setSelectedCategory] = useState(CATEGORIES[0].id);

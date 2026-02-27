@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { type ServiceDetailContent } from '@/entities/service/api/serviceApi';
 import ArrowDownIcon from '@/shared/assets/icons/arrow-down.svg?react';
-import Button from '@/shared/components/Button';
-import Checkbox from '@/shared/components/Checkbox';
+import Button from '@/shared/ui/Button';
+import Checkbox from '@/shared/ui/Checkbox';
 import * as S from './SidePanel.styles';
 
 interface SidePanelProps {

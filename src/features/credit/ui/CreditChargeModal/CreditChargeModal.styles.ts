@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Input from '@/shared/components/Input';
+import Input from '@/shared/ui/Input';
 
 export const CreditChargeForm = styled.form`
   display: flex;

@@ -9,8 +9,8 @@ import OrderFormSection from '@/pages/order-create/components/OrderFormSection';
 import SidePanel from '@/pages/order-create/components/SidePanel';
 import { useOrderForm } from '@/pages/order-create/hooks/useOrderForm';
 import * as S from '@/pages/order-create/OrderCreate.styles';
-import { useDialog } from '@/shared/hooks/useDialog';
-import { formatDeadlineISO } from '@/shared/utils';
+import { formatDeadlineISO } from '@/shared/lib';
+import { useDialog } from '@/shared/lib/useDialog';
 import type { OrderFormData } from '@/entities/order/model/Order';
 
 const OrderCreate: React.FC = () => {

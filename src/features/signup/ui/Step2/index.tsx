@@ -1,9 +1,9 @@
 import React from 'react';
 import { type Step2Form } from '@/features/signup/model/useSignUpForm';
 import * as S from '@/pages/signup/SignUp.styles';
-import Button from '@/shared/components/Button';
-import FormMessage from '@/shared/components/FormMessage';
-import Input from '@/shared/components/Input';
+import Button from '@/shared/ui/Button';
+import FormMessage from '@/shared/ui/FormMessage';
+import Input from '@/shared/ui/Input';
 
 interface Step2Props {
   form: Step2Form;

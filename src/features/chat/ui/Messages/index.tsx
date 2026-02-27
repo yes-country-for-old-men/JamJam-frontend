@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import * as S from '@/features/chat/ui/Messages/Messages.styles';
 import DownloadIcon from '@/shared/assets/icons/download.svg?react';
 import UserProfileImageIcon from '@/shared/assets/icons/user-profile-image.svg?react';
-import Button from '@/shared/components/Button';
-import { formatTime, formatPrice } from '@/shared/utils';
+import { formatTime, formatPrice } from '@/shared/lib';
+import Button from '@/shared/ui/Button';
 import type {
   Message,
   ChatRoom,

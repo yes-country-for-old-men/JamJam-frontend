@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Z_INDEX } from '@/shared/constants';
+import { Z_INDEX } from '@/shared/config';
 
 export const Container = styled.article`
   width: 840px;

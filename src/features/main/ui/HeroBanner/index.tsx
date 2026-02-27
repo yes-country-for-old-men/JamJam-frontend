@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { BANNER_CONFIG } from '@/features/main/ui/HeroBanner/constants';
-import { SLIDE_IMAGES } from '@/shared/constants';
+import { SLIDE_IMAGES } from '@/shared/config';
 import * as S from './HeroBanner.styles';
 import { useHeroBanner } from './useHeroBanner';
 

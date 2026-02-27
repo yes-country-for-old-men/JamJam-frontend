@@ -7,11 +7,11 @@ import {
   searchLoginId,
 } from '@/features/auth/api/authApi';
 import LogoIcon from '@/shared/assets/icons/logo-icon.svg?react';
-import Button from '@/shared/components/Button';
-import Input from '@/shared/components/Input';
-import Modal from '@/shared/components/Modal';
-import { useDialog } from '@/shared/hooks/useDialog';
-import { formatPhoneNumber } from '@/shared/utils';
+import { formatPhoneNumber } from '@/shared/lib';
+import { useDialog } from '@/shared/lib/useDialog';
+import Button from '@/shared/ui/Button';
+import Input from '@/shared/ui/Input';
+import Modal from '@/shared/ui/Modal';
 import * as S from './LoginModal.styles';
 
 type View = 'login' | 'find-id' | 'find-password';

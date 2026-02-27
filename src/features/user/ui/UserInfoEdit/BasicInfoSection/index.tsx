@@ -1,10 +1,10 @@
 import React from 'react';
 import { type InfoEditForm } from '@/features/user/model/useInfoEditForm';
 import * as S from '@/pages/user-info-edit/UserInfoEdit.styles';
-import Button from '@/shared/components/Button';
-import FormMessage from '@/shared/components/FormMessage';
-import Input from '@/shared/components/Input';
-import SingleImageUpload from '@/shared/components/SingleImageUpload';
+import Button from '@/shared/ui/Button';
+import FormMessage from '@/shared/ui/FormMessage';
+import Input from '@/shared/ui/Input';
+import SingleImageUpload from '@/shared/ui/SingleImageUpload';
 
 interface BasicInfoSectionProps {
   form: InfoEditForm;

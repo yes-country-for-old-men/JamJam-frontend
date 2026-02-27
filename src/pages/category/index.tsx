@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom';
 import { useCategory } from '@/entities/category/model/useCategory';
 import { useServiceListQuery } from '@/entities/category/model/useServiceListQuery';
 import * as S from '@/pages/category/Category.styles';
-import CategoryTabNavigator from '@/shared/components/CategoryTabNavigator';
-import SearchBar from '@/shared/components/SearchBar';
-import ServiceCard from '@/shared/components/ServiceCard';
-import Spinner from '@/shared/components/Spinner';
+import CategoryTabNavigator from '@/shared/ui/CategoryTabNavigator';
+import SearchBar from '@/shared/ui/SearchBar';
+import ServiceCard from '@/shared/ui/ServiceCard';
+import Spinner from '@/shared/ui/Spinner';
 
 const Category: React.FC = () => {
   const { categoryId } = useParams<{ categoryId: string }>();

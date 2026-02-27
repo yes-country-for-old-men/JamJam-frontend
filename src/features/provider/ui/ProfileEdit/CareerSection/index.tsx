@@ -5,8 +5,8 @@ import DocumentsTooltip from '@/features/provider/ui/ProfileEdit/DocumentsToolti
 import * as S from '@/pages/provider-edit/ProfileEdit.styles';
 import AddIcon from '@/shared/assets/icons/add.svg?react';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
-import FileUpload from '@/shared/components/FileUpload';
-import Input from '@/shared/components/Input';
+import FileUpload from '@/shared/ui/FileUpload';
+import Input from '@/shared/ui/Input';
 import type { FileWithId } from '@/shared/types/FileWithId';
 
 interface CareerSectionProps {

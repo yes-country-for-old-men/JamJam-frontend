@@ -1,6 +1,6 @@
 import React from 'react';
 import CategoryCard from '@/features/main/ui/CategoryCard';
-import { CATEGORIES } from '@/shared/constants';
+import { CATEGORIES } from '@/shared/config';
 import * as S from './CategorySection.styles';
 
 const CategorySection: React.FC = () => {

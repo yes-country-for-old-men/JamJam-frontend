@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import NotFoundIcon from '@/shared/assets/icons/not-found.svg?react';
-import Button from '@/shared/components/Button';
+import Button from '@/shared/ui/Button';
 import * as S from './NotFound.styles';
 
 const NotFound = () => {

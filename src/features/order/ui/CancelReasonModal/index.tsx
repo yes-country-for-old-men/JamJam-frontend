@@ -3,8 +3,8 @@ import {
   CLIENT_CANCEL_REASONS,
   PROVIDER_CANCEL_REASONS,
 } from '@/features/order/config/cancelReasons';
-import Button from '@/shared/components/Button';
-import Modal from '@/shared/components/Modal';
+import Button from '@/shared/ui/Button';
+import Modal from '@/shared/ui/Modal';
 import * as S from './CancelReasonModal.styles';
 
 interface CancelReasonModalProps {

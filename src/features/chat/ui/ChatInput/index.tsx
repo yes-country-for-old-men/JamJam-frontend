@@ -6,7 +6,7 @@ import CrossIcon from '@/shared/assets/icons/cross.svg?react';
 import FileIcon from '@/shared/assets/icons/file.svg?react';
 import PictureIcon from '@/shared/assets/icons/picture.svg?react';
 import SendIcon from '@/shared/assets/icons/send.svg?react';
-import { useDialog } from '@/shared/hooks/useDialog';
+import { useDialog } from '@/shared/lib/useDialog';
 import type {
   MessageType,
   ChatFileInfo,

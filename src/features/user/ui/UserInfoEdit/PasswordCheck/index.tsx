@@ -2,8 +2,8 @@ import React from 'react';
 import { type PasswordCheckForm } from '@/features/user/model/useInfoEditForm';
 import * as S from '@/pages/user-info-edit/UserInfoEdit.styles';
 import PasswordIcon from '@/shared/assets/icons/password.svg?react';
-import Button from '@/shared/components/Button';
-import Input from '@/shared/components/Input';
+import Button from '@/shared/ui/Button';
+import Input from '@/shared/ui/Input';
 
 interface PasswordCheckProps {
   form: PasswordCheckForm;

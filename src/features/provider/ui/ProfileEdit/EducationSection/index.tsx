@@ -4,9 +4,9 @@ import DocumentsTooltip from '@/features/provider/ui/ProfileEdit/DocumentsToolti
 import * as S from '@/pages/provider-edit/ProfileEdit.styles';
 import AddIcon from '@/shared/assets/icons/add.svg?react';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
-import FileUpload from '@/shared/components/FileUpload';
-import Input from '@/shared/components/Input';
-import Select from '@/shared/components/Select';
+import FileUpload from '@/shared/ui/FileUpload';
+import Input from '@/shared/ui/Input';
+import Select from '@/shared/ui/Select';
 import type { Education, License } from '@/entities/provider/model/Provider';
 import type { FileWithId } from '@/shared/types/FileWithId';
 

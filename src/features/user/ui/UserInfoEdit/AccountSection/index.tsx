@@ -1,9 +1,9 @@
 import React from 'react';
 import { type InfoEditForm } from '@/features/user/model/useInfoEditForm';
 import * as S from '@/pages/user-info-edit/UserInfoEdit.styles';
-import Input from '@/shared/components/Input';
-import Select from '@/shared/components/Select';
-import { BANK_CODE_MAP } from '@/shared/constants';
+import { BANK_CODE_MAP } from '@/shared/config';
+import Input from '@/shared/ui/Input';
+import Select from '@/shared/ui/Select';
 
 const BANKS = Object.entries(BANK_CODE_MAP).map(([code, name]) => ({
   code,

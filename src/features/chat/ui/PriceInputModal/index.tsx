@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Button from '@/shared/components/Button';
-import Modal from '@/shared/components/Modal';
+import Button from '@/shared/ui/Button';
+import Modal from '@/shared/ui/Modal';
 import * as S from './PriceInputModal.styles';
 
 interface PriceInputModalProps {

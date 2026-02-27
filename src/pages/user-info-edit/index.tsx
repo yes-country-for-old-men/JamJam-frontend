@@ -9,12 +9,12 @@ import PasswordCheck from '@/features/user/ui/UserInfoEdit/PasswordCheck';
 import PasswordSection from '@/features/user/ui/UserInfoEdit/PasswordSection';
 import PhoneSection from '@/features/user/ui/UserInfoEdit/PhoneSection';
 import * as S from '@/pages/user-info-edit/UserInfoEdit.styles';
-import Button from '@/shared/components/Button';
-import { BANK_CODE_MAP } from '@/shared/constants';
-import { useDialog } from '@/shared/hooks/useDialog';
-import { useNicknameCheck } from '@/shared/hooks/useNicknameCheck';
-import { usePhoneVerification } from '@/shared/hooks/usePhoneVerification';
-import { formatPhoneNumber, getErrorMessage } from '@/shared/utils';
+import { BANK_CODE_MAP } from '@/shared/config';
+import { formatPhoneNumber, getErrorMessage } from '@/shared/lib';
+import { useDialog } from '@/shared/lib/useDialog';
+import { useNicknameCheck } from '@/shared/lib/useNicknameCheck';
+import { usePhoneVerification } from '@/shared/lib/usePhoneVerification';
+import Button from '@/shared/ui/Button';
 import type { UpdateUserRequest } from '@/entities/user/api/userApi';
 
 const BANKS = Object.entries(BANK_CODE_MAP).map(([code, name]) => ({

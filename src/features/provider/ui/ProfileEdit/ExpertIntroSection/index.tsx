@@ -2,8 +2,8 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import { type ProfileForm } from '@/features/provider/model/useProfileForm';
 import * as S from '@/pages/provider-edit/ProfileEdit.styles';
-import Select from '@/shared/components/Select';
-import { CATEGORIES, LOCATIONS } from '@/shared/constants';
+import { CATEGORIES, LOCATIONS } from '@/shared/config';
+import Select from '@/shared/ui/Select';
 
 interface ExpertIntroSectionProps {
   form: ProfileForm;

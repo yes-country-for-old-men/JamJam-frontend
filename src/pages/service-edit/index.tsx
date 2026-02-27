@@ -14,16 +14,16 @@ import {
 } from '@/features/service/model/serviceEditSchema';
 import * as S from '@/pages/service-edit/ServiceEdit.styles';
 import DeleteIcon from '@/shared/assets/icons/cross.svg?react';
-import Button from '@/shared/components/Button';
-import FormMessage from '@/shared/components/FormMessage';
-import Input from '@/shared/components/Input';
-import MultiImageUpload from '@/shared/components/MultiImageUpload';
-import RichTextEditor from '@/shared/components/RichTextEditor';
-import Select from '@/shared/components/Select';
-import SingleImageUpload from '@/shared/components/SingleImageUpload';
-import { CATEGORIES } from '@/shared/constants';
-import { useDialog } from '@/shared/hooks/useDialog';
-import { parsePrice } from '@/shared/utils';
+import { CATEGORIES } from '@/shared/config';
+import { parsePrice } from '@/shared/lib';
+import { useDialog } from '@/shared/lib/useDialog';
+import Button from '@/shared/ui/Button';
+import FormMessage from '@/shared/ui/FormMessage';
+import Input from '@/shared/ui/Input';
+import MultiImageUpload from '@/shared/ui/MultiImageUpload';
+import RichTextEditor from '@/shared/ui/RichTextEditor';
+import Select from '@/shared/ui/Select';
+import SingleImageUpload from '@/shared/ui/SingleImageUpload';
 import type { FileWithId } from '@/shared/types/FileWithId';
 
 const ServiceEdit: React.FC = () => {

@@ -13,11 +13,11 @@ import Step3 from '@/features/signup/ui/Step3';
 import StepIndicator from '@/features/signup/ui/StepIndicator';
 import * as S from '@/pages/signup/SignUp.styles';
 import LogoIcon from '@/shared/assets/icons/logo-icon.svg?react';
-import Button from '@/shared/components/Button';
-import { useDialog } from '@/shared/hooks/useDialog';
-import { useNicknameCheck } from '@/shared/hooks/useNicknameCheck';
-import { usePhoneVerification } from '@/shared/hooks/usePhoneVerification';
-import { getErrorMessage } from '@/shared/utils';
+import { getErrorMessage } from '@/shared/lib';
+import { useDialog } from '@/shared/lib/useDialog';
+import { useNicknameCheck } from '@/shared/lib/useNicknameCheck';
+import { usePhoneVerification } from '@/shared/lib/usePhoneVerification';
+import Button from '@/shared/ui/Button';
 
 const SignUp: React.FC = () => {
   const [isCompleted, setIsCompleted] = useState(false);

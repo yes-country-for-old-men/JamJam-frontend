@@ -2,13 +2,13 @@ import React from 'react';
 import { Controller, type UseFormReturn } from 'react-hook-form';
 import { type ServiceRegisterData } from '@/features/service/model/serviceRegisterSchema';
 import * as S from '@/pages/service-register/ServiceRegister.styles';
-import Button from '@/shared/components/Button';
-import FormMessage from '@/shared/components/FormMessage';
-import Input from '@/shared/components/Input';
-import RichTextEditor from '@/shared/components/RichTextEditor';
-import Select from '@/shared/components/Select';
-import { CATEGORIES } from '@/shared/constants';
-import { parsePrice } from '@/shared/utils';
+import { CATEGORIES } from '@/shared/config';
+import { parsePrice } from '@/shared/lib';
+import Button from '@/shared/ui/Button';
+import FormMessage from '@/shared/ui/FormMessage';
+import Input from '@/shared/ui/Input';
+import RichTextEditor from '@/shared/ui/RichTextEditor';
+import Select from '@/shared/ui/Select';
 
 interface ServiceDetailsStepProps {
   form: UseFormReturn<ServiceRegisterData>;

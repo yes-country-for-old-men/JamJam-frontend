@@ -11,8 +11,8 @@ import IntroductionStep from '@/features/service/ui/ServiceRegister/Introduction
 import MediaUploadStep from '@/features/service/ui/ServiceRegister/MediaUploadStep';
 import ServiceDetailsStep from '@/features/service/ui/ServiceRegister/ServiceDetailsStep';
 import * as S from '@/pages/service-register/ServiceRegister.styles';
-import { useDialog } from '@/shared/hooks/useDialog';
-import { base64ToFile, parsePrice } from '@/shared/utils';
+import { base64ToFile, parsePrice } from '@/shared/lib';
+import { useDialog } from '@/shared/lib/useDialog';
 
 const ServiceRegister: React.FC = () => {
   const { form, formData, updatePrice, updatePortfolioImages } =

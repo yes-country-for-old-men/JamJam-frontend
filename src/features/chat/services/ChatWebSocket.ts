@@ -1,4 +1,4 @@
-import { eventManager } from '@/shared/utils';
+import { eventManager } from '@/shared/lib';
 import type {
   StompNewMessageEvent,
   StompChatRoomUpdateEvent,

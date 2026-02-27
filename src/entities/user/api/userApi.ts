@@ -1,5 +1,5 @@
 import { apiClient } from '@/shared/api/apiClient';
-import { createMultipartRequest } from '@/shared/utils';
+import { createMultipartRequest } from '@/shared/lib';
 import type { User } from '@/entities/user/model/User';
 import type { ApiResponse } from '@/shared/types/ApiResponse';
 

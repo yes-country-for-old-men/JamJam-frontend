@@ -13,9 +13,9 @@ import EducationSection from '@/features/provider/ui/ProfileEdit/EducationSectio
 import ExpertIntroSection from '@/features/provider/ui/ProfileEdit/ExpertIntroSection';
 import SkillsSection from '@/features/provider/ui/ProfileEdit/SkillsSection';
 import * as S from '@/pages/provider-edit/ProfileEdit.styles';
-import Button from '@/shared/components/Button';
-import { LOCATIONS } from '@/shared/constants';
-import { useDialog } from '@/shared/hooks/useDialog';
+import { LOCATIONS } from '@/shared/config';
+import { useDialog } from '@/shared/lib/useDialog';
+import Button from '@/shared/ui/Button';
 
 const ProfileEdit: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);

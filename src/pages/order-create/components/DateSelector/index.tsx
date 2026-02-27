@@ -1,5 +1,5 @@
 import React from 'react';
-import Select from '@/shared/components/Select';
+import Select from '@/shared/ui/Select';
 import * as S from './DateSelector.styles';
 import type { DeadlineData } from '@/entities/order/model/Order';
 

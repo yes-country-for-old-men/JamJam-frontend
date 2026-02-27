@@ -3,10 +3,10 @@ import { useSearchParams } from 'react-router-dom';
 import { useSearchQuery } from '@/features/search/model/queries/useSearchQuery';
 import { useSearch } from '@/features/search/model/useSearch';
 import * as S from '@/pages/search/Search.styles';
-import CategoryTabNavigator from '@/shared/components/CategoryTabNavigator';
-import SearchBar from '@/shared/components/SearchBar';
-import ServiceCard from '@/shared/components/ServiceCard';
-import Spinner from '@/shared/components/Spinner';
+import CategoryTabNavigator from '@/shared/ui/CategoryTabNavigator';
+import SearchBar from '@/shared/ui/SearchBar';
+import ServiceCard from '@/shared/ui/ServiceCard';
+import Spinner from '@/shared/ui/Spinner';
 
 const Search: React.FC = () => {
   const [searchParams] = useSearchParams();

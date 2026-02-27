@@ -4,7 +4,7 @@ import {
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from 'axios';
-import { storageService } from '@/shared/services/storage';
+import { storageService } from '@/shared/lib/storage';
 import type { ApiErrorResponse } from '@/shared/types/ApiError';
 
 const AUTH_ERROR_CODE = {

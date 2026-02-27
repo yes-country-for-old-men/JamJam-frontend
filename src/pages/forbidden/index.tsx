@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import ForbiddenIcon from '@/shared/assets/icons/forbidden.svg?react';
-import Button from '@/shared/components/Button';
+import Button from '@/shared/ui/Button';
 import * as S from './Forbidden.styles';
 
 const Forbidden = () => {

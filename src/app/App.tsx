@@ -1,16 +1,16 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Dialog from '@/shared/components/Dialog';
-import EventHandler from '@/shared/components/EventHandler';
-import Layout from '@/shared/components/Layout';
-import GuestRoute from '@/shared/components/Routes/GuestRoute';
-import ScrollInitializer from '@/shared/components/ScrollInitializer';
-import Spinner from '@/shared/components/Spinner';
 import {
   publicRoutes,
   protectedRoutes,
   myPageRoutes,
-} from '@/shared/routes/routeConfig';
+} from '@/shared/config/routeConfig';
+import Dialog from '@/shared/ui/Dialog';
+import EventHandler from '@/shared/ui/EventHandler';
+import Layout from '@/shared/ui/Layout';
+import GuestRoute from '@/shared/ui/Routes/GuestRoute';
+import ScrollInitializer from '@/shared/ui/ScrollInitializer';
+import Spinner from '@/shared/ui/Spinner';
 
 const SignUp = lazy(() => import('@/pages/signup'));
 

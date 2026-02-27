@@ -1,5 +1,5 @@
 import { useCallback, useRef, useMemo, useEffect } from 'react';
-import { CATEGORIES } from '@/shared/constants';
+import { CATEGORIES } from '@/shared/config';
 
 interface UseCategoryProps {
   categoryId: string | undefined;

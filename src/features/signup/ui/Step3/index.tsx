@@ -3,12 +3,12 @@ import { type Step3Form } from '@/features/signup/model/useSignUpForm';
 import * as S from '@/pages/signup/SignUp.styles';
 import FemaleIcon from '@/shared/assets/icons/female.svg?react';
 import MaleIcon from '@/shared/assets/icons/male.svg?react';
-import Button from '@/shared/components/Button';
-import FormMessage from '@/shared/components/FormMessage';
-import Input from '@/shared/components/Input';
-import ToggleButton from '@/shared/components/ToggleButton';
+import { removePaddingZero, formatPhoneNumber } from '@/shared/lib';
 import { type MessageState } from '@/shared/types/MessageState';
-import { removePaddingZero, formatPhoneNumber } from '@/shared/utils';
+import Button from '@/shared/ui/Button';
+import FormMessage from '@/shared/ui/FormMessage';
+import Input from '@/shared/ui/Input';
+import ToggleButton from '@/shared/ui/ToggleButton';
 
 interface Step3Props {
   form: Step3Form;

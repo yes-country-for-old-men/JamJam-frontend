@@ -1,10 +1,10 @@
 import React from 'react';
 import { type InfoEditForm } from '@/features/user/model/useInfoEditForm';
 import * as S from '@/pages/user-info-edit/UserInfoEdit.styles';
-import Button from '@/shared/components/Button';
-import FormMessage from '@/shared/components/FormMessage';
-import Input from '@/shared/components/Input';
 import { type MessageState } from '@/shared/types/MessageState';
+import Button from '@/shared/ui/Button';
+import FormMessage from '@/shared/ui/FormMessage';
+import Input from '@/shared/ui/Input';
 
 interface PhoneSectionProps {
   form: InfoEditForm;

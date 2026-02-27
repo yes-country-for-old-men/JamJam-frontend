@@ -1,4 +1,4 @@
-import InfoTooltip from '@/shared/components/InfoTooltip';
+import InfoTooltip from '@/shared/ui/InfoTooltip';
 
 const DocumentsTooltip = () => {
   return (

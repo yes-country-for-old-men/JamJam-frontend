@@ -3,7 +3,7 @@ import {
   completePayment,
   savePaymentOrder,
 } from '@/entities/credit/api/creditApi';
-import { ensurePunctuation, eventManager } from '@/shared/utils';
+import { ensurePunctuation, eventManager } from '@/shared/lib';
 
 const PAYMENT_MESSAGES = {
   SUCCESS: '결제가 완료되었습니다.',

@@ -32,8 +32,8 @@ import OrderDetailModal from '@/features/chat/ui/OrderDetailModal';
 import PriceInputModal from '@/features/chat/ui/PriceInputModal';
 import * as S from '@/pages/chat/Chat.styles';
 import LogoIcon from '@/shared/assets/icons/gray-logo-icon.svg?react';
-import { useDialog } from '@/shared/hooks/useDialog';
-import { decodeToken } from '@/shared/utils';
+import { decodeToken } from '@/shared/lib';
+import { useDialog } from '@/shared/lib/useDialog';
 import type {
   ChatRoom,
   Message,

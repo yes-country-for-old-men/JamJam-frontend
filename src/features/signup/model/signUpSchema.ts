@@ -13,7 +13,7 @@ import {
   phoneSchema,
   verificationCodeSchema,
 } from '@/features/user/model/userInfoSchema';
-import { isValidDate, isEligibleAgeForRole } from '@/shared/utils';
+import { isValidDate, isEligibleAgeForRole } from '@/shared/lib';
 
 export const step1Schema = z.object({
   role: roleSchema,

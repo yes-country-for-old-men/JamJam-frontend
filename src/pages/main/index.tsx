@@ -1,7 +1,7 @@
 import React from 'react';
 import CategorySection from '@/features/main/ui/CategorySection';
 import HeroBanner from '@/features/main/ui/HeroBanner';
-import SearchBar from '@/shared/components/SearchBar';
+import SearchBar from '@/shared/ui/SearchBar';
 import * as S from './Main.styles';
 
 const fadeUp = (delay: number) => ({

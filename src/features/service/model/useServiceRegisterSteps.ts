@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { getProviderProfile } from '@/entities/provider/api/providerApi';
-import { useDialog } from '@/shared/hooks/useDialog';
+import { useDialog } from '@/shared/lib/useDialog';
 
 export const useServiceRegisterSteps = () => {
   const [step, setStep] = useState(1);

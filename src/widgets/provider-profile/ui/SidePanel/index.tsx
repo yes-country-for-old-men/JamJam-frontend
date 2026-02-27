@@ -1,6 +1,6 @@
 import React from 'react';
 import { type ProviderDetailContent } from '@/entities/provider/api/providerApi';
-import Button from '@/shared/components/Button';
+import Button from '@/shared/ui/Button';
 import * as S from '@/widgets/provider-profile/ui/SidePanel/SidePanel.styles';
 
 interface SidePanelProps {
