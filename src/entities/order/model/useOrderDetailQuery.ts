@@ -9,5 +9,7 @@ export const useOrderDetailQuery = (orderId: number | null) => {
       return response.data.content;
     },
     enabled: !!orderId,
+    staleTime: 30 * 1000,
+    gcTime: 3 * 60 * 1000,
   });
 };

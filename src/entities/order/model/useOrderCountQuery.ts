@@ -8,5 +8,7 @@ export const useOrderCountQuery = () => {
       const response = await getOrderCount();
       return response.data.content;
     },
+    staleTime: 30 * 1000,
+    gcTime: 3 * 60 * 1000,
   });
 };

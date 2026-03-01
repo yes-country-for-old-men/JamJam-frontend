@@ -6,6 +6,6 @@ export const useProviderDetailQuery = (userId: number | null) => {
     queryKey: ['providerDetail', userId],
     queryFn: () => getProviderPage(userId!),
     enabled: !!userId,
-    staleTime: 10 * 60 * 1000,
+    staleTime: 15 * 60 * 1000,
   });
 };

@@ -8,5 +8,7 @@ export const useMyOrderListQuery = () => {
       const response = await getMyOrderList({ page: 0, size: 20 });
       return response.data.content;
     },
+    staleTime: 30 * 1000,
+    gcTime: 3 * 60 * 1000,
   });
 };

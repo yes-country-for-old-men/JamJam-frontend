@@ -6,6 +6,6 @@ export const useServiceDetailQuery = (serviceId: number | null) => {
     queryKey: ['serviceDetail', serviceId],
     queryFn: () => getServiceDetail({ serviceId: serviceId! }),
     enabled: !!serviceId,
-    staleTime: 10 * 60 * 1000,
+    staleTime: 15 * 60 * 1000,
   });
 };

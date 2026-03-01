@@ -8,5 +8,7 @@ export const useOrderListQuery = (orderStatus: OrderStatus) => {
       const response = await getOrderList({ orderStatus });
       return response.data.content;
     },
+    staleTime: 30 * 1000,
+    gcTime: 3 * 60 * 1000,
   });
 };

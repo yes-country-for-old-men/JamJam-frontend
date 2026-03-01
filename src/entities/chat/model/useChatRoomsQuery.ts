@@ -22,5 +22,6 @@ export const useChatRoomsQuery = (currentUserId: string, page: number = 0) => {
     },
     enabled: !!currentUserId,
     staleTime: 30 * 1000,
+    gcTime: 2 * 60 * 1000,
   });
 };

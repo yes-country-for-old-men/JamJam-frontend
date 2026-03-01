@@ -44,7 +44,7 @@ export const useChatMessagesQuery = (chatRoomId: number | null) => {
       return lastPage.hasNext ? allPages.length : undefined;
     },
     enabled: !!chatRoomId,
-    staleTime: 60 * 1000,
+    gcTime: 10 * 60 * 1000,
     initialPageParam: 0,
   });
 };

@@ -5,7 +5,16 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import GlobalStyle from '@/shared/styles/GlobalStyle';
 import theme from '@/shared/styles/theme';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 30 * 1000,
+      gcTime: 5 * 60 * 1000,
+      retry: 1,
+      refetchOnWindowFocus: true,
+    },
+  },
+});
 
 interface AppProviderProps {
   children: React.ReactNode;
