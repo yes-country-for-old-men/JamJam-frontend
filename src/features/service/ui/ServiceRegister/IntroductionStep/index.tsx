@@ -11,19 +11,24 @@ const DESCRIPTION_MAX_LENGTH = 1000;
 interface IntroductionStepProps {
   form: UseFormReturn<ServiceRegisterData>;
   onAIGenerate: () => void;
+  onSkip: () => void;
   isGeneratingContent?: boolean;
 }
 
 const IntroductionStep: React.FC<IntroductionStepProps> = ({
   form,
   onAIGenerate,
+  onSkip,
   isGeneratingContent,
 }) => {
   const descriptionValue = form.watch('description') || '';
 
   return (
     <>
-      <S.PageTitle>서비스 소개를 자유롭게 적어주세요.</S.PageTitle>
+      <S.PageTitle>서비스 설명을 자유롭게 작성해 주세요.</S.PageTitle>
+      <S.SubTitle>
+        입력해 주신 내용을 바탕으로 매력적인 서비스 소개글을 생성해 드릴게요.
+      </S.SubTitle>
       <S.GuideContainer>
         <S.GuideContent>
           <S.GuideHeader>✨ 아래 질문을 참고해서 작성해 보세요!</S.GuideHeader>
@@ -81,12 +86,15 @@ const IntroductionStep: React.FC<IntroductionStepProps> = ({
           </S.CharacterCounter>
         </S.MessageAndCounterWrapper>
       </S.Section>
-      <S.ContentGenerateButtonWrapper>
+      <S.ActionButtonWrapper>
+        <S.SkipButton onClick={onSkip} disabled={isGeneratingContent}>
+          건너뛰기
+        </S.SkipButton>
         <GradientButton onClick={onAIGenerate} disabled={isGeneratingContent}>
           <AIIcon />
           AI 생성하기
         </GradientButton>
-      </S.ContentGenerateButtonWrapper>
+      </S.ActionButtonWrapper>
     </>
   );
 };

@@ -6,13 +6,21 @@ export const Container = styled.article`
 `;
 
 export const PageTitle = styled.div`
+  margin-bottom: 8px;
   font-size: 24px;
   font-weight: 700;
-  margin-bottom: 24px;
+`;
+
+export const SubTitle = styled.div`
+  margin-bottom: 20px;
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
+  font-size: 16px;
+  font-weight: 500;
 `;
 
 export const Section = styled.section`
   margin-bottom: 24px;
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -92,9 +100,22 @@ export const MessageAndCounterWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export const ContentGenerateButtonWrapper = styled.div`
+export const ActionButtonWrapper = styled.div`
   display: flex;
+  align-items: center;
   justify-content: flex-end;
+  gap: 12px;
+`;
+
+export const SkipButton = styled.button`
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: white;
+  border-radius: 30px;
+  border: 1px solid ${(props) => props.theme.COLORS.GRAY[5]};
+  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
+  transition: all 0.2s ease;
 `;
 
 export const NavigationButtonsWrapper = styled.div`
@@ -124,16 +145,49 @@ export const RecommendationChip = styled.button`
   }
 `;
 
-export const ThumbnailUploadArea = styled.div`
+export const ThumbnailTabBar = styled.div`
   display: flex;
-  align-items: center;
-  gap: 28px;
+  width: 280px;
+  border-bottom: 1px solid ${(props) => props.theme.COLORS.GRAY[5]};
+  margin-bottom: 12px;
+`;
+
+export const ThumbnailTab = styled.button<{ active: boolean }>`
+  flex: 1;
+  padding: 12px 0;
+  font-size: 14px;
+  font-weight: ${(props) => (props.active ? 600 : 400)};
+  color: ${(props) =>
+    props.active
+      ? props.theme.COLORS.MAIN.PRIMARY
+      : props.theme.COLORS.LABEL.SECONDARY};
+  border-bottom: 2px solid
+    ${(props) =>
+      props.active ? props.theme.COLORS.MAIN.PRIMARY : 'transparent'};
 `;
 
 export const ThumbnailUploadBox = styled.div`
   position: relative;
   width: 280px;
   height: 280px;
+`;
+
+export const ThumbnailAIBox = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 280px;
+  height: 280px;
+  background-color: ${(props) => props.theme.COLORS.GRAY[6]};
+  border-radius: 12px;
+  overflow: hidden;
+`;
+
+export const ThumbnailGeneratedImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 export const ThumbnailLoadingOverlay = styled.div`
@@ -158,72 +212,4 @@ export const ThumbnailLoadingText = styled.div`
   color: white;
   font-size: 14px;
   font-weight: 600;
-`;
-
-export const ThumbnailGenerateSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  height: 280px;
-`;
-
-export const ExampleThumbnailsContainer = styled.div`
-  display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
-`;
-
-export const ExampleThumbnailWrapper = styled.figure`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 120px;
-  height: 120px;
-  background-color: ${(props) => props.theme.COLORS.GRAY[6]};
-  border-radius: 12px;
-  overflow: hidden;
-`;
-
-export const ExampleThumbnailImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-`;
-
-export const StatusBadge = styled.div<{ isSuccess: boolean }>`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 8px;
-  right: 8px;
-  background-color: ${(props) =>
-    props.isSuccess ? props.theme.COLORS.GREEN : props.theme.COLORS.RED};
-  opacity: 0.9;
-  border-radius: 12px;
-  color: white;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 8px;
-`;
-
-export const ServiceNameWarning = styled.div`
-  display: flex;
-  align-items: center;
-  color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
-  font-size: 13px;
-  line-height: 1.4;
-  gap: 4px;
-  margin-bottom: 12px;
-
-  svg {
-    width: 12px;
-    height: 12px;
-    fill: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
-  }
-`;
-
-export const ThumbnailGenerateButtonWrapper = styled.div`
-  margin-top: auto;
 `;

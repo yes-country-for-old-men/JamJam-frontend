@@ -7,7 +7,6 @@ import {
   priceSchema,
   thumbnailImageSchema,
   portfolioImagesSchema,
-  includeTitleInThumbnailSchema,
 } from '@/entities/service/model/serviceSchema';
 
 export const serviceRegisterSchema = z.object({
@@ -18,7 +17,6 @@ export const serviceRegisterSchema = z.object({
   price: priceSchema,
   thumbnailImage: thumbnailImageSchema,
   portfolioImages: portfolioImagesSchema,
-  includeTitleInThumbnail: includeTitleInThumbnailSchema,
 });
 
 export type ServiceRegisterData = z.infer<typeof serviceRegisterSchema>;

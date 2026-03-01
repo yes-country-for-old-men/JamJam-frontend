@@ -1,13 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Controller, type UseFormReturn } from 'react-hook-form';
 import { type ServiceRegisterData } from '@/features/service/model/serviceRegisterSchema';
 import * as S from '@/pages/service-register/ServiceRegister.styles';
 import AIIcon from '@/shared/assets/icons/ai.svg?react';
-import InfoIcon from '@/shared/assets/icons/info.svg?react';
-import ThumbnailErrorImage from '@/shared/assets/images/thumbnail-error.png?format=webp&as=url';
-import ThumbnailNormalImage from '@/shared/assets/images/thumbnail-normal.png?format=webp&as=url';
 import Button from '@/shared/ui/Button';
-import Checkbox from '@/shared/ui/Checkbox';
 import FormMessage from '@/shared/ui/FormMessage';
 import GradientButton from '@/shared/ui/GradientButton';
 import MultiImageUpload from '@/shared/ui/MultiImageUpload';
@@ -16,6 +12,8 @@ import Spinner from '@/shared/ui/Spinner';
 import type { FileWithId } from '@/shared/types/FileWithId';
 
 const MAX_PORTFOLIO_IMAGES = 10;
+
+type ThumbnailTab = 'upload' | 'ai';
 
 interface MediaUploadStepProps {
   form: UseFormReturn<ServiceRegisterData>;
@@ -28,6 +26,44 @@ interface MediaUploadStepProps {
   onSave: () => void;
 }
 
+const ThumbnailAIContent: React.FC<{
+  isGeneratingThumbnail: boolean;
+  hasGeneratedThumbnail: boolean;
+  thumbnailImage: File | null;
+  onAIGenerateThumbnail: () => void;
+}> = ({
+  isGeneratingThumbnail,
+  hasGeneratedThumbnail,
+  thumbnailImage,
+  onAIGenerateThumbnail,
+}) => {
+  if (isGeneratingThumbnail) {
+    return (
+      <S.ThumbnailLoadingOverlay>
+        <Spinner />
+        <S.ThumbnailLoadingText>AI 썸네일 생성 중</S.ThumbnailLoadingText>
+      </S.ThumbnailLoadingOverlay>
+    );
+  }
+  if (hasGeneratedThumbnail && thumbnailImage) {
+    return (
+      <S.ThumbnailGeneratedImage
+        src={URL.createObjectURL(thumbnailImage)}
+        alt="AI 생성 썸네일"
+      />
+    );
+  }
+  return (
+    <GradientButton
+      onClick={onAIGenerateThumbnail}
+      disabled={isGeneratingThumbnail}
+    >
+      <AIIcon />
+      AI 생성하기
+    </GradientButton>
+  );
+};
+
 const MediaUploadStep: React.FC<MediaUploadStepProps> = ({
   form,
   isGeneratingThumbnail,
@@ -38,11 +74,28 @@ const MediaUploadStep: React.FC<MediaUploadStepProps> = ({
   onPrevious,
   onSave,
 }) => {
+  const [activeTab, setActiveTab] = useState<ThumbnailTab>('upload');
+  const thumbnailImage = form.watch('thumbnailImage');
+
   return (
     <>
       <S.Label>썸네일 사진</S.Label>
       <S.Section>
-        <S.ThumbnailUploadArea>
+        <S.ThumbnailTabBar>
+          <S.ThumbnailTab
+            active={activeTab === 'upload'}
+            onClick={() => setActiveTab('upload')}
+          >
+            직접 업로드
+          </S.ThumbnailTab>
+          <S.ThumbnailTab
+            active={activeTab === 'ai'}
+            onClick={() => setActiveTab('ai')}
+          >
+            AI 생성
+          </S.ThumbnailTab>
+        </S.ThumbnailTabBar>
+        {activeTab === 'upload' ? (
           <S.ThumbnailUploadBox>
             <Controller
               name="thumbnailImage"
@@ -56,52 +109,17 @@ const MediaUploadStep: React.FC<MediaUploadStepProps> = ({
                 />
               )}
             />
-            {isGeneratingThumbnail && (
-              <S.ThumbnailLoadingOverlay>
-                <Spinner />
-                <S.ThumbnailLoadingText>
-                  AI 썸네일 생성 중
-                </S.ThumbnailLoadingText>
-              </S.ThumbnailLoadingOverlay>
-            )}
           </S.ThumbnailUploadBox>
-          <S.ThumbnailGenerateSection>
-            <S.ServiceNameWarning>
-              <InfoIcon />
-              AI가 생성한 썸네일에서 서비스 명이 잘못 표기될 수 있습니다.
-            </S.ServiceNameWarning>
-            <S.ExampleThumbnailsContainer>
-              <S.ExampleThumbnailWrapper>
-                <S.ExampleThumbnailImage src={ThumbnailNormalImage} />
-                <S.StatusBadge isSuccess>정상</S.StatusBadge>
-              </S.ExampleThumbnailWrapper>
-              <S.ExampleThumbnailWrapper>
-                <S.ExampleThumbnailImage src={ThumbnailErrorImage} />
-                <S.StatusBadge isSuccess={false}>오류</S.StatusBadge>
-              </S.ExampleThumbnailWrapper>
-            </S.ExampleThumbnailsContainer>
-            <Controller
-              name="includeTitleInThumbnail"
-              control={form.control}
-              render={({ field }) => (
-                <Checkbox
-                  label="썸네일에 서비스 명 표기"
-                  selected={field.value}
-                  onClick={() => field.onChange(!field.value)}
-                />
-              )}
+        ) : (
+          <S.ThumbnailAIBox>
+            <ThumbnailAIContent
+              isGeneratingThumbnail={isGeneratingThumbnail}
+              hasGeneratedThumbnail={hasGeneratedThumbnail}
+              thumbnailImage={thumbnailImage}
+              onAIGenerateThumbnail={onAIGenerateThumbnail}
             />
-            <S.ThumbnailGenerateButtonWrapper>
-              <GradientButton
-                onClick={onAIGenerateThumbnail}
-                disabled={isGeneratingThumbnail || hasGeneratedThumbnail}
-              >
-                <AIIcon />
-                AI 생성하기
-              </GradientButton>
-            </S.ThumbnailGenerateButtonWrapper>
-          </S.ThumbnailGenerateSection>
-        </S.ThumbnailUploadArea>
+          </S.ThumbnailAIBox>
+        )}
         {form.formState.errors.thumbnailImage?.message && (
           <FormMessage
             type="error"

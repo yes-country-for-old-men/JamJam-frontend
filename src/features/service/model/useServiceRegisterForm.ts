@@ -22,7 +22,6 @@ export const useServiceRegisterForm = () => {
       price: 0,
       thumbnailImage: null as unknown as File,
       portfolioImages: [],
-      includeTitleInThumbnail: true,
     },
     mode: 'onSubmit',
   });

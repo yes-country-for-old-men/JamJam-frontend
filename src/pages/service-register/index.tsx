@@ -74,6 +74,10 @@ const ServiceRegister: React.FC = () => {
     }
   };
 
+  const handleSkip = () => {
+    goToNextStep();
+  };
+
   const handleAIGenerateThumbnail = async () => {
     const isValid = await form.trigger('serviceName');
     if (!isValid) {
@@ -82,7 +86,6 @@ const ServiceRegister: React.FC = () => {
 
     const serviceName = form.getValues('serviceName');
     const serviceDetail = form.getValues('serviceDetail');
-    const includeTitleInThumbnail = form.getValues('includeTitleInThumbnail');
 
     setIsGeneratingThumbnail(true);
 
@@ -90,7 +93,7 @@ const ServiceRegister: React.FC = () => {
       const response = await generateAiThumbnail({
         serviceName,
         description: serviceDetail,
-        typography: includeTitleInThumbnail,
+        typography: true,
       });
 
       const { imageBase64 } = response.data.content;
@@ -108,7 +111,14 @@ const ServiceRegister: React.FC = () => {
   };
 
   const handleSave = async () => {
-    const isValid = await form.trigger();
+    const isValid = await form.trigger([
+      'serviceName',
+      'serviceDetail',
+      'category',
+      'price',
+      'thumbnailImage',
+      'portfolioImages',
+    ]);
     if (!isValid) {
       return;
     }
@@ -174,7 +184,13 @@ const ServiceRegister: React.FC = () => {
   const renderStepContent = () => {
     switch (step) {
       case 1:
-        return <IntroductionStep form={form} onAIGenerate={handleAIGenerate} />;
+        return (
+          <IntroductionStep
+            form={form}
+            onAIGenerate={handleAIGenerate}
+            onSkip={handleSkip}
+          />
+        );
       case 2:
         return (
           <ServiceDetailsStep
