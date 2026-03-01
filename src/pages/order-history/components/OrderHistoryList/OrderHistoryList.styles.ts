@@ -152,12 +152,10 @@ export const OrderActions = styled.div`
 
 export const EmptyState = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80px 20px;
-  background-color: white;
-  border-radius: 12px;
 `;
 
 export const EmptyStateText = styled.p`
