@@ -47,7 +47,7 @@ const OrderHistoryList: React.FC<OrderHistoryListProps> = ({ orderList }) => {
   };
 
   const handleServiceClick = (serviceId: number) => {
-    navigate(`/services/${serviceId}`);
+    navigate(`/service/${serviceId}`);
   };
 
   const renderActionButtons = (order: MyOrderListItem) => {
