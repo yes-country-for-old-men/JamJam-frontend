@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
 import GlobalStyle from '@/shared/styles/GlobalStyle';
 import theme from '@/shared/styles/theme';
+import GlobalErrorBoundary from '@/shared/ui/ErrorBoundary/GlobalErrorBoundary';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -12,6 +13,7 @@ const queryClient = new QueryClient({
       gcTime: 5 * 60 * 1000,
       retry: 1,
       refetchOnWindowFocus: true,
+      throwOnError: true,
     },
   },
 });
@@ -25,7 +27,9 @@ const AppProvider = ({ children }: AppProviderProps) => {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Router>{children}</Router>
+        <GlobalErrorBoundary>
+          <Router>{children}</Router>
+        </GlobalErrorBoundary>
       </ThemeProvider>
     </QueryClientProvider>
   );

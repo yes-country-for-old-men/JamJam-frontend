@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
+import PageErrorBoundary from '@/shared/ui/ErrorBoundary/PageErrorBoundary';
 import ClientRoute from '@/shared/ui/Routes/ClientRoute';
 import ProtectedRoute from '@/shared/ui/Routes/ProtectedRoute';
 import ProviderRoute from '@/shared/ui/Routes/ProviderRoute';
@@ -23,11 +24,46 @@ const My = lazy(() => import('@/pages/my'));
 const NotFound = lazy(() => import('@/pages/not-found'));
 
 export const publicRoutes = [
-  { index: true, element: <Main /> },
-  { path: 'category/:categoryId', element: <Category /> },
-  { path: 'search', element: <Search /> },
-  { path: 'provider/:userId', element: <Provider /> },
-  { path: 'service/:serviceId', element: <Service /> },
+  {
+    index: true,
+    element: (
+      <PageErrorBoundary>
+        <Main />
+      </PageErrorBoundary>
+    ),
+  },
+  {
+    path: 'category/:categoryId',
+    element: (
+      <PageErrorBoundary>
+        <Category />
+      </PageErrorBoundary>
+    ),
+  },
+  {
+    path: 'search',
+    element: (
+      <PageErrorBoundary>
+        <Search />
+      </PageErrorBoundary>
+    ),
+  },
+  {
+    path: 'provider/:userId',
+    element: (
+      <PageErrorBoundary>
+        <Provider />
+      </PageErrorBoundary>
+    ),
+  },
+  {
+    path: 'service/:serviceId',
+    element: (
+      <PageErrorBoundary>
+        <Service />
+      </PageErrorBoundary>
+    ),
+  },
   { path: 'forbidden', element: <Forbidden /> },
   { path: 'not-found', element: <NotFound /> },
   { path: '*', element: <NotFound /> },
@@ -37,17 +73,21 @@ export const protectedRoutes = [
   {
     path: 'chat',
     element: (
-      <ProtectedRoute>
-        <Chat />
-      </ProtectedRoute>
+      <PageErrorBoundary>
+        <ProtectedRoute>
+          <Chat />
+        </ProtectedRoute>
+      </PageErrorBoundary>
     ),
   },
   {
     path: 'order',
     element: (
-      <ClientRoute>
-        <OrderCreate />
-      </ClientRoute>
+      <PageErrorBoundary>
+        <ClientRoute>
+          <OrderCreate />
+        </ClientRoute>
+      </PageErrorBoundary>
     ),
   },
 ];
@@ -62,50 +102,68 @@ export const myPageRoutes = {
     { index: true, element: <Navigate to="info-edit" replace /> },
     {
       path: 'info-edit',
-      element: <UserInfoEdit />,
+      element: (
+        <PageErrorBoundary>
+          <UserInfoEdit />
+        </PageErrorBoundary>
+      ),
     },
     {
       path: 'credit',
-      element: <Credit />,
+      element: (
+        <PageErrorBoundary>
+          <Credit />
+        </PageErrorBoundary>
+      ),
     },
     {
       path: 'profile-edit',
       element: (
-        <ProviderRoute>
-          <ProfileEdit />
-        </ProviderRoute>
+        <PageErrorBoundary>
+          <ProviderRoute>
+            <ProfileEdit />
+          </ProviderRoute>
+        </PageErrorBoundary>
       ),
     },
     {
       path: 'service-register',
       element: (
-        <ProviderRoute>
-          <ServiceRegister />
-        </ProviderRoute>
+        <PageErrorBoundary>
+          <ProviderRoute>
+            <ServiceRegister />
+          </ProviderRoute>
+        </PageErrorBoundary>
       ),
     },
     {
       path: 'service-edit/:serviceId',
       element: (
-        <ProviderRoute>
-          <ServiceEdit />
-        </ProviderRoute>
+        <PageErrorBoundary>
+          <ProviderRoute>
+            <ServiceEdit />
+          </ProviderRoute>
+        </PageErrorBoundary>
       ),
     },
     {
       path: 'order-manage',
       element: (
-        <ProviderRoute>
-          <OrderManage />
-        </ProviderRoute>
+        <PageErrorBoundary>
+          <ProviderRoute>
+            <OrderManage />
+          </ProviderRoute>
+        </PageErrorBoundary>
       ),
     },
     {
       path: 'order-history',
       element: (
-        <ClientRoute>
-          <OrderHistory />
-        </ClientRoute>
+        <PageErrorBoundary>
+          <ClientRoute>
+            <OrderHistory />
+          </ClientRoute>
+        </PageErrorBoundary>
       ),
     },
   ],
