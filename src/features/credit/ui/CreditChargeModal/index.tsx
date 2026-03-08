@@ -62,44 +62,54 @@ const CreditChargeModal: React.FC<CreditChargeModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="크레딧 충전">
-      <S.CreditChargeForm onSubmit={handleSubmit}>
-        <S.AmountInputField>
-          <S.AmountInput
-            id="charge"
-            type="text"
-            label="충전 금액"
-            value={displayValue}
-            onChange={handleAmountChange}
-            onKeyDown={handleKeyDown}
-            placeholder="충전할 금액을 입력하세요"
-          />
-          <S.QuickAmountButtonGrid>
-            {QUICK_CHARGE_AMOUNTS.map(({ label, value }) => (
-              <S.QuickAmountButton
-                key={value}
-                type="button"
-                onClick={() => handleQuickCharge(value)}
-                disabled={amount + value > MAX_CHARGE_AMOUNT}
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal.Overlay>
+        <Modal.Container>
+          <Modal.Header>
+            <Modal.Title>크레딧 충전</Modal.Title>
+            <Modal.CloseButton />
+          </Modal.Header>
+          <Modal.Content>
+            <S.CreditChargeForm onSubmit={handleSubmit}>
+              <S.AmountInputField>
+                <S.AmountInput
+                  id="charge"
+                  type="text"
+                  label="충전 금액"
+                  value={displayValue}
+                  onChange={handleAmountChange}
+                  onKeyDown={handleKeyDown}
+                  placeholder="충전할 금액을 입력하세요"
+                />
+                <S.QuickAmountButtonGrid>
+                  {QUICK_CHARGE_AMOUNTS.map(({ label, value }) => (
+                    <S.QuickAmountButton
+                      key={value}
+                      type="button"
+                      onClick={() => handleQuickCharge(value)}
+                      disabled={amount + value > MAX_CHARGE_AMOUNT}
+                    >
+                      {label}
+                    </S.QuickAmountButton>
+                  ))}
+                </S.QuickAmountButtonGrid>
+              </S.AmountInputField>
+              <S.InfoNotification>
+                • 충전 금액은 1,000원부터 2,000,000원까지 설정할 수 있습니다.
+                <br />• 결제 내역은 마이페이지에서 확인하실 수 있습니다.
+              </S.InfoNotification>
+              <Button
+                type="submit"
+                onClick={handlePayment}
+                fullWidth
+                disabled={!isValidAmount || chargeMutation.isPending}
               >
-                {label}
-              </S.QuickAmountButton>
-            ))}
-          </S.QuickAmountButtonGrid>
-        </S.AmountInputField>
-        <S.InfoNotification>
-          • 충전 금액은 1,000원부터 2,000,000원까지 설정할 수 있습니다.
-          <br />• 결제 내역은 마이페이지에서 확인하실 수 있습니다.
-        </S.InfoNotification>
-        <Button
-          type="submit"
-          onClick={handlePayment}
-          fullWidth
-          disabled={!isValidAmount || chargeMutation.isPending}
-        >
-          충전하기
-        </Button>
-      </S.CreditChargeForm>
+                충전하기
+              </Button>
+            </S.CreditChargeForm>
+          </Modal.Content>
+        </Modal.Container>
+      </Modal.Overlay>
     </Modal>
   );
 };

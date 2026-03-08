@@ -49,42 +49,52 @@ const CancelReasonModal: React.FC<CancelReasonModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="취소 사유 선택">
-      <S.Form>
-        <S.RadioGroup>
-          {reasons.map((option, index) => (
-            <S.RadioLabel key={option.label}>
-              <S.RadioInput
-                type="radio"
-                name="cancelReason"
-                checked={selectedIndex === index}
-                onChange={() => setSelectedIndex(index)}
-              />
-              {option.label}
-            </S.RadioLabel>
-          ))}
-        </S.RadioGroup>
-        {isCustomInput && (
-          <S.TextArea
-            placeholder="취소 사유를 입력해 주세요."
-            value={customReason}
-            onChange={(e) => setCustomReason(e.target.value)}
-            autoFocus
-          />
-        )}
-        <S.ButtonGroup>
-          <S.ButtonWrapper>
-            <Button variant="secondary" onClick={onClose} fullWidth>
-              닫기
-            </Button>
-          </S.ButtonWrapper>
-          <S.ButtonWrapper>
-            <Button variant="primary" onClick={handleSubmit} fullWidth>
-              확인
-            </Button>
-          </S.ButtonWrapper>
-        </S.ButtonGroup>
-      </S.Form>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal.Overlay>
+        <Modal.Container>
+          <Modal.Header>
+            <Modal.Title>취소 사유 선택</Modal.Title>
+            <Modal.CloseButton />
+          </Modal.Header>
+          <Modal.Content>
+            <S.Form>
+              <S.RadioGroup>
+                {reasons.map((option, index) => (
+                  <S.RadioLabel key={option.label}>
+                    <S.RadioInput
+                      type="radio"
+                      name="cancelReason"
+                      checked={selectedIndex === index}
+                      onChange={() => setSelectedIndex(index)}
+                    />
+                    {option.label}
+                  </S.RadioLabel>
+                ))}
+              </S.RadioGroup>
+              {isCustomInput && (
+                <S.TextArea
+                  placeholder="취소 사유를 입력해 주세요."
+                  value={customReason}
+                  onChange={(e) => setCustomReason(e.target.value)}
+                  autoFocus
+                />
+              )}
+              <S.ButtonGroup>
+                <S.ButtonWrapper>
+                  <Button variant="secondary" onClick={onClose} fullWidth>
+                    닫기
+                  </Button>
+                </S.ButtonWrapper>
+                <S.ButtonWrapper>
+                  <Button variant="primary" onClick={handleSubmit} fullWidth>
+                    확인
+                  </Button>
+                </S.ButtonWrapper>
+              </S.ButtonGroup>
+            </S.Form>
+          </Modal.Content>
+        </Modal.Container>
+      </Modal.Overlay>
     </Modal>
   );
 };

@@ -35,30 +35,40 @@ const PriceInputModal: React.FC<PriceInputModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="결제 요청">
-      <S.Form>
-        <S.Description>요청할 금액을 입력해 주세요.</S.Description>
-        <S.PriceInput
-          type="number"
-          placeholder="금액 입력"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onKeyDown={handleKeyDown}
-          autoFocus
-        />
-        <S.ButtonGroup>
-          <S.ButtonWrapper>
-            <Button variant="secondary" onClick={onClose} fullWidth>
-              취소
-            </Button>
-          </S.ButtonWrapper>
-          <S.ButtonWrapper>
-            <Button variant="primary" onClick={handleSubmit} fullWidth>
-              결제 요청
-            </Button>
-          </S.ButtonWrapper>
-        </S.ButtonGroup>
-      </S.Form>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal.Overlay>
+        <Modal.Container>
+          <Modal.Header>
+            <Modal.Title>결제 요청</Modal.Title>
+            <Modal.CloseButton />
+          </Modal.Header>
+          <Modal.Content>
+            <S.Form>
+              <S.Description>요청할 금액을 입력해 주세요.</S.Description>
+              <S.PriceInput
+                type="number"
+                placeholder="금액 입력"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                autoFocus
+              />
+              <S.ButtonGroup>
+                <S.ButtonWrapper>
+                  <Button variant="secondary" onClick={onClose} fullWidth>
+                    취소
+                  </Button>
+                </S.ButtonWrapper>
+                <S.ButtonWrapper>
+                  <Button variant="primary" onClick={handleSubmit} fullWidth>
+                    결제 요청
+                  </Button>
+                </S.ButtonWrapper>
+              </S.ButtonGroup>
+            </S.Form>
+          </Modal.Content>
+        </Modal.Container>
+      </Modal.Overlay>
     </Modal>
   );
 };
