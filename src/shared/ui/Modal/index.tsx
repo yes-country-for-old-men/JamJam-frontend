@@ -1,95 +1,124 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, createContext, useContext } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
 import CloseIcon from '@/shared/assets/icons/close.svg?react';
 import * as S from './Modal.styles';
 
+interface ModalContextValue {
+  onClose: () => void;
+  disableBackdropClick: boolean;
+}
+
+const ModalContext = createContext<ModalContextValue | null>(null);
+
+const useModalContext = () => {
+  const ctx = useContext(ModalContext);
+  if (!ctx) throw new Error('Modal sub-components must be used within <Modal>');
+  return ctx;
+};
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  title?: string;
-  showCloseButton?: boolean;
   disableBackdropClick?: boolean;
   children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({
+const ModalRoot: React.FC<ModalProps> = ({
   isOpen,
   onClose,
-  title,
-  showCloseButton = true,
   disableBackdropClick = false,
   children,
 }) => {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && !disableBackdropClick) {
-        onClose();
-      }
+      if (e.key === 'Escape' && !disableBackdropClick) onClose();
     };
-
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
       document.body.style.overflow = 'hidden';
     }
-
     return () => {
       document.removeEventListener('keydown', handleEscape);
-      if (!isOpen) {
-        document.body.style.overflow = '';
-      }
     };
   }, [isOpen, onClose, disableBackdropClick]);
 
   useEffect(() => {
-    if (!isOpen) {
-      document.body.style.overflow = '';
-    }
+    if (!isOpen) document.body.style.overflow = '';
   }, [isOpen]);
 
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget && !disableBackdropClick) {
-      onClose();
-    }
-  };
+  const contextValue = useMemo(
+    () => ({ onClose, disableBackdropClick }),
+    [onClose, disableBackdropClick],
+  );
 
-  const hasTitle = Boolean(title);
-  const hasHeader = hasTitle || showCloseButton;
-
-  return createPortal(
-    <AnimatePresence>
-      {isOpen && (
-        <S.Backdrop
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          onClick={handleBackdropClick}
-        >
-          <S.ModalContainer
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.2 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {hasHeader && (
-              <S.ModalHeader hasTitle={hasTitle}>
-                {hasTitle && <S.ModalTitle>{title}</S.ModalTitle>}
-                {showCloseButton && (
-                  <S.CloseButton onClick={onClose}>
-                    <CloseIcon />
-                  </S.CloseButton>
-                )}
-              </S.ModalHeader>
-            )}
-            <S.ModalContent hasHeader={hasHeader}>{children}</S.ModalContent>
-          </S.ModalContainer>
-        </S.Backdrop>
+  return (
+    <ModalContext.Provider value={contextValue}>
+      {createPortal(
+        <AnimatePresence>{isOpen && children}</AnimatePresence>,
+        document.body,
       )}
-    </AnimatePresence>,
-    document.body,
+    </ModalContext.Provider>
   );
 };
+
+const Overlay: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { onClose, disableBackdropClick } = useModalContext();
+  return (
+    <S.Backdrop
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget && !disableBackdropClick) onClose();
+      }}
+    >
+      {children}
+    </S.Backdrop>
+  );
+};
+
+const Container: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <S.ModalContainer
+    initial={{ opacity: 0, scale: 0.95, y: 20 }}
+    animate={{ opacity: 1, scale: 1, y: 0 }}
+    exit={{ opacity: 0, scale: 0.95, y: 20 }}
+    transition={{ duration: 0.2 }}
+    onClick={(e) => e.stopPropagation()}
+  >
+    {children}
+  </S.ModalContainer>
+);
+
+const Header: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <S.ModalHeader>{children}</S.ModalHeader>
+);
+
+const Title: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <S.ModalTitle>{children}</S.ModalTitle>
+);
+
+const CloseButton: React.FC = () => {
+  const { onClose } = useModalContext();
+  return (
+    <S.CloseButton onClick={onClose}>
+      <CloseIcon />
+    </S.CloseButton>
+  );
+};
+
+const Content: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <S.ModalContent>{children}</S.ModalContent>
+);
+
+const Modal = Object.assign(ModalRoot, {
+  Overlay,
+  Container,
+  Header,
+  Title,
+  CloseButton,
+  Content,
+});
 
 export default Modal;

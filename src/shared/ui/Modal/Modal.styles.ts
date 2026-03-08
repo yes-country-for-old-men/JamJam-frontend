@@ -27,12 +27,11 @@ export const ModalContainer = styled(motion.div)`
   overflow: hidden;
 `;
 
-export const ModalHeader = styled.div<{ hasTitle: boolean }>`
+export const ModalHeader = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: ${(props) =>
-    props.hasTitle ? 'space-between' : 'flex-end'};
+  justify-content: flex-end;
   padding: 20px 16px 12px 24px;
 `;
 
@@ -64,8 +63,12 @@ export const CloseButton = styled.button`
   }
 `;
 
-export const ModalContent = styled.div<{ hasHeader: boolean }>`
+export const ModalContent = styled.div`
   color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
-  padding: ${(props) => (props.hasHeader ? '0 24px 24px 24px' : '24px')};
+  padding: 24px;
   white-space: pre-line;
+
+  ${ModalHeader} + & {
+    padding-top: 0;
+  }
 `;
