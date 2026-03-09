@@ -36,10 +36,14 @@ export const DialogTitle = styled.div`
   font-weight: 700;
 `;
 
-export const DialogContent = styled.div<{ hasHeader: boolean }>`
+export const DialogContent = styled.div`
   color: ${(props) => props.theme.COLORS.LABEL.SECONDARY};
-  padding: ${(props) => (props.hasHeader ? '0 24px 24px 24px' : '24px')};
+  padding: 24px;
   white-space: pre-line;
+
+  ${DialogHeader} + & {
+    padding-top: 0;
+  }
 `;
 
 export const DialogFooter = styled.div`

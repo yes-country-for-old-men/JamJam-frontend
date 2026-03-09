@@ -85,8 +85,6 @@ const Dialog: React.FC = () => {
       );
     }
 
-    const hasTitle = Boolean(dialog.title);
-
     return (
       <S.Backdrop
         key={dialog.id}
@@ -104,14 +102,12 @@ const Dialog: React.FC = () => {
           transition={{ duration: 0.2 }}
           onClick={(e) => e.stopPropagation()}
         >
-          {hasTitle && (
+          {dialog.title && (
             <S.DialogHeader>
               <S.DialogTitle>{dialog.title}</S.DialogTitle>
             </S.DialogHeader>
           )}
-          <S.DialogContent hasHeader={hasTitle}>
-            {dialog.content}
-          </S.DialogContent>
+          <S.DialogContent>{dialog.content}</S.DialogContent>
           <S.DialogFooter>
             {dialog.type === 'confirm' && (
               <S.FooterButtonWrapper>
