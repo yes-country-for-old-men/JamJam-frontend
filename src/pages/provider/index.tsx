@@ -7,7 +7,7 @@ import * as S from '@/pages/provider/Provider.styles';
 import { eventManager } from '@/shared/lib';
 import { useDialog } from '@/shared/lib/useDialog';
 import { useTabScroll } from '@/shared/lib/useTabScroll';
-import SectionTab from '@/shared/ui/SectionTab';
+import { TabList, Tab, TabPanel } from '@/shared/ui/SectionTab';
 import ProfileCard from '@/widgets/provider-profile/ui/ProfileCard';
 import ProviderInfoSection from '@/widgets/provider-profile/ui/ProviderInfoSection';
 import ServicesSection from '@/widgets/provider-profile/ui/ServicesSection';
@@ -75,18 +75,25 @@ const Provider: React.FC = () => {
     <S.Container>
       <S.MainContent>
         <ProfileCard data={providerData} />
-        <SectionTab
-          tabs={TABS}
-          activeTab={activeTab}
-          onTabClick={handleTabClick}
-        >
+        <TabList>
+          {TABS.map((tab) => (
+            <Tab
+              key={tab}
+              active={activeTab === tab}
+              onClick={() => handleTabClick(tab)}
+            >
+              {tab}
+            </Tab>
+          ))}
+        </TabList>
+        <TabPanel>
           <section ref={expertInfoRef}>
             <ProviderInfoSection data={providerData} />
           </section>
           <section ref={servicesRef}>
             <ServicesSection data={providerData} />
           </section>
-        </SectionTab>
+        </TabPanel>
       </S.MainContent>
       <SidePanel
         data={providerData}

@@ -9,7 +9,7 @@ import { decodeToken, eventManager } from '@/shared/lib';
 import { useDialog } from '@/shared/lib/useDialog';
 import { useTabScroll } from '@/shared/lib/useTabScroll';
 import CategoryTabNavigator from '@/shared/ui/CategoryTabNavigator';
-import SectionTab from '@/shared/ui/SectionTab';
+import { TabList, Tab, TabPanel } from '@/shared/ui/SectionTab';
 import PortfolioSection from '@/widgets/service-detail/ui/PortfolioSection';
 import ServiceHeader from '@/widgets/service-detail/ui/ServiceHeader';
 import ServiceInfoSection from '@/widgets/service-detail/ui/ServiceInfoSection';
@@ -125,11 +125,18 @@ const Service: React.FC = () => {
             onInquiryClick={handleInquiryClick}
             onProviderClick={handleProviderClick}
           />
-          <SectionTab
-            tabs={TABS}
-            activeTab={activeTab}
-            onTabClick={handleTabClick}
-          >
+          <TabList>
+            {TABS.map((tab) => (
+              <Tab
+                key={tab}
+                active={activeTab === tab}
+                onClick={() => handleTabClick(tab)}
+              >
+                {tab}
+              </Tab>
+            ))}
+          </TabList>
+          <TabPanel>
             <section ref={serviceInfoRef}>
               <ServiceInfoSection data={serviceData} />
             </section>
@@ -138,7 +145,7 @@ const Service: React.FC = () => {
                 <PortfolioSection data={serviceData} />
               </section>
             )}
-          </SectionTab>
+          </TabPanel>
         </S.MainContent>
         <SidePanel
           data={serviceData}
