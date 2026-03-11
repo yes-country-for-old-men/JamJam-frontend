@@ -6,7 +6,7 @@ import * as S from './Modal.styles';
 
 interface ModalContextValue {
   onClose: () => void;
-  disableBackdropClick: boolean;
+  disableDismiss: boolean;
 }
 
 const ModalContext = createContext<ModalContextValue | null>(null);
@@ -20,19 +20,19 @@ const useModalContext = () => {
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  disableBackdropClick?: boolean;
+  disableDismiss?: boolean;
   children: React.ReactNode;
 }
 
 const ModalRoot: React.FC<ModalProps> = ({
   isOpen,
   onClose,
-  disableBackdropClick = false,
+  disableDismiss = false,
   children,
 }) => {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && !disableBackdropClick) onClose();
+      if (e.key === 'Escape' && !disableDismiss) onClose();
     };
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
@@ -41,15 +41,15 @@ const ModalRoot: React.FC<ModalProps> = ({
     return () => {
       document.removeEventListener('keydown', handleEscape);
     };
-  }, [isOpen, onClose, disableBackdropClick]);
+  }, [isOpen, onClose, disableDismiss]);
 
   useEffect(() => {
     if (!isOpen) document.body.style.overflow = '';
   }, [isOpen]);
 
   const contextValue = useMemo(
-    () => ({ onClose, disableBackdropClick }),
-    [onClose, disableBackdropClick],
+    () => ({ onClose, disableDismiss }),
+    [onClose, disableDismiss],
   );
 
   return (
@@ -63,7 +63,7 @@ const ModalRoot: React.FC<ModalProps> = ({
 };
 
 const Overlay: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { onClose, disableBackdropClick } = useModalContext();
+  const { onClose, disableDismiss } = useModalContext();
   return (
     <S.Backdrop
       initial={{ opacity: 0 }}
@@ -71,7 +71,7 @@ const Overlay: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
       onClick={(e) => {
-        if (e.target === e.currentTarget && !disableBackdropClick) onClose();
+        if (e.target === e.currentTarget && !disableDismiss) onClose();
       }}
     >
       {children}
